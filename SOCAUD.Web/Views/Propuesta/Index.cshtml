@@ -1,0 +1,115 @@
+﻿@model SOCAUD.Web.Models.PropuestaModel
+
+@{
+    ViewBag.PageTitle = "Propuesta";
+    ViewBag.PageDescription = "Propuesta";
+    ViewBag.PageDescription = "Elaboracion de Propuesta";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Publicaciones</h3>
+            </div>
+            <div class="box-body">
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(c => c.CODPUB)
+                            @Html.DropDownListFor(c => c.CODPUB, Model.cboPublicaciones, "Seleccione", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-8">
+                            <br />
+                            <button class="btn btn-primary" type="button" id="btnBuscarPropuesta"><i class="fa fa-search"></i>&nbsp;Buscar</button>&nbsp;&nbsp;
+                            <button class="btn btn-info" type="button" id="btnAgregarPropuesta"><i class="fa fa-file"></i>&nbsp;Elaborar Propuesta</button>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table id="tabPropuesta" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+
+        var _dataPropuesta_ = null;
+
+        var tabPropuesta = $("#tabPropuesta").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataPropuesta_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-primary" title="Agregar agenda" type="button" onclick="verPropuesta(' + row[0] + ');"><i class="fa fa-search"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Entidad" },
+                { "sTitle": "Retribucion" },
+                { "sTitle": "IGV" },
+                { "sTitle": "Viaticos" },
+                { "sTitle": "Estado" }
+            ]
+
+        });
+
+        $(document).ready(function () {
+            listarPropuesta();
+            $("#btnAgregarPropuesta").click(agregarPropuesta);
+            $("#btnBuscarPropuesta").click(listarPropuesta);
+        });
+
+        function agregarPropuesta() {
+            $.ajax({
+                url: '@Url.Action("CrearPropuesta", "Propuesta")',
+                type: 'POST',
+                async: false,
+                data: { idPub: $("#CODPUB").val() },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    listarPropuesta();
+                }
+            });
+        }
+
+        function listarPropuesta() {
+            $.ajax({
+                url: '@Url.Action("ListadoPropuestas", "Propuesta")',
+                type: 'POST',
+                async: false,
+                data: { idPub: $("#CODPUB").val() },
+                success: function (result) {
+                    _dataPropuesta_ = result;
+                    tabPropuesta.fnReloadData(_dataPropuesta_);
+                }
+            });
+        }
+
+
+
+        function verPropuesta(idPropuesta) {
+            document.location = '@Url.Action("VerPropuesta", "Propuesta")' + "?idPropuesta=" + idPropuesta;
+        }
+
+    </script>
+}

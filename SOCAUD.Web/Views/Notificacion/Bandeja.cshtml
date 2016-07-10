@@ -1,0 +1,208 @@
+﻿@{
+    ViewBag.PageTitle = "Notificacion";
+    ViewBag.PageDescription = "Notificacion";
+    ViewBag.PageDescription = "Listado de Notificaciones";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Bandejas</h3>
+
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked" id="ulMenuNota">
+                        <li class="active">
+                            <a href="javascript:void(0);" onclick="javascript:ListarNotificaciones('R', 0);">
+                                <i class="fa fa-inbox"></i> Recibidos
+                                <span class="label label-primary pull-right" id="lblNotaNueva">0</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" onclick="javascript:ListarNotificaciones('P', 1);">
+                                <i class="fa fa-trash-o"></i> Papelera
+                                <span class="label label-warning pull-right" id="lblNotaEliminado">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="box box-primary" id="listadoNotificacion">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Bandeja de Mensajes</h3>
+
+                    <div class="box-tools pull-right">
+                        <div class="has-feedback">
+                            @*<button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>*@
+                        </div>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div class="table-responsive mailbox-messages col-lg-12">
+                        <table class="table table-hover table-striped" id="tbNotificaciones"></table>
+                        <!-- /.table -->
+                    </div>
+                    <!-- /.mail-box-messages -->
+                </div>
+            </div>
+            <!-- /. box -->
+
+            <div class="box box-primary" id="mensajeNotificacion">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Descripcion del Mensaje</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div class="mailbox-read-info">
+                        <h3 id="lblAsunto"></h3>
+                        <h5>
+                            From: <span id="lblRemitente"></span>
+                            <span class="mailbox-read-time pull-right" id="lblFechaNota"></span>
+                        </h5>
+                    </div>
+                    <div class="mailbox-read-message" id="lblMensaje">
+
+                    </div>
+                    <!-- /.mailbox-read-message -->
+                </div>
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+</section>
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+        var _dataNotificacion_ = null;
+
+        var tbNotificaciones = $("#tbNotificaciones").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataNotificacion_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        var icon = "fa-envelope-o";
+                        if (row[4] == "1") icon = "fa-envelope";
+                        return '<button type="button" class="btn btn-default btn-sm" onclick="javascript:verNota(' + data + ')"><i class="fa ' + icon + '"></i></button>';
+                    }
+                },
+                { "sTitle": "Nombre", "sClass": "mailbox-name" },
+                { "sTitle": "Asunto", "sClass": "mailbox-subject" },
+                { "sTitle": "Recibido", "sClass": "mailbox-date" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (row[5] == "0") return "";
+                        return '<button type="button" class="btn btn-danger btn-sm" onclick="javascript:eliminarNota(' + row[0] + ');"><i class="fa fa-trash-o"></i></button>';
+                    }
+                }
+            ],
+            "rowCallback": function (row, data, index) {
+                if (data[4] == "1") {
+                    $(row).addClass('message-recibe');
+                }
+                if (data[5] == "0") {
+                    $(row).addClass('message-delete');
+                }
+            }
+
+        });
+
+        $(document).ready(function () {
+            ListarNotificaciones('R', 0);
+            actualizarContador();
+        });
+
+        function ListarNotificaciones(bandeja, id) {
+            $("#listadoNotificacion").show();
+            $("#mensajeNotificacion").hide();
+            $("li", "#ulMenuNota").removeClass("active");
+            $("li", "#ulMenuNota").eq(id).addClass("active");
+            $.ajax({
+                url: '@Url.Action("ListarMensajes", "Notificacion")',
+                type: 'POST',
+                async: false,
+                data: { "bandeja": bandeja },
+                success: function (result) {
+                    _dataNotificacion_ = result;
+                    tbNotificaciones.fnReloadData(_dataNotificacion_);
+                    actualizarContador();
+                    //$("#lblNotaNueva").text(tbNotificaciones.api().rows(".message-recibe")[0].length);
+                    //$("#lblNotaEliminado").text((tbNotificaciones.api().rows(".message-delete")[0].length))
+
+                }
+            });
+        }
+
+        function actualizarContador() {
+            $.ajax({
+                url: '@Url.Action("ContadorMensajesBandeja", "Notificacion")',
+                type: 'POST',
+                async: false,
+                data: {},
+                success: function (result) {
+                    $("#lblNotaNueva").text(result.cantNoLeidos);
+                    $("#lblNotaEliminado").text(result.cantEliminado);
+                }
+            });
+        }
+
+        function eliminarNota(mensaje)
+        {
+            $.ajax({
+                url: '@Url.Action("EliminarMensaje", "Notificacion")',
+                type: 'POST',
+                async: false,
+                data: { "mensaje": mensaje },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    ListarNotificaciones('R', 0);
+                }
+            });
+        }
+
+        function verNota(mensaje) {
+            $.ajax({
+                url: '@Url.Action("LeerMensaje", "Notificacion")',
+                type: 'POST',
+                async: false,
+                data: { "mensaje": mensaje },
+                success: function (result) {
+                    $("#listadoNotificacion").hide();
+                    $("#mensajeNotificacion").show();
+                    $("#lblAsunto").text(result.ASUNOT);
+                    $("#lblRemitente").text(result.USUNOT);
+                    $("#lblFechaNota").text(result.FECNOT);
+                    $("#lblMensaje").html(result.DESNOT);
+                }
+            });
+        }
+    </script>
+}

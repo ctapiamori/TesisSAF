@@ -1,0 +1,185 @@
+﻿@using SOCAUD.Common.Enum;
+
+@model SOCAUD.Web.Models.InvitacionModel
+@{
+    ViewBag.PageTitle = "Bandeja Invitaciones";
+    ViewBag.PageDescription = "Bandeja Invitaciones";
+    ViewBag.PageDescription = "Invitaciones por Aceptar";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="callout callout-info">
+    <h4><i class="icon fa fa-info"></i>&nbsp;Información</h4>
+    <p>
+        Al aceptar una invitacion sus las fechas seran exclusivas para la Sociedad de Auditoria, nadie mas podra reservar esas
+        fechas.
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Invitaciones</h3>
+            </div>
+            <div class="box-body">
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(c => c.CODPUB)
+                            @Html.DropDownListFor(c => c.CODPUB, Model.cboPublicaciones, "Seleccione", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(c => c.CODSERAUD)
+                            @Html.DropDownListFor(c => c.CODSERAUD, Model.cboServiciosAuditoria, "Seleccione", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            <br />
+                            <button class="btn btn-primary" type="button" id="btnBuscarInvitaciones"><i class="fa fa-search"></i>&nbsp;Buscar Invitaciones</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table id="tabInvitaciones" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDetalleInvitacion" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        var _dataInvitaciones_ = null;
+
+        $(document).ready(function () {
+            $("#btnBuscarInvitaciones").click(listarInvitaciones);
+            $("#CODPUB").change(cargarServiciosAuditoria);
+            listarInvitaciones();
+        });
+
+        var tabInvitaciones = $("#tabInvitaciones").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataInvitaciones_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-primary" title="Ver agenda" type="button" onclick="verAgendaInvitacion(' + row[0] + ');"><i class="fa fa-calendar"></i></button></center>';
+                    }
+                },
+                { "sTitle": "RUC" },
+                { "sTitle": "Sociedad Auditoria" },
+                { "sTitle": "Entidad", "sClass": "center" },
+                { "sTitle": "Periodo", "sClass": "center" },
+                { "sTitle": "Estado", "sClass": "center" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (row[6] == '@Convert.ToInt32(Estado.Invitacion.Enviada)')
+                            return '<center><button class="btn btn-success" title="Aceptar" type="button" onclick="aceptarInvitacion(' + row[0] + ');"><i class="fa fa-check"></i></button></center>';
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (row[6] == '@Convert.ToInt32(Estado.Invitacion.Aceptado)')
+                            return '<center><button class="btn btn-warning" title="Cancelar" type="button" onclick="cancelarInvitacion(' + row[0] + ');"><i class="fa fa-times"></i></button></center>';
+                        else
+                            return "";
+                    }
+                }
+            ]
+
+        });
+
+        function cargarServiciosAuditoria() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("listarServicios", "BandejaInvitaciones")',
+                data: { idBase: $("#CODPUB").val().split("-")[1] },
+                dataType: "json",
+                success: function (result) {
+                    $("#CODSERAUD option").not(":first").remove();
+                    $.each(result, function (i, v) {
+                        $("#CODSERAUD").append("<option value='" + v.Value + "'>" + v.Text + "</option>");
+                    });
+                }
+            });
+        }
+
+        function listarInvitaciones() {
+            $.ajax({
+                url: '@Url.Action("ListadoInvitaciones", "BandejaInvitaciones")',
+                type: 'POST',
+                async: false,
+                data: { idPub: $("#CODPUB").val(), idSerAud: $("#CODSERAUD").val() },
+                success: function (result) {
+                    _dataInvitaciones_ = result;
+                    tabInvitaciones.fnReloadData(_dataInvitaciones_);
+                }
+            });
+        }
+
+        function aceptarInvitacion(id) {
+            $.ajax({
+                url: '@Url.Action("AceptarInvitacion", "BandejaInvitaciones")',
+                type: 'POST',
+                async: false,
+                data: { id: id },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    listarInvitaciones();
+                }
+            });
+        }
+
+        function cancelarInvitacion(id) {
+            $.ajax({
+                url: '@Url.Action("CancelarInvitacion", "BandejaInvitaciones")',
+                type: 'POST',
+                async: false,
+                data: { id: id },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    listarInvitaciones();
+                }
+            });
+        }
+
+
+        function verAgendaInvitacion(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("VerDetalleInvitacion", "BandejaInvitaciones")',
+                data: { id: id },
+                success: function (result) {
+                    $("#modalDetalleInvitacion").empty().html(result).modal();
+                }
+            });
+
+        }
+
+    </script>
+}

@@ -1,0 +1,297 @@
+﻿@using SOCAUD.Common.Enum;
+@using SOCAUD.Common.Constantes;
+
+@model SOCAUD.Web.Models.SoaModel
+@{
+    ViewBag.PageTitle = "Editar Solicitud";
+    ViewBag.PageDescription = "Editar Solicitud";
+    ViewBag.PageDescription = "Sociedad de Auditoria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmRegistroSolicitudSOA" }))
+{
+    @Html.HiddenFor(c => c.codSolicitud)
+    @Html.HiddenFor(c => c.codSoa)
+
+    @Html.HiddenFor(c => c.estadoSolicitud)
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><strong><i class="fa fa-info-circle"></i>&nbsp;Observaciones</strong></h3>
+                </div>
+                <div class="box-body">
+
+
+
+                    <div style="width:100%;">
+                        @Html.Raw(HttpUtility.HtmlDecode(Model.observacionSolicitud));
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información Sociedad Auditoria</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.rucSoa)
+                                @Html.TextBoxFor(c => c.rucSoa, new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(c => c.rucSoa)
+                            </div>
+                            <div class="col-md-8">
+                                @Html.LabelFor(c => c.razSocSoa)
+                                @Html.TextBoxFor(c => c.razSocSoa, new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(c => c.razSocSoa)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(c => c.misSoa)
+                                @Html.TextAreaFor(c => c.misSoa, new { @class = "form-control", @rows = "4" })
+                                @Html.ValidationMessageFor(c => c.misSoa)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(c => c.visSoa)
+                                @Html.TextAreaFor(c => c.visSoa, new { @class = "form-control", @rows = "4" })
+                                @Html.ValidationMessageFor(c => c.visSoa)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información Responsable</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.nomRepLegSoa)
+                                @Html.TextBoxFor(c => c.nomRepLegSoa, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.nomRepLegSoa)
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.apeRepLegSoa)
+                                @Html.TextBoxFor(c => c.apeRepLegSoa, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.apeRepLegSoa)
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.corRepLegSoa)
+                                @Html.TextBoxFor(c => c.corRepLegSoa, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.corRepLegSoa)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.celRepLegSoa)
+                                @Html.TextBoxFor(c => c.celRepLegSoa, new { @class = "form-control", @maxlength = "9" })
+                                @Html.ValidationMessageFor(c => c.celRepLegSoa)
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.telRepLegSoa)
+                                @Html.TextBoxFor(c => c.telRepLegSoa, new { @class = "form-control", @maxlength = "8" })
+                                @Html.ValidationMessageFor(c => c.telRepLegSoa)
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información Adicional</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.numParSunSoa)
+                                @Html.TextBoxFor(c => c.numParSunSoa, new { @class = "form-control", @maxlength = "10" })
+                                @Html.ValidationMessageFor(c => c.numParSunSoa)
+                            </div>
+                            <div class="col-md-4">
+                                @Html.HiddenFor(c => c.firIntSoa)
+
+                                @Html.LabelFor(c => c.firIntSoa)
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="chkFirmaInternacional" type="checkbox" /> &nbsp; Firma Internacional
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                @Html.HiddenFor(c => c.firPcaobSoa)
+                                @Html.LabelFor(c => c.firPcaobSoa)
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="chkFirmaPCAOB" type="checkbox" /> &nbsp; Firma Internacional
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.codColConSoa)
+                                @Html.TextBoxFor(c => c.codColConSoa, new { @class = "form-control", @maxlength = "10" })
+                                @Html.ValidationMessageFor(c => c.codColConSoa)
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default color-palette-box">
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <center>
+                                    <button type="button" id="btnEnviarInfoSoaSolicitud" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Enviar</button>
+                                    <button type="button" id="btnGuardarInfoSoaSolicitud" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                                    <button type="button" id="btnCancelarInfoSoaSolicitud" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+
+            $("#chkFirmaInternacional").prop("checked", ($("#firIntSoa").val() == "S"));
+            $("#chkFirmaPCAOB").prop("checked", ($("#firPcaobSoa").val() == "S"));
+
+            if (
+                $("#estadoSolicitud").val() == '@Convert.ToInt32(Estado.Solicitud.Elaboracion)' ||
+                $("#estadoSolicitud").val() == '@Convert.ToInt32(Estado.Solicitud.Observada)'
+                ) {
+                //$("#btnGuardarInfoSoaSolicitud").prop("disabled", false);
+                //$("#btnEnviarInfoSoaSolicitud").prop("disabled", false);
+
+                $("#btnGuardarInfoSoaSolicitud").show();
+                $("#btnEnviarInfoSoaSolicitud").show();
+
+            } else {
+                $("#btnGuardarInfoSoaSolicitud").hide();
+                $("#btnEnviarInfoSoaSolicitud").hide();
+
+                $("input").prop("disabled", true);
+                $("select").prop("disabled", true);
+                $("#btnCancelarInfoSoaSolicitud").attr("disabled", false);
+                //$("#btnGuardarInfoSoaSolicitud").prop("disabled", true);
+                //$("#btnEnviarInfoSoaSolicitud").prop("disabled", true);
+            }
+
+            $("#btnGuardarInfoSoaSolicitud").click(function () {
+
+                $("#frmRegistroSolicitudSOA").updateValidation();
+                if (!$("#frmRegistroSolicitudSOA").isValid()) { return; }
+
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                    if (result)
+                        guardarSolicitudSOA();
+                });
+
+
+
+            });
+            $("#btnCancelarInfoSoaSolicitud").click(regresarListadoSolicitud);
+            $("#btnEnviarInfoSoaSolicitud").click(function () {
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                    if (result)
+                        enviarSolicitudRegistroSOA();
+                });
+            });
+        });
+
+
+        function guardarSolicitudSOA() {
+
+
+
+            $("#firIntSoa").val($("#chkFirmaInternacional").is(":checked") ? "S" : "N");
+            $("#firPcaobSoa").val($("#chkFirmaPCAOB").is(":checked") ? "S" : "N");
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("grabarRegistroSolicitudSOA", "Solicitud")',
+                data: $("#frmRegistroSolicitudSOA").serialize(),
+                dataType: "json",
+                success: function (result) {
+                    mostrarNotificacion(result);
+                }
+            });
+        }
+
+        function enviarSolicitudRegistroSOA() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("enviarSolicitud", "Solicitud")',
+                data: { idSol: $("#codSolicitud").val() },
+                dataType: "json",
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    if (result.Exito) {
+                        $("input").prop("disabled", true);
+                        $("select").prop("disabled", true);
+                        $("#btnCancelarInfoSoaSolicitud").attr("disabled", false);
+                    }
+                }
+            });
+        }
+
+        function regresarListadoSolicitud() {
+            document.location = '@Url.Action("Index", "Solicitud")';
+        }
+
+    </script>
+}

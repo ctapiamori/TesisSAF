@@ -1,0 +1,133 @@
+﻿@model SOCAUD.Web.Models.ExperienciaModel
+
+<iframe id="iRegistroExperiencia" name="RegistroExperiencia" style="visibility:hidden; display: none;"></iframe>
+@using (Html.BeginForm("guardarExperiencia", "Solicitud", FormMethod.Post, new { autocomplete = "off", id = "frmRegistroExperiencia", role = "form", enctype = "multipart/form-data", target = "RegistroExperiencia" }))
+{
+    @Html.HiddenFor(c => c.codSol)
+    @Html.HiddenFor(c => c.codSolExp)
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
+                <h4 class="bigger">Registro de Experiencia</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.codTipExp)
+                            @Html.DropDownListFor(c => c.codTipExp, Model.Tipos, "Seleccione", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.codEmpresa)
+                            @Html.DropDownListFor(c => c.codEmpresa, Model.Empresas, "Seleccione", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.codEmpresa)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.descSolExp)
+                            @Html.TextBoxFor(m => m.descSolExp, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.descSolExp)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.fechaInicioSolExp)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(m => m.fechaInicioSolExp, new { @class = "form-control" })
+                                <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(c => c.fechaInicioSolExp)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.fechaFinSolExp)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(m => m.fechaFinSolExp, new { @class = "form-control" })
+                                <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(c => c.fechaFinSolExp)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.nombreArchivoExp)
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.nombreArchivoExp, new { @class = "form-control", @readonly = "" })
+                            </div>
+                            @Html.HiddenFor(m => m.codArchivoExp)
+                            @Html.ValidationMessageFor(c => c.codArchivoExp)
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(c => c.numHorasSolExp)
+                        @Html.TextBoxFor(c => c.numHorasSolExp, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.numHorasSolExp)
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="btnGuardarExperiencia" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript" language="javascript">
+
+    $(document).ready(function () {
+        $('#fechaInicioSolExp').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $('#fechaFinSolExp').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+    });
+
+    $("#nombreArchivoExp").fileInput({ file: $("#codArchivoExp").val(), fileName: "archivoExpFile", ctrlCleanDelete: ["codArchivoExp"] });
+    $("#btnGuardarExperiencia").click(function () {
+
+
+
+        $("#frmRegistroExperiencia").updateValidation();
+        if ($("#frmRegistroExperiencia").isValid()) {
+
+            if ($("#nombreArchivoExp").val() == "") {
+                mostrarNotificacionError("Debe seleccionar un archivo");
+                return;
+            } else {
+                $("#frmRegistroExperiencia").submit();
+            }
+        }
+    });
+    $("#iRegistroExperiencia").load(function () {
+        var resultText = $("#iRegistroExperiencia").contents().find('body').html();
+        if (resultText == "") return;
+
+        var result = jQuery.parseJSON(resultText);
+        mostrarNotificacion(result);
+        if (result.Exito) {
+            cargarExperiencias();
+            $("#dlgRegistroExperiencia").modal('hide');
+        }
+    });
+</script>

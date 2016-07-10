@@ -1,0 +1,172 @@
+﻿@using SOCAUD.Common.Enum;
+@model SOCAUD.Intranet.Models.BaseModel
+@{
+    ViewBag.PageTitle = "Base";
+    ViewBag.PageDescription = "Información de Base";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(c => c.Codigo)
+<div class="box box-primary color-palette-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Base</h3>
+    </div>
+    <div class="box-body">
+        <form id="frmBases">
+            @Html.HiddenFor(c => c.Codigo)
+            <div class="form-group">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.Numero)
+                            @Html.TextBoxFor(c => c.Numero, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.FechaMaxPublicacion)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(c => c.FechaMaxPublicacion, new { @class = "form-control" })
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar bigger-110"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(c => c.FechaMaxPublicacion)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.Cronograma)
+                            @Html.DropDownListFor(c => c.Cronograma, Model.Cronogramas, "(Seleccionar Cronograma)", new { @class = "form-control", @disabled ="disabled" })
+                            @Html.ValidationMessageFor(c => c.Cronograma)
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.CronoEntidad)
+                            @Html.DropDownListFor(c => c.CronoEntidad, Model.Entidades, "(Seleccionar Entidad)", new { @class = "form-control", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(c => c.CronoEntidad)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.TotalRetribucion)
+                            @Html.TextBoxFor(c => c.TotalRetribucion, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.TotalRetribucion)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.TotalViaticos)
+                            @Html.TextBoxFor(c => c.TotalViaticos, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.TotalViaticos)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.FirmaPcaob)
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary @Html.Raw(Model.FirmaPcaob == "S" ? "active" : "")">
+                                    <input type="radio" name="FirmaPcaob" id="FirmaPcaob1" value="S" autocomplete="off" @Html.Raw(Model.FirmaPcaob == "S" ? "checked" : "")> SI
+                                </label>
+                                <label class="btn btn-danger @Html.Raw(Model.FirmaPcaob == "N" ? "active" : "")">
+                                    <input type="radio" name="FirmaPcaob" id="FirmaPcaob2" value="N" autocomplete="off" @Html.Raw(Model.FirmaPcaob == "N" ? "checked" : "")> NO
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.FirmaInternacional)
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary @Html.Raw(Model.FirmaInternacional == "S" ? "active" : "")">
+                                    <input type="radio" name="FirmaInternacional" id="FirmaInternacional1" value="S" autocomplete="off" @Html.Raw(Model.FirmaInternacional == "S" ? "checked" : "")> SI
+                                </label>
+                                <label class="btn btn-danger @Html.Raw(Model.FirmaInternacional == "N" ? "active" : "")">
+                                    <input type="radio" name="FirmaInternacional" id="FirmaInternacional2" value="N" autocomplete="off" @Html.Raw(Model.FirmaInternacional == "N" ? "checked" : "")> NO
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <button type="button" id="btnGrabar" class="btn btn-success" onclick="grabarCronograma();"><i class="fa fa-fw fa-save"></i>Grabar</button>
+                            <button type="button" id="btnRegresar" class="btn btn-default" onclick="regresar();"><i class="fa fa-fw fa-reply"></i>Regresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+
+        $('#FechaMaxPublicacion').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $("#Cronograma").on("change", function () {
+            var cronograma = $(this).val();
+            Entidades(cronograma);
+        });
+
+    });
+
+    function Entidades(cronograma)
+    {
+        $("#CronoEntidad option").not(":first").remove();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ListarEntidadCronograma", "Base")',
+            data: { "cronograma": cronograma },
+            dataType: "json",
+            success: function (result) {
+                $.each(result, function (key, value) {
+                    $("#CronoEntidad").append("<option value='" + value.Value + "'>" + value.Text + "</option>")
+                });
+            }
+        });
+    }
+
+
+    function grabarCronograma() {
+        if (!$("#frmBases").isValid()) { return; }
+
+        bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SaveBase", "Base")',
+                    data: $("#frmBases").serialize(),
+                        dataType: "json",
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            if (result.Exito)
+                            {
+                                $("#Numero").val(result.Data.NUMBAS)
+                                $("#btnGrabar").prop("disabled", true);
+                            }
+                        }
+                    });
+                }
+            });
+    }
+
+        function regresar() {
+            document.location = '@Url.Action("Index", "Base")';
+        }
+    </script>
+}

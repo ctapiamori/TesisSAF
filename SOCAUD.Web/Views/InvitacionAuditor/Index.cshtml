@@ -1,0 +1,240 @@
+﻿@using SOCAUD.Common.Enum;
+@using SOCAUD.Common.Constantes;
+
+@model SOCAUD.Web.Models.InvitacionModel
+@{
+    ViewBag.PageTitle = "Invitaciones";
+    ViewBag.PageDescription = "Invitaciones";
+    ViewBag.PageDescription = "Auditor Financiero";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="callout callout-info">
+    <h4><i class="icon fa fa-info"></i>&nbsp;Información</h4>
+    <p>
+        Esta seccion podra invitar a los auditores financieros para que pueda postular a una propuesta de concurso
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Invitaciones</h3>
+            </div>
+            <div class="box-body">
+
+                <div class="form-group">
+                    <div class="row">
+                        @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmBusquedaAuditores" }))
+                        {
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.CODPUB)
+                                @Html.DropDownListFor(c => c.CODPUB, Model.cboPublicaciones, "Seleccione", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.CODPUB)
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.CODSERAUD)
+                                @Html.DropDownListFor(c => c.CODSERAUD, Model.cboServiciosAuditoria, "Seleccione", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.CODSERAUD)
+                            </div>
+
+                        }
+
+                        <div class="col-md-4">
+                            <br />
+                            <button class="btn btn-primary" type="button" id="btnBuscarInvitaciones"><i class="fa fa-search"></i>&nbsp;Buscar Invitaciones</button>
+                            <button class="btn btn-info" type="button" id="btnBuscar"><i class="fa fa-search-plus"></i>&nbsp;Buscar Auditores</button>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table id="tabInvitaciones" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalBusquedaAuditor" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+<div class="modal fade" id="modalAgendaDisponibilidadAuditor" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+
+
+        var _dataInvitaciones_ = null;
+
+        var tabInvitaciones = $("#tabInvitaciones").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataInvitaciones_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+
+                        return '<center><button class="btn btn-primary" title="Agregar agenda" type="button" onclick="popupAgendaAuditores(' + row[0] + ');"><i class="fa fa-calendar"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Auditor" },
+                { "sTitle": "DNI" },
+                { "sTitle": "Entidad" },
+                { "sTitle": "Periodo" },
+                { "sTitle": "Cargo" },
+                { "sTitle": "Fecha Acepto Invitacion", "sClass": "center" },
+                { "sTitle": "Estado", "sClass": "center" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (row[8] == '@Convert.ToInt32(Estado.Invitacion.Elaboracion)')
+                            return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="eliminarInvitacion(' + row[0] + ');"><i class="fa fa-trash"></i></button></center>';
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (row[8] == '@Convert.ToInt32(Estado.Invitacion.Elaboracion)')
+                            return '<center><button class="btn btn-success" title="Enviar" type="button" onclick="enviarInvitacion(' + row[0] + ');"><i class="fa fa-share"></i></button></center>';
+                        else if (row[8] == '@Convert.ToInt32(Estado.Invitacion.Aceptado)' || row[5] == '@Convert.ToInt32(Estado.Invitacion.Enviada)')
+                            return '<center><button class="btn btn-warning" title="Cancelar" type="button" onclick="cancelarInvitacion(' + row[0] + ');"><i class="fa fa-times"></i></button></center>';
+                        else
+                            return "";
+                    }
+                }
+            ]
+
+        });
+
+        $(document).ready(function () {
+            listarInvitaciones();
+            $("#btnBuscar").click(popupBuscarAuditores);
+            $("#btnBuscarInvitaciones").click(function () {
+                listarInvitaciones();
+            });
+            $("#CODPUB").change(function () {
+                cargarServiciosAuditoria();
+            });
+        });
+
+        $('#modalBusquedaAuditor').on('hidden.bs.modal', function () { $("#modalBusquedaAuditor").empty(); });
+
+        function popupBuscarAuditores() {
+
+            if (!$("#frmBusquedaAuditores").isValid()) { return; }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("BusquedaAuditores", "InvitacionAuditor")',
+                data: { idPub: ($("#CODPUB").val().split("-")[0]), idSerAud: $("#CODSERAUD").val() },
+                success: function (result) {
+                    $("#modalBusquedaAuditor").empty().html(result).modal();
+                }
+            });
+        }
+
+        function popupAgendaAuditores(id) {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AgendaAuditor", "InvitacionAuditor")',
+                data: { idInvitacion: id },
+                success: function (result) {
+                    $("#modalAgendaDisponibilidadAuditor").empty().html(result).modal();
+                }
+            });
+        }
+
+        function cargarServiciosAuditoria() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("listarServicios", "InvitacionAuditor")',
+                data: { idBase: $("#CODPUB").val().split("-")[1] },
+                dataType: "json",
+                success: function (result) {
+                    $("#CODSERAUD option").not(":first").remove();
+                    $.each(result, function (i, v) {
+                        $("#CODSERAUD").append("<option value='" + v.Value + "'>" + v.Text + "</option>");
+                    });
+                }
+            });
+        }
+
+        function listarInvitaciones() {
+            $.ajax({
+                url: '@Url.Action("ListadoInvitacionesPorSOA", "InvitacionAuditor")',
+                type: 'POST',
+                async: false,
+                data: { idPub: $("#CODPUB").val(), idSerAud: $("#CODSERAUD").val() },
+                success: function (result) {
+                    _dataInvitaciones_ = result;
+                    tabInvitaciones.fnReloadData(_dataInvitaciones_);
+                }
+            });
+        }
+
+        function enviarInvitacion(id) {
+            $.ajax({
+                url: '@Url.Action("EnviarInvitacionAuditor", "InvitacionAuditor")',
+                type: 'POST',
+                async: false,
+                data: { idPub: $("#CODPUB").val(), idSerAud: $("#CODSERAUD").val() },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    listarInvitaciones();
+                }
+            });
+        }
+
+
+        function enviarInvitacion(id) {
+            $.ajax({
+                url: '@Url.Action("EnviarInvitacionAuditor", "InvitacionAuditor")',
+                type: 'POST',
+                async: false,
+                data: { id: id },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    listarInvitaciones();
+                }
+            });
+        }
+
+        function eliminarInvitacion(id) {
+            $.ajax({
+                url: '@Url.Action("EliminarInvitacion", "InvitacionAuditor")',
+                type: 'POST',
+                async: false,
+                data: { id: id },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    listarInvitaciones();
+                }
+            });
+        }
+
+
+
+    </script>
+}

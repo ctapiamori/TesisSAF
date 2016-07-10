@@ -1,0 +1,116 @@
+﻿@using SOCAUD.Common.Enum;
+@model SOCAUD.Intranet.Models.CronogramaModel
+@{
+    ViewBag.PageTitle = "Cronograma";
+    ViewBag.PageDescription = "Información de Cronograma";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(c => c.Codigo)
+<div class="box box-primary color-palette-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Cronograma</h3>
+    </div>
+    <div class="box-body">
+        <form id="frmCronograma">
+            <div class="form-group">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(c => c.Codigo)
+                            @Html.TextBoxFor(c => c.Codigo, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(c => c.Anio)
+                            @Html.TextBoxFor(c => c.Anio, new { @class = "form-control", @readonly = "true" })
+                            @Html.ValidationMessageFor(c => c.FechaPublicacion)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.FechaPublicacion)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(c => c.FechaPublicacion, new { @class = "form-control" })
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar bigger-110"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(c => c.FechaPublicacion)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.FechaMaximaCreacionBase)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(c => c.FechaMaximaCreacionBase, new { @class = "form-control" })
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar bigger-110"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(c => c.FechaMaximaCreacionBase)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <button type="button" id="btnGrabar" class="btn btn-success" onclick="grabarCronograma();"><i class="fa fa-fw fa-save"></i>Grabar</button>
+                            <button type="button" id="btnRegresar" class="btn btn-default" onclick="regresar();"><i class="fa fa-fw fa-reply"></i>Regresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@Html.Partial("_entidadcronograma", Model.Entidad)
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+
+
+        $('#FechaPublicacion').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $('#FechaMaximaCreacionBase').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+    });
+
+
+    function grabarCronograma() {
+        if (!$("#frmCronograma").isValid()) { return; }
+
+        bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SaveCronograma", "Cronograma")',
+                        data: $("#frmCronograma").serialize(),
+                        dataType: "json",
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                        }
+                    });
+                }
+            });
+        }
+
+        function regresar()
+        {
+            document.location = '@Url.Action("Index", "Cronograma")';
+        }
+    </script>
+}

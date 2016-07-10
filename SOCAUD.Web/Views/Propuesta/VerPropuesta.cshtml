@@ -1,0 +1,551 @@
+﻿@using SOCAUD.Common.Enum;
+@model SOCAUD.Web.Models.PropuestaModel
+
+@{
+    ViewBag.PageTitle = "Propuesta";
+    ViewBag.PageDescription = "Propuesta";
+    ViewBag.PageDescription = "Informacion de la propuesta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(c => c.CODPRO)
+@Html.HiddenFor(c => c.ESTPRO)
+
+<style type="text/css">
+    body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        padding: 0 0 50px 0;
+    }
+
+    .contain {
+        width: 800px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        margin: 40px 0 20px 0;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        padding-bottom: 3px;
+        border-bottom: 1px solid #DDD;
+        margin-top: 50px;
+        margin-bottom: 25px;
+    }
+
+    table th:first-child {
+        width: 150px;
+    }
+    /* Bootstrap 3.x re-reset */
+    .fn-gantt *,
+    .fn-gantt *:after,
+    .fn-gantt *:before {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+</style>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#tabsInfoSoa" aria-controls="home" role="tab" data-toggle="tab">Informacion de la Sociedad Auditoria</a></li>
+    <li role="presentation"><a href="#tabsRetribucion" aria-controls="profile" role="tab" data-toggle="tab">Retribucion y Sustentos de la Sociedad</a></li>
+    <li role="presentation"><a href="#tabsAuditorias" aria-controls="profile" role="tab" data-toggle="tab">Auditorias</a></li>
+</ul>
+
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="tabsInfoSoa">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary color-palette-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-info-circle"></i>&nbsp;Sociedad Presenta Propuesta</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.LabelFor(c => c.RUCSOA)
+                                    @Html.TextBoxFor(c => c.RUCSOA, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(c => c.RAZSOCSOA)
+                                    @Html.TextBoxFor(c => c.RAZSOCSOA, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.NOMREPLEGSOA)
+                                    @Html.TextBoxFor(c => c.NOMREPLEGSOA, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.CORREPLEGSOA)
+                                    @Html.TextBoxFor(c => c.CORREPLEGSOA, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.CELREPLEGSOA)
+                                    @Html.TextBoxFor(c => c.CELREPLEGSOA, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="tabsRetribucion">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary color-palette-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-info-circle"></i>&nbsp;Retribucion</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.TOTRETECOBASREQ)
+                                    @Html.TextBoxFor(c => c.TOTIGVBASREQ, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.TOTIGVBASREQ)
+                                    @Html.TextBoxFor(c => c.TOTIGVBASREQ, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.TOTVIABASREQ)
+                                    @Html.TextBoxFor(c => c.TOTVIABASREQ, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-success color-palette-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Propuesta de Retribucion</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(c => c.RETRECO)
+                                    @Html.TextBoxFor(c => c.RETRECO, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.LabelFor(c => c.IGVTOTAL)
+                                    @Html.TextBoxFor(c => c.IGVTOTAL, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.LabelFor(c => c.RETRECOTOTAL)
+                                    @Html.TextBoxFor(c => c.RETRECOTOTAL, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.LabelFor(c => c.MONTVIATICO)
+                                    @Html.TextBoxFor(c => c.MONTVIATICO, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" id="btnGrabarRetribucionEconomica" class="btn btn-primary pull-right"><i class="fa fa-save"></i>&nbsp;Grabar Retribucion</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <iframe id="iRegistroSustentoAdicional" name="RegistroSustentoAdicional" style="visibility:hidden; display: none;"></iframe>
+        @using (Html.BeginForm("guardarSustentoAdicional", "Propuesta", FormMethod.Post, new { autocomplete = "off", id = "frmPropuestaSustentoAdicional", role = "form", enctype = "multipart/form-data", target = "RegistroSustentoAdicional" }))
+        {
+            @Html.HiddenFor(c => c.codigoPropuestaSustento)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-success color-palette-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa fa-copy"></i>&nbsp;Sustentos Adicionales</h3>
+                        </div>
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    @if (Model.INDREQFIRINT.Equals("S"))
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="inline">
+                                                <h4><i class="fa fa-check-square-o">&nbsp;</i>&nbsp;Requiere Sustento Firma Internacional</h4>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (Model.INDREQFIRPCAOB.Equals("S"))
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="inline">
+                                                <h4><i class="fa fa-check-square-o">&nbsp;</i>&nbsp;Requiere Sustento PCAOB</h4>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.LabelFor(m => m.nombreArchivoFirmaInternacional)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.nombreArchivoFirmaInternacional, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                        @Html.HiddenFor(m => m.codArchivoFirmaInternacional)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.LabelFor(m => m.nombreArchivoFirmaPCAOB)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.nombreArchivoFirmaPCAOB, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                        @Html.HiddenFor(m => m.codArchivoFirmaPCAOB)
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" id="btnGrabarDocumentosAdicionales" class="btn btn-primary pull-right"><i class="fa fa-save"></i>&nbsp;Grabar Sustentos Adicionales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane" id="tabsAuditorias">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-success color-palette-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Listado de Auditorias</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="tabAuditorias" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-success color-palette-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-users"></i>&nbsp;Equipo por Auditoria</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="tabEquipoAuditoria" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" id="btnGrabarFechasAuditor" class="btn btn-primary pull-right"><i class="fa fa-calendar"></i>&nbsp;Asignar fechas Propuesta</button>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success" type="button" id="btnPresentarPropuesta"><i class="fa fa-check"></i>&nbsp;Presentar Propuesta</button>
+            <button class="btn btn-primary" id="btnRegresar" type="button"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAsignaFechasAuditor" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div class="modal fade" id="modalGanttAuditoria" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
+            </div>
+            <div id="cntGanttAuditoria" class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+        var editarPropuesta = false;
+        if ('@Model.ESTPRO' == '@Convert.ToInt32(Estado.Propuesta.Elaboracion)') {
+            editarPropuesta = true;
+        }
+
+        $("#nombreArchivoFirmaInternacional").fileInput({ file: $("#codArchivoFirmaInternacional").val(), fileName: "archivoFirmaInternacional", ctrlCleanDelete: ["codArchivoFirmaInternacional"] });
+        $("#nombreArchivoFirmaPCAOB").fileInput({ file: $("#codArchivoFirmaPCAOB").val(), fileName: "archivoFirmaPCAOB", ctrlCleanDelete: ["codArchivoFirmaPCAOB"] });
+        $('#modalGanttAuditoria').on('hidden.bs.modal', function () { $("#cntGanttAuditoria").empty(); });
+
+        $("#iRegistroSustentoAdicional").load(function () {
+            var resultText = $("#iRegistroSustentoAdicional").contents().find('body').html();
+            if (resultText == "") return;
+
+            var result = jQuery.parseJSON(resultText);
+            mostrarNotificacion(result);
+            if (result.Exito) {
+                //cargarCapacitaciones();
+                //$("#dlgRegistroCapacitacion").modal('hide');
+            }
+        });
+
+        var _dataAuditorias_ = null;
+        var _dataEquipoAuditoria_ = null;
+
+        var tabAuditorias = $("#tabAuditorias").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataAuditorias_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "sTitle": "Equipo",
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-primary" title="Ver Equipo" type="button" onclick="verEquipoAuditoria(' + row[0] + ');"><i class="fa fa-search"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Periodo" },
+                { "sTitle": "Entidad" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-warning" title="Gantt Equipo" type="button" onclick="popupGanttAuditoria(' + row[0] + ');"><i class="fa fa-calendar"></i></button></center>';
+                    }
+                },
+            ]
+        });
+
+        var tabEquipoAuditoria = $("#tabEquipoAuditoria").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataAuditorias_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "sTitle": "Equipo",
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-warning" title="Asignar Fechas" type="button" onclick="popupAsignarFechaEquipoAuditoria(' + row[0] + ');"><i class="fa fa-calendar"></i></button></center>';
+                    }
+                },
+
+                { "sTitle": "Periodo" },
+                { "sTitle": "DNI" },
+                { "sTitle": "Auditor" },
+                { "sTitle": "Cargo" },
+                { "sTitle": "Celular" },
+                { "sTitle": "Correo" }
+
+            ]
+        });
+
+        $(document).ready(function () {
+
+            if (!editarPropuesta) {
+                $("#btnPresentarPropuesta").hide();
+                $("#btnGrabarDocumentosAdicionales").hide();
+                $("#btnGrabarRetribucionEconomica").hide();
+            }
+
+            listarAuditorias();
+            $("#btnRegresar").click(regresarPropuestas);
+            $("#btnGrabarRetribucionEconomica").click(registrarRetribucionEconomica);
+            $("#btnGrabarDocumentosAdicionales").click(function () { $("#frmPropuestaSustentoAdicional").submit(); });
+            $("#btnPresentarPropuesta").click(function () {
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                    if (result)
+                        presentarPropuesta();
+                });
+            });
+            $("#RETRECO").keyup(calcularRetribucion)
+        });
+
+        function regresarPropuestas() {
+            document.location = '@Url.Action("Index","Propuesta")';
+        }
+
+        function calcularRetribucion() {
+            var retribucion = parseFloat($("#RETRECO").val());
+            var igv = (retribucion * 0.18);
+            var retribucionTotal = (retribucion + igv);
+            $("#IGVTOTAL").val(parseInt(igv));
+            $("#RETRECOTOTAL").val(parseInt(retribucionTotal));
+        }
+
+        function listarAuditorias() {
+            $.ajax({
+                url: '@Url.Action("ListarAuditorias", "Propuesta")',
+                type: 'POST',
+                async: false,
+                data: { idPropuesta: $("#CODPRO").val() },
+                success: function (result) {
+                    _dataAuditorias_ = result;
+                    tabAuditorias.fnReloadData(_dataAuditorias_);
+                }
+            });
+        }
+
+        function verEquipoAuditoria(idAuditoria) {
+            $.ajax({
+                url: '@Url.Action("VerEquipoAuditoria", "Propuesta")',
+                type: 'POST',
+                async: false,
+                data: { idAuditoria: idAuditoria },
+                success: function (result) {
+                    _dataEquipoAuditoria_ = result;
+                    tabEquipoAuditoria.fnReloadData(_dataEquipoAuditoria_);
+                }
+            });
+        }
+
+        function popupAsignarFechaEquipoAuditoria(id) {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AsignarFechaEquipoPropuesta", "Propuesta")',
+                data: { idPropuesta: $("#CODPRO").val(), idEquipo: id },
+                success: function (result) {
+                    $("#modalAsignaFechasAuditor").empty().html(result).modal();
+                }
+            });
+        }
+
+        function registrarRetribucionEconomica() {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GrabarRetribucionEconomica", "Propuesta")',
+                data: {
+                    idProp: $("#CODPRO").val(),
+                    retribucion: $("#RETRECO").val(),
+                    igv: $("#IGVTOTAL").val(),
+                    totalretrib: $("#RETRECOTOTAL").val(),
+                    viatico: $("#MONTVIATICO").val()
+                },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                }
+            });
+        }
+
+        function presentarPropuesta() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PresentarPropuesta", "Propuesta")',
+                data: { idPropuesta: $("#CODPRO").val() },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                }
+            });
+        };
+
+        function popupGanttAuditoria(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ObtenerGanttAuditoria", "Propuesta")',
+                data: { id: id },
+                success: function (result) {
+                    $("#cntGanttAuditoria").gantt({
+                        source: result,
+                        navigate: "scroll",
+                        maxScale: "hours",
+                        itemsPerPage: 10,
+                        months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                        dow: ["D", "L", "M", "M", "J", "V", "S"],
+                    });
+                    prettyPrint();
+                    /*$(".gantt").popover({
+                        selector: ".bar",
+                        title: "I'm a popover",
+                        content: "And I'm the content of said popover.",
+                        trigger: "hover"
+                    });*/
+                    $("#modalGanttAuditoria").modal();
+                }
+            });
+        };
+
+    </script>
+}

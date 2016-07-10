@@ -1,0 +1,234 @@
+﻿@model SOCAUD.Intranet.Models.SoaModel
+@{
+    ViewBag.PageTitle = "Evaluar";
+    ViewBag.PageDescription = "Evaluar";
+    ViewBag.PageDescription = "Solicitud Sociedad Auditoria";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@*<link href="~/Content/jHtmlArea/jHtmlArea.Editor.css" rel="stylesheet" />*@
+
+<link href="~/Content/jHtmlArea/jHtmlArea.css" rel="stylesheet" />
+
+@*<link href="~/Content/jHtmlArea/jHtmlArea.ColorPickerMenu.css" rel="stylesheet" />*@
+
+@using (Html.BeginForm("observarSolicitudSoa", "SolicitudAdmin", FormMethod.Post, new { id = "frmRevisarSolicitudSOA" }))
+{
+    @Html.HiddenFor(c => c.codSolicitud)
+    @Html.HiddenFor(c => c.codSoa)
+
+    @Html.HiddenFor(c => c.estadoSolicitud)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información Sociedad Auditoria</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.rucSoa)
+                                @Html.TextBoxFor(c => c.rucSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="col-md-8">
+                                @Html.LabelFor(c => c.razSocSoa)
+                                @Html.TextBoxFor(c => c.razSocSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(c => c.misSoa)
+                                @Html.TextAreaFor(c => c.misSoa, new { @class = "form-control", @rows = "4", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(c => c.visSoa)
+                                @Html.TextAreaFor(c => c.visSoa, new { @class = "form-control", @rows = "4", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información Responsable</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.nomRepLegSoa)
+                                @Html.TextBoxFor(c => c.nomRepLegSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.apeRepLegSoa)
+                                @Html.TextBoxFor(c => c.apeRepLegSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.corRepLegSoa)
+                                @Html.TextBoxFor(c => c.corRepLegSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.celRepLegSoa)
+                                @Html.TextBoxFor(c => c.celRepLegSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.telRepLegSoa)
+                                @Html.TextBoxFor(c => c.telRepLegSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información Adicional</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.numParSunSoa)
+                                @Html.TextBoxFor(c => c.numParSunSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.HiddenFor(c => c.firIntSoa)
+
+                                @Html.LabelFor(c => c.firIntSoa)
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="chkFirmaInternacional" disabled="disabled" type="checkbox" /> &nbsp; Firma Internacional
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                @Html.HiddenFor(c => c.firPcaobSoa)
+                                @Html.LabelFor(c => c.firPcaobSoa)
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="chkFirmaPCAOB" disabled="disabled" type="checkbox" /> &nbsp; Firma Internacional
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.codColConSoa)
+                                @Html.TextBoxFor(c => c.codColConSoa, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default color-palette-box">
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                @Html.TextAreaFor(c => c.observacionSolicitud, new { @class = "form-control", @rows = "10" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <center>
+                                    <button type="button" id="btnAceptarInfoSoaSolicitud" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
+                                    <button type="button" id="btnObservarInfoSoaSolicitud" class="btn btn-primary"><i class="fa fa-close"></i>&nbsp;Observar</button>
+                                    <button type="button" id="btnRegresar" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+
+
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+
+            $("#chkFirmaInternacional").prop("checked", ($("#firIntSoa").val() == "S"));
+            $("#chkFirmaPCAOB").prop("checked", ($("#firPcaobSoa").val() == "S"));
+
+            $("#observacionSolicitud").htmlarea();
+            $("#btnObservarInfoSoaSolicitud").click(observarSolicitudSOA);
+            $("#btnAceptarInfoSoaSolicitud").click(function () {
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                    if(result)
+                        aceptarSolicitudSOA();
+                });
+            });
+            $("#btnRegresar").click(regresar);
+
+        });
+
+
+        function aceptarSolicitudSOA() {
+            $.ajax({
+                url: '@Url.Action("aceptarSolicitud", "SolicitudAdmin")',
+                type: 'POST',
+                async: false,
+                data: { id: $("#codSolicitud").val() },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    if (result.Exito) {
+                        $("#btnAceptarInfoSoaSolicitud").attr("disabled", true);
+                        $("#btnObservarInfoSoaSolicitud").attr("disabled", true);
+                    }
+                }
+            });
+        }
+
+        function observarSolicitudSOA() {
+            $("#frmRevisarSolicitudSOA").submit();
+        }
+
+        function regresar() {
+            document.location = '@Url.Action("Index","SolicitudAdmin")';
+        }
+
+
+    </script>
+}

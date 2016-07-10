@@ -1,0 +1,20 @@
+﻿.login-page,
+.register-page {
+  background: rgba(210, 214, 222, 0.27);
+}
+
+.center, .align-center {
+    text-align: center !important;
+}
+.align-left {
+    text-align: left !important;
+}
+.align-right {
+    text-align: right !important;
+}
+
+.form-actions {
+    margin: 0;
+    background-color: transparent;
+    vertical-align: bottom;
+}

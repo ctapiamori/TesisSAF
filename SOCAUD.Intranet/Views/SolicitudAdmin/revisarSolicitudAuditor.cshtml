@@ -1,0 +1,325 @@
+﻿@model SOCAUD.Intranet.Models.AuditorModel
+@{
+    ViewBag.PageTitle = "Evaluar";
+    ViewBag.PageDescription = "Evaluar";
+    ViewBag.PageDescription = "Solicitud Auditor Financiero";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@*<link href="~/Content/jHtmlArea/jHtmlArea.Editor.css" rel="stylesheet" />*@
+
+<link href="~/Content/jHtmlArea/jHtmlArea.css" rel="stylesheet" />
+
+@*<link href="~/Content/jHtmlArea/jHtmlArea.ColorPickerMenu.css" rel="stylesheet" />*@
+
+@using (Html.BeginForm("observarSolicitudAuditor", "SolicitudAdmin", FormMethod.Post, new { id = "frmRevisarSolicitudAuditor" }))
+{
+    @Html.HiddenFor(c => c.codigoSolicitud)
+    @Html.HiddenFor(c => c.codAud)
+
+    @Html.HiddenFor(c => c.estadoSolicitud)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información Auditor</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.dniAud)
+                                @Html.TextBoxFor(c => c.dniAud, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.fecNacAud)
+                                @Html.TextBoxFor(c => c.fecNacAud, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.sexAud)
+                                @Html.TextBoxFor(c => c.sexAud, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.nomAud)
+                                @Html.TextBoxFor(c => c.nomAud, new { @class = "form-control", @rows = "4", @readonly = "true" })
+                            </div>
+                            <div class="col-md-8">
+                                @Html.LabelFor(c => c.apeComAud)
+                                @Html.TextBoxFor(c => c.apeComAud, new { @class = "form-control", @rows = "4", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c)
+                                @Html.DropDownListFor(c => c.codDeparAud, Model.cboDepartamento, "Seleccione", new { @class = "form-control", @rows = "4", @disabled = "disabled" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.codProvAud)
+                                @Html.DropDownListFor(c => c.codProvAud, Model.cboProvincia, "Seleccione", new { @class = "form-control", @rows = "4", @disabled = "disabled" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.codDisAud)
+                                @Html.DropDownListFor(c => c.codDisAud, Model.cboDistrito, "Seleccione", new { @class = "form-control", @rows = "4", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.corAud)
+                                @Html.TextBoxFor(c => c.corAud, new { @class = "form-control", @rows = "4", @disabled = "disabled" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.telAud)
+                                @Html.TextBoxFor(c => c.telAud, new { @class = "form-control", @rows = "4", @disabled = "disabled" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.celAud)
+                                @Html.TextBoxFor(c => c.celAud, new { @class = "form-control", @rows = "4", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información Adicional</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(c => c.codCerAud)
+                                @Html.TextBoxFor(c => c.codCerAud, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.nombreArchivo)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.nombreArchivo, new { @class = "form-control", @readonly = "", @disabled = "disabled" })
+                                    </div>
+                                    @Html.HiddenFor(m => m.codArchivo)
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Capacitaciones</h3>
+                </div>
+                <div class="box-body">
+                    <table id="tabCapacitaciones" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Experiencias</h3>
+                </div>
+                <div class="box-body">
+                    <table id="tabExperiencias" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default color-palette-box">
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(c => c.observacionSolicitud, new { @class = "form-control", @rows = "10" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <center>
+                                    <button type="button" id="btnAceptarSolicitud" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
+                                    <button type="button" id="btnObservarSolicitud" class="btn btn-primary"><i class="fa fa-close"></i>&nbsp;Observar</button>
+                                    <button type="button" id="btnRegresar" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+
+
+    <script type="text/javascript" language="javascript">
+        var tabCapacitaciones, _capacitaciones_;
+        var tabExperiencias, _experiencias_;
+        $("#nombreArchivo").fileInput({ file: $("#codArchivo").val(), fileName: "archivoCertificadoAuditor", disabled: true });
+
+        $(document).ready(function () {
+            $("#observacionSolicitud").htmlarea();
+            $("#btnObservarSolicitud").click(observarSolicitud);
+            $("#btnAceptarSolicitud").click(function () {
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                    if (result)
+                        aceptarSolicitudAuditor();
+                });
+            });
+            $("#btnRegresar").click(regresar);
+            cargarCapacitaciones();
+            cargarExperiencias();
+        });
+
+        function aceptarSolicitudAuditor() {
+            $.ajax({
+                url: '@Url.Action("aceptarSolicitud", "SolicitudAdmin")',
+                type: 'POST',
+                async: false,
+                data: { id: $("#codigoSolicitud").val() },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    if (result.Exito) {
+                        $("#btnObservarSolicitud").attr("disabled", true);
+                        $("#btnAceptarSolicitud").attr("disabled", true);
+                    }
+                }
+            });
+        }
+
+        function observarSolicitud() {
+            $("#frmRevisarSolicitudAuditor").submit();
+        }
+
+        function regresar() {
+            document.location = '@Url.Action("Index","SolicitudAdmin")';
+        }
+
+        function cargarCapacitaciones() {
+            $.ajax({
+                url: '@Url.Action("listarCapacitaciones", "SolicitudAdmin")',
+                type: 'POST',
+                async: false,
+                data: { id: '@Model.codigoSolicitud' },
+                success: function (result) {
+                    _capacitaciones_ = result;
+                    tabCapacitaciones.fnReloadData(_capacitaciones_);
+                }
+            });
+        };
+
+        tabCapacitaciones = $("#tabCapacitaciones").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _capacitaciones_,
+            //"order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return "";
+                    }
+                },
+            {
+                "sTitle": "Descripción",
+                "sClass": "center"
+            },
+            { "sTitle": "Especialidad" },
+            { "sTitle": "Inicio" },
+            { "sTitle": "Fin" },
+            {
+                "sClass": "center",
+                "render": function (data, type, row) {
+                    return '<center><button class="btn btn-info" title="Descarga" type="button" onclick="descargarArchivo(' + row[5] + ');"><i class="fa fa-download"></i></button></center>';
+                }
+            },
+            ]
+        });
+
+        function cargarExperiencias() {
+            $.ajax({
+                url: '@Url.Action("listarExperiencias", "SolicitudAdmin")',
+                type: 'POST',
+                async: false,
+                data: { id: '@Model.codigoSolicitud' },
+                success: function (result) {
+                    _experiencias_ = result;
+                    tabExperiencias.fnReloadData(_experiencias_);
+                }
+            });
+        };
+
+        tabExperiencias = $("#tabExperiencias").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _experiencias_,
+            //"order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return "";
+                    }
+                },
+            {
+                "sTitle": "Descripción",
+                "sClass": "center"
+            },
+            { "sTitle": "Empresa" },
+            { "sTitle": "Inicio" },
+            { "sTitle": "Fin" },
+            {
+                "sClass": "center",
+                "render": function (data, type, row) {
+                    return '<center><button class="btn btn-info" title="Descarga" type="button" onclick="descargarArchivo(' + row[5] + ');"><i class="fa fa-download"></i></button></center>';
+                }
+            },
+            ]
+        });
+
+
+        function descargarArchivo(id) {
+            document.location = '@Url.Action("DescargarArchivo", "General", new { Area = "" })' + '?id=' + id;
+
+        }
+    </script>
+}

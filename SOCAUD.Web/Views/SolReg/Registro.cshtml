@@ -1,0 +1,472 @@
+﻿@model SOCAUD.Web.Models.SolRegModel
+@using SOCAUD.Common.Enum;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Solicitud Registro</title>
+    @Styles.Render("~/Content/Login")
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="hold-transition login-page">
+
+
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-check-square-o"></i>&nbsp;Solicitud Registro
+            <small>Inscripción Auditores / Sociedades Auditoria</small>
+        </h1>
+    </section>
+
+    @using (Html.BeginForm("", "", FormMethod.Post, new { autocomplete = "off", id = "frmRegistroSolicitud", role = "form" }))
+    {
+        <div class="wrapper">
+
+            <section class="content">
+                <div class="callout callout-info">
+                    <h4><i class="icon fa fa-warning"></i>&nbsp;Información Confidencial!</h4>
+                    <p>Toda información ingresada sera validada!</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="box box-primary color-palette-box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Tipo de Solicitud</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @Html.LabelFor(c => c.cboTipoSolicitud)
+                                            @Html.DropDownListFor(c => c.solicitud.codTipSol, Model.cboTipoSolicitud, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="pnlSociedadAuditoria">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-primary color-palette-box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Información Sociedad Auditoria</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.soa.rucSoa)
+                                                @Html.TextBoxFor(c => c.soa.rucSoa, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(c => c.soa.rucSoa)
+                                            </div>
+                                            <div class="col-md-8">
+                                                @Html.LabelFor(c => c.soa.razSocSoa)
+                                                @Html.TextBoxFor(c => c.soa.razSocSoa, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(c => c.soa.razSocSoa)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                @Html.LabelFor(c => c.soa.misSoa)
+                                                @Html.TextAreaFor(c => c.soa.misSoa, new { @class = "form-control", @rows = "4" })
+                                                @Html.ValidationMessageFor(c => c.soa.misSoa)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                @Html.LabelFor(c => c.soa.visSoa)
+                                                @Html.TextAreaFor(c => c.soa.visSoa, new { @class = "form-control", @rows = "4" })
+                                                @Html.ValidationMessageFor(c => c.soa.visSoa)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-primary color-palette-box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Información Usuario</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.soa.nomUsu)
+                                                @Html.TextBoxFor(c => c.soa.nomUsu, new { @class = "form-control", @readonly = "true" })
+                                                @Html.ValidationMessageFor(c => c.soa.nomUsu)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.soa.pasUsu)
+                                                @Html.PasswordFor(c => c.soa.pasUsu, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(c => c.soa.pasUsu)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.soa.repPasUsu)
+                                                @Html.PasswordFor(c => c.soa.repPasUsu, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(c => c.soa.repPasUsu)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pnlAuditor" style="display:none;">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-primary color-palette-box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Información Auditor</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.dniAud)
+                                                @Html.TextBoxFor(c => c.auditor.dniAud, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(c => c.auditor.dniAud)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.fecNacAud)
+
+
+                                                <div class="input-group date">
+                                                    @Html.TextBoxFor(c => c.auditor.fecNacAud, new { @class = "form-control" })
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.ValidationMessageFor(c => c.auditor.fecNacAud)
+
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.sexAud)
+                                                @Html.DropDownListFor(c => c.auditor.sexAud, Model.auditor.cboSexo, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(c => c.auditor.sexAud)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.nomAud)
+                                                @Html.TextBoxFor(c => c.auditor.nomAud, new { @class = "form-control", @rows = "4" })
+                                                @Html.ValidationMessageFor(c => c.auditor.nomAud)
+                                            </div>
+                                            <div class="col-md-8">
+                                                @Html.LabelFor(c => c.auditor.apeComAud)
+                                                @Html.TextBoxFor(c => c.auditor.apeComAud, new { @class = "form-control", @rows = "4" })
+                                                @Html.ValidationMessageFor(c => c.auditor.apeComAud)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.codDeparAud)
+                                                @Html.DropDownListFor(c => c.auditor.codDeparAud, Model.auditor.cboDepartamento, "Seleccione", new { @class = "form-control", @rows = "4" })
+                                                @Html.ValidationMessageFor(c => c.auditor.codDeparAud)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.codProvAud)
+                                                @Html.DropDownListFor(c => c.auditor.codProvAud, Model.auditor.cboProvincia, "Seleccione", new { @class = "form-control", @rows = "4" })
+                                                @Html.ValidationMessageFor(c => c.auditor.codProvAud)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.codDisAud)
+                                                @Html.DropDownListFor(c => c.auditor.codDisAud, Model.auditor.cboDistrito, "Seleccione", new { @class = "form-control", @rows = "4" })
+                                                @Html.ValidationMessageFor(c => c.auditor.codDisAud)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.corAud)
+                                                @Html.TextBoxFor(c => c.auditor.corAud, new { @class = "form-control", @rows = "4" })
+                                                @Html.ValidationMessageFor(c => c.auditor.corAud)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.telAud)
+                                                @Html.TextBoxFor(c => c.auditor.telAud, new { @class = "form-control", @maxlength = "8" })
+                                                @Html.ValidationMessageFor(c => c.auditor.telAud)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.celAud)
+                                                @Html.TextBoxFor(c => c.auditor.celAud, new { @class = "form-control", @maxlength = "9" })
+                                                @Html.ValidationMessageFor(c => c.auditor.celAud)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-primary color-palette-box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Información Usuario</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.nomUsu)
+                                                @Html.TextBoxFor(c => c.auditor.nomUsu, new { @class = "form-control", @readonly = "true" })
+                                                @Html.ValidationMessageFor(c => c.auditor.nomUsu)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.pasUsu)
+                                                @Html.PasswordFor(c => c.auditor.pasUsu, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(c => c.auditor.pasUsu)
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(c => c.auditor.repPasUsu)
+                                                @Html.PasswordFor(c => c.auditor.repPasUsu, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(c => c.auditor.repPasUsu)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-default color-palette-box">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <center>
+                                                <button type="button" id="btnGuardarSolicitud" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                                                <button type="button" id="btnCancelarSolicitud" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+    }
+
+
+    @Scripts.Render("~/Scripts/Login")
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+
+            $('#auditor_fecNacAud').datepicker({
+                format: "dd/mm/yyyy"
+            }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+
+            $("#solicitud_codTipSol").change(seleccionTipoSolicitud);
+            $("#soa_rucSoa").blur(ingresarUsuarioSOA);
+            $("#auditor_dniAud").blur(ingresarUsuarioAuditor);
+            $("#btnGuardarSolicitud").click(function () {
+
+                if ($("#frmRegistroSolicitud").isValid()) {
+
+
+                    if ($("#solicitud_codTipSol").val() == "1") { // si es una sociedad
+                        if ($("#soa_rucSoa").val().length != 11) {
+                            mostrarNotificacionError("La longitud del RUC no es valido");
+                            return;
+                        }
+
+                        if ($("#soa_visSoa").val().length > 299) {
+                            mostrarNotificacionError("La longitud del VISION no es valido");
+                            return;
+                        }
+
+                        if ($("#soa_misSoa").val().length > 299) {
+                            mostrarNotificacionError("La longitud del MISION no es valido");
+                            return;
+                        }
+
+                        if ($("#soa_pasUsu").val() != $("#soa_repPasUsu").val()) {
+                            mostrarNotificacionError("Las contraseñas deben coincidir");
+                            return;
+                        }
+
+                    } else {
+
+                        if ($("#auditor_dniAud").val().length != 8) {
+                            mostrarNotificacionError("La longitud del DNI no es valido");
+                            return;
+                        }
+
+                        if ($("#auditor_pasUsu").val() != $("#auditor_repPasUsu").val()) {
+                            mostrarNotificacionError("Las contraseñas deben coincidir");
+                            return;
+                        }
+
+                    }
+
+
+
+                    bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                        if (result)
+                            guardarSolicitud();
+                    });
+                }
+            });
+            $("#btnCancelarSolicitud").click(cancelarSolicitud);
+
+            $("#auditor_codDeparAud").change(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CargarProvincia", "SolReg")',
+                    data: { id : $(this).val() },
+                    success: function (result) {
+                        $("#auditor_codProvAud option").not(":first").remove();
+                        $.each(result, function (i, v) {
+                            $("#auditor_codProvAud").append("<option value='" + v.Value + "'>" + v.Text + "</option>");
+                        });
+                    }
+                });
+            });
+
+            $("#auditor_codProvAud").change(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CargarDistrito", "SolReg")',
+                    data: { id: $(this).val() },
+                    success: function (result) {
+                        $("#auditor_codDisAud option").not(":first").remove();
+                        $.each(result, function (i, v) {
+                            $("#auditor_codDisAud").append("<option value='" + v.Value + "'>" + v.Text + "</option>");
+                        });
+                    }
+                });
+            });
+
+        });
+
+        function seleccionTipoSolicitud() {
+            if ($("#solicitud_codTipSol").val() == '@Convert.ToInt32(Tipo.TipoSolicitud.InscripcionSoa)') {
+                $("#pnlSociedadAuditoria").show("slow");
+                $("#pnlAuditor").hide();
+            } else {
+                $("#pnlSociedadAuditoria").hide();
+                $("#pnlAuditor").show("slow");
+            }
+        }
+
+        function ingresarUsuarioSOA() {
+            $("#soa_nomUsu").val($("#soa_rucSoa").val());
+        }
+
+        function ingresarUsuarioAuditor() {
+            $("#auditor_nomUsu").val($("#auditor_dniAud").val());
+        }
+
+        function guardarSolicitud() {
+
+
+
+            var obj = jsonObject();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GrabarSolicitudRegistro", "SolReg")',
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    mostrarNotificacion(result);
+
+                    if (result.Exito) {
+                        $("#btnGuardarSolicitud").hide();
+                        $("input").prop("disabled", true);
+                        $("select").prop("disabled", true);
+                        $("#btnCancelarSolicitud").prop("disabled", false);
+                    }
+                }
+            });
+
+        }
+
+        function cancelarSolicitud() {
+            document.location = '@Url.Action("Login","Acceso")';
+        }
+
+        function jsonObject() {
+            var obj = [];
+            obj = {
+                solicitud: {
+                    codTipSol: $("#solicitud_codTipSol").val(),
+                },
+                soa: {
+                    razSocSoa: $("#soa_razSocSoa").val(),
+                    rucSoa: $("#soa_rucSoa").val(),
+                    misSoa: $("#soa_misSoa").val(),
+                    visSoa: $("#soa_visSoa").val(),
+                    nomUsu: $("#soa_nomUsu").val(),
+                    pasUsu: $("#soa_pasUsu").val()
+                },
+                auditor: {
+                    dniAud: $("#auditor_dniAud").val(),
+                    fecNacAud: $("#auditor_fecNacAud").val(),
+                    sexAud: $("#auditor_sexAud").val(),
+                    nomAud: $("#auditor_nomAud").val(),
+                    apeComAud: $("#auditor_apeComAud").val(),
+                    codDeparAud: $("#auditor_codDeparAud").val(),
+                    codProvAud: $("#auditor_codProvAud").val(),
+                    codDisAud: $("#auditor_codDisAud").val(),
+                    corAud: $("#auditor_corAud").val(),
+                    telAud: $("#auditor_telAud").val(),
+                    celAud: $("#auditor_celAud").val(),
+                    nomUsu: $("#auditor_nomUsu").val(),
+                    pasUsu: $("#auditor_pasUsu").val()
+                }
+            };
+            return obj;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+﻿@using SOCAUD.Common.Enum;
+@model SOCAUD.Intranet.Models.PropuestaModel
+@{
+    ViewBag.PageTitle = "Propuesta";
+    ViewBag.PageDescription = "Propuestas";
+    ViewBag.PageDescription = "Bandeja Calificacion de Propuestas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(c => c.CODPRO)
+@Html.HiddenFor(c => c.CodigoPublicacion)
+
+<div class="callout callout-info">
+    <h4><i class="icon fa fa-info"></i>&nbsp;Información</h4>
+    <p>
+        El sistema propondra a la propuesta que cuente con el equipo mas calificado, pero el usuario final determinara finalmente al ganador.
+    </p>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Listado de Propuestas por Calificar</h3>
+            </div>
+            <div class="box-body">
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.CODPUB)
+                            @Html.DropDownListFor(c => c.CODPUB, Model.cboPublicaciones, "Seleccione", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <br />
+                            <button id="btnBuscarPropuestas" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Buscar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tabPropuestas" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" id="btnDefinirGanador" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Definir Ganador</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+
+
+        var _dataPropuestas_ = null;
+        var tabPropuestas = $("#tabPropuestas").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataPropuestas_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-primary" title="Informacion Propuesta" type="button" onclick="verInformacionPropuesta(' + row[0] + ');"><i class="fa fa-file-pdf-o"></i></button></center>';
+                    }
+                },
+                {
+                    "sTitle": "Sociedad",
+                    "render": function (data, type, row) {
+                        return "<div style='font-size:13px;'><i>RUC - Razon Social:</i> <br/>" + data + "</div>";
+                    }
+                },
+                { "sTitle": "Representante", "sWidth": "15%" },
+                { "sTitle": "Cel. Representate", "visible": false },
+                { "sTitle": "Correo Representate", "visible": false },
+                { "sTitle": "Entidad" },
+                { "sTitle": "Retribucion" },
+                { "sTitle": "IGV" },
+                {
+                    "sTitle": "Estado",
+                    "sClass": "center",
+                    "render": function (data, type, row) {
+                        if (row[10] == '@Convert.ToInt32(Estado.Propuesta.Ganadora)')
+                            return "<span style='font-weight:bold; color:green; font-size:15px;'>" + data + " <h4><i class='fa fa-thumbs-up'></i></h4> </span>";
+                        else if (row[10] == '@Convert.ToInt32(Estado.Propuesta.Descalifica)')
+                            return "<span style='font-weight:bold; color:red; font-size:15px;'>" + data + " <h4><i class='fa fa-thumbs-down'></i></h4> </span>";
+                        else
+                            return "<span >" + data + "</span>";
+                    }
+                },
+
+                    {
+                        "sTitle": "Puntaje",
+                        "sClass": "center",
+                        "render": function (data, type, row) {
+                            return "<span class='valoresPropuesta' id='valProp" + row[0] + "' style='font-weight:bold; color:red; font-size:12px;'>" + data + "</span>";
+                        }
+                    },
+                    {
+                        "sTitle": "Ganador",
+                        "render": function (data, type, row) {
+                            return "<center><input type='radio' value='" + row[0] + "' name='rdGanadorPropuesta' onclick='javascript:seleccionarPropuesta(this.value, " + row[11] + ");' /></center>";
+                        }
+                    },
+            ],
+            "fnDrawCallback": function (oSettings) {
+                var mayorPropuesta = 0;
+                var idPropuestaGanadora = 0;
+                $(".valoresPropuesta").each(function () {
+                    if (parseInt($(this).text()) > mayorPropuesta) {
+                        mayorPropuesta = parseInt($(this).text());
+                        idPropuestaGanadora = $(this).attr("id");
+                    }
+                });
+
+                $("#" + idPropuestaGanadora).append("<h4><i class='fa fa-star-o'></i></h4>");
+
+            }
+
+        });
+
+
+        $(document).ready(function () {
+            listarPropuestas();
+            $("#btnBuscarPropuestas").click(listarPropuestas);
+            $("#btnDefinirGanador").click(asignarPropuestaGanadora);
+        });
+
+        function seleccionarPropuesta(idProp, idPub) {
+
+            $("#CODPRO").val(idProp);
+            $("#CodigoPublicacion").val(idPub);
+        }
+
+        function listarPropuestas() {
+            $.ajax({
+                url: '@Url.Action("ListadoPropuestasCalificar", "Propuesta")',
+                type: 'POST',
+                async: false,
+                data: { idPub: $("#CODPUB").val() },
+                success: function (result) {
+                    _dataPropuestas_ = result;
+                    tabPropuestas.fnReloadData(_dataPropuestas_);
+                }
+            });
+        }
+
+        function asignarPropuestaGanadora() {
+            $.ajax({
+                url: '@Url.Action("AsignarPropuestaComoGanadora", "Propuesta")',
+                type: 'POST',
+                async: false,
+                data: { idPropuesta: $("#CODPRO").val(), idPublicacion: $("#CodigoPublicacion").val() },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    listarPropuestas();
+                }
+            });
+        }
+
+        function verInformacionPropuesta(id) {
+            window.location.href = '@Url.Action("DescargarReportePropuesta", "Propuesta", new { id ="_id_" })'.replace('_id_', id);
+        }
+
+    </script>
+}

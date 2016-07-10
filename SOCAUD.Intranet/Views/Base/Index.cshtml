@@ -1,0 +1,122 @@
+﻿@using SOCAUD.Common.Enum;
+
+@{
+    ViewBag.PageTitle = "Base";
+    ViewBag.PageDescription = "Bases";
+    ViewBag.PageDescription = "Listado de Bases";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Listado de Bases</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Cronograma</label>
+                            @Html.DropDownList("cronogramas", (List<SelectListItem>)ViewBag.Cronogramas, "Seleccione", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <button id="btnBuscar" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Buscar</button>
+                            <button id="btnNuevo" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Nuevo</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tabBases" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+
+
+    var _dataBases_ = null;
+    var tabBases = $("#tabBases").dataTable({
+        "info": false,
+        "bServerSide": false,
+        "data": _dataBases_,
+        "order": [[1, "asc"]],
+        "columns": [
+            {
+                "bSortable": false,
+                "sClass": "center",
+                "sWidth": "5%",
+                "render": function (data, type, row) {
+                    return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarBase(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                }
+            },
+            { "sTitle": "Número" },
+            { "sTitle": "Fecha máxima de Publiación" },
+            { "sTitle": "Descripción" },
+            { "sTitle": "Total Retribución" },
+            { "sTitle": "Total Viaticos" },
+            { "sTitle": "Firma de PCAOB" },
+            { "sTitle": "Firma Internacional" },
+            {
+                "bSortable": false,
+                "sClass": "center",
+                "render": function (data, type, row) {
+                    return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarBase(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                }
+            }
+        ]
+    });
+
+
+    $(document).ready(function () {
+        $("#btnBuscar").click(listarBases);
+        $("#btnNuevo").click(nuevoBase);
+    });
+
+    function listarBases() {
+        $.ajax({
+            url: '@Url.Action("ListarBases", "Base")',
+            type: 'POST',
+            async: false,
+            data: { cronograma: $("#cronogramas").val() },
+            success: function (result) {
+                _dataBases_ = result;
+                tabBases.fnReloadData(_dataBases_);
+            }
+        });
+    }
+
+    function nuevoBase() {
+        document.location = '@Url.Action("Registrar", "Base")';
+    }
+
+    function EditarBase(id) {
+        document.location = '@Url.Action("Editar", "Base")/' + id;
+        }
+
+        function EliminarBase(id)
+        {
+            $.ajax({
+                url: '@Url.Action("EliminarBase", "Base")/' + id,
+                type: 'POST',
+                async: false,
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    listarBases();
+                }
+            });
+        }
+
+
+    </script>
+}
+

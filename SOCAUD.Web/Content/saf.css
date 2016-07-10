@@ -1,0 +1,10 @@
+﻿/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+    /*font-size: 0.75em;*/
+    font-size: 11px;
+}
+
+.field-validation-valid {
+    display: none;
+}

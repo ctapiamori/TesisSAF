@@ -1,0 +1,95 @@
+﻿@model SOCAUD.Web.Models.AccesoModel
+
+@using SOCAUD.Common.Enum
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Acceso</title>
+
+
+    @Styles.Render("~/Content/Login")
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Saf</b>CGR</a>
+        </div><!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Inicia sesion en el sistema</p>
+            <form action="../../index2.html" method="post">
+                <div class="form-group has-feedback">
+                    <select class="form-control" id="CodigoTipoUsuario" name="CodigoTipoUsuario">
+                        <option value='@Convert.ToInt32(Tipo.TipoUsuarioExtranet.Auditor)'>Auditor</option>
+                        <option value='@Convert.ToInt32(Tipo.TipoUsuarioExtranet.SociedadAuditoria)'>Sociedad</option>
+                    </select>
+                </div>
+                <div class="form-group has-feedback">
+                    @Html.TextBoxFor(c => c.Usuario, new { @class = "form-control", @placeholder = "Usuario" })
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(c => c.Password, new { @class = "form-control", @placeholder = "Password" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <button type="button" id="btnIngresarSistema" class="btn btn-primary">Ingresar</button>
+                        </div><!-- /.col -->
+                    </div>
+                </div>
+            </form>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href='@Url.Action("Registro","SolReg")'>Registrar como Nuevo</a><br />
+                        <a href="#" class="text-center">Olvide mi Contraseña</a>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->
+    @Scripts.Render("~/Scripts/Login")
+
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+            $("#btnIngresarSistema").click(ingresarSistema);
+        });
+
+        function ingresarSistema() {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("IngresarSistema", "Acceso")',
+                data: {
+                    tipoUsuario: $("#CodigoTipoUsuario").val(),
+                    usuario: $("#Usuario").val(),
+                    password: $("#Password").val()
+                },
+                success: function (result) {
+                    if (result.Exito)
+                        document.location = '@Url.Action("Index", "Solicitud")';
+                    else
+                        mostrarNotificacion(result);
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

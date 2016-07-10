@@ -1,0 +1,312 @@
+﻿@using SOCAUD.Common.Enum;
+@using SOCAUD.Common.Constantes;
+
+
+@model SOCAUD.Intranet.Areas.Publicacion.Models.PublicacionViewModel
+@{
+    ViewBag.PageTitle = "Publicacion";
+    ViewBag.PageDescription = "Publicacion";
+    ViewBag.PageDescription = "Editar Informacion";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="callout callout-info">
+    <h4><i class="icon fa fa-info"></i>&nbsp;Informacion</h4>
+    <p>
+        Cuando realice un cambio en la publicacion se notificar a todos los usuarios del Sistema <strong>Auditores Financieros</strong> y <strong>Sociedades de Auditoria</strong>
+    </p>
+</div>
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmRegistroPublicacion" }))
+{
+    @Html.HiddenFor(c => c.CodigoPublicacion)
+    @Html.HiddenFor(c => c.estadoPublicacion)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Informacion de la Publicacion</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.Cronograma)
+                                @Html.DropDownListFor(c => c.Cronograma, Model.Cronogramas, "(Seleccionar Cronograma)", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.Cronograma)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.FechaMaximaPublicacionConcurso)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(c => c.FechaMaximaPublicacionConcurso, new { @class = "form-control" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(c => c.FechaMaximaPublicacionConcurso)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.FechaMaximaCreacionConsulta)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(c => c.FechaMaximaCreacionConsulta, new { @class = "form-control" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(c => c.FechaMaximaCreacionConsulta)
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.FechaMaximaResponderConsultas)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(c => c.FechaMaximaResponderConsultas, new { @class = "form-control" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(c => c.FechaMaximaResponderConsultas)
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.FechaMaximaPresentacionPropuestas)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(c => c.FechaMaximaPresentacionPropuestas, new { @class = "form-control" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(c => c.FechaMaximaPresentacionPropuestas)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.estadoPublicacion == Convert.ToInt32(Estado.Publicacion.Elaboracion))
+                {
+                    <button type="button" id="btnGrabarPublicacion" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Grabar</button>
+                }
+                <button type="button" id="btnRegresar" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp; Regresar</button>
+            </div>
+        </div>
+    </div>
+}
+@if (Model.CodigoPublicacion.HasValue){
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Asignar Bases</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table id="tabBasesAsignadas" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                        <button class="btn btn-primary" onclick="Desasignar();"><i class="fa fa-fw fa-chevron-circle-right"></i>Desasignar</button>
+                    </div>
+                    <div class="col-md-6">
+                        <table id="tabBasesSinAsignar" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                        <button class="btn btn-primary" onclick="Asignar();"><i class="fa fa-fw fa-chevron-circle-left"></i>Asignar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@section scripts {
+
+    <script type="text/javascript">
+        var _dataBases_ = null;
+        var _dataBasesAsignadas_ = null;
+        var tabBasesAsignadas;
+        var tabBasesSinAsignar;
+
+    $(document).ready(function () {
+        $("#btnRegresar").click(regresarBandeja);
+        $("#btnGrabarPublicacion").click(grabarPublicacion);
+
+        $('#FechaMaximaPublicacionConcurso').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $('#FechaMaximaCreacionConsulta').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $('#FechaMaximaResponderConsultas').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $('#FechaMaximaPresentacionPropuestas').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        if ($("#CodigoPublicacion").val() != "") $("#Cronograma").attr("disabled", "disabled");
+       
+        if ($("#tabBasesAsignadas").length == 1)
+        {
+            tabBasesAsignadas = $("#tabBasesAsignadas").dataTable({
+                "info": false,
+                "bServerSide": false,
+                "data": _dataBasesAsignadas_,
+                "order": [[1, "asc"]],
+                "columns": [
+                    {
+                        "bSortable": false,
+                        "sClass": "center",
+                        "sWidth": "5%",
+                        "render": function (data, type, row) {
+                            return '<input type="checkbox" value="' + row[0] + '">';
+                        }
+                    },
+                    { "sTitle": "Base" }
+                ]
+            });
+
+            tabBasesSinAsignar = $("#tabBasesSinAsignar").dataTable({
+                "info": false,
+                "bServerSide": false,
+                "data": _dataBases_,
+                "order": [[1, "asc"]],
+                "columns": [
+                    {
+                        "bSortable": false,
+                        "sClass": "center",
+                        "sWidth": "5%",
+                        "render": function (data, type, row) {
+                            return '<input type="checkbox" value="' + row[0] + '">';
+                        }
+                    },
+                    { "sTitle": "Base" }
+                ]
+            });
+
+            Bases();
+        }
+        
+    });
+
+    function regresarBandeja() {
+        document.location = '@Url.Action("Bandeja", "Evaluador", new { Area = "Publicacion" })';
+    }
+
+    function grabarPublicacion() {
+        if (!$("#frmRegistroPublicacion").isValid()) { return; }
+
+        bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GrabarPublicacion", "Evaluador", new { Area = "Publicacion" })',
+                    data: $("#frmRegistroPublicacion").serialize(),
+                    dataType: "json",
+                    success: function (result) {
+                        mostrarNotificacion(result);
+                        if (result.Exito && $("#CodigoPublicacion").val() == "") {
+                            document.location = '@Url.Action("Publicacion", "Evaluador", new { Area = "Publicacion" })' + "?idPub=" + result.Data;
+                        }
+                    }
+                });
+            }
+
+        });
+    }
+
+    function Bases()
+    {
+        publicacion = $("#CodigoPublicacion").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ListarBases", "Evaluador", new { Area = "Publicacion" })',
+            data: { "publicacion": publicacion },
+            dataType: "json",
+            success: function (result) {
+                _dataBasesAsignadas_ = result.asignadas;
+                tabBasesAsignadas.fnReloadData(_dataBasesAsignadas_);
+                _dataBases_ = result.bases;
+                tabBasesSinAsignar.fnReloadData(_dataBases_);
+            }
+        });
+    }
+
+        function Asignar()
+        {
+            if (tabBasesSinAsignar.find("input:checked").length == 0)
+            {
+                notificacion({title: "Información", type: "info", message: "Debe seleccionar al menos una base."});
+                return;
+            }
+            var listado = "";
+            for (var i = 0; i < tabBasesSinAsignar.find("input:checked").length ; i++) {
+                listado += $(tabBasesSinAsignar.find("input:checked")[i]).val() + ",";
+            }
+            listado = listado.substr(0, listado.length - 1)
+            publicacion = $("#CodigoPublicacion").val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AsignarBases", "Evaluador", new { Area = "Publicacion" })',
+                data: { "bases": listado, "publicacion": publicacion },
+                dataType: "json",
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    Bases();
+                }
+            });
+        }
+
+        function Desasignar() {
+            if (tabBasesAsignadas.find("input:checked").length == 0) {
+                notificacion({ title: "Información", type: "info", message: "Debe seleccionar al menos una base." });
+                return;
+            }
+            var listado = "";
+            for (var i = 0; i < tabBasesAsignadas.find("input:checked").length ; i++) {
+                listado += $(tabBasesAsignadas.find("input:checked")[i]).val() + ",";
+            }
+            listado = listado.substr(0, listado.length - 1)
+            publicacion = $("#CodigoPublicacion").val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DesasignarBases", "Evaluador", new { Area = "Publicacion" })',
+                data: { "bases": listado },
+                dataType: "json",
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    Bases();
+                }
+            });
+        }
+
+    </script>
+}

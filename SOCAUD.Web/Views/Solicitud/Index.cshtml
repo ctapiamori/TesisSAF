@@ -1,0 +1,128 @@
+﻿@using SOCAUD.Common.Enum;
+
+@{
+    ViewBag.PageTitle = "Solicitud";
+    ViewBag.PageDescription = "Solicitud";
+    ViewBag.PageDescription = "Bandeja de Solicitud";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="callout callout-info">
+    <h4><i class="icon fa fa-info"></i>&nbsp;Información</h4>
+    <p>
+        Solo podra realizar una solicitud de actualizacion cuando tenga todas las solicitudes aceptadas.
+    </p>
+</div>
+
+<div class="box box-primary color-palette-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Listado de Solicitudes</h3>
+    </div>
+    <div class="box-body">
+        <table id="tabSolicitudes" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" id="btnNuevaSolicitud"><i class="fa fa-file-o"></i>&nbsp;Generar Solicitud de Actualizacion</button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        var tabSolicitudes;
+        var _dataSolicitudes_ = null;
+
+
+        $(document).ready(function () {
+            listarSolicitudes();
+        });
+
+        function editarSolicitudSOA(idSol) {
+            document.location = '@Url.Action("editarSolicitudSOA", "Solicitud")' + "?id=" + idSol;
+        }
+
+        function editarSolicitudAuditor(idSol) {
+            document.location = '@Url.Action("editarSolicitudAuditor", "Solicitud")' + "?id=" + idSol;
+        }
+
+        function listarSolicitudes() {
+
+            if (tabSolicitudes == undefined) {
+                tabSolicitudes = $("#tabSolicitudes").dataTable({
+                    "info": false,
+                    "bServerSide": false,
+                    "data": _dataSolicitudes_,
+                    //"order": [[1, "asc"]],
+                    "columns": [
+                        {
+                            "bSortable": false,
+                            "sClass": "center",
+                            "sWidth": "5%",
+                            "render": function (data, type, row) {
+                                if ('@Convert.ToInt32(Session["sessionTipoUsuario"])' == '@Convert.ToInt32(Tipo.TipoUsuarioExtranet.SociedadAuditoria)')
+                                    return '<center><button class="btn btn-primary" title="Abrir" type="button" onclick="editarSolicitudSOA(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+                                else
+                                    return '<center><button class="btn btn-primary" title="Abrir" type="button" onclick="editarSolicitudAuditor(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+                            }
+                        },
+                        {
+                            "sTitle": "Nº Solicitud",
+                            "sClass": "center"
+                        },
+                        { "sTitle": "Tipo Solicitud" },
+                        { "sTitle": "Estado Solicitud" }
+                    ]
+
+                });
+            }
+
+            $.ajax({
+                url: '@Url.Action("listarSolicitud", "Solicitud")',
+                type: 'POST',
+                async: false,
+                data: {},
+                success: function (result) {
+                    _dataSolicitudes_ = result;
+                    tabSolicitudes.fnReloadData(_dataSolicitudes_);
+                }
+            });
+        }
+
+        $("#btnNuevaSolicitud").click(function () { crearNuevaSolicitud() });
+
+        function crearNuevaSolicitud() {
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                if(result)
+                    confirmaNuevaSolicitud();
+            });
+        };
+
+        function confirmaNuevaSolicitud(id) {
+            $.ajax({
+                url: '@Url.Action("crearNuevaSolicitud")',
+                type: 'POST',
+                async: false,
+                data: { id: id },
+                success: function (result) {
+                    if (result.Exito) {
+                        if (result.Data.Tipo == 1)
+                            window.location.href = '@Url.Action("editarSolicitudSoa", "Solicitud", new { id = "_id_" })'.replace("_id_", result.Data.Codigo);
+                        else
+                            window.location.href = '@Url.Action("editarSolicitudAuditor", "Solicitud", new { id = "_id_" })'.replace("_id_", result.Data.Codigo);
+
+                    }
+                    else
+                        mostrarNotificacion(result);
+                }
+            });
+        };
+    </script>
+}

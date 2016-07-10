@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{62850FB8-85B9-4C04-8AD9-B48298AC15BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SOCAUD.Business</RootNamespace>
+    <AssemblyName>SOCAUD.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\SafBaseEntregableLogic.cs" />
+    <Compile Include="Core\SafBaseLogic.cs" />
+    <Compile Include="Core\SafCapacitacionLogic.cs" />
+    <Compile Include="Core\SafArchivoLogic.cs" />
+    <Compile Include="Core\SafAuditoriaLogic.cs" />
+    <Compile Include="Core\SafAuditorLogic.cs" />
+    <Compile Include="Core\SafCronogramaEntidadLogic.cs" />
+    <Compile Include="Core\SafCronogramaLogic.cs" />
+    <Compile Include="Core\SafEntidadLogic.cs" />
+    <Compile Include="Core\SafExperienciaLogic.cs" />
+    <Compile Include="Core\SafInvitacionDetalleLogic.cs" />
+    <Compile Include="Core\SafInvitacionLogic.cs" />
+    <Compile Include="Core\SafNotificacionLogic.cs" />
+    <Compile Include="Core\SafPropuestaEquipoDetalleLogic.cs" />
+    <Compile Include="Core\SafPropuestaEquipoLogic.cs" />
+    <Compile Include="Core\SafPropuestaLogic.cs" />
+    <Compile Include="Core\SafPublicacionBaseLogic.cs" />
+    <Compile Include="Core\SafPublicacionLogic.cs" />
+    <Compile Include="Core\SafServicioAuditoriaLogic.cs" />
+    <Compile Include="Core\SafSoaLogic.cs" />
+    <Compile Include="Core\SafSolCapacitacionLogic.cs" />
+    <Compile Include="Core\SafSolExperienciaLogic.cs" />
+    <Compile Include="Core\SafSolicitudLogic.cs" />
+    <Compile Include="Core\SafGeneralLogic.cs" />
+    <Compile Include="Core\SafUsuarioLogic.cs" />
+    <Compile Include="Core\SafWorkFlowLogic.cs" />
+    <Compile Include="Core\SeguridadLogic.cs" />
+    <Compile Include="Infraestructure\IFacadeOperacionCRUD.cs" />
+    <Compile Include="Infraestructure\MapperConfiguration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SOCAUD.Common\SOCAUD.Common.csproj">
+      <Project>{1f430ab3-04d4-4d54-b597-7d12654e8a59}</Project>
+      <Name>SOCAUD.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOCAUD.Data\SOCAUD.Data.csproj">
+      <Project>{287782ce-5709-4fe7-a327-de30426ce390}</Project>
+      <Name>SOCAUD.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

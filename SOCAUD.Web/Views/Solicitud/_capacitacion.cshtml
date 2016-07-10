@@ -1,0 +1,151 @@
+﻿@model SOCAUD.Web.Models.CapacitacionModel
+
+<iframe id="iRegistroCapacitacion" name="RegistroCapacitacion" style="visibility:hidden; display: none;"></iframe>
+@using (Html.BeginForm("guardarCapacitacion", "Solicitud", FormMethod.Post, new { autocomplete = "off", id = "frmRegistroCapacitacion", role = "form", enctype = "multipart/form-data", target = "RegistroCapacitacion" }))
+{
+    @Html.HiddenFor(c => c.codSol)
+    @Html.HiddenFor(c => c.codSolCap)
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
+                <h4 class="bigger">Registro de Capacitación</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.codCatCapa)
+                            @Html.DropDownListFor(c => c.codCatCapa, Model.Categorias, "Seleccione", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.codCatCapa)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.codTipCapa)
+                            @Html.DropDownListFor(c => c.codTipCapa, Model.Tipos, "Seleccione", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.codTipCapa)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.codUni)
+                            @Html.DropDownListFor(c => c.codUni, Model.Universidades, "Seleccione", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.codUni)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.codCar)
+                            @Html.DropDownListFor(c => c.codCar, Model.Especialidades, "Seleccione", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.codCar)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.desSolCap)
+                            @Html.TextBoxFor(m => m.desSolCap, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.desSolCap)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.fechaInicioSolCap)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(m => m.fechaInicioSolCap, new { @class = "form-control" })
+                                <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(c => c.fechaInicioSolCap)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.fechaFinSolCap)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(m => m.fechaFinSolCap, new { @class = "form-control" })
+                                <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(c => c.fechaFinSolCap)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.nombreArchivoCapa)
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.nombreArchivoCapa, new { @class = "form-control", @readonly = "" })
+                            </div>
+                            @Html.HiddenFor(m => m.codArchivoCapa)
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(c => c.numHorasSolCap)
+                        @Html.TextBoxFor(c => c.numHorasSolCap, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.numHorasSolCap)
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="btnGuardarCapacitacion" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript" language="javascript">
+
+    $(document).ready(function () {
+        $('#fechaInicioSolCap').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $('#fechaFinSolCap').datepicker({
+            format: "dd/mm/yyyy"
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+    });
+
+    $("#nombreArchivoCapa").fileInput({ file: $("#codArchivoCapa").val(), fileName: "archivoCapaFile", ctrlCleanDelete: ["codArchivoCapa"] });
+    $("#btnGuardarCapacitacion").click(function () {
+
+
+
+        $("#frmRegistroCapacitacion").updateValidation();
+        if ($("#frmRegistroCapacitacion").isValid()) {
+
+
+            if ($("#nombreArchivoCapa").val() == "") {
+                mostrarNotificacionError("Debe seleccionar un archivo");
+                return;
+            } else {
+                $("#frmRegistroCapacitacion").submit();
+            }
+        }
+    });
+
+    $("#iRegistroCapacitacion").load(function () {
+        var resultText = $("#iRegistroCapacitacion").contents().find('body').html();
+        if (resultText == "") return;
+
+        var result = jQuery.parseJSON(resultText);
+        mostrarNotificacion(result);
+        if (result.Exito) {
+            cargarCapacitaciones();
+            $("#dlgRegistroCapacitacion").modal('hide');
+        }
+    });
+</script>

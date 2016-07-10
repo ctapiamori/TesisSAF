@@ -1,0 +1,159 @@
+﻿@using SOCAUD.Web.Controllers;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="INFOSAF - Sistema de Sociedades de Auditoría y Auditores Financieros">
+    <meta name="author" content="Contraloría General de la República">
+    <link rel="shortcut icon" href="@Url.Content("~/Content/Icons/ico-favicon.ico")">
+
+
+    <title>@ViewBag.Title</title>
+
+
+    <!-- Css -->
+    @Styles.Render("~/Content/Layout")
+    <link href="~/Content/skin-black-light.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini wysihtml5-supported skin-blue-light">
+
+
+
+    <div class="wrapper">
+        @Html.Partial("_PageHeader")
+        @Html.Partial("_PageLeftMenu")
+
+        <div class="content-wrapper">
+
+            @if (ViewBag.PageTitle != null)
+            {
+                <section class="content-header">
+
+
+                    <h1>
+                        @ViewBag.PageTitle
+
+                        @if (ViewBag.PageDescription != null)
+                        {
+                            <small>@ViewBag.PageDescription</small>
+                        }
+                    </h1>
+
+
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> @ViewBag.PageTitle</a></li>
+                        @if (ViewBag.PageDescription != null)
+                        {
+                            <li class="active">@ViewBag.PageDescription</li>
+                        }
+                    </ol>
+
+                </section>
+            }
+
+            <section class="content">
+                @RenderBody()
+            </section>
+        </div>
+
+
+        @Html.Partial("_PageFooter")
+
+    </div>
+
+    <script type="text/javascript">
+        var sistema = {
+            url: {
+                descargaArchivo: '@Url.Action("DescargarArchivo", "General", new {area = "", id = "_id_"})',
+            }
+        };
+    </script>
+
+
+    @Scripts.Render("~/Scripts/Layout")
+
+
+
+    <script type="text/javascript">
+        //#region Métodos
+        function actualizarContador(total) {
+            //var icon = $('#icoNotificaciones').clone().removeClass("icon-animated-vertical");
+            //$('#icoNotificaciones').remove();
+            //$('#lnkNotificaciones').prepend(icon);
+            //if (total > 0) { $('#icoNotificaciones').addClass("icon-animated-vertical"); }
+            $("#contadorNotificacion").html(total);
+        }
+
+        function contarNotificaciones() {
+            @*$.ajax({
+                url: '@Url.Action("ContarNoLeidas", "Notificacion", new { area = "" })',
+                success: function (result) {
+                    if (result.exito) {
+                        actualizarContador(result.total);
+                    }
+                }
+            });*@
+        }
+
+
+        function contarCorreos() {
+            $.ajax({
+                url: '@Url.Action("ContarNotificacionesUsuario", "General", new { area = "" })',
+                success: function (result) {
+                    $("#contadorNotificacion").text(result);
+                }
+            });
+        }
+
+        //#endregion
+
+        //#region Load
+        //$(function () {
+        //    contarNotificaciones();
+        //    //contarCorreos();
+        //});
+
+        $(document).ready(function () {
+            contarCorreos();
+            setInterval(contarCorreos, 6000);
+        });
+        //setInterval(contarCorreos(), 5000);
+        //#endregion
+    </script>
+
+    @*SignalR==============================================================*@
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+
+        var notificacionHub;
+        var notificacionHubConnect = false;
+        //$(document).ready(function () {
+        $(function () {
+            notificacionHub = $.connection.NotificacionHub;
+            $.connection.hub.qs = "name=@Session["sessionUsuario"].ToString()";
+            notificacionHub.client.ViewTotalNotificacion = function (total) {
+                actualizarContador(total);
+            };
+            $.connection.hub.start().done(function () {
+                notificacionHubConnect = true;
+            });
+        });
+
+    </script>
+    @*SignalR==============================================================*@
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
