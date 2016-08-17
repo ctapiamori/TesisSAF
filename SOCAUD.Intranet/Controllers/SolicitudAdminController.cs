@@ -2,6 +2,7 @@
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
 using SOCAUD.Data.Model;
+using SOCAUD.Intranet.Helper;
 using SOCAUD.Intranet.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace SOCAUD.Intranet.Controllers
         private readonly ISafNotificacionLogic _notificacionLogic;
         private readonly ISafSolCapacitacionLogic _solCapacitacionLogic;
         private readonly ISafSolExperienciaLogic _solExperienciaLogic;
+        private readonly ISafWorkFlowLogic _safWorkflowLogic;
 
         public SolicitudAdminController()
         {
@@ -30,6 +32,7 @@ namespace SOCAUD.Intranet.Controllers
             _notificacionLogic = new SafNotificacionLogic();
             _solCapacitacionLogic = new SafSolCapacitacionLogic();
             _solExperienciaLogic = new SafSolExperienciaLogic();
+            this._safWorkflowLogic = new SafWorkFlowLogic();
         }
 
         // GET: SolicitudAdmin
@@ -48,6 +51,30 @@ namespace SOCAUD.Intranet.Controllers
                 c.NOMTIPSOL,
                 c.NOMESTSOL,
                 c.CODSOA.HasValue ? "S":"A"
+            }).ToArray();
+
+            return Json(data);
+        }
+
+        public ActionResult Flujo()
+        {
+            return View();
+        }
+
+        public JsonResult listarFlujos()
+        {
+            var listado = this._safWorkflowLogic.ListarTodos();
+
+            var data = listado.Select(c => new string[] { 
+                c.CODWORFLO.ToString(),
+                c.DESTIPDOC,
+                c.NOTWORFLO,
+                WebHelper.GetShortDateString(c.FECREG),
+                c.TIPDOC,
+                c.ESTWORFLO.GetValueOrDefault().ToString(),
+                c.CODDOC.GetValueOrDefault().ToString(),
+                c.FLGNOTREP == "0" && c.TIPCARUSU.GetValueOrDefault().Equals(int.Parse(Session["tipoUsuario"].ToString())) ? "1" : "0",
+                
             }).ToArray();
 
             return Json(data);

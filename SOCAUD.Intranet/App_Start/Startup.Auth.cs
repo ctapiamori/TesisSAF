@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SOCAUD.Intranet.Models;
 
@@ -11,6 +12,23 @@ namespace SOCAUD.Intranet
 {
     public partial class Startup
     {
+        //static Startup()
+        //{
+        //    PublicClientId = "self";
+        //    CookieOptions = new CookieAuthenticationOptions();
+
+        //    OAuthOptions = new OAuthAuthorizationServerOptions
+        //    {
+        //        TokenEndpointPath = "/Token",
+        //        AuthorizeEndpointPath = "/Acceso/Login",
+        //        Provider = new ApplicationOAuthProvider(PublicClientId, IdentityManagerFactory, CookieOptions)
+        //    };
+        //}
+
+        //public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+        //public static CookieAuthenticationOptions CookieOptions { get; private set; }
+        //public static string PublicClientId { get; private set; }
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {

@@ -17,12 +17,14 @@ namespace SOCAUD.Intranet.Controllers
         private readonly ISafCronogramaLogic _cronogramaLogic;
         private readonly ISafCronoEntidadLogic _cronoEntidadLogic;
         private readonly ISafBaseLogic _baseLogic;
+        private readonly ISafGeneralLogic _safGeneralLogic;
 
         public BaseController()
         {
             this._cronogramaLogic = new SafCronogramaLogic();
             this._cronoEntidadLogic = new SafCronoEntidadLogic();
             this._baseLogic = new SafBaseLogic();
+            this._safGeneralLogic = new SafGeneralLogic();
         }
 
         // GET: Base
@@ -50,6 +52,9 @@ namespace SOCAUD.Intranet.Controllers
         {
             var _base = this._baseLogic.BuscarPorId(id);
 
+            if (!_base.ESTBAS.GetValueOrDefault().Equals(Estado.Bases.Elaboracion.GetHashCode()))
+                return RedirectToAction("View", new { id = id });
+
             var model = new BaseModel() { 
                 Codigo = _base.CODBAS,
                 Numero = _base.NUMBAS,
@@ -63,6 +68,37 @@ namespace SOCAUD.Intranet.Controllers
                 CronoEntidad = _base.CODCROENT.GetValueOrDefault(),
                 EstadoBase = _base.ESTBAS.GetValueOrDefault()
             };
+
+            model.EstadoBaseDescripcion = this._safGeneralLogic.GetParametro(_base.ESTBAS.GetValueOrDefault()).NOMPAR;
+
+            var cronogramas = this._cronogramaLogic.ListarTodos();
+            model.Cronogramas = cronogramas.Select(c => new SelectListItem() { Value = c.CODCRO.ToString(), Text = c.ANIOCRO.GetValueOrDefault().ToString(), Selected = c.CODCRO.Equals(_base.CODCRO.GetValueOrDefault()) });
+
+            var entidades = this._cronoEntidadLogic.ListarPorCronograma(_base.CODCRO.GetValueOrDefault());
+            model.Entidades = entidades.Select(c => new SelectListItem() { Value = c.CODCROENT.ToString(), Text = c.DESCROENT, Selected = c.DESCROENT.Equals(_base.CODCROENT.GetValueOrDefault()) });
+            return View(model);
+        }
+
+        public ActionResult View(int id)
+        {
+            var _base = this._baseLogic.BuscarPorId(id);
+
+            var model = new BaseModel()
+            {
+                Codigo = _base.CODBAS,
+                Numero = _base.NUMBAS,
+                FechaMaxPublicacion = WebHelper.GetShortDateString(_base.FECMAXCREPUBBAS),
+                Descripcion = _base.DESBAS,
+                TotalRetribucion = _base.TOTRETECOBAS.GetValueOrDefault(),
+                TotalViaticos = _base.TOTVIABAS.GetValueOrDefault(),
+                FirmaPcaob = _base.FIRPCAOBBAS,
+                FirmaInternacional = _base.FIRINTBAS,
+                Cronograma = _base.CODCRO.GetValueOrDefault(),
+                CronoEntidad = _base.CODCROENT.GetValueOrDefault(),
+                EstadoBase = _base.ESTBAS.GetValueOrDefault()
+            };
+
+            model.EstadoBaseDescripcion = this._safGeneralLogic.GetParametro(_base.ESTBAS.GetValueOrDefault()).NOMPAR;
 
             var cronogramas = this._cronogramaLogic.ListarTodos();
             model.Cronogramas = cronogramas.Select(c => new SelectListItem() { Value = c.CODCRO.ToString(), Text = c.ANIOCRO.GetValueOrDefault().ToString(), Selected = c.CODCRO.Equals(_base.CODCRO.GetValueOrDefault()) });
@@ -89,7 +125,8 @@ namespace SOCAUD.Intranet.Controllers
                 c.TOTRETECOBAS.GetValueOrDefault().ToString(),
                 c.TOTVIABAS.GetValueOrDefault().ToString(),
                 WebHelper.GetBooleanString(c.FIRPCAOBBAS),
-                WebHelper.GetBooleanString(c.FIRINTBAS)
+                WebHelper.GetBooleanString(c.FIRINTBAS),
+                c.ESTBAS.GetValueOrDefault().Equals(Estado.Bases.Elaboracion.GetHashCode()) ? "1" : "0"
 
             }).ToArray();
 

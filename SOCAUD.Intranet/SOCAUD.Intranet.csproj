@@ -205,6 +205,7 @@
     <Compile Include="Models\PropuestaModel.cs" />
     <Compile Include="Models\PublicacionModels.cs" />
     <Compile Include="Models\SoaModel.cs" />
+    <Compile Include="Models\WorkflowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\Datasets\dsPropuesta.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -324,6 +325,7 @@
     </Content>
     <Content Include="fonts\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" />
     <Content Include="fonts\DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff" />
+    <Content Include="Areas\Publicacion\Views\Evaluador\View.cshtml" />
     <None Include="Properties\PublishProfiles\publish_intranet.pubxml" />
     <None Include="Reports\Datasets\dsPropuesta.xsd">
       <SubType>Designer</SubType>
@@ -487,12 +489,16 @@
     <Content Include="Views\Base\Index.cshtml" />
     <Content Include="Views\Base\Registrar.cshtml" />
     <Content Include="Views\Base\Editar.cshtml" />
+    <Content Include="Views\Workflow\_SolicitudWorkflow.cshtml" />
+    <Content Include="Views\Cronograma\View.cshtml" />
+    <Content Include="Views\Cronograma\_entidadcronogramaview.cshtml" />
+    <Content Include="Views\Base\View.cshtml" />
+    <Content Include="Views\SolicitudAdmin\Flujo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Entidad\" />
     <Folder Include="Views\General\" />
-    <Folder Include="Views\Workflow\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -18,21 +18,25 @@ namespace SOCAUD.Intranet.Controllers
         private readonly ISafCronogramaLogic _cronogramaLogic;
         private readonly ISafEntidadLogic _entidadLogic;
         private readonly ISafCronoEntidadLogic _cronoEntidadLogic;
+        private readonly ISafGeneralLogic _safGeneralLogic;
 
         public CronogramaController()
         {
             this._cronogramaLogic = new SafCronogramaLogic();
             this._entidadLogic = new SafEntidadLogic();
             this._cronoEntidadLogic = new SafCronoEntidadLogic();
+            this._safGeneralLogic = new SafGeneralLogic();
         }
 
         // GET: Cronograma
         public ActionResult Index()
         {
             var anios = new List<SelectListItem>();
-            anios.Add(new SelectListItem() { Value = "2015", Text = "2015" });
-            anios.Add(new SelectListItem() { Value = "2016", Text = "2016" });
-            anios.Add(new SelectListItem() { Value = "2017", Text = "2017" });
+            for (int i = Variables.ANIO_INICIAL; i < DateTime.Now.Year + 1; i++)
+            {
+                anios.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
+            }
+
             ViewBag.Anios = anios;
             return View();
         }
@@ -49,12 +53,39 @@ namespace SOCAUD.Intranet.Controllers
         public ActionResult Configurar(int id)
         {
             var cronograma = this._cronogramaLogic.BuscarPorId(id);
+
+            if (!cronograma.ESTCRO.GetValueOrDefault().Equals(Estado.Cronograma.Elaboracion.GetHashCode()))
+                return RedirectToAction("View", new { id = id });
+
             var model = new CronogramaModel();
 
             model.Codigo = cronograma.CODCRO;
             model.Anio = cronograma.ANIOCRO.GetValueOrDefault();
             model.FechaPublicacion = WebHelper.GetShortDateString(cronograma.FECPUBCRO);
             model.FechaMaximaCreacionBase = WebHelper.GetShortDateString(cronograma.FECMAXCREBASCRO);
+            model.EstadoCronograma = this._safGeneralLogic.GetParametro(cronograma.ESTCRO.GetValueOrDefault()).NOMPAR;
+
+            var entidades = this._entidadLogic.ListarTodos();
+            ViewBag.Entidades = entidades.Select(c => new SelectListItem() { Value = c.CODENT.ToString(), Text = c.RAZSOCENT });
+
+            model.Entidad = new CronoEntidadModel()
+            {
+                Cronograma = cronograma.CODCRO
+            };
+
+            return View(model);
+        }
+
+        public ActionResult View(int id)
+        {
+            var cronograma = this._cronogramaLogic.BuscarPorId(id);
+            var model = new CronogramaModel();
+
+            model.Codigo = cronograma.CODCRO;
+            model.Anio = cronograma.ANIOCRO.GetValueOrDefault();
+            model.FechaPublicacion = WebHelper.GetShortDateString(cronograma.FECPUBCRO);
+            model.FechaMaximaCreacionBase = WebHelper.GetShortDateString(cronograma.FECMAXCREBASCRO);
+            model.EstadoCronograma = this._safGeneralLogic.GetParametro(cronograma.ESTCRO.GetValueOrDefault()).NOMPAR;
 
             var entidades = this._entidadLogic.ListarTodos();
             ViewBag.Entidades = entidades.Select(c => new SelectListItem() { Value = c.CODENT.ToString(), Text = c.RAZSOCENT });
@@ -119,7 +150,8 @@ namespace SOCAUD.Intranet.Controllers
                 c.CODCRO.ToString(),
                 c.ANIOCRO.ToString(),
                 WebHelper.GetShortDateString(c.FECPUBCRO),
-                WebHelper.GetShortDateString(c.FECMAXCREBASCRO)
+                WebHelper.GetShortDateString(c.FECMAXCREBASCRO),
+                c.ESTCRO.GetValueOrDefault().Equals(Estado.Cronograma.Elaboracion.GetHashCode()) ? "1" : "0"
             }).ToArray();
 
             return Json(data);

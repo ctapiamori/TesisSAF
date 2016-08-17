@@ -38,6 +38,8 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Models
         //public IEnumerable<SelectListItem> Bases { get; set; }
 
         public int estadoPublicacion { get; set; }
+        [Display(Name = "Estado")]
+        public string EstadoDescripcion { get; set; }
 
         public PublicacionViewModel()
         {

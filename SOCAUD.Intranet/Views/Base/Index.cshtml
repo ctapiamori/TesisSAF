@@ -56,7 +56,10 @@
                 "sClass": "center",
                 "sWidth": "5%",
                 "render": function (data, type, row) {
-                    return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarBase(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                    if (row[8] == "1")
+                        return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarBase(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                    else
+                        return '<center><button class="btn btn-primary" title="Mostrar" type="button" onclick="ViewBase(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
                 }
             },
             { "sTitle": "Número" },
@@ -70,7 +73,9 @@
                 "bSortable": false,
                 "sClass": "center",
                 "render": function (data, type, row) {
-                    return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarBase(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                    if (row[8] == "1")
+                        return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarBase(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                    return "";
                 }
             }
         ]
@@ -98,6 +103,10 @@
     function nuevoBase() {
         document.location = '@Url.Action("Registrar", "Base")';
     }
+
+        function ViewBase(id) {
+            document.location = '@Url.Action("View", "Base")/' + id;
+        }
 
     function EditarBase(id) {
         document.location = '@Url.Action("Editar", "Base")/' + id;

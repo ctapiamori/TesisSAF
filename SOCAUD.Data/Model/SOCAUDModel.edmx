@@ -786,13 +786,18 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.SAF_DIALABORABLE' does not have a pr
         </EntityType>
         <EntityType Name="SAF_WORKFLOW">
           <Key>
-            <PropertyRef Name="CODWOR" />
+            <PropertyRef Name="CODWORFLO" />
           </Key>
-          <Property Name="CODWOR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CODWORFLO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TIPDOC" Type="char" MaxLength="1" />
           <Property Name="CODDOC" Type="int" />
-          <Property Name="TIPDOC" Type="char" MaxLength="25" />
+          <Property Name="DESTIPDOC" Type="varchar" MaxLength="255" />
           <Property Name="TIPCARUSU" Type="int" />
-          <Property Name="NOTWOR" Type="varchar" MaxLength="255" />
+          <Property Name="NOTWORFLO" Type="varchar(max)" />
+          <Property Name="ESTWORFLO" Type="int" />
+          <Property Name="CODUSUSOL" Type="int" />
+          <Property Name="CODWORFLOPAR" Type="int" />
+          <Property Name="FLGNOTREP" Type="char" MaxLength="1" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
           <Property Name="FECREG" Type="datetime" />
           <Property Name="FECMOD" Type="datetime" />
@@ -4293,13 +4298,18 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
         </Association>
         <EntityType Name="SAF_WORKFLOW">
           <Key>
-            <PropertyRef Name="CODWOR" />
+            <PropertyRef Name="CODWORFLO" />
           </Key>
-          <Property Name="CODWOR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CODWORFLO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TIPDOC" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="CODDOC" Type="Int32" />
-          <Property Name="TIPDOC" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
+          <Property Name="DESTIPDOC" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="TIPCARUSU" Type="Int32" />
-          <Property Name="NOTWOR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NOTWORFLO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ESTWORFLO" Type="Int32" />
+          <Property Name="CODUSUSOL" Type="Int32" />
+          <Property Name="CODWORFLOPAR" Type="Int32" />
+          <Property Name="FLGNOTREP" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="FECREG" Type="DateTime" Precision="3" />
           <Property Name="FECMOD" Type="DateTime" Precision="3" />
@@ -5516,11 +5526,16 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
                 <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
                 <ScalarProperty Name="FECREG" ColumnName="FECREG" />
                 <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-                <ScalarProperty Name="NOTWOR" ColumnName="NOTWOR" />
+                <ScalarProperty Name="FLGNOTREP" ColumnName="FLGNOTREP" />
+                <ScalarProperty Name="CODWORFLOPAR" ColumnName="CODWORFLOPAR" />
+                <ScalarProperty Name="CODUSUSOL" ColumnName="CODUSUSOL" />
+                <ScalarProperty Name="ESTWORFLO" ColumnName="ESTWORFLO" />
+                <ScalarProperty Name="NOTWORFLO" ColumnName="NOTWORFLO" />
                 <ScalarProperty Name="TIPCARUSU" ColumnName="TIPCARUSU" />
-                <ScalarProperty Name="TIPDOC" ColumnName="TIPDOC" />
+                <ScalarProperty Name="DESTIPDOC" ColumnName="DESTIPDOC" />
                 <ScalarProperty Name="CODDOC" ColumnName="CODDOC" />
-                <ScalarProperty Name="CODWOR" ColumnName="CODWOR" />
+                <ScalarProperty Name="TIPDOC" ColumnName="TIPDOC" />
+                <ScalarProperty Name="CODWORFLO" ColumnName="CODWORFLO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

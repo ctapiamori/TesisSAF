@@ -1,0 +1,222 @@
+﻿@using SOCAUD.Common.Enum;
+@using SOCAUD.Common.Constantes;
+
+
+@model SOCAUD.Intranet.Areas.Publicacion.Models.PublicacionViewModel
+@{
+    ViewBag.PageTitle = "Publicacion";
+    ViewBag.PageDescription = "Publicacion";
+    ViewBag.PageDescription = "Mostrar Informacion";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmRegistroPublicacion" }))
+{
+    @Html.HiddenFor(c => c.CodigoPublicacion)
+    @Html.HiddenFor(c => c.estadoPublicacion)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary color-palette-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Informacion de la Publicacion</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.Cronograma)
+                                @Html.DropDownListFor(c => c.Cronograma, Model.Cronogramas, "(Seleccionar Cronograma)", new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.FechaMaximaPublicacionConcurso)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(c => c.FechaMaximaPublicacionConcurso, new { @class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.FechaMaximaCreacionConsulta)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(c => c.FechaMaximaCreacionConsulta, new { @class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.FechaMaximaResponderConsultas)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(c => c.FechaMaximaResponderConsultas, new { @class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.LabelFor(c => c.FechaMaximaPresentacionPropuestas)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(c => c.FechaMaximaPresentacionPropuestas, new { @class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" id="btnRegresar" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp; Regresar</button>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Asignar Bases</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabBasesAsignadas" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box box-primary color-palette-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Flujo de Aprobación</h3>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-6">
+                    @Html.LabelFor(c => c.EstadoDescripcion) : @Html.Raw(Model.EstadoDescripcion)
+                </div>
+            </div>
+        </div>
+        <table id="tabFlujo" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+    </div>
+</div>
+
+
+@section scripts {
+
+    <script type="text/javascript">
+        var _dataBases_ = null;
+        var _dataBasesAsignadas_ = null;
+        var tabBasesAsignadas;
+
+    $(document).ready(function () {
+        $("#btnRegresar").click(regresarBandeja);
+
+        if ($("#tabBasesAsignadas").length == 1)
+        {
+            tabBasesAsignadas = $("#tabBasesAsignadas").dataTable({
+                "info": false,
+                "bServerSide": false,
+                "data": _dataBasesAsignadas_,
+                "order": [[1, "asc"]],
+                "columns": [
+                    {
+                        "bSortable": false,
+                        "sClass": "center",
+                        "sWidth": "5%",
+                        "render": function (data, type, row) {
+                            return '';
+                        }
+                    },
+                    { "sTitle": "Base" }
+                ]
+            });
+
+            Bases();
+        }
+        listarFlujos();
+
+    });
+
+    var tabFlujo;
+    var _dataFlujo_ = null;
+
+    function listarFlujos() {
+
+        if (tabFlujo == undefined) {
+            tabFlujo = $("#tabFlujo").dataTable({
+                "info": false,
+                "bServerSide": false,
+                "data": _dataFlujo_,
+                //"order": [[1, "asc"]],
+                "columns": [
+                    { "sTitle": "Flujo" },
+                    { "sTitle": "Nota" },
+                    { "sTitle": "Fecha" }
+                ]
+
+            });
+        }
+
+        $.ajax({
+            url: '@Url.Action("ListarWorkflowDocumento", "Workflow", new { Area = "" })',
+            type: 'POST',
+            async: false,
+            data: { idDocumento: $("#CodigoPublicacion").val() },
+            success: function (result) {
+                _dataFlujo_ = result;
+                tabFlujo.fnReloadData(_dataFlujo_);
+            }
+        });
+    }
+
+    function regresarBandeja() {
+        document.location = '@Url.Action("Bandeja", "Evaluador", new { Area = "Publicacion" })';
+    }
+
+    function Bases()
+    {
+        publicacion = $("#CodigoPublicacion").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ListarBases", "Evaluador", new { Area = "Publicacion" })',
+            data: { "publicacion": publicacion },
+            dataType: "json",
+            success: function (result) {
+                _dataBasesAsignadas_ = result.asignadas;
+                tabBasesAsignadas.fnReloadData(_dataBasesAsignadas_);
+            }
+        });
+    }
+
+        
+    </script>
+}

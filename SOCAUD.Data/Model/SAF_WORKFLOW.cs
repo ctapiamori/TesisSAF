@@ -14,11 +14,16 @@ namespace SOCAUD.Data.Model
     
     public partial class SAF_WORKFLOW
     {
-        public int CODWOR { get; set; }
-        public Nullable<int> CODDOC { get; set; }
+        public int CODWORFLO { get; set; }
         public string TIPDOC { get; set; }
+        public Nullable<int> CODDOC { get; set; }
+        public string DESTIPDOC { get; set; }
         public Nullable<int> TIPCARUSU { get; set; }
-        public string NOTWOR { get; set; }
+        public string NOTWORFLO { get; set; }
+        public Nullable<int> ESTWORFLO { get; set; }
+        public Nullable<int> CODUSUSOL { get; set; }
+        public Nullable<int> CODWORFLOPAR { get; set; }
+        public string FLGNOTREP { get; set; }
         public string ESTREG { get; set; }
         public Nullable<System.DateTime> FECREG { get; set; }
         public Nullable<System.DateTime> FECMOD { get; set; }

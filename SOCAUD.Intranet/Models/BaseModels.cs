@@ -29,6 +29,8 @@ namespace SOCAUD.Intranet.Models
         public string FirmaInternacional { get; set; }
         public decimal TotalIgv { get; set; }
         public int EstadoBase { get; set; }
+        [Display(Name = "Estado")]
+        public string EstadoBaseDescripcion { get; set; }
         public IEnumerable<SelectListItem> Cronogramas { get; set; }
         public IEnumerable<SelectListItem> Entidades { get; set; }
 

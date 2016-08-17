@@ -17,6 +17,8 @@ namespace SOCAUD.Intranet.Models
         [Display(Name = "Fecha Máxima Creación Base")]
         public string FechaMaximaCreacionBase { get; set; }
         public int NumperoRepublicaciones { get; set; }
+        [Display(Name = "Estado")]
+        public string EstadoCronograma { get; set; }
 
         public CronoEntidadModel Entidad { get; set; }
     }

@@ -19,6 +19,7 @@ namespace SOCAUD.Business.Core
         IEnumerable<SAF_CARRERA> ListarCarreras();
         IEnumerable<SAF_UNIVERSIDAD> ListarUniversidades();
         IEnumerable<SAF_PARAMETRICA> ListarParametricas(int tipo);
+        SAF_PARAMETRICA GetParametro(int parametro);
         IEnumerable<SAF_EMPRESA> ListarEmpresas();
         IEnumerable<SAF_CARGO> ListarCargos();
         IEnumerable<SAF_TIPOSOLICITUD> ListarTipoSolicitud();
@@ -95,6 +96,10 @@ namespace SOCAUD.Business.Core
             return this._safParametricaData.GetMany(x => x.CODTIPPAR == tipo).ToList();
         }
 
+        public SAF_PARAMETRICA GetParametro(int parametro)
+        {
+            return this._safParametricaData.GetById(parametro);
+        }
 
         public IEnumerable<SAF_EMPRESA> ListarEmpresas()
         {

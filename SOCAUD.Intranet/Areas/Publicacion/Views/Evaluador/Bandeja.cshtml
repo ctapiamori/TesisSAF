@@ -69,7 +69,7 @@
                 "sClass": "center",
                 "sWidth": "5%",
                 "render": function (data, type, row) {
-                    if (row[7] == '@Convert.ToInt32(Estado.Publicacion.Elaboracion)')
+                    if (row[7] == '@Convert.ToInt32(Estado.Publicacion.Elaboracion)' || row[7] == '@Convert.ToInt32(Estado.Publicacion.Aprobado)')
                         return '<center><button class="btn btn-success" title="Publicar" type="button" onclick="publicarPublicacion(' + row[0] + ');"><i class="fa fa-check-circle"></i></button></center>';
                     else
                         return ""
@@ -91,7 +91,7 @@
                     "sClass": "center",
                     "sWidth": "5%",
                     "render": function (data, type, row) {
-                        if (row[7] == '@Convert.ToInt32(Estado.Publicacion.Publicado)')
+                        if (row[7] == '@Convert.ToInt32(Estado.Publicacion.Publicado)' || row[7] == '@Convert.ToInt32(Estado.Publicacion.Aprobado)')
                             return "";
                         else
                             return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="eliminarPublicacion(' + row[0] + ');"><i class="fa fa-trash"></i></button></center>';
@@ -132,36 +132,36 @@
     function publicarPublicacion(id) {
         $.ajax({
             url: '@Url.Action("PublicarPublicacion", "Evaluador", new { Area = "Publicacion" })',
-                type: 'POST',
-                async: false,
-                data: { id: id },
-                success: function (result) {
-                    if (result.Exito) {
-                        listarPublicacion();
-                    }
-                    mostrarNotificacion(result);
+            type: 'POST',
+            async: false,
+            data: { id: id },
+            success: function (result) {
+                if (result.Exito) {
+                    listarPublicacion();
                 }
-            });
-        }
+                mostrarNotificacion(result);
+            }
+        });
+    }
 
-        function eliminarPublicacion(id) {
-            $.ajax({
-                url: '@Url.Action("EliminarPublicacion", "Evaluador", new { Area = "Publicacion" })',
-                type: 'POST',
-                async: false,
-                data: { id: id },
-                success: function (result) {
-                    if (result.Exito) {
-                        listarPublicacion();
-                    }
-                    mostrarNotificacion(result);
+    function eliminarPublicacion(id) {
+        $.ajax({
+            url: '@Url.Action("EliminarPublicacion", "Evaluador", new { Area = "Publicacion" })',
+            type: 'POST',
+            async: false,
+            data: { id: id },
+            success: function (result) {
+                if (result.Exito) {
+                    listarPublicacion();
                 }
-            });
-        }
+                mostrarNotificacion(result);
+            }
+        });
+    }
 
-        function verCortePublicacion(id) {
-            $.ajax({
-                url: '@Url.Action("VerResultadoCortePublicacion", "Evaluador", new { Area = "Publicacion" })',
+    function verCortePublicacion(id) {
+        $.ajax({
+            url: '@Url.Action("VerResultadoCortePublicacion", "Evaluador", new { Area = "Publicacion" })',
             type: 'POST',
             async: false,
             data: { id: id },
@@ -171,5 +171,5 @@
         });
     }
 
-    </script>
+</script>
 }

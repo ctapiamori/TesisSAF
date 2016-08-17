@@ -20,6 +20,7 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
         private readonly ISafNotificacionLogic _notificacionLogic;
         private readonly ISafCronogramaLogic _cronogramaLogic;
         private readonly ISafBaseLogic _baseLogic;
+        private readonly ISafGeneralLogic _safGeneralLogic;
 
         public EvaluadorController()
         {
@@ -29,6 +30,7 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
             this._notificacionLogic = new SafNotificacionLogic();
             this._cronogramaLogic = new SafCronogramaLogic();
             this._baseLogic = new SafBaseLogic();
+            this._safGeneralLogic = new SafGeneralLogic();
         }
 
         public ActionResult Bandeja()
@@ -45,6 +47,9 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
             {
                 var publicacion = this._publicacionLogic.BuscarPorId(idPub.Value);
 
+                if (!publicacion.ESTPUB.GetValueOrDefault().Equals(Estado.Publicacion.Elaboracion.GetHashCode()))
+                    return RedirectToAction("View", new { id = idPub });
+
                 model.CodigoPublicacion = publicacion.CODPUB;
                 model.Cronograma = publicacion.CODCRO.GetValueOrDefault();
                 //model.Base = publicacion.CODBAS.GetValueOrDefault();
@@ -53,7 +58,7 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
                 model.FechaMaximaResponderConsultas = publicacion.FECMAXRESCONS.GetValueOrDefault().ToShortDateString();
                 model.FechaMaximaPresentacionPropuestas = publicacion.FECMAXPREPROP.GetValueOrDefault().ToShortDateString();
                 model.estadoPublicacion = publicacion.ESTPUB.GetValueOrDefault();
-
+                model.EstadoDescripcion = this._safGeneralLogic.GetParametro(publicacion.ESTPUB.GetValueOrDefault()).NOMPAR;
                 //var bases = this._baseLogic.BuscarPorCronograma(model.Cronograma);
                 //model.Bases = bases.Select(c => new SelectListItem() { Value = c.CODBAS.ToString(), Text = c.DESBAS }).ToList();
             }
@@ -62,6 +67,27 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
                 model.estadoPublicacion = Estado.Publicacion.Elaboracion.GetHashCode();
             }
             
+            return View(model);
+
+        }
+
+        public ActionResult View(int id)
+        {
+            var model = new PublicacionViewModel();
+            var cronogramas = this._cronogramaLogic.ListarTodos();
+            model.Cronogramas = cronogramas.Select(c => new SelectListItem() { Value = c.CODCRO.ToString(), Text = c.ANIOCRO.GetValueOrDefault().ToString() }).ToList();
+
+            var publicacion = this._publicacionLogic.BuscarPorId(id);
+
+            model.CodigoPublicacion = publicacion.CODPUB;
+            model.Cronograma = publicacion.CODCRO.GetValueOrDefault();
+            model.FechaMaximaCreacionConsulta = publicacion.FECMAXCONS.GetValueOrDefault().ToShortDateString();
+            model.FechaMaximaPublicacionConcurso = publicacion.FECMAXCRECON.GetValueOrDefault().ToShortDateString();
+            model.FechaMaximaResponderConsultas = publicacion.FECMAXRESCONS.GetValueOrDefault().ToShortDateString();
+            model.FechaMaximaPresentacionPropuestas = publicacion.FECMAXPREPROP.GetValueOrDefault().ToShortDateString();
+            model.estadoPublicacion = publicacion.ESTPUB.GetValueOrDefault();
+            model.EstadoDescripcion = this._safGeneralLogic.GetParametro(publicacion.ESTPUB.GetValueOrDefault()).NOMPAR;
+
             return View(model);
 
         }

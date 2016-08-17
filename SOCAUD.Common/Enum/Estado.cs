@@ -22,7 +22,9 @@ namespace SOCAUD.Common.Enum
             [Description("Elaboracion")]
             Elaboracion = 1,
             [Description("Aprobado")]
-            Aprobado = 2
+            Aprobado = 2,
+            [Description("Pendiente de Aprobación")]
+            PendienteAprobacion = 39
         }
 
         public enum Bases
@@ -30,7 +32,9 @@ namespace SOCAUD.Common.Enum
             [Description("Elaboracion")]
             Elaboracion = 3,
             [Description("Aprobado")]
-            Aprobado = 4
+            Aprobado = 4,
+            [Description("Pendiente de Aprobación")]
+            PendienteAprobacion = 40
         }
 
         public enum Publicacion
@@ -40,7 +44,9 @@ namespace SOCAUD.Common.Enum
             [Description("Aprobado")]
             Aprobado = 6,
             [Description("Publicado")]
-            Publicado = 13
+            Publicado = 13,
+            [Description("Pendiente de Aprobación")]
+            PendienteAprobacion = 41
 
         }
 
@@ -86,6 +92,17 @@ namespace SOCAUD.Common.Enum
             Ganadora = 34,
             [Description("Descalifica")]
             Descalifica = 35
+
+        }
+
+        public enum Workflow
+        {
+            [Description("Pendiente de Apronación")]
+            PendienteAprobacion = 42,
+            [Description("Aprobado")]
+            Aprobado = 43,
+            [Description("Rechazado")]
+            Rechazado = 44
 
         }
     }

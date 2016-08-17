@@ -1,0 +1,59 @@
+﻿@model SOCAUD.Intranet.Models.CronoEntidadModel
+
+@Html.HiddenFor(c => c.Cronograma)
+<div class="box box-primary color-palette-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Entidades</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tabEntidades" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var _dataEntidades_ = null;
+    var tabEntidades;
+
+        $(document).ready(function () {
+
+            tabEntidades = $("#tabEntidades").dataTable({
+                "info": false,
+                "bServerSide": false,
+                "data": _dataEntidades_,
+                "order": [[1, "asc"]],
+                "columns": [
+                    {
+                        "bVisible": false,
+                        "sClass": "center",
+                        "sWidth": "5%"
+                    },
+                    { "sTitle": "Entidad" },
+                    { "sTitle": "Fecha Inicio" },
+                    { "sTitle": "Fecha Termino" },
+                    {
+                        "bVisible": false
+                    }
+                ]
+            });
+
+            listarEntidades();
+        });
+
+        function listarEntidades() {
+            $.ajax({
+                url: '@Url.Action("ListarEntidadCronograma", "Cronograma")',
+                type: 'POST',
+                async: false,
+                data: { cronograma: $("#Cronograma").val() },
+                success: function (result) {
+                    _dataEntidades_ = result;
+                    tabEntidades.fnReloadData(_dataEntidades_);
+                }
+            });
+        }
+
+</script>

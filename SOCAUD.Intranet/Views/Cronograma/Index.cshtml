@@ -13,8 +13,6 @@
                 <h3 class="box-title">Listado de Cronograma</h3>
             </div>
             <div class="box-body">
-
-
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
@@ -27,8 +25,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
@@ -45,7 +41,6 @@
 
     <script type="text/javascript" language="javascript">
 
-
     var _dataCronogramas_ = null;
     var tabCronogramas = $("#tabCronogramas").dataTable({
         "info": false,
@@ -58,7 +53,10 @@
                 "sClass": "center",
                 "sWidth": "5%",
                 "render": function (data, type, row) {
-                    return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarCronograma(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                    if (row[4] == "1")
+                        return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarCronograma(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                    else
+                        return '<center><button class="btn btn-primary" title="Mostrar" type="button" onclick="ViewCronograma(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
                 }
             },
             { "sTitle": "Año" },
@@ -68,7 +66,10 @@
                 "bSortable": false,
                 "sClass": "center",
                 "render": function (data, type, row) {
-                    return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarCronograma(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                    if (row[4] == "1")
+                        return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarCronograma(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                    else
+                        return "";
                 }
             }
         ]
@@ -97,6 +98,9 @@
     function nuevoCronograma() {
         document.location = '@Url.Action("Registrar", "Cronograma")';
     }
+        function ViewCronograma(id) {
+            document.location = '@Url.Action("View", "Cronograma")/' + id;
+        }
 
     function EditarCronograma(id) {
         document.location = '@Url.Action("Configurar", "Cronograma")/' + id;

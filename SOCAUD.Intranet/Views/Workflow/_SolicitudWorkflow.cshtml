@@ -1,0 +1,61 @@
+﻿@model SOCAUD.Intranet.Models.SolicitarWorkflowViewModel
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">@Html.Raw(Model.Descripcion)</h4>
+        </div>
+        <div class="modal-body">
+            <form id="frmFlujo">
+                @Html.HiddenFor(c => c.IdFlujo)
+                @Html.HiddenFor(c => c.IdDocumento)
+                @Html.HiddenFor(c => c.IdTipoDocumento)
+                @Html.HiddenFor(c => c.Descripcion)
+                <div class="form-group">
+                    @Html.LabelFor(c => c.TipoUsuario)
+                    @Html.DropDownListFor(c => c.TipoUsuario, Model.TiposUsuario, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(c => c.TipoUsuario)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(c => c.EstadoFlujo)
+                    @Html.DropDownListFor(c => c.EstadoFlujo, Model.EstadosFlujo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(c => c.EstadoFlujo)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(c => c.Comentario)
+                    @Html.TextAreaFor(c => c.Comentario, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(c => c.Comentario)
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" onclick="grabarFlujo();"><i class="fa fa-fw fa-save"></i>Grabar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function grabarFlujo()
+    {
+        if (!$("#frmFlujo").isValid()) { return; }
+
+        bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GrabarSolicitud", "Workflow")',
+                    data: $("#frmFlujo").serialize(),
+                    dataType: "json",
+                    success: function (result) {
+                        mostrarNotificacion(result);
+                        if (result.Exito) {
+                            document.location = document.location;
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
