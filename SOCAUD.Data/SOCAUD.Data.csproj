@@ -257,6 +257,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SOCAUDModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\SP_SAF_BASE_RPT_Result.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SP_SAF_BASE_RPT_Result1.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SP_SAF_CRONOENTIDAD_CRONO_RPT_Result.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SP_SAF_CRONOGRAMA_RPT_Result.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SP_SAF_PUBLICACIONBASE_RPT_Result.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SP_SAF_PUBLICACION_RPT_Result.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\TcACCEDERSISTEMAADMIN.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
@@ -330,6 +348,21 @@
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TcResultadoMensaje.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TcSAFBASERPT.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TcSAFCRONOENTIDADCRONORPT.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TcSAFCRONOGRAMARPT.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TcSAFPUBLICACIONBASERPT.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TcSAFPUBLICACIONRPT.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VW_SAF_AUDITORIAEQUIPO.cs">

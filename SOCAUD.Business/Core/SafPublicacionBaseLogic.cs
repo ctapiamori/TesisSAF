@@ -13,6 +13,7 @@ namespace SOCAUD.Business.Core
     public interface ISafPublicacionBaseLogic : IFacadeOperacionCRUD<SAF_PUBLICACIONBASE>
     {
         IEnumerable<SAF_PUBLICACIONBASE> ListarPorPublicacion(int publicacionId);
+        IEnumerable<TcSAFPUBLICACIONBASERPT> ListarBasesPublicacionRpt(int idPublicacion);
     }
 
     public class SafPublicacionBaseLogic : ISafPublicacionBaseLogic
@@ -64,6 +65,12 @@ namespace SOCAUD.Business.Core
         public IEnumerable<SAF_PUBLICACIONBASE> ListarTodos()
         {
             return this._safPublicacionBaseData.GetAll();
+        }
+
+
+        public IEnumerable<TcSAFPUBLICACIONBASERPT> ListarBasesPublicacionRpt(int idPublicacion)
+        {
+            return this._safPublicacionBaseData.ListarBasesPublicacionRpt(idPublicacion);
         }
     }
 }

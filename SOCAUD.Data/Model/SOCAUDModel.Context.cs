@@ -359,5 +359,50 @@ namespace SOCAUD.Data.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcPROPUESTARPT>("SP_SAF_PROPUESTA_RPT", cODPROParameter);
         }
+    
+        public virtual ObjectResult<TcSAFCRONOENTIDADCRONORPT> SP_SAF_CRONOENTIDAD_CRONO_RPT(Nullable<int> cODCRO)
+        {
+            var cODCROParameter = cODCRO.HasValue ?
+                new ObjectParameter("CODCRO", cODCRO) :
+                new ObjectParameter("CODCRO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcSAFCRONOENTIDADCRONORPT>("SP_SAF_CRONOENTIDAD_CRONO_RPT", cODCROParameter);
+        }
+    
+        public virtual ObjectResult<TcSAFCRONOGRAMARPT> SP_SAF_CRONOGRAMA_RPT(Nullable<int> cODCRO)
+        {
+            var cODCROParameter = cODCRO.HasValue ?
+                new ObjectParameter("CODCRO", cODCRO) :
+                new ObjectParameter("CODCRO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcSAFCRONOGRAMARPT>("SP_SAF_CRONOGRAMA_RPT", cODCROParameter);
+        }
+    
+        public virtual ObjectResult<TcSAFBASERPT> SP_SAF_BASE_RPT(Nullable<int> cODBAS)
+        {
+            var cODBASParameter = cODBAS.HasValue ?
+                new ObjectParameter("CODBAS", cODBAS) :
+                new ObjectParameter("CODBAS", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcSAFBASERPT>("SP_SAF_BASE_RPT", cODBASParameter);
+        }
+    
+        public virtual ObjectResult<TcSAFPUBLICACIONRPT> SP_SAF_PUBLICACION_RPT(Nullable<int> cODPUB)
+        {
+            var cODPUBParameter = cODPUB.HasValue ?
+                new ObjectParameter("CODPUB", cODPUB) :
+                new ObjectParameter("CODPUB", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcSAFPUBLICACIONRPT>("SP_SAF_PUBLICACION_RPT", cODPUBParameter);
+        }
+    
+        public virtual ObjectResult<TcSAFPUBLICACIONBASERPT> SP_SAF_PUBLICACIONBASE_RPT(Nullable<int> cODPUB)
+        {
+            var cODPUBParameter = cODPUB.HasValue ?
+                new ObjectParameter("CODPUB", cODPUB) :
+                new ObjectParameter("CODPUB", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcSAFPUBLICACIONBASERPT>("SP_SAF_PUBLICACIONBASE_RPT", cODPUBParameter);
+        }
     }
 }

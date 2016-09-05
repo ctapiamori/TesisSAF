@@ -1627,6 +1627,9 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
         <Function Name="SP_SAF_AUDITORIAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODPRO" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_SAF_BASE_RPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CODBAS" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_SAF_CORTEPUBLICACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODPUB" Type="int" Mode="In" />
         </Function>
@@ -1639,6 +1642,12 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
         </Function>
         <Function Name="SP_SAF_CREARSOLICITUDSOA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODSOA" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SAF_CRONOENTIDAD_CRONO_RPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CODCRO" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SAF_CRONOGRAMA_RPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CODCRO" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_SAF_DETALLEEQUIPOPORAUDITORIA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODAUDITORIA" Type="int" Mode="In" />
@@ -1678,6 +1687,12 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <Parameter Name="CODPRO" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_SAF_PROPUESTAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_SAF_PUBLICACION_RPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CODPUB" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SAF_PUBLICACIONBASE_RPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CODPUB" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_SAF_RESULTADOCORTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODPUB" Type="int" Mode="In" />
         </Function>
@@ -3908,6 +3923,21 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
             <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
           </AssociationSet>
           <EntitySet Name="SAF_WORKFLOW" EntityType="SI_SOCAUDModel.SAF_WORKFLOW" />
+          <FunctionImport Name="SP_SAF_CRONOENTIDAD_CRONO_RPT" ReturnType="Collection(SI_SOCAUDModel.TcSAFCRONOENTIDADCRONORPT)">
+          <Parameter Name="CODCRO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_CRONOGRAMA_RPT" ReturnType="Collection(SI_SOCAUDModel.TcSAFCRONOGRAMARPT)">
+          <Parameter Name="CODCRO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_BASE_RPT" ReturnType="Collection(SI_SOCAUDModel.TcSAFBASERPT)">
+          <Parameter Name="CODBAS" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_PUBLICACION_RPT" ReturnType="Collection(SI_SOCAUDModel.TcSAFPUBLICACIONRPT)">
+            <Parameter Name="CODPUB" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_PUBLICACIONBASE_RPT" ReturnType="Collection(SI_SOCAUDModel.TcSAFPUBLICACIONBASERPT)">
+            <Parameter Name="CODPUB" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
@@ -4316,6 +4346,93 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="SP_SAF_CRONOENTIDAD_CRONO_RPT_Result">
+          <Property Type="String" Name="CODCRO" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CODCROENT" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="FECINICROENT" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECFINCROENT" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DESCROENT" Nullable="true" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="SP_SAF_CRONOGRAMA_RPT_Result">
+          <Property Type="String" Name="CODCRO" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ANIOCRO" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="FECPUBCRO" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECMAXCREBASCRO" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="TcSAFCRONOGRAMARPT">
+          <Property Type="String" Name="CODCRO" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ANIOCRO" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="FECPUBCRO" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECMAXCREBASCRO" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="TcSAFCRONOENTIDADCRONORPT">
+          <Property Type="String" Name="CODCRO" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CODCROENT" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="FECINICROENT" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECFINCROENT" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DESCROENT" Nullable="true" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="SP_SAF_BASE_RPT_Result">
+          <Property Type="Int32" Name="CODBAS" Nullable="false" />
+          <Property Type="String" Name="NUMBAS" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="FECMAXCREPUBBAS" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ANIOCRO" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="DESBAS" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="TOTRETECOBAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="TOTVIABAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="FIRPCAOBBAS" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="FIRINTBAS" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SP_SAF_BASE_RPT_Result1">
+          <Property Type="String" Name="Column1" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="NUMBAS" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="FECMAXCREPUBBAS" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ANIOCRO" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="DESBAS" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="TOTRETECOBAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="TOTVIABAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="FIRPCAOBBAS" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="FIRINTBAS" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="TcSAFBASERPT">
+          <Property Type="String" Name="NUMBAS" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="FECMAXCREPUBBAS" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ANIOCRO" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="DESBAS" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="TOTRETECOBAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="TOTVIABAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="FIRPCAOBBAS" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="FIRINTBAS" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="CODBAS" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SP_SAF_PUBLICACION_RPT_Result">
+          <Property Type="String" Name="ANIOCRO" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="NUMPUB" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FECMAXCONS" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECMAXCRECON" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECMAXRESCONS" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECMAXPREPROP" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SP_SAF_PUBLICACIONBASE_RPT_Result">
+          <Property Type="String" Name="CODPUBBAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CODPUB" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CODBAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="DESPUBBAS" Nullable="true" MaxLength="300" />
+        </ComplexType>
+        <ComplexType Name="TcSAFPUBLICACIONRPT">
+          <Property Type="String" Name="ANIOCRO" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="NUMPUB" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FECMAXCONS" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECMAXCRECON" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECMAXRESCONS" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FECMAXPREPROP" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="TcSAFPUBLICACIONBASERPT">
+          <Property Type="String" Name="CODPUBBAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CODPUB" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CODBAS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="DESPUBBAS" Nullable="true" MaxLength="300" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5539,6 +5656,64 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_CRONOENTIDAD_CRONO_RPT" FunctionName="SI_SOCAUDModel.Store.SP_SAF_CRONOENTIDAD_CRONO_RPT">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcSAFCRONOENTIDADCRONORPT">
+                <ScalarProperty Name="CODCRO" ColumnName="CODCRO" />
+                <ScalarProperty Name="CODCROENT" ColumnName="CODCROENT" />
+                <ScalarProperty Name="FECINICROENT" ColumnName="FECINICROENT" />
+                <ScalarProperty Name="FECFINCROENT" ColumnName="FECFINCROENT" />
+                <ScalarProperty Name="DESCROENT" ColumnName="DESCROENT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_CRONOGRAMA_RPT" FunctionName="SI_SOCAUDModel.Store.SP_SAF_CRONOGRAMA_RPT">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcSAFCRONOGRAMARPT">
+                <ScalarProperty Name="CODCRO" ColumnName="CODCRO" />
+                <ScalarProperty Name="ANIOCRO" ColumnName="ANIOCRO" />
+                <ScalarProperty Name="FECPUBCRO" ColumnName="FECPUBCRO" />
+                <ScalarProperty Name="FECMAXCREBASCRO" ColumnName="FECMAXCREBASCRO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_BASE_RPT" FunctionName="SI_SOCAUDModel.Store.SP_SAF_BASE_RPT">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcSAFBASERPT">
+                <ScalarProperty Name="NUMBAS" ColumnName="NUMBAS" />
+                <ScalarProperty Name="FECMAXCREPUBBAS" ColumnName="FECMAXCREPUBBAS" />
+                <ScalarProperty Name="ANIOCRO" ColumnName="ANIOCRO" />
+                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
+                <ScalarProperty Name="TOTRETECOBAS" ColumnName="TOTRETECOBAS" />
+                <ScalarProperty Name="TOTVIABAS" ColumnName="TOTVIABAS" />
+                <ScalarProperty Name="FIRPCAOBBAS" ColumnName="FIRPCAOBBAS" />
+                <ScalarProperty Name="FIRINTBAS" ColumnName="FIRINTBAS" />
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_PUBLICACION_RPT" FunctionName="SI_SOCAUDModel.Store.SP_SAF_PUBLICACION_RPT">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcSAFPUBLICACIONRPT">
+                <ScalarProperty Name="ANIOCRO" ColumnName="ANIOCRO" />
+                <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
+                <ScalarProperty Name="FECMAXCONS" ColumnName="FECMAXCONS" />
+                <ScalarProperty Name="FECMAXCRECON" ColumnName="FECMAXCRECON" />
+                <ScalarProperty Name="FECMAXRESCONS" ColumnName="FECMAXRESCONS" />
+                <ScalarProperty Name="FECMAXPREPROP" ColumnName="FECMAXPREPROP" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_PUBLICACIONBASE_RPT" FunctionName="SI_SOCAUDModel.Store.SP_SAF_PUBLICACIONBASE_RPT">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcSAFPUBLICACIONBASERPT">
+                <ScalarProperty Name="CODPUBBAS" ColumnName="CODPUBBAS" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+                <ScalarProperty Name="DESPUBBAS" ColumnName="DESPUBBAS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

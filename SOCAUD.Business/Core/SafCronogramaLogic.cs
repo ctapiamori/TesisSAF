@@ -16,6 +16,7 @@ namespace SOCAUD.Business.Core
         IEnumerable<SAF_CRONOGRAMA> ListarPorAnio(int anio);
         int NewCorrelativoBase(int cronograma);
         int NewCorrelativoPublicacion(int cronograma);
+        IEnumerable<TcSAFCRONOGRAMARPT> CronogramaRpt(int idCronograma);
     }
 
     public class SafCronogramaLogic : ISafCronogramaLogic
@@ -90,6 +91,12 @@ namespace SOCAUD.Business.Core
             _cronograma.NUMPUB = _cronograma.NUMPUB.GetValueOrDefault() + 1;
             Actualizar(_cronograma);
             return _cronograma.NUMPUB.GetValueOrDefault();
+        }
+
+
+        public IEnumerable<TcSAFCRONOGRAMARPT> CronogramaRpt(int idCronograma)
+        {
+            return _safCronogramaData.CronogramaRpt(idCronograma);
         }
     }
 }

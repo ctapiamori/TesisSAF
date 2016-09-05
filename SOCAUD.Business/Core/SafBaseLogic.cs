@@ -14,6 +14,7 @@ namespace SOCAUD.Business.Core
     {
         int CorrelativoCronograma(int cronograma);
         IEnumerable<SAF_BASE> BuscarPorCronograma(int cronograma);
+        IEnumerable<TcSAFBASERPT> BaseRpt(int idBase);
 
     }
 
@@ -85,6 +86,11 @@ namespace SOCAUD.Business.Core
         public IEnumerable<SAF_BASE> BuscarPorCronograma(int cronograma)
         {
             return this._safBaseData.GetMany(c => c.CODCRO == cronograma);
+        }
+
+        public IEnumerable<TcSAFBASERPT> BaseRpt(int idBase)
+        {
+            return this._safBaseData.BaseRpt(idBase);
         }
     }
 }

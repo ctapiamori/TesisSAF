@@ -8,11 +8,25 @@ using System.Threading.Tasks;
 
 namespace SOCAUD.Data.Core
 {
-    public interface ISafPublicacionBaseData : IBaseRepository<SAF_PUBLICACIONBASE> { }
+    public interface ISafPublicacionBaseData : IBaseRepository<SAF_PUBLICACIONBASE>
+    {
+        IEnumerable<TcSAFPUBLICACIONBASERPT> ListarBasesPublicacionRpt(int idPublicacion);
+    }
 
 
     public class SafPublicacionBaseData : BaseRepository<SAF_PUBLICACIONBASE>, ISafPublicacionBaseData
     {
-        public SafPublicacionBaseData(IUnitOfWork databaseFactory) : base(databaseFactory) { }
+        private readonly IUnitOfWork _uow;
+        public SafPublicacionBaseData(IUnitOfWork uow)
+            : base(uow)
+        {
+            this._uow = uow;
+        }
+        //public SafPublicacionBaseData(IUnitOfWork databaseFactory) : base(databaseFactory) { }
+
+        public IEnumerable<TcSAFPUBLICACIONBASERPT> ListarBasesPublicacionRpt(int idPublicacion)
+        {
+            return this._uow.DataContext().SP_SAF_PUBLICACIONBASE_RPT(idPublicacion).ToList();
+        }
     }
 }

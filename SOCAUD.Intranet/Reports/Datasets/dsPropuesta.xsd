@@ -43,6 +43,64 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="dtCronograma" msprop:Generator_TableClassName="dtCronogramaDataTable" msprop:Generator_TableVarName="tabledtCronograma" msprop:Generator_RowChangedName="dtCronogramaRowChanged" msprop:Generator_TablePropName="dtCronograma" msprop:Generator_RowDeletingName="dtCronogramaRowDeleting" msprop:Generator_RowChangingName="dtCronogramaRowChanging" msprop:Generator_RowEvHandlerName="dtCronogramaRowChangeEventHandler" msprop:Generator_RowDeletedName="dtCronogramaRowDeleted" msprop:Generator_RowClassName="dtCronogramaRow" msprop:Generator_UserTableName="dtCronograma" msprop:Generator_RowEvArgName="dtCronogramaRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODCRO" msprop:Generator_ColumnVarNameInTable="columnCODCRO" msprop:Generator_ColumnPropNameInRow="CODCRO" msprop:Generator_ColumnPropNameInTable="CODCROColumn" msprop:Generator_UserColumnName="CODCRO" type="xs:string" minOccurs="0" />
+              <xs:element name="ANIOCRO" msprop:Generator_ColumnVarNameInTable="columnANIOCRO" msprop:Generator_ColumnPropNameInRow="ANIOCRO" msprop:Generator_ColumnPropNameInTable="ANIOCROColumn" msprop:Generator_UserColumnName="ANIOCRO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECPUBCRO" msprop:Generator_ColumnVarNameInTable="columnFECPUBCRO" msprop:Generator_ColumnPropNameInRow="FECPUBCRO" msprop:Generator_ColumnPropNameInTable="FECPUBCROColumn" msprop:Generator_UserColumnName="FECPUBCRO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECMAXCREBASCRO" msprop:Generator_ColumnVarNameInTable="columnFECMAXCREBASCRO" msprop:Generator_ColumnPropNameInRow="FECMAXCREBASCRO" msprop:Generator_ColumnPropNameInTable="FECMAXCREBASCROColumn" msprop:Generator_UserColumnName="FECMAXCREBASCRO" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtEntidadCronograma" msprop:Generator_TableClassName="dtEntidadCronogramaDataTable" msprop:Generator_TableVarName="tabledtEntidadCronograma" msprop:Generator_RowChangedName="dtEntidadCronogramaRowChanged" msprop:Generator_TablePropName="dtEntidadCronograma" msprop:Generator_RowDeletingName="dtEntidadCronogramaRowDeleting" msprop:Generator_RowChangingName="dtEntidadCronogramaRowChanging" msprop:Generator_RowEvHandlerName="dtEntidadCronogramaRowChangeEventHandler" msprop:Generator_RowDeletedName="dtEntidadCronogramaRowDeleted" msprop:Generator_RowClassName="dtEntidadCronogramaRow" msprop:Generator_UserTableName="dtEntidadCronograma" msprop:Generator_RowEvArgName="dtEntidadCronogramaRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODCRO" msprop:Generator_ColumnVarNameInTable="columnCODCRO" msprop:Generator_ColumnPropNameInRow="CODCRO" msprop:Generator_ColumnPropNameInTable="CODCROColumn" msprop:Generator_UserColumnName="CODCRO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCROENT" msprop:Generator_ColumnVarNameInTable="columnCODCROENT" msprop:Generator_ColumnPropNameInRow="CODCROENT" msprop:Generator_ColumnPropNameInTable="CODCROENTColumn" msprop:Generator_UserColumnName="CODCROENT" type="xs:string" minOccurs="0" />
+              <xs:element name="FECINICROENT" msprop:Generator_ColumnVarNameInTable="columnFECINICROENT" msprop:Generator_ColumnPropNameInRow="FECINICROENT" msprop:Generator_ColumnPropNameInTable="FECINICROENTColumn" msprop:Generator_UserColumnName="FECINICROENT" type="xs:string" minOccurs="0" />
+              <xs:element name="FECFINCROENT" msprop:Generator_ColumnVarNameInTable="columnFECFINCROENT" msprop:Generator_ColumnPropNameInRow="FECFINCROENT" msprop:Generator_ColumnPropNameInTable="FECFINCROENTColumn" msprop:Generator_UserColumnName="FECFINCROENT" type="xs:string" minOccurs="0" />
+              <xs:element name="DESCROENT" msprop:Generator_ColumnVarNameInTable="columnDESCROENT" msprop:Generator_ColumnPropNameInRow="DESCROENT" msprop:Generator_ColumnPropNameInTable="DESCROENTColumn" msprop:Generator_UserColumnName="DESCROENT" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtBase" msprop:Generator_TableClassName="dtBaseDataTable" msprop:Generator_TableVarName="tabledtBase" msprop:Generator_RowChangedName="dtBaseRowChanged" msprop:Generator_TablePropName="dtBase" msprop:Generator_RowDeletingName="dtBaseRowDeleting" msprop:Generator_RowChangingName="dtBaseRowChanging" msprop:Generator_RowEvHandlerName="dtBaseRowChangeEventHandler" msprop:Generator_RowDeletedName="dtBaseRowDeleted" msprop:Generator_RowClassName="dtBaseRow" msprop:Generator_UserTableName="dtBase" msprop:Generator_RowEvArgName="dtBaseRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODBAS" msprop:Generator_ColumnVarNameInTable="columnCODBAS" msprop:Generator_ColumnPropNameInRow="CODBAS" msprop:Generator_ColumnPropNameInTable="CODBASColumn" msprop:Generator_UserColumnName="CODBAS" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMBAS" msprop:Generator_ColumnVarNameInTable="columnNUMBAS" msprop:Generator_ColumnPropNameInRow="NUMBAS" msprop:Generator_ColumnPropNameInTable="NUMBASColumn" msprop:Generator_UserColumnName="NUMBAS" type="xs:string" minOccurs="0" />
+              <xs:element name="FECMAXCREPUBBAS" msprop:Generator_ColumnVarNameInTable="columnFECMAXCREPUBBAS" msprop:Generator_ColumnPropNameInRow="FECMAXCREPUBBAS" msprop:Generator_ColumnPropNameInTable="FECMAXCREPUBBASColumn" msprop:Generator_UserColumnName="FECMAXCREPUBBAS" type="xs:string" minOccurs="0" />
+              <xs:element name="ANIOCRO" msprop:Generator_ColumnVarNameInTable="columnANIOCRO" msprop:Generator_ColumnPropNameInRow="ANIOCRO" msprop:Generator_ColumnPropNameInTable="ANIOCROColumn" msprop:Generator_UserColumnName="ANIOCRO" type="xs:string" minOccurs="0" />
+              <xs:element name="DESBAS" msprop:Generator_ColumnVarNameInTable="columnDESBAS" msprop:Generator_ColumnPropNameInRow="DESBAS" msprop:Generator_ColumnPropNameInTable="DESBASColumn" msprop:Generator_UserColumnName="DESBAS" type="xs:string" minOccurs="0" />
+              <xs:element name="TOTRETECOBAS" msprop:Generator_ColumnVarNameInTable="columnTOTRETECOBAS" msprop:Generator_ColumnPropNameInRow="TOTRETECOBAS" msprop:Generator_ColumnPropNameInTable="TOTRETECOBASColumn" msprop:Generator_UserColumnName="TOTRETECOBAS" type="xs:string" minOccurs="0" />
+              <xs:element name="TOTVIABAS" msprop:Generator_ColumnVarNameInTable="columnTOTVIABAS" msprop:Generator_ColumnPropNameInRow="TOTVIABAS" msprop:Generator_ColumnPropNameInTable="TOTVIABASColumn" msprop:Generator_UserColumnName="TOTVIABAS" type="xs:string" minOccurs="0" />
+              <xs:element name="FIRPCAOBBAS" msprop:Generator_ColumnVarNameInTable="columnFIRPCAOBBAS" msprop:Generator_ColumnPropNameInRow="FIRPCAOBBAS" msprop:Generator_ColumnPropNameInTable="FIRPCAOBBASColumn" msprop:Generator_UserColumnName="FIRPCAOBBAS" type="xs:string" minOccurs="0" />
+              <xs:element name="FIRINTBAS" msprop:Generator_ColumnVarNameInTable="columnFIRINTBAS" msprop:Generator_ColumnPropNameInRow="FIRINTBAS" msprop:Generator_ColumnPropNameInTable="FIRINTBASColumn" msprop:Generator_UserColumnName="FIRINTBAS" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtPublicacion" msprop:Generator_TableClassName="dtPublicacionDataTable" msprop:Generator_TableVarName="tabledtPublicacion" msprop:Generator_TablePropName="dtPublicacion" msprop:Generator_RowDeletingName="dtPublicacionRowDeleting" msprop:Generator_RowChangingName="dtPublicacionRowChanging" msprop:Generator_RowEvHandlerName="dtPublicacionRowChangeEventHandler" msprop:Generator_RowDeletedName="dtPublicacionRowDeleted" msprop:Generator_UserTableName="dtPublicacion" msprop:Generator_RowChangedName="dtPublicacionRowChanged" msprop:Generator_RowEvArgName="dtPublicacionRowChangeEvent" msprop:Generator_RowClassName="dtPublicacionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ANIOCRO" msprop:Generator_ColumnVarNameInTable="columnANIOCRO" msprop:Generator_ColumnPropNameInRow="ANIOCRO" msprop:Generator_ColumnPropNameInTable="ANIOCROColumn" msprop:Generator_UserColumnName="ANIOCRO" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMPUB" msprop:Generator_ColumnVarNameInTable="columnNUMPUB" msprop:Generator_ColumnPropNameInRow="NUMPUB" msprop:Generator_ColumnPropNameInTable="NUMPUBColumn" msprop:Generator_UserColumnName="NUMPUB" type="xs:string" minOccurs="0" />
+              <xs:element name="FECMAXCONS" msprop:Generator_ColumnVarNameInTable="columnFECMAXCONS" msprop:Generator_ColumnPropNameInRow="FECMAXCONS" msprop:Generator_ColumnPropNameInTable="FECMAXCONSColumn" msprop:Generator_UserColumnName="FECMAXCONS" type="xs:string" minOccurs="0" />
+              <xs:element name="FECMAXCRECON" msprop:Generator_ColumnVarNameInTable="columnFECMAXCRECON" msprop:Generator_ColumnPropNameInRow="FECMAXCRECON" msprop:Generator_ColumnPropNameInTable="FECMAXCRECONColumn" msprop:Generator_UserColumnName="FECMAXCRECON" type="xs:string" minOccurs="0" />
+              <xs:element name="FECMAXRESCONS" msprop:Generator_ColumnVarNameInTable="columnFECMAXRESCONS" msprop:Generator_ColumnPropNameInRow="FECMAXRESCONS" msprop:Generator_ColumnPropNameInTable="FECMAXRESCONSColumn" msprop:Generator_UserColumnName="FECMAXRESCONS" type="xs:string" minOccurs="0" />
+              <xs:element name="FECMAXPREPROP" msprop:Generator_ColumnVarNameInTable="columnFECMAXPREPROP" msprop:Generator_ColumnPropNameInRow="FECMAXPREPROP" msprop:Generator_ColumnPropNameInTable="FECMAXPREPROPColumn" msprop:Generator_UserColumnName="FECMAXPREPROP" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtBasePublicacion" msprop:Generator_TableClassName="dtBasePublicacionDataTable" msprop:Generator_TableVarName="tabledtBasePublicacion" msprop:Generator_TablePropName="dtBasePublicacion" msprop:Generator_RowDeletingName="dtBasePublicacionRowDeleting" msprop:Generator_RowChangingName="dtBasePublicacionRowChanging" msprop:Generator_RowEvHandlerName="dtBasePublicacionRowChangeEventHandler" msprop:Generator_RowDeletedName="dtBasePublicacionRowDeleted" msprop:Generator_UserTableName="dtBasePublicacion" msprop:Generator_RowChangedName="dtBasePublicacionRowChanged" msprop:Generator_RowEvArgName="dtBasePublicacionRowChangeEvent" msprop:Generator_RowClassName="dtBasePublicacionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODPUBBAS" msprop:Generator_ColumnVarNameInTable="columnCODPUBBAS" msprop:Generator_ColumnPropNameInRow="CODPUBBAS" msprop:Generator_ColumnPropNameInTable="CODPUBBASColumn" msprop:Generator_UserColumnName="CODPUBBAS" type="xs:string" minOccurs="0" />
+              <xs:element name="CODPUB" msprop:Generator_ColumnVarNameInTable="columnCODPUB" msprop:Generator_ColumnPropNameInRow="CODPUB" msprop:Generator_ColumnPropNameInTable="CODPUBColumn" msprop:Generator_UserColumnName="CODPUB" type="xs:string" minOccurs="0" />
+              <xs:element name="CODBAS" msprop:Generator_ColumnVarNameInTable="columnCODBAS" msprop:Generator_ColumnPropNameInRow="CODBAS" msprop:Generator_ColumnPropNameInTable="CODBASColumn" msprop:Generator_UserColumnName="CODBAS" type="xs:string" minOccurs="0" />
+              <xs:element name="DESPUBBAS" msprop:Generator_ColumnVarNameInTable="columnDESPUBBAS" msprop:Generator_ColumnPropNameInRow="DESPUBBAS" msprop:Generator_ColumnPropNameInTable="DESPUBBASColumn" msprop:Generator_UserColumnName="DESPUBBAS" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

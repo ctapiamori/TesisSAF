@@ -20,65 +20,82 @@
     <script type="text/javascript">
 
 
-        var tabSolicitudes;
-        var _dataSolicitudes_ = null;
+    var tabSolicitudes;
+    var _dataSolicitudes_ = null;
 
-        $(document).ready(function () {
-            listarSolicitudes();
-        });
+    $(document).ready(function () {
+        listarSolicitudes();
+    });
 
-        function listarSolicitudes() {
+    function listarSolicitudes() {
 
-            if (tabSolicitudes == undefined) {
-                tabSolicitudes = $("#tabSolicitudes").dataTable({
-                    "info": false,
-                    "bServerSide": false,
-                    "data": _dataSolicitudes_,
-                    "pageLength": 50,
-                    //"order": [[1, "asc"]],
-                    "columns": [
-                        {
-                            "bSortable": false,
-                            "sClass": "center",
-                            "sWidth": "5%",
-                            "render": function (data, type, row) {
-                                if (row[7] == '1')
-                                    return '<center><button class="btn btn-success" title="Responder" type="button" onclick="AbrirFlujo(' + row[0] + ',\'' + row[4] + '\',' + row[6] + ');"><i class="fa fa-share"></i></button></center>';
-                                return '';
-                            }
-                        },
-                        {
-                            "sTitle": "Flujo",
-                            "sClass": "center"
-                        },
-                        { "sTitle": "Nota" },
-                        { "sTitle": "Fecha" }
-                    ]
+        if (tabSolicitudes == undefined) {
+            tabSolicitudes = $("#tabSolicitudes").dataTable({
+                "info": false,
+                "bServerSide": false,
+                "data": _dataSolicitudes_,
+                "pageLength": 50,
+                //"order": [[1, "asc"]],
+                "columns": [
+                    {
+                        "bSortable": false,
+                        "sClass": "center",
+                        "sWidth": "5%",
+                        "render": function (data, type, row) {
+                            if (row[7] == '1')
+                                return '<center><button class="btn btn-success" title="Responder" type="button" onclick="AbrirFlujo(' + row[0] + ',\'' + row[4] + '\',' + row[6] + ');"><i class="fa fa-share"></i></button></center>';
+                            return '';
+                        }
+                    },
+                    {
+                        "sTitle": "Flujo",
+                        "sClass": "center"
+                    },
+                    { "sTitle": "Nota" },
+                    { "sTitle": "Fecha" },
+                    {
+                        "bSortable": false,
+                        "sClass": "center",
+                        "sWidth": "5%",
+                        "render": function (data, type, row) {
+                            return '<center><button class="btn btn-primary" title="Descargar" type="button" onclick="Descargar(' + row[6] + ',\'' + row[4] + '\');"><i class="fa fa-download"></i></button></center>';
+                        }
+                    }
+                ]
 
-                });
+            });
+        }
+
+        $.ajax({
+            url: '@Url.Action("listarFlujos", "SolicitudAdmin")',
+            type: 'POST',
+            async: false,
+            data: {},
+            success: function (result) {
+                _dataSolicitudes_ = result;
+                tabSolicitudes.fnReloadData(_dataSolicitudes_);
             }
+        });
+    }
 
-            $.ajax({
-                url: '@Url.Action("listarFlujos", "SolicitudAdmin")',
-                type: 'POST',
-                async: false,
-                data: {},
-                success: function (result) {
-                    _dataSolicitudes_ = result;
-                    tabSolicitudes.fnReloadData(_dataSolicitudes_);
-                }
-            });
-        }
+    function AbrirFlujo(idFlujo, tipo, codigo) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Solicitud", "Workflow")',
+            data: { idDocumento: codigo, tipoDocumento: tipo, idFlujo: idFlujo },
+            success: function (result) {
+                $("#modalWorkflow").empty().html(result).modal();
+            }
+        });
+    }
 
-        function AbrirFlujo(idFlujo, tipo, codigo) {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Solicitud", "Workflow")',
-                data: { idDocumento: codigo, tipoDocumento: tipo, idFlujo: idFlujo },
-                success: function (result) {
-                    $("#modalWorkflow").empty().html(result).modal();
-                }
-            });
-        }
+    function Descargar(id, tipo) {
+        if (tipo == 'C')
+            window.location.href = '@Url.Action("DescargarReporte", "Cronograma", new { Area = "", id = "_id_" })'.replace('_id_', id);
+        if (tipo == 'B')
+            window.location.href = '@Url.Action("DescargarReporte", "Base", new { Area = "", id = "_id_" })'.replace('_id_', id);
+        if(tipo == 'P')
+            window.location.href = '@Url.Action("DescargarReporte", "Evaluador", new { Area = "Publicacion", id = "_id_" })'.replace('_id_', id);
+    }
     </script>
 }

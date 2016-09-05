@@ -13,6 +13,7 @@ namespace SOCAUD.Business.Core
     public interface ISafCronoEntidadLogic : IFacadeOperacionCRUD<SAF_CRONOENTIDAD>
     {
         IEnumerable<SAF_CRONOENTIDAD> ListarPorCronograma(int cronograma);
+        IEnumerable<TcSAFCRONOENTIDADCRONORPT> ListarEntidadesCronogramaRpt(int idCronograma);
 
     }
 
@@ -73,5 +74,11 @@ namespace SOCAUD.Business.Core
         }
 
 
+
+
+        public IEnumerable<TcSAFCRONOENTIDADCRONORPT> ListarEntidadesCronogramaRpt(int idCronograma)
+        {
+            return this._safCronoEntidadData.ListarEntidadesCronogramaRpt(idCronograma);
+        }
     }
 }

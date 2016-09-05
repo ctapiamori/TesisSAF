@@ -19,6 +19,8 @@ namespace SOCAUD.Business.Core
         SAF_PUBLICACION PublicarPublicacion(int id);
         TcCORTEPUBLICACION GenerarCortePublicacion(int idPublicacion);
         IEnumerable<TcRESULTADOCORTE> VerResultadoCorte(int idPublicacion);
+
+        IEnumerable<TcSAFPUBLICACIONRPT> PublicacionRpt(int idPublicacion);
     }
 
     public class SafPublicacionLogic : ISafPublicacionLogic
@@ -126,6 +128,12 @@ namespace SOCAUD.Business.Core
         public IEnumerable<TcRESULTADOCORTE> VerResultadoCorte(int idPublicacion)
         {
             return _spSafResultadoCorteLogic.VerResultadoCorte(idPublicacion);
+        }
+
+
+        public IEnumerable<TcSAFPUBLICACIONRPT> PublicacionRpt(int idPublicacion)
+        {
+            return this._safPublicacionData.PublicacionRpt(idPublicacion);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace SOCAUD.Data.Core
 {
     public interface ISafPublicacionData : IBaseRepository<SAF_PUBLICACION> {
         IEnumerable<TcMEJOREQUIPO> VerMejorEquipoAuditoria(int idPublicacion, int idServicioAud);
+        IEnumerable<TcSAFPUBLICACIONRPT> PublicacionRpt(int idPublicacion);
     }
 
     public class SafPublicacionData : BaseRepository<SAF_PUBLICACION>, ISafPublicacionData
@@ -22,6 +23,11 @@ namespace SOCAUD.Data.Core
         public IEnumerable<TcMEJOREQUIPO> VerMejorEquipoAuditoria(int idPublicacion, int idServicioAud)
         {
             return this._uow.DataContext().SP_SAF_MEJOREQUIPO(idPublicacion, idServicioAud).ToList(); 
+        }
+
+        public IEnumerable<TcSAFPUBLICACIONRPT> PublicacionRpt(int idPublicacion)
+        {
+            return this._uow.DataContext().SP_SAF_PUBLICACION_RPT(idPublicacion).ToList();
         }
     }
 }

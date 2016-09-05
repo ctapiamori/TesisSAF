@@ -8,10 +8,26 @@ using System.Threading.Tasks;
 
 namespace SOCAUD.Data.Core
 {
-    public interface ISafCronogramaData : IBaseRepository<SAF_CRONOGRAMA> { }
+    public interface ISafCronogramaData : IBaseRepository<SAF_CRONOGRAMA> 
+    {
+        IEnumerable<TcSAFCRONOGRAMARPT> CronogramaRpt(int idCronograma);
+    }
 
     public class SafCronogramaData : BaseRepository<SAF_CRONOGRAMA>, ISafCronogramaData
     {
-        public SafCronogramaData(IUnitOfWork databaseFactory) : base(databaseFactory) { }
+        private readonly IUnitOfWork _uow;
+
+        public SafCronogramaData(IUnitOfWork uow)
+            : base(uow)
+        {
+            this._uow = uow;
+        }
+
+        //public SafCronogramaData(IUnitOfWork databaseFactory) : base(databaseFactory) { }
+
+        public IEnumerable<TcSAFCRONOGRAMARPT> CronogramaRpt(int idCronograma)
+        {
+            return this._uow.DataContext().SP_SAF_CRONOGRAMA_RPT(idCronograma).ToList();
+        }
     }
 }

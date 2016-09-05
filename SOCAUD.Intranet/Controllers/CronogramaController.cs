@@ -1,4 +1,5 @@
-﻿using SOCAUD.Business.Core;
+﻿using Microsoft.Reporting.WebForms;
+using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
 using SOCAUD.Data.Model;
@@ -212,6 +213,52 @@ namespace SOCAUD.Intranet.Controllers
             {
                 return Json(new MensajeRespuesta("No se pudo eliminar", false));
             }
+        }
+
+        public ActionResult DescargarReporte(int id)
+        {
+            var file = ObtenerCronogramaRPT(id);
+            return File(file, "application/pdf", "rptCronograma.pdf");
+        }
+
+        public Byte[] ObtenerCronogramaRPT(int id)
+        {
+            /* Carga de lista de datos */
+            var cronogramaRpt = this._cronogramaLogic.CronogramaRpt(id);
+            var entidadesCronogramaRpt = this._cronoEntidadLogic.ListarEntidadesCronogramaRpt(id);
+
+            /* Creación de reporte */
+            const string reportPath = "~/Reports/rptCronograma.rdlc";
+            var localReport = new LocalReport { ReportPath = Server.MapPath(reportPath) };
+
+            /* Seteando el datasource */
+            var dtCronograma = new ReportDataSource("dtCronograma") { Value = cronogramaRpt };
+            var dtEntidadCronograma = new ReportDataSource("dtEntidadCronograma") { Value = entidadesCronogramaRpt };
+
+            localReport.DataSources.Add(dtCronograma);
+            localReport.DataSources.Add(dtEntidadCronograma);
+            //localReport.SubreportProcessing += ReportePropuestaSubreportProcessingEventHandler;
+            localReport.Refresh();
+
+            //Configuración del reporte           
+
+            string deviceInfoA4 = "<DeviceInfo>" +
+                                         "  <OutputFormat>A4</OutputFormat>" +
+                                         "  <PageWidth>21cm</PageWidth>" +
+                                         "  <PageHeight>29.7cm</PageHeight>" +
+                                         "  <MarginTop>1cm</MarginTop>" +
+                                         "  <MarginLeft>1cm</MarginLeft>" +
+                                         "  <MarginRight>1cm</MarginRight>" +
+                                         "  <MarginBottom>1cm</MarginBottom>" +
+                                         "</DeviceInfo>";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            var file = localReport.Render("pdf", deviceInfoA4, out mimeType, out encoding, out fileNameExtension, out streams, out warnings);
+
+            return file;
         }
     }
 }
