@@ -205,6 +205,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PropuestaModel.cs" />
     <Compile Include="Models\PublicacionModels.cs" />
+    <Compile Include="Models\ServicioAuditoriaModels.cs" />
     <Compile Include="Models\SoaModel.cs" />
     <Compile Include="Models\WorkflowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -495,6 +496,7 @@
     <Content Include="Views\Cronograma\_entidadcronogramaview.cshtml" />
     <Content Include="Views\Base\View.cshtml" />
     <Content Include="Views\SolicitudAdmin\Flujo.cshtml" />
+    <Content Include="Views\Base\ServicioAuditoria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

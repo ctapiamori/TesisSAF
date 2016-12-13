@@ -2,6 +2,7 @@
 using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
+using SOCAUD.Common.Helpers;
 using SOCAUD.Data.Model;
 using SOCAUD.Intranet.Helper;
 using SOCAUD.Intranet.Models;
@@ -19,6 +20,8 @@ namespace SOCAUD.Intranet.Controllers
         private readonly ISafCronoEntidadLogic _cronoEntidadLogic;
         private readonly ISafBaseLogic _baseLogic;
         private readonly ISafGeneralLogic _safGeneralLogic;
+        private readonly ISafServicioAuditoriaLogic _safServicioAuditoriaLogic;
+        private readonly ISafServicioAuditoriaCargoLogic _safServicioAuditoriaCargoLogic;
 
         public BaseController()
         {
@@ -26,6 +29,8 @@ namespace SOCAUD.Intranet.Controllers
             this._cronoEntidadLogic = new SafCronoEntidadLogic();
             this._baseLogic = new SafBaseLogic();
             this._safGeneralLogic = new SafGeneralLogic();
+            this._safServicioAuditoriaLogic = new SafServicioAuditoriaLogic();
+            this._safServicioAuditoriaCargoLogic = new SafServicioAuditoriaCargoLogic();
         }
 
         // GET: Base
@@ -79,6 +84,156 @@ namespace SOCAUD.Intranet.Controllers
             model.Entidades = entidades.Select(c => new SelectListItem() { Value = c.CODCROENT.ToString(), Text = c.DESCROENT, Selected = c.DESCROENT.Equals(_base.CODCROENT.GetValueOrDefault()) });
             return View(model);
         }
+
+        [Route("Base/Editar/{idBase}/Servicio/{servicio}")]
+        public ActionResult ServicioAuditoria(int idBase, int? servicio)
+        {
+            var model = new ServicioAuditoriaModel();
+            var cargos = this._safGeneralLogic.ListarCargos();
+            var _base = this._baseLogic.BuscarPorId(idBase);
+            var entidad = _base.SAF_CRONOENTIDAD;
+            var anioInicial = entidad.FECINICROENT.GetValueOrDefault().Year;
+            var anioTermino = entidad.FECFINCROENT.GetValueOrDefault().Year;
+            
+            model.IdCodigoBase = idBase;
+            model.NumeroBase = _base.NUMBAS;
+            model.PeriodoBase = anioInicial == anioTermino ? anioInicial.ToString() : string.Format("{0} - {1}", anioInicial, anioTermino);
+            model.EntidadBase = _base.DESBAS;
+            model.RetribucionBase = _base.TOTRETECOBAS.GetValueOrDefault();
+
+            model.Cargos = cargos.Select(c => new SelectListItem() { Value = c.CODCAR.ToString(), Text = c.NOMCAR });
+            return View(model);
+        }
+
+        public JsonResult GrabarCargoEquipo(EquipoServicioAuditoriaModel model)
+        {
+            var cargo = new SAF_SERAUDCARGO()
+            {
+                CODSERAUD = model.IdServicioAuditoria,
+                CODCAR = model.IdCargoServicioAuditoria,
+                NUMMININTSERAUDCAR = model.CantidadIntegrantes,
+                NUMMINHORPARSERAUDCAR = model.MinimoHoras
+            };
+
+            var experiencia = new SAF_SERAUDCAREXP()
+            {
+                NUMMINHORSERAUDCAREXP = model.MinimoHorasExperiencia
+            };
+
+            var capacitacion = new SAF_SERAUDCARCAP()
+            {
+                NUMMINHORSERAUDCAPCAP = model.MinimoHorasCapacitacion
+            };
+
+            try
+            {
+                this._safServicioAuditoriaCargoLogic.RegistrarCargoCompleto(cargo, experiencia, capacitacion);
+                return Json(new MensajeRespuesta("Registro satisfactorio", true));
+            }
+            catch (Exception ex)
+            {
+                return Json(new MensajeRespuesta("Ocurrio un error no controlado, comuniquese con su Administrador.", TipoMensaje.error, ex.Message));
+            }
+
+        }
+
+        public JsonResult ActualizarCargoEquipo(EquipoServicioAuditoriaModel model)
+        {
+            var cargo = new SAF_SERAUDCARGO()
+            {
+                CODSERAUDCAR = model.IdCargoServicioAuditoria,
+                NUMMININTSERAUDCAR = model.CantidadIntegrantes,
+                NUMMINHORPARSERAUDCAR = model.MinimoHoras
+            };
+
+            var experiencia = new SAF_SERAUDCAREXP()
+            {
+                CODSERAUDCAREXP = model.IdExperienciaServicioAuditoria,
+                NUMMINHORSERAUDCAREXP = model.MinimoHorasExperiencia
+            };
+
+            var capacitacion = new SAF_SERAUDCARCAP()
+            {
+                CODSERAUDCARCAP = model.IdCapacitacionServicioAuditoria,
+                NUMMINHORSERAUDCAPCAP = model.MinimoHorasCapacitacion
+            };
+
+            try
+            {
+                this._safServicioAuditoriaCargoLogic.ActualizarCargoCompleto(cargo, experiencia, capacitacion);
+                return Json(new MensajeRespuesta("Actualización satisfactoria", true));
+            }
+            catch (Exception ex)
+            {
+                return Json(new MensajeRespuesta("Ocurrio un error no controlado, comuniquese con su Administrador.", TipoMensaje.error, ex.Message));
+            }
+        }
+
+        public JsonResult EliminarCargoEquipo(int id)
+        {
+            try
+            {
+                this._safServicioAuditoriaCargoLogic.EliminarCompleto(id);
+                return Json(new MensajeRespuesta("Se elimino satisfactoriamente", true));
+            }
+            catch (Exception)
+            {
+                return Json(new MensajeRespuesta("No se pudo eliminar", false));
+            }
+        }
+
+        public JsonResult ListarServicios(int id)
+        {
+            //var 
+            return Json(new { });
+        }
+
+        public JsonResult GrabarServicioAuditoria(ServicioAuditoriaModel servicio)
+        {
+            var servicioAuditoria = new SAF_SERVICIOAUDITORIA();
+            servicioAuditoria.CODBAS = servicio.IdCodigoBase;
+            servicioAuditoria.CODSERAUD = servicio.IdServicioAuditoria;
+            servicioAuditoria.FECINISERAUD = Texto.GetDateTime(servicio.FechaInicio);
+            servicioAuditoria.FECFINSERAUD = Texto.GetDateTime(servicio.FechaTermino);
+            servicioAuditoria.RETECOSERAUD = servicio.RetribucionServicio;
+            servicioAuditoria.VIASERAUD = servicio.ViaticosServicio;
+            servicioAuditoria.IGVSERAUD = servicio.IgvServicio;
+
+            try
+            {
+                var result = this._safServicioAuditoriaLogic.Registrar(servicioAuditoria);
+                return Json(new MensajeRespuesta("Registro satisfactorio", true, result));
+            }
+            catch (Exception ex)
+            {
+                return Json(new MensajeRespuesta("Ocurrio un error no controlado, comuniquese con su Administrador.", TipoMensaje.error, ex.Message));
+            }
+        }
+
+        public JsonResult AgregarCargo(int idSerAud, int idCar, int canInt, int horPar)
+        {
+            //var cargoServicio = new SAF_SERAUDCARGO();
+            var cargoServicio = this._safServicioAuditoriaCargoLogic.BuscarPorServicioCargo(idSerAud, idCar);
+            if (cargoServicio == null) cargoServicio = new SAF_SERAUDCARGO();
+
+            cargoServicio.CODSERAUD = idSerAud;
+            cargoServicio.CODCAR = idCar;
+            cargoServicio.NUMMININTSERAUDCAR = canInt;
+            cargoServicio.NUMMINHORPARSERAUDCAR = horPar;
+
+            try
+            {
+                var result = this._safServicioAuditoriaCargoLogic.Registrar(cargoServicio);
+                return Json(new MensajeRespuesta("Registro satisfactorio", true, result));
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new MensajeRespuesta("Ocurrio un error no controlado, comuniquese con su Administrador.", TipoMensaje.error, ex.Message));
+            }
+        }
+
+
 
         public ActionResult View(int id)
         {

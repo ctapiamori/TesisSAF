@@ -83,6 +83,9 @@
     <Compile Include="Core\SafProvinciaData.cs" />
     <Compile Include="Core\SafPublicacionBase.cs" />
     <Compile Include="Core\SafPublicacionData.cs" />
+    <Compile Include="Core\SafServAudCargoCapacitacionData.cs" />
+    <Compile Include="Core\SafServAudCargoExperienciaData.cs" />
+    <Compile Include="Core\SafServicioAuditoriaCargoData.cs" />
     <Compile Include="Core\SafServicioAuditoriaData.cs" />
     <Compile Include="Core\SafSoaData.cs" />
     <Compile Include="Core\SafSolCapacitacionData.cs" />

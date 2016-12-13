@@ -63,6 +63,9 @@
     <Compile Include="Core\SafPropuestaLogic.cs" />
     <Compile Include="Core\SafPublicacionBaseLogic.cs" />
     <Compile Include="Core\SafPublicacionLogic.cs" />
+    <Compile Include="Core\SafServAudCargoCapacitacionLogic.cs" />
+    <Compile Include="Core\SafServAudCargoExperienciaLogic.cs" />
+    <Compile Include="Core\SafServicioAuditoriaCargoLogic.cs" />
     <Compile Include="Core\SafServicioAuditoriaLogic.cs" />
     <Compile Include="Core\SafSoaLogic.cs" />
     <Compile Include="Core\SafSolCapacitacionLogic.cs" />

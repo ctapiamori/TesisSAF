@@ -13,5 +13,6 @@ namespace SOCAUD.Common.Constantes
         public const string BASES_CONCURSO = "B";
         public const string PUBLICACION_CONCURSO = "P";
         
+        public const string FORMAT_MMDDYYYY = "dd/MM/yyyy";
     }
 }

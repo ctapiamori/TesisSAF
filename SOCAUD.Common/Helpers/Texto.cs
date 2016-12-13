@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 
 namespace SOCAUD.Common.Helpers
@@ -34,6 +35,11 @@ namespace SOCAUD.Common.Helpers
                 contentType = key.GetValue("Content Type").ToString();
             }
             return contentType;
+        }
+
+        public static DateTime? GetDateTime(string date)
+        {
+            return string.Empty == date ? default(DateTime?) : DateTime.ParseExact(date, Constantes.Variables.FORMAT_MMDDYYYY, null);
         }
     }
 }
