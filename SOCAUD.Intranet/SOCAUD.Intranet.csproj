@@ -497,6 +497,7 @@
     <Content Include="Views\Base\View.cshtml" />
     <Content Include="Views\SolicitudAdmin\Flujo.cshtml" />
     <Content Include="Views\Base\ServicioAuditoria.cshtml" />
+    <Content Include="Views\Base\_cargoequipo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

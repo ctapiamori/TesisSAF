@@ -40,10 +40,14 @@ namespace SOCAUD.Intranet.Models
         public IEnumerable<CargoServicioAuditoriaModel> CargosServicioAuditoria { get; set; }
     }
 
-    public class EquipoServicioAuditoriaModel
+    public class CargoEquipoServicioAuditoriaModel
     {
         public int IdServicioAuditoria { get; set; }
         public int IdCargoServicioAuditoria { get; set; }
+        [Display(Name = "Cargo")]
+        public int IdCargoSeleted { get; set; }
+        //public IEnumerable<CargoServicioAuditoriaModel> CargosServicioAuditoria { get; set; }
+        public IEnumerable<SelectListItem> CargosServicioAuditoria { get; set; }
         [Display(Name = "Cantidad de Integrantes")]
         public int CantidadIntegrantes { get; set; }
         [Display(Name = "Mínimo horas Participación")]

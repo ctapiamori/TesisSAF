@@ -105,7 +105,14 @@ namespace SOCAUD.Intranet.Controllers
             return View(model);
         }
 
-        public JsonResult GrabarCargoEquipo(EquipoServicioAuditoriaModel model)
+        public ActionResult ViewCargoEquipo(int id)
+        {
+
+            var model = new CargoEquipoServicioAuditoriaModel();
+            return PartialView("");
+        }
+
+        public JsonResult GrabarCargoEquipo(CargoEquipoServicioAuditoriaModel model)
         {
             var cargo = new SAF_SERAUDCARGO()
             {
@@ -137,7 +144,7 @@ namespace SOCAUD.Intranet.Controllers
 
         }
 
-        public JsonResult ActualizarCargoEquipo(EquipoServicioAuditoriaModel model)
+        public JsonResult ActualizarCargoEquipo(CargoEquipoServicioAuditoriaModel model)
         {
             var cargo = new SAF_SERAUDCARGO()
             {
