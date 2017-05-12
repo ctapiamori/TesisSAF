@@ -241,10 +241,8 @@
     <Content Include="Content\Image\boxed-bg.png" />
     <Content Include="Content\Image\default-50x50.gif" />
     <Content Include="Content\Image\icons.png" />
-    <Content Include="Content\Image\photo1.png" />
     <Content Include="Content\Image\photo2.png" />
     <Content Include="Content\Image\photo3.jpg" />
-    <Content Include="Content\Image\photo4.jpg" />
     <Content Include="Content\Image\user1-128x128.jpg" />
     <Content Include="Content\Image\user2-160x160.jpg" />
     <Content Include="Content\Image\user3-128x128.jpg" />

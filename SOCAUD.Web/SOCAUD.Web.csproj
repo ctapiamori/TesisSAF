@@ -62,6 +62,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Scripting.11.0.2100.61\lib\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ManagedConnections, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Scripting.11.0.2100.61\lib\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Scripting.11.0.2100.61\lib\Microsoft.SqlServer.Smo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -246,10 +259,8 @@
     <Content Include="Content\Image\boxed-bg.png" />
     <Content Include="Content\Image\default-50x50.gif" />
     <Content Include="Content\Image\icons.png" />
-    <Content Include="Content\Image\photo1.png" />
     <Content Include="Content\Image\photo2.png" />
     <Content Include="Content\Image\photo3.jpg" />
-    <Content Include="Content\Image\photo4.jpg" />
     <Content Include="Content\Image\user1-128x128.jpg" />
     <Content Include="Content\Image\user2-160x160.jpg" />
     <Content Include="Content\Image\user3-128x128.jpg" />
@@ -327,6 +338,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="fonts\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" />
     <Content Include="fonts\DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff" />
+    <None Include="Properties\PublishProfiles\Extranet_local.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap3-wysihtml5.all.min.js" />
     <Content Include="Scripts\core.js" />

@@ -43,10 +43,14 @@ namespace SOCAUD.Web.Controllers
             return Json(result);
         }
 
-        public JsonResult ListadoInvitaciones(int? idPub, int? idSerAud)
+        public JsonResult ListadoInvitaciones(string idPub, int? idSerAud)
         {
+
+            int codigoPub = 0;
+            if (idPub != null && idPub!="")
+                codigoPub = Convert.ToInt32( idPub.Split('-')[0]);
             //var invitaciones = this.modelEntity.SP_SAF_INVITACION(idPub, idSerAud).ToList().Where(c => c.ESTINV == (int)Estado.Invitacion.Enviada || c.ESTINV == (int)Estado.Invitacion.Cancelada || c.ESTINV == (int)Estado.Invitacion.Aceptado);
-            var invitaciones = this._invitacionLogic.ListarInvitacionesPublicacion(idPub, idSerAud,  (int)Session["sessionCodigoResponsableLogin"]);
+            var invitaciones = this._invitacionLogic.ListarInvitacionesPublicacion((codigoPub == 0) ? (int?)null : codigoPub, idSerAud, (int)Session["sessionCodigoResponsableLogin"]);
             //invitaciones = invitaciones.Where(c => c.CODAUD == (int)Session["sessionCodigoResponsableLogin"]).ToList();
             var data = invitaciones.Select(c => new string[] {
                 c.CODINV.ToString(),
