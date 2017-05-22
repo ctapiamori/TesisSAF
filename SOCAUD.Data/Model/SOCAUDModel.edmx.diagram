@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_DISTRITO" Width="1.5" PointX="12.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_DOCUMENTO" Width="1.5" PointX="7.75" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_EMPRESA" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_ENTIDADES" Width="1.5" PointX="13.75" PointY="12" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_EXPERIENCIA" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_FLUJO_DOCUMENTO" Width="1.5" PointX="10" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_INVITACION" Width="1.5" PointX="22.75" PointY="28.875" IsExpanded="true" />
@@ -46,7 +45,6 @@
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_TIPOPARAMETRICA" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_TIPOSOLICITUD" Width="1.5" PointX="0.75" PointY="35.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_UNIVERSIDAD" Width="1.5" PointX="3" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_USUARIO" Width="1.5" PointX="15.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_DIALABORABLE" Width="1.5" PointX="15.75" PointY="13.75" IsExpanded="true" />
         <AssociationConnector Association="SI_SOCAUDModel.FK_SAF_CAPACITACION_SAF_ARCHIVO" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.FK_SAF_EXPERIENCIA_SAF_ARCHIVO" ManuallyRouted="false" />
@@ -75,7 +73,6 @@
         <AssociationConnector Association="SI_SOCAUDModel.R_28" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.R_50" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.R_52" ManuallyRouted="false" />
-        <AssociationConnector Association="SI_SOCAUDModel.R_14" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.R_15" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.FK__SAF_PROVI__CODDE__0E6E26BF" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.FK__SAF_DISTR__CODPR__01142BA1" ManuallyRouted="false" />
@@ -115,6 +112,9 @@
         <AssociationConnector Association="SI_SOCAUDModel.FK_SAF_PUBLICACIONBASE_CODPUB" />
         <AssociationConnector Association="SI_SOCAUDModel.FK_SAF_PUBLICACION_CODCRO" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_WORKFLOW" Width="1.5" PointX="19.375" PointY="4.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_USUARIO" Width="1.5" PointX="20.375" PointY="9.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_ENTIDADES" Width="1.5" PointX="21.375" PointY="1.125" />
+        <AssociationConnector Association="SI_SOCAUDModel.R_14" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

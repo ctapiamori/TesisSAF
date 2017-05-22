@@ -51,9 +51,15 @@
       <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\SOCAUD.Common\Libraries\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PdfReportGenerator">
+      <HintPath>..\SOCAUD.Common\Libraries\PdfReportGenerator.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -188,6 +194,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PropuestaController.cs" />
+    <Compile Include="Controllers\PuntajeController.cs" />
     <Compile Include="Controllers\SolicitudAdminController.cs" />
     <Compile Include="Controllers\WorkflowController.cs" />
     <Compile Include="Global.asax.cs">
@@ -201,10 +208,12 @@
     <Compile Include="Models\AuditorModel.cs" />
     <Compile Include="Models\BaseModels.cs" />
     <Compile Include="Models\CronogramaModels.cs" />
+    <Compile Include="Models\EntidadModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PropuestaModel.cs" />
     <Compile Include="Models\PublicacionModels.cs" />
+    <Compile Include="Models\PuntajeModel.cs" />
     <Compile Include="Models\ServicioAuditoriaModels.cs" />
     <Compile Include="Models\SoaModel.cs" />
     <Compile Include="Models\WorkflowModel.cs" />
@@ -261,6 +270,7 @@
     <Content Include="Content\jquery-jvectormap-1.2.2.css" />
     <Content Include="Content\jquery.pnotify.css" />
     <Content Include="Content\jquery.pnotify.icons.css" />
+    <Content Include="Content\logo_contraloria.png" />
     <Content Include="Content\materialize\css\materialize.css" />
     <Content Include="Content\materialize\css\materialize.min.css" />
     <Content Include="Content\materialize\font\material-design-icons\LICENSE.txt" />
@@ -326,6 +336,7 @@
     <Content Include="fonts\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" />
     <Content Include="fonts\DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff" />
     <Content Include="Areas\Publicacion\Views\Evaluador\View.cshtml" />
+    <Content Include="Areas\Publicacion\Views\Evaluador\CreateReportPublicacion.cshtml" />
     <None Include="Properties\PublishProfiles\publish_intranet.pubxml" />
     <None Include="Reports\Datasets\dsPropuesta.xsd">
       <SubType>Designer</SubType>
@@ -496,10 +507,13 @@
     <Content Include="Views\SolicitudAdmin\Flujo.cshtml" />
     <Content Include="Views\Base\ServicioAuditoria.cshtml" />
     <Content Include="Views\Base\_cargoequipo.cshtml" />
+    <Content Include="Views\Cronograma\CreateReporteCronograma.cshtml" />
+    <Content Include="Views\Base\CreateReporteBase.cshtml" />
+    <Content Include="Views\Entidad\Index.cshtml" />
+    <Content Include="Views\Puntaje\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Entidad\" />
     <Folder Include="Views\General\" />
   </ItemGroup>
   <ItemGroup>

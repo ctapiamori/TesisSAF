@@ -1,0 +1,60 @@
+﻿@model SOCAUD.Intranet.Models.PuntajeModel
+ 
+@{
+    ViewBag.PageTitle = "Puntaje";
+    ViewBag.PageDescription = "Puntaje";
+    ViewBag.PageDescription = "Puntos para las propuesta";
+}
+ 
+ 
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Puntaje para las Propuesta</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(c => c.PuntajeExp)
+                      @Html.TextBoxFor(c => c.PuntajeExp, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(c => c.PuntajeCapa)
+                      @Html.TextBoxFor(c => c.PuntajeCapa, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button id="btnGrabar" type="button" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Grabar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section scripts {
+
+    <script type="text/ecmascript">
+
+        $(document).ready(function () {
+
+            $("#btnGrabar").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GrabarPuntaje", "Puntaje")',
+                    data: { Experiencia: $("#PuntajeExp").val(), Capacitacion: $("#PuntajeCapa").val() },
+                    success: function (result) {
+                        mostrarNotificacion(result);
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+}

@@ -248,6 +248,27 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
             }
         }
 
+        //public ActionResult CreateReportPublicacion(int id)
+        //{
+        //    var model = new ReporteCronograma();
+        //    var cronogramaRpt = this._cronogramaLogic.CronogramaRpt(id);
+        //    var entidadesCronogramaRpt = this._cronoEntidadLogic.ListarEntidadesCronogramaRpt(id);
+        //    FillImageUrl(model, "logo_contraloria.png");
+        //    model.cronograma = cronogramaRpt.FirstOrDefault();
+        //    model.listaEntidades = entidadesCronogramaRpt;
+        //    return this.ViewPdf("", "CreateReporteCronograma", model);
+        //}
+
+        //private void FillImageUrl(ReporteCronograma model, string imageName)
+        //{
+        //    string url = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+        //    model.ImageUrl = url + "Content/" + imageName;
+        //}
+
+        public class ReportePublicacion { 
+            
+        }
+
         public PartialViewResult VerResultadoCortePublicacion(int id)
         {
             var model = new PublicacionViewModel();

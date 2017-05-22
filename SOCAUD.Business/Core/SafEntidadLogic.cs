@@ -13,7 +13,8 @@ namespace SOCAUD.Business.Core
     public interface ISafEntidadLogic : IFacadeOperacionCRUD<SAF_ENTIDADES>
     {
 
-
+        SAF_ENTIDADES ModificarInformacion(SAF_ENTIDADES entidad);
+            
     }
 
     public class SafEntidadLogic : ISafEntidadLogic
@@ -67,5 +68,29 @@ namespace SOCAUD.Business.Core
             }
         }
 
+
+        public SAF_ENTIDADES ModificarInformacion(SAF_ENTIDADES entidad)
+        {
+            var info = this._safEntidadData.GetById(entidad.CODENT);
+
+            info.RAZSOCENT = entidad.RAZSOCENT;
+            info.VISENT = entidad.VISENT;
+            info.MISENT = entidad.MISENT;
+            info.ACTPRIENT = entidad.ACTPRIENT;
+            info.BASLEGENT = entidad.BASLEGENT;
+            info.APEREPLEGENT = entidad.APEREPLEGENT;
+            info.NOMREPLEGENT = entidad.NOMREPLEGENT;
+            info.CELREPLEGENT = entidad.CELREPLEGENT;
+            info.TELREPLEGENT = entidad.TELREPLEGENT;
+            info.CORREPLEGENT = entidad.CORREPLEGENT;
+            info.DOMLEGENT = entidad.DOMLEGENT;
+            info.PAGWEBENT = entidad.PAGWEBENT;
+            info.CODDEPENT = entidad.CODDEPENT;
+            info.CODDISENT = entidad.CODDISENT;
+            info.CODPROENT = entidad.CODPROENT;
+
+            this._safEntidadData.Update(info);
+            return info;
+        }
     }
 }

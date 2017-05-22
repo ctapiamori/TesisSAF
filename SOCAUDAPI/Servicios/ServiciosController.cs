@@ -76,7 +76,7 @@ namespace SOCAUDAPI.Servicios
             try
             {
                 var infoSOAPorUsuario = _soaLogic.InformacionPorUsuario(usuario);
-                return Ok(new { ObtenerSoaPorUsuarioResult = infoSOAPorUsuario.CODSOA });
+                return Ok(new { ObtenerSoaPorUsuarioResult = new { CodigoSOA = infoSOAPorUsuario.CODSOA }});
             }
             catch (Exception)
             {
@@ -146,7 +146,7 @@ namespace SOCAUDAPI.Servicios
         
 
         [HttpGet]
-        [Route("listaConsulta")]
+        [Route("GetConsultas")] 
         public IHttpActionResult listaConsulta(int idSoa, int idPub)
         {
             var listaConsulta = _consultaLogic.ListarConsultaPorPublicacionyUsuario(idSoa, idPub);
@@ -162,17 +162,45 @@ namespace SOCAUDAPI.Servicios
         [Route("DeleteConsulta")]
         public IHttpActionResult DeleteConsulta(int idCon)
         {
-            var listaConsulta = _consultaLogic.ListarConsultaPorPublicacionyUsuario(idSoa, idPub);
-            var result = (from c in listaConsulta
-                          select new
-                          {
-                              CodigoConsulta = c.CODCON,
-                              DescripcionConsulta = c.DESCON,
-                              EstadoConsulta = c.ESTCON
-                          });
-            return Ok(new { listarConsultaResult = result });
+            try
+            {
+                _consultaLogic.DeleteConsulta(idCon);
+                return Ok("Elimino");
+            }
+            catch (Exception)
+            {
+                return Ok("No elimino");
+            }
+        }
+
+        [HttpGet]
+        [Route("InsertConsulta")]
+        public IHttpActionResult InsertConsulta(int idSoa, int idPub, string desCon) { 
+            try
+            {
+                _consultaLogic.InsertConsulta(idSoa, idPub, desCon);
+                return Ok("Agrego");
+            }
+            catch (Exception)
+            {
+                return Ok("Error al agregar");
+            }
         }
         
-
+        [HttpGet]
+        [Route("SendConsulta")]
+        public IHttpActionResult SendConsulta(int idCon)
+        { 
+            try
+            {
+                _consultaLogic.SendConsulta(idCon);
+                return Ok("Envio");
+            }
+            catch (Exception)
+            {
+                return Ok("Error al enviar");
+            }
+        }
+        
     }
 }

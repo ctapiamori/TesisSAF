@@ -1,0 +1,85 @@
+﻿@model SOCAUD.Intranet.Controllers.ReporteCronograma
+ 
+<br/>
+<img src="@Model.ImageUrl" width="200" height="64" /> 
+<br/> <br/> 
+ 
+<table>
+    <tr>
+        <td width="100%" align="center"><h2>Cronograma de Entidades</h2></td> 
+    </tr>
+    <tr>
+        <td width="100%" align="center">Periodo - @Model.cronograma.ANIOCRO</td> 
+    </tr>
+</table>
+<br />
+<br />
+
+
+
+<table cellpadding="3" cellspacing="3">
+
+    <tr>
+    <td width="30%" style="font-size:10px;font-weight:bold;">Fecha publicación</td><td>@Model.cronograma.FECPUBCRO</td>
+    </tr>
+ 
+</table>
+<br /><br />
+<p style="text-align:justify; font-size:10px;">
+    (1) Las modificaciones del presente Cronograma serán aprobadas por el Departamento de Gestión de Sociedades de Auditoría.<br />
+    (2) Siempre que el Titular de la Entidad presente a la CGR la información y que el Coordinador de la Entidad registre la información en el INFOSAF, según lo
+    dispuesto en el presente Cronograma y lo dispuesto en la Directiva.<br />
+    (3) Según el numeral 7.2.1.2 de la Directiva N° 012-2015-CG/PROCAL
+</p>
+<br />
+<br />
+<table cellpadding="3" cellspacing="3">
+    <tr border="1" bgcolor="#777777" color="#ffffff">
+        <td width="60%" align="center">
+            Entidad
+        </td>
+        <td width="20%" align="center">
+            Fecha Inicio
+        </td>
+        <td width="20%" align="center">
+            Fecha Fin
+        </td>
+    </tr>
+    @{
+        var OddColor = "#DDEEEE";
+        var evenColor = "#EEFFFF";
+        var Odd = OddColor;
+    }
+    @foreach (var item in Model.listaEntidades)
+    {
+        <tr border="1" bgcolor="@Odd" >
+            <td style="font-size:10px;">@item.DESCROENT
+            </td>
+            <td style="font-size:10px;">@item.FECINICROENT
+            </td>
+            <td style="font-size:10px;">@item.FECFINCROENT
+            </td>
+        </tr>
+        if (Odd == OddColor)
+        {
+            Odd = evenColor;
+        }
+        else
+        {
+            Odd = OddColor;
+        }
+
+    }
+</table>
+
+<br />
+<br />
+<p style="text-align:justify; font-size:10px;">
+    <span style="font-weight:bold;">Información Importante:</span><br />
+    La Ley regula el ingreso a la carrera administrativa, y los derechos, deberes y responsabilidades de
+    los servidores públicos. No están comprendidos en dicha carrera los funcionarios que desempeñan
+    cargos políticos o de confianza. Ningún funcionario o servidor público puede desempeñar más de un
+    empleo o cargo público remunerado, con excepción de uno o más por función docente. No están
+    comprendidos en la función pública los trabajadores de las empresas del Estado o de sociedades de
+    economía mixta. 
+</p>

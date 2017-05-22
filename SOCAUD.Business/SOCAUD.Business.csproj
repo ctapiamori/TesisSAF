@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\SafConsultaLogic.cs" />
     <Compile Include="Core\SafBaseEntregableLogic.cs" />
     <Compile Include="Core\SafBaseLogic.cs" />
     <Compile Include="Core\SafCapacitacionLogic.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Core\SafInvitacionDetalleLogic.cs" />
     <Compile Include="Core\SafInvitacionLogic.cs" />
     <Compile Include="Core\SafNotificacionLogic.cs" />
+    <Compile Include="Core\SafParametricaLogic.cs" />
     <Compile Include="Core\SafPropuestaEquipoDetalleLogic.cs" />
     <Compile Include="Core\SafPropuestaEquipoLogic.cs" />
     <Compile Include="Core\SafPropuestaLogic.cs" />

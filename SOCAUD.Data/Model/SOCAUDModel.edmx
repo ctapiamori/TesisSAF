@@ -263,8 +263,8 @@
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SI_SOCAUD.dbo.SAF_DIALABORABLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="SAF_DIALABORABLE">
           <Key>
             <PropertyRef Name="CODDIL" />
@@ -340,10 +340,10 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.SAF_DIALABORABLE' does not have a pr
           <Property Name="CODENT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RAZSOCENT" Type="varchar" MaxLength="150" />
           <Property Name="RUCENT" Type="char" MaxLength="21" />
-          <Property Name="VISENT" Type="varchar" MaxLength="300" />
-          <Property Name="MISENT" Type="varchar" MaxLength="300" />
-          <Property Name="ACTPRIENT" Type="varchar" MaxLength="300" />
-          <Property Name="BASLEGENT" Type="varchar" MaxLength="300" />
+          <Property Name="VISENT" Type="varchar" MaxLength="1000" />
+          <Property Name="MISENT" Type="varchar" MaxLength="1000" />
+          <Property Name="ACTPRIENT" Type="varchar" MaxLength="1000" />
+          <Property Name="BASLEGENT" Type="varchar" MaxLength="1000" />
           <Property Name="ORGENT" Type="image" />
           <Property Name="DOMLEGENT" Type="varchar" MaxLength="50" />
           <Property Name="CODDEPENT" Type="char" MaxLength="18" />
@@ -783,6 +783,7 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.SAF_DIALABORABLE' does not have a pr
           <Property Name="USUREG" Type="varchar" MaxLength="50" />
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="CODENT" Type="int" />
         </EntityType>
         <EntityType Name="SAF_WORKFLOW">
           <Key>
@@ -804,8 +805,8 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.SAF_DIALABORABLE' does not have a pr
           <Property Name="USUREG" Type="varchar" MaxLength="50" />
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_AUDITORIAEQUIPO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_AUDITORIAEQUIPO' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VW_SAF_AUDITORIAEQUIPO">
           <Key>
             <PropertyRef Name="CODPROEQU" />
@@ -817,8 +818,8 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_AUDITORIAEQUIPO' does not hav
           <Property Name="NOMCOMAUD" Type="varchar" MaxLength="101" />
           <Property Name="NOMCAR" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_INVITACION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_INVITACION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VW_SAF_INVITACION">
           <Key>
             <PropertyRef Name="CODINV" />
@@ -839,8 +840,8 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_INVITACION' does not have a p
           <Property Name="CODSOA" Type="int" Nullable="false" />
           <Property Name="RAZSOCSOA" Type="varchar" MaxLength="150" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_PROPUESTAEJECUCION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_PROPUESTAEJECUCION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VW_SAF_PROPUESTAEJECUCION">
           <Key>
             <PropertyRef Name="CODPRO" />
@@ -854,8 +855,8 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_PROPUESTAEJECUCION' does not 
           <Property Name="CODPUB" Type="int" Nullable="false" />
           <Property Name="DESBAS" Type="varchar" MaxLength="300" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_PUBLICACION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_PUBLICACION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VW_SAF_PUBLICACION">
           <Key>
             <PropertyRef Name="CODPUB" />
@@ -877,8 +878,8 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_PUBLICACION' does not have a 
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VW_SAF_SOLICITUD">
           <Key>
             <PropertyRef Name="CODSOL" />
@@ -2317,8 +2318,8 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="SAF_BASE" Relationship="Self.R_16" FromRole="SAF_CRONOENTIDAD" ToRole="SAF_BASE" />
-          <NavigationProperty Name="SAF_ENTIDADES" Relationship="Self.R_14" FromRole="SAF_CRONOENTIDAD" ToRole="SAF_ENTIDADES" />
           <NavigationProperty Name="SAF_CRONOGRAMA" Relationship="Self.R_15" FromRole="SAF_CRONOENTIDAD" ToRole="SAF_CRONOGRAMA" />
+          <NavigationProperty Name="SAF_ENTIDADES" Relationship="SI_SOCAUDModel.R_14" FromRole="SAF_CRONOENTIDAD" ToRole="SAF_ENTIDADES" />
         </EntityType>
         <EntityType Name="SAF_CRONOGRAMA">
           <Key>
@@ -2410,35 +2411,6 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="SAF_SOLEXPERIENCIA" Relationship="Self.R_10" FromRole="SAF_EMPRESA" ToRole="SAF_SOLEXPERIENCIA" />
           <NavigationProperty Name="SAF_EXPERIENCIA" Relationship="Self.R_6" FromRole="SAF_EMPRESA" ToRole="SAF_EXPERIENCIA" />
-        </EntityType>
-        <EntityType Name="SAF_ENTIDADES">
-          <Key>
-            <PropertyRef Name="CODENT" />
-          </Key>
-          <Property Name="CODENT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RAZSOCENT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="RUCENT" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
-          <Property Name="VISENT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="MISENT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ACTPRIENT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="BASLEGENT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ORGENT" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="DOMLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CODDEPENT" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
-          <Property Name="CODPROENT" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
-          <Property Name="CODDISENT" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
-          <Property Name="PAGWEBENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NOMREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="APEREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CORREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TELREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CELREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FECREG" Type="DateTime" Precision="3" />
-          <Property Name="FECMOD" Type="DateTime" Precision="3" />
-          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="SAF_CRONOENTIDAD" Relationship="Self.R_14" FromRole="SAF_ENTIDADES" ToRole="SAF_CRONOENTIDAD" />
         </EntityType>
         <EntityType Name="SAF_EXPERIENCIA">
           <Key>
@@ -2883,23 +2855,6 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <NavigationProperty Name="SAF_CAPACITACION" Relationship="Self.R_7" FromRole="SAF_UNIVERSIDAD" ToRole="SAF_CAPACITACION" />
           <NavigationProperty Name="SAF_SOLCAPACITACION" Relationship="Self.R_12" FromRole="SAF_UNIVERSIDAD" ToRole="SAF_SOLCAPACITACION" />
         </EntityType>
-        <EntityType Name="SAF_USUARIO">
-          <Key>
-            <PropertyRef Name="CODUSU" />
-          </Key>
-          <Property Name="CODUSU" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PASUSU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="NOMPERUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="APEPERUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DNIUSU" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="TIPCARUSU" Type="Int32" />
-          <Property Name="FECREG" Type="DateTime" Precision="3" />
-          <Property Name="FECMOD" Type="DateTime" Precision="3" />
-          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
         <EntityType Name="SAF_DIALABORABLE">
           <Key>
             <PropertyRef Name="CODDIL" />
@@ -3239,18 +3194,6 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="R_14">
-          <End Role="SAF_ENTIDADES" Type="Self.SAF_ENTIDADES" Multiplicity="0..1" />
-          <End Role="SAF_CRONOENTIDAD" Type="Self.SAF_CRONOENTIDAD" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_ENTIDADES">
-              <PropertyRef Name="CODENT" />
-            </Principal>
-            <Dependent Role="SAF_CRONOENTIDAD">
-              <PropertyRef Name="CODENT" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="R_15">
           <End Role="SAF_CRONOGRAMA" Type="Self.SAF_CRONOGRAMA" Multiplicity="0..1" />
           <End Role="SAF_CRONOENTIDAD" Type="Self.SAF_CRONOENTIDAD" Multiplicity="*" />
@@ -3570,7 +3513,6 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <EntitySet Name="SAF_DISTRITO" EntityType="Self.SAF_DISTRITO" />
           <EntitySet Name="SAF_DOCUMENTO" EntityType="Self.SAF_DOCUMENTO" />
           <EntitySet Name="SAF_EMPRESA" EntityType="Self.SAF_EMPRESA" />
-          <EntitySet Name="SAF_ENTIDADES" EntityType="Self.SAF_ENTIDADES" />
           <EntitySet Name="SAF_EXPERIENCIA" EntityType="Self.SAF_EXPERIENCIA" />
           <EntitySet Name="SAF_FLUJO_DOCUMENTO" EntityType="Self.SAF_FLUJO_DOCUMENTO" />
           <EntitySet Name="SAF_INVITACION" EntityType="Self.SAF_INVITACION" />
@@ -3593,7 +3535,6 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <EntitySet Name="SAF_TIPOPARAMETRICA" EntityType="Self.SAF_TIPOPARAMETRICA" />
           <EntitySet Name="SAF_TIPOSOLICITUD" EntityType="Self.SAF_TIPOSOLICITUD" />
           <EntitySet Name="SAF_UNIVERSIDAD" EntityType="Self.SAF_UNIVERSIDAD" />
-          <EntitySet Name="SAF_USUARIO" EntityType="Self.SAF_USUARIO" />
           <EntitySet Name="SAF_DIALABORABLE" EntityType="Self.SAF_DIALABORABLE" />
           <AssociationSet Name="FK_SAF_CAPACITACION_SAF_ARCHIVO" Association="Self.FK_SAF_CAPACITACION_SAF_ARCHIVO">
             <End Role="SAF_ARCHIVO" EntitySet="SAF_ARCHIVO" />
@@ -3702,10 +3643,6 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <AssociationSet Name="R_52" Association="Self.R_52">
             <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
             <End Role="SAF_CORTE_AUDITOR_CARGO" EntitySet="SAF_CORTE_AUDITOR_CARGO" />
-          </AssociationSet>
-          <AssociationSet Name="R_14" Association="Self.R_14">
-            <End Role="SAF_ENTIDADES" EntitySet="SAF_ENTIDADES" />
-            <End Role="SAF_CRONOENTIDAD" EntitySet="SAF_CRONOENTIDAD" />
           </AssociationSet>
           <AssociationSet Name="R_15" Association="Self.R_15">
             <End Role="SAF_CRONOGRAMA" EntitySet="SAF_CRONOGRAMA" />
@@ -3933,11 +3870,17 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <Parameter Name="CODBAS" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_SAF_PUBLICACION_RPT" ReturnType="Collection(SI_SOCAUDModel.TcSAFPUBLICACIONRPT)">
-            <Parameter Name="CODPUB" Mode="In" Type="Int32" />
+          <Parameter Name="CODPUB" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_SAF_PUBLICACIONBASE_RPT" ReturnType="Collection(SI_SOCAUDModel.TcSAFPUBLICACIONBASERPT)">
-            <Parameter Name="CODPUB" Mode="In" Type="Int32" />
+          <Parameter Name="CODPUB" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="SAF_USUARIO" EntityType="SI_SOCAUDModel.SAF_USUARIO" />
+          <EntitySet Name="SAF_ENTIDADES" EntityType="SI_SOCAUDModel.SAF_ENTIDADES" />
+          <AssociationSet Name="R_14" Association="SI_SOCAUDModel.R_14">
+            <End Role="SAF_ENTIDADES" EntitySet="SAF_ENTIDADES" />
+            <End Role="SAF_CRONOENTIDAD" EntitySet="SAF_CRONOENTIDAD" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
@@ -4433,6 +4376,65 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
           <Property Type="String" Name="CODBAS" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="DESPUBBAS" Nullable="true" MaxLength="300" />
         </ComplexType>
+        <EntityType Name="SAF_USUARIO">
+          <Key>
+            <PropertyRef Name="CODUSU" />
+          </Key>
+          <Property Name="CODUSU" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASUSU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NOMPERUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APEPERUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DNIUSU" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="TIPCARUSU" Type="Int32" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODENT" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SAF_ENTIDADES">
+          <Key>
+            <PropertyRef Name="CODENT" />
+          </Key>
+          <Property Name="CODENT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RAZSOCENT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="RUCENT" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
+          <Property Name="VISENT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="MISENT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ACTPRIENT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="BASLEGENT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ORGENT" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DOMLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CODDEPENT" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
+          <Property Name="CODPROENT" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
+          <Property Name="CODDISENT" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
+          <Property Name="PAGWEBENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NOMREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APEREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CORREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TELREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CELREPLEGENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="SAF_CRONOENTIDAD" Relationship="SI_SOCAUDModel.R_14" FromRole="SAF_ENTIDADES" ToRole="SAF_CRONOENTIDAD" />
+        </EntityType>
+        <Association Name="R_14">
+          <End Type="SI_SOCAUDModel.SAF_ENTIDADES" Role="SAF_ENTIDADES" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CRONOENTIDAD" Role="SAF_CRONOENTIDAD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_ENTIDADES">
+              <PropertyRef Name="CODENT" />
+            </Principal>
+            <Dependent Role="SAF_CRONOENTIDAD">
+              <PropertyRef Name="CODENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4746,35 +4748,6 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
                 <ScalarProperty Name="CODEMP" ColumnName="CODEMP" />
                 <ScalarProperty Name="RAZSOCEMP" ColumnName="RAZSOCEMP" />
                 <ScalarProperty Name="RUCEMP" ColumnName="RUCEMP" />
-                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
-                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
-                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
-                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SAF_ENTIDADES">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_ENTIDADES">
-              <MappingFragment StoreEntitySet="SAF_ENTIDADES">
-                <ScalarProperty Name="CODENT" ColumnName="CODENT" />
-                <ScalarProperty Name="RAZSOCENT" ColumnName="RAZSOCENT" />
-                <ScalarProperty Name="RUCENT" ColumnName="RUCENT" />
-                <ScalarProperty Name="VISENT" ColumnName="VISENT" />
-                <ScalarProperty Name="MISENT" ColumnName="MISENT" />
-                <ScalarProperty Name="ACTPRIENT" ColumnName="ACTPRIENT" />
-                <ScalarProperty Name="BASLEGENT" ColumnName="BASLEGENT" />
-                <ScalarProperty Name="ORGENT" ColumnName="ORGENT" />
-                <ScalarProperty Name="DOMLEGENT" ColumnName="DOMLEGENT" />
-                <ScalarProperty Name="CODDEPENT" ColumnName="CODDEPENT" />
-                <ScalarProperty Name="CODPROENT" ColumnName="CODPROENT" />
-                <ScalarProperty Name="CODDISENT" ColumnName="CODDISENT" />
-                <ScalarProperty Name="PAGWEBENT" ColumnName="PAGWEBENT" />
-                <ScalarProperty Name="NOMREPLEGENT" ColumnName="NOMREPLEGENT" />
-                <ScalarProperty Name="APEREPLEGENT" ColumnName="APEREPLEGENT" />
-                <ScalarProperty Name="CORREPLEGENT" ColumnName="CORREPLEGENT" />
-                <ScalarProperty Name="TELREPLEGENT" ColumnName="TELREPLEGENT" />
-                <ScalarProperty Name="CELREPLEGENT" ColumnName="CELREPLEGENT" />
                 <ScalarProperty Name="FECREG" ColumnName="FECREG" />
                 <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
                 <ScalarProperty Name="USUREG" ColumnName="USUREG" />
@@ -5175,24 +5148,6 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
                 <ScalarProperty Name="CODUNI" ColumnName="CODUNI" />
                 <ScalarProperty Name="RAZSOCUNI" ColumnName="RAZSOCUNI" />
                 <ScalarProperty Name="RUCUNI" ColumnName="RUCUNI" />
-                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
-                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
-                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
-                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SAF_USUARIO">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_USUARIO">
-              <MappingFragment StoreEntitySet="SAF_USUARIO">
-                <ScalarProperty Name="CODUSU" ColumnName="CODUSU" />
-                <ScalarProperty Name="NOMUSU" ColumnName="NOMUSU" />
-                <ScalarProperty Name="PASUSU" ColumnName="PASUSU" />
-                <ScalarProperty Name="NOMPERUSU" ColumnName="NOMPERUSU" />
-                <ScalarProperty Name="APEPERUSU" ColumnName="APEPERUSU" />
-                <ScalarProperty Name="DNIUSU" ColumnName="DNIUSU" />
-                <ScalarProperty Name="TIPCARUSU" ColumnName="TIPCARUSU" />
                 <ScalarProperty Name="FECREG" ColumnName="FECREG" />
                 <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
                 <ScalarProperty Name="USUREG" ColumnName="USUREG" />
@@ -5714,6 +5669,54 @@ warning 6002: The table/view 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' does not have a pr
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SAF_USUARIO">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_USUARIO">
+              <MappingFragment StoreEntitySet="SAF_USUARIO">
+                <ScalarProperty Name="CODENT" ColumnName="CODENT" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="TIPCARUSU" ColumnName="TIPCARUSU" />
+                <ScalarProperty Name="DNIUSU" ColumnName="DNIUSU" />
+                <ScalarProperty Name="APEPERUSU" ColumnName="APEPERUSU" />
+                <ScalarProperty Name="NOMPERUSU" ColumnName="NOMPERUSU" />
+                <ScalarProperty Name="PASUSU" ColumnName="PASUSU" />
+                <ScalarProperty Name="NOMUSU" ColumnName="NOMUSU" />
+                <ScalarProperty Name="CODUSU" ColumnName="CODUSU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_ENTIDADES">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_ENTIDADES">
+              <MappingFragment StoreEntitySet="SAF_ENTIDADES">
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="CELREPLEGENT" ColumnName="CELREPLEGENT" />
+                <ScalarProperty Name="TELREPLEGENT" ColumnName="TELREPLEGENT" />
+                <ScalarProperty Name="CORREPLEGENT" ColumnName="CORREPLEGENT" />
+                <ScalarProperty Name="APEREPLEGENT" ColumnName="APEREPLEGENT" />
+                <ScalarProperty Name="NOMREPLEGENT" ColumnName="NOMREPLEGENT" />
+                <ScalarProperty Name="PAGWEBENT" ColumnName="PAGWEBENT" />
+                <ScalarProperty Name="CODDISENT" ColumnName="CODDISENT" />
+                <ScalarProperty Name="CODPROENT" ColumnName="CODPROENT" />
+                <ScalarProperty Name="CODDEPENT" ColumnName="CODDEPENT" />
+                <ScalarProperty Name="DOMLEGENT" ColumnName="DOMLEGENT" />
+                <ScalarProperty Name="ORGENT" ColumnName="ORGENT" />
+                <ScalarProperty Name="BASLEGENT" ColumnName="BASLEGENT" />
+                <ScalarProperty Name="ACTPRIENT" ColumnName="ACTPRIENT" />
+                <ScalarProperty Name="MISENT" ColumnName="MISENT" />
+                <ScalarProperty Name="VISENT" ColumnName="VISENT" />
+                <ScalarProperty Name="RUCENT" ColumnName="RUCENT" />
+                <ScalarProperty Name="RAZSOCENT" ColumnName="RAZSOCENT" />
+                <ScalarProperty Name="CODENT" ColumnName="CODENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

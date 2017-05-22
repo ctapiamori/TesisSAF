@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reporting.WebForms;
+using ReportManagement;
 using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
@@ -14,12 +15,38 @@ using System.Web.Mvc;
 
 namespace SOCAUD.Intranet.Controllers
 {
-    public class BaseController : Controller
+
+
+    public class ReporteBase
+    {
+        public TcSAFBASERPT bases { get; set; }
+        public string RUCEntidad { get; set; }
+        public string RazonSocial { get; set; }
+        public string MisionEntidad { get; set; }
+        public string VisionEntidad { get; set; }
+        public string BaseLegalEntidad { get; set; }
+        public string ActividadPrincipalEntidad { get; set; }
+        public string DomicilioLegalEntidad { get; set; }
+        public string PaginaWebEntidad { get; set; }
+
+        public string ImageUrl { get; set; }
+        public IEnumerable<TcSAFCRONOENTIDADCRONORPT> listaEntidades { get; set; }
+        public ReporteBase()
+        {
+            this.bases = new TcSAFBASERPT();
+            this.listaEntidades = new List<TcSAFCRONOENTIDADCRONORPT>();
+        }
+    }
+
+
+    public class BaseController : PdfViewController
     {
         private readonly ISafCronogramaLogic _cronogramaLogic;
         private readonly ISafCronoEntidadLogic _cronoEntidadLogic;
         private readonly ISafBaseLogic _baseLogic;
         private readonly ISafGeneralLogic _safGeneralLogic;
+        private readonly ISafEntidadLogic _safEntidadLogic;
+
         private readonly ISafServicioAuditoriaLogic _safServicioAuditoriaLogic;
         private readonly ISafServicioAuditoriaCargoLogic _safServicioAuditoriaCargoLogic;
 
@@ -29,6 +56,7 @@ namespace SOCAUD.Intranet.Controllers
             this._cronoEntidadLogic = new SafCronoEntidadLogic();
             this._baseLogic = new SafBaseLogic();
             this._safGeneralLogic = new SafGeneralLogic();
+            this._safEntidadLogic = new SafEntidadLogic();
             this._safServicioAuditoriaLogic = new SafServicioAuditoriaLogic();
             this._safServicioAuditoriaCargoLogic = new SafServicioAuditoriaCargoLogic();
         }
@@ -107,7 +135,6 @@ namespace SOCAUD.Intranet.Controllers
 
         public ActionResult ViewCargoEquipo(int id)
         {
-
             var model = new CargoEquipoServicioAuditoriaModel();
             return PartialView("");
         }
@@ -359,6 +386,39 @@ namespace SOCAUD.Intranet.Controllers
             var file = ObtenerBaseRPT(id);
             return File(file, "application/pdf", "rptBase.pdf");
         }
+
+
+        public ActionResult CreateReporteBase(int id)
+        {
+            var model = new ReporteBase();
+            var baseRpt = this._baseLogic.BaseRpt(id);
+            var infoBase = this._baseLogic.BuscarPorId(id);
+            var infoCronoEntidad = this._cronoEntidadLogic.BuscarPorId(infoBase.CODCROENT.Value);
+            var infoEntidad = this._safEntidadLogic.BuscarPorId(infoCronoEntidad.CODENT.Value);
+            var entidadesCronogramaRpt = this._cronoEntidadLogic.ListarEntidadesCronogramaRpt(infoBase.CODCRO.Value);
+
+            model.bases = baseRpt.FirstOrDefault();
+            model.listaEntidades = entidadesCronogramaRpt;
+            model.RazonSocial = infoEntidad.RAZSOCENT;
+            model.RUCEntidad = infoEntidad.RUCENT;
+            model.PaginaWebEntidad = string.IsNullOrEmpty(infoEntidad.PAGWEBENT) ? "NO HAY INFORMACION" : infoEntidad.PAGWEBENT;
+            model.BaseLegalEntidad = string.IsNullOrEmpty(infoEntidad.BASLEGENT) ? "NO HAY INFORMACION" : infoEntidad.BASLEGENT;
+            model.VisionEntidad = string.IsNullOrEmpty(infoEntidad.VISENT) ? "NO HAY INFORMACION" : infoEntidad.VISENT;
+            model.MisionEntidad = string.IsNullOrEmpty(infoEntidad.MISENT) ? "NO HAY INFORMACION" : infoEntidad.MISENT;
+            model.ActividadPrincipalEntidad = string.IsNullOrEmpty(infoEntidad.ACTPRIENT) ? "NO HAY INFORMACION" : infoEntidad.ACTPRIENT;
+            model.DomicilioLegalEntidad = string.IsNullOrEmpty(infoEntidad.DOMLEGENT) ? "NO HAY INFORMACION" : infoEntidad.DOMLEGENT;
+            FillImageUrl(model, "logo_contraloria.png");
+            return this.ViewPdf("", "CreateReporteBase", model);
+        }
+
+
+        private void FillImageUrl(ReporteBase model, string imageName)
+        {
+            string url = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+            model.ImageUrl = url + "Content/" + imageName;
+        }
+
+
 
         public Byte[] ObtenerBaseRPT(int id)
         {

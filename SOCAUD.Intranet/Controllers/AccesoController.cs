@@ -36,6 +36,7 @@ namespace SOCAUD.Intranet.Controllers
                 Session["sessionUsuarioNombreCompleto"] = string.Format("{0} {1}", datosUsuario.NOMPERUSU, datosUsuario.APEPERUSU);
                 Session["tipoUsuario"] = datosUsuario.TIPCARUSU.GetValueOrDefault();
                 Session["idUsuario"] = datosUsuario.CODUSU;
+                Session["codigoEntidadDelUsuario"] = (datosUsuario.CODENT.HasValue)? datosUsuario.CODENT.Value : 0;
                 return Json(new MensajeRespuesta(result.MENSAJE, true));
             }
         }

@@ -81,6 +81,8 @@
   <ItemGroup>
     <Content Include="Libraries\EntityFramework.dll" />
     <Content Include="Libraries\EntityFramework.SqlServer.dll" />
+    <Content Include="Libraries\itextsharp.dll" />
+    <Content Include="Libraries\PdfReportGenerator.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

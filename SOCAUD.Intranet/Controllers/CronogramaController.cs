@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reporting.WebForms;
+using ReportManagement;
 using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
@@ -14,7 +15,21 @@ using System.Web.Mvc;
 
 namespace SOCAUD.Intranet.Controllers
 {
-    public class CronogramaController : Controller
+
+    public class ReporteCronograma
+    {
+
+        public TcSAFCRONOGRAMARPT cronograma { get; set; }
+        public IEnumerable<TcSAFCRONOENTIDADCRONORPT> listaEntidades { get; set; }
+        public string ImageUrl { get; set; }
+
+        public ReporteCronograma()
+        {
+            this.cronograma = new TcSAFCRONOGRAMARPT();
+            this.listaEntidades = new List<TcSAFCRONOENTIDADCRONORPT>();
+        }
+    }
+    public class CronogramaController : PdfViewController
     {
         private readonly ISafCronogramaLogic _cronogramaLogic;
         private readonly ISafEntidadLogic _entidadLogic;
@@ -33,11 +48,16 @@ namespace SOCAUD.Intranet.Controllers
         public ActionResult Index()
         {
             var anios = new List<SelectListItem>();
-            for (int i = Variables.ANIO_INICIAL; i < DateTime.Now.Year + 1; i++)
-            {
-                anios.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
-            }
+            //for (int i = Variables.ANIO_INICIAL; i < DateTime.Now.Year + 1; i++)
+            //{
+            //    anios.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
+            //}
+            var cronogramas = this._cronogramaLogic.ListarTodos();
 
+            foreach (var item in cronogramas)
+            {
+                anios.Add(new SelectListItem() { Value = item.ANIOCRO.Value.ToString(), Text = item.ANIOCRO.Value.ToString() });
+            }
             ViewBag.Anios = anios;
             return View();
         }
@@ -220,6 +240,27 @@ namespace SOCAUD.Intranet.Controllers
             var file = ObtenerCronogramaRPT(id);
             return File(file, "application/pdf", "rptCronograma.pdf");
         }
+
+        public ActionResult CreateReporteCronograma(int id) {
+            var model = new  ReporteCronograma();
+            var cronogramaRpt = this._cronogramaLogic.CronogramaRpt(id);
+            var entidadesCronogramaRpt = this._cronoEntidadLogic.ListarEntidadesCronogramaRpt(id);
+             FillImageUrl(model, "logo_contraloria.png");
+            model.cronograma = cronogramaRpt.FirstOrDefault();
+            model.listaEntidades = entidadesCronogramaRpt;
+            return this.ViewPdf("", "CreateReporteCronograma", model);
+        }
+
+
+    
+
+        private void FillImageUrl(ReporteCronograma model, string imageName)
+        {
+            string url = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+            model.ImageUrl = url + "Content/" + imageName;
+        }
+
+
 
         public Byte[] ObtenerCronogramaRPT(int id)
         {

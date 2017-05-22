@@ -90,12 +90,15 @@
     }
 
     function Descargar(id, tipo) {
+        var url = "";
         if (tipo == 'C')
-            window.location.href = '@Url.Action("DescargarReporte", "Cronograma", new { Area = "", id = "_id_" })'.replace('_id_', id);
+            url = '@Url.Action("CreateReporteCronograma", "Cronograma", new { Area = "", id = "_id_" })'.replace('_id_', id);
         if (tipo == 'B')
-            window.location.href = '@Url.Action("DescargarReporte", "Base", new { Area = "", id = "_id_" })'.replace('_id_', id);
+            url = '@Url.Action("CreateReporteBase", "Base", new { Area = "", id = "_id_" })'.replace('_id_', id);
         if(tipo == 'P')
-            window.location.href = '@Url.Action("DescargarReporte", "Evaluador", new { Area = "Publicacion", id = "_id_" })'.replace('_id_', id);
+            url = '@Url.Action("DescargarReporte", "Evaluador", new { Area = "Publicacion", id = "_id_" })'.replace('_id_', id);
+
+        window.open(url);
     }
     </script>
 }

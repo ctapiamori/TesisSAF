@@ -1,0 +1,197 @@
+﻿@model SOCAUD.Intranet.Models.EntidadModel
+ 
+@{
+    ViewBag.PageTitle = "Entidad";
+    ViewBag.PageDescription = "Entidad";
+    ViewBag.PageDescription = "Actualización de datos";
+}
+ 
+
+
+<form id="frmGrabarEntidad" name="frmGrabarEntidad">
+
+@Html.HiddenFor(c => c.CodigoEntidad)
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Editar Información de Entidad</h3>
+        </div>
+        <div class="box-body">
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(c => c.Ruc)
+                    @Html.TextBoxFor(c => c.Ruc, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.LabelFor(c => c.RazonSocial)
+                    @Html.TextBoxFor(c => c.RazonSocial, new { @class = "form-control" })                            
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(c => c.PaginaWeb)
+                    @Html.TextBoxFor(c => c.PaginaWeb, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.LabelFor(c => c.DomicilioEntidad)
+                    @Html.TextBoxFor(c => c.DomicilioEntidad, new { @class = "form-control" })                            
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(c => c.Departamento)
+                    @Html.DropDownListFor(c => c.Departamento, Model.ListaDepartamento, "Seleccione", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(c => c.Provincia)
+                    @Html.DropDownListFor(c => c.Provincia, Model.ListaProvincia, "Seleccione", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(c => c.Distrito)
+                    @Html.DropDownListFor(c => c.Distrito, Model.ListaDistrito, "Seleccione", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(c => c.Mision)
+                    <textarea rows="5" class="form-control" name="Mision" id="Mision">@Model.Mision</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(c => c.Vision)
+                    <textarea rows="5" class="form-control" name="Vision" id="Vision">@Model.Vision</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(c => c.BaseLegal)
+                    <textarea rows="5" class="form-control" name="BaseLegal" id="BaseLegal">@Model.BaseLegal</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(c => c.ActividadPrincipal)
+                    <textarea rows="5" class="form-control" name="ActividadPrincipal" id="ActividadPrincipal">@Model.ActividadPrincipal</textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary color-palette-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Representante Legal</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.NombreRepLegal)
+                                 @Html.TextBoxFor(c => c.NombreRepLegal, new { @class = "form-control" })   
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.ApellidoRepLegal)
+                                 @Html.TextBoxFor(c => c.ApellidoRepLegal, new { @class = "form-control" })   
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.CorreoRepLegal)
+                                 @Html.TextBoxFor(c => c.CorreoRepLegal, new { @class = "form-control" })   
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.TelefonoRepLegal)
+                                 @Html.TextBoxFor(c => c.TelefonoRepLegal, new { @class = "form-control" })   
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.LabelFor(c => c.CelularRepLegal)
+                                 @Html.TextBoxFor(c => c.CelularRepLegal, new { @class = "form-control" })   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnGrabar" class="btn btn-primary" type="button"><i class="fa fa-save"></i>&nbsp;Grabar</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</form>
+
+@section scripts {
+
+    <script type="text/ecmascript">
+
+        $(document).ready(function () {
+
+            $("#btnGrabar").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GrabarInfoEntidad", "Entidad")',
+                    data: $("#frmGrabarEntidad").serialize(),
+                    success: function (result) {
+                        mostrarNotificacion(result);
+                    }
+                });
+            });
+
+
+            $("#Departamento").change(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CargarProvincia", "Entidad")',
+                    data: { id: $(this).val() },
+                    success: function (result) {
+                        $("#Provincia option").not(":first").remove();
+                        $.each(result, function (i, v) {
+                            $("#Provincia").append("<option value='" + v.Value + "'>" + v.Text + "</option>");
+                        });
+                    }
+                });
+            });
+
+            $("#Provincia").change(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CargarDistrito", "Entidad")',
+                    data: { id: $(this).val() },
+                    success: function (result) {
+                        $("#Distrito option").not(":first").remove();
+                        $.each(result, function (i, v) {
+                            $("#Distrito").append("<option value='" + v.Value + "'>" + v.Text + "</option>");
+                        });
+                    }
+                });
+            });
+
+        });
+
+    </script>
+}
