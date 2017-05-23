@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CAPACITACION" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CARGO" Width="1.5" PointX="23.5" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CARRERA" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CONSULTA" Width="1.5" PointX="22.75" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CORTE_AUDITOR" Width="1.5" PointX="22.75" PointY="18.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CORTE_AUDITOR_CARGO" Width="1.5" PointX="25.75" PointY="21.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CRONOENTIDAD" Width="1.5" PointX="16" PointY="18.75" IsExpanded="true" />
@@ -69,8 +68,6 @@
         <AssociationConnector Association="SI_SOCAUDModel.FK_SAF_SERAUDCARGO_SAF_CARGO" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.R_51" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.R_13" ManuallyRouted="false" />
-        <AssociationConnector Association="SI_SOCAUDModel.R_27" ManuallyRouted="false" />
-        <AssociationConnector Association="SI_SOCAUDModel.R_28" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.R_50" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.R_52" ManuallyRouted="false" />
         <AssociationConnector Association="SI_SOCAUDModel.R_15" ManuallyRouted="false" />
@@ -115,6 +112,9 @@
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_USUARIO" Width="1.5" PointX="20.375" PointY="9.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_ENTIDADES" Width="1.5" PointX="21.375" PointY="1.125" />
         <AssociationConnector Association="SI_SOCAUDModel.R_14" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CONSULTA" Width="1.5" PointX="22.75" PointY="24.625" />
+        <AssociationConnector Association="SI_SOCAUDModel.R_27" />
+        <AssociationConnector Association="SI_SOCAUDModel.R_28" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,6 +24,7 @@ namespace SOCAUD.Data.Model
         public Nullable<int> CODPUB { get; set; }
         public Nullable<int> CODSOA { get; set; }
         public Nullable<int> ESTCON { get; set; }
+        public string RESCON { get; set; }
     
         public virtual SAF_PUBLICACION SAF_PUBLICACION { get; set; }
         public virtual SAF_SOA SAF_SOA { get; set; }

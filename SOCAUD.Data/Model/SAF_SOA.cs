@@ -17,10 +17,10 @@ namespace SOCAUD.Data.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SAF_SOA()
         {
-            this.SAF_CONSULTA = new HashSet<SAF_CONSULTA>();
             this.SAF_INVITACION = new HashSet<SAF_INVITACION>();
             this.SAF_PROPUESTA = new HashSet<SAF_PROPUESTA>();
             this.SAF_SOLICITUD = new HashSet<SAF_SOLICITUD>();
+            this.SAF_CONSULTA = new HashSet<SAF_CONSULTA>();
         }
     
         public int CODSOA { get; set; }
@@ -47,12 +47,12 @@ namespace SOCAUD.Data.Model
         public string PASUSU { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SAF_CONSULTA> SAF_CONSULTA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_INVITACION> SAF_INVITACION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_PROPUESTA> SAF_PROPUESTA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_SOLICITUD> SAF_SOLICITUD { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SAF_CONSULTA> SAF_CONSULTA { get; set; }
     }
 }

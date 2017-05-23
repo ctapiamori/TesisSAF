@@ -35,7 +35,6 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_CAPACITACION> SAF_CAPACITACION { get; set; }
         public virtual DbSet<SAF_CARGO> SAF_CARGO { get; set; }
         public virtual DbSet<SAF_CARRERA> SAF_CARRERA { get; set; }
-        public virtual DbSet<SAF_CONSULTA> SAF_CONSULTA { get; set; }
         public virtual DbSet<SAF_CORTE_AUDITOR> SAF_CORTE_AUDITOR { get; set; }
         public virtual DbSet<SAF_CORTE_AUDITOR_CARGO> SAF_CORTE_AUDITOR_CARGO { get; set; }
         public virtual DbSet<SAF_CRONOENTIDAD> SAF_CRONOENTIDAD { get; set; }
@@ -79,6 +78,7 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_WORKFLOW> SAF_WORKFLOW { get; set; }
         public virtual DbSet<SAF_USUARIO> SAF_USUARIO { get; set; }
         public virtual DbSet<SAF_ENTIDADES> SAF_ENTIDADES { get; set; }
+        public virtual DbSet<SAF_CONSULTA> SAF_CONSULTA { get; set; }
     
         public virtual ObjectResult<TcCORTEPUBLICACION> SP_SAF_CORTEPUBLICACION(Nullable<int> cODPUB)
         {

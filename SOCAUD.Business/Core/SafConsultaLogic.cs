@@ -16,11 +16,15 @@ namespace SOCAUD.Business.Core
     {
         IEnumerable<SAF_CONSULTA> ListarConsultaPorPublicacionyUsuario(int codSOA, int codPub);
 
+        IEnumerable<SAF_CONSULTA> ListarConsultaPorPublicacion(int codPub);
+
         void DeleteConsulta(int idCon);
 
         SAF_CONSULTA InsertConsulta(int idSoa, int idPub, string consulta);
 
         void SendConsulta(int idCon);
+
+        SAF_CONSULTA buscarPorId(int id);
     }
 
 
@@ -67,6 +71,19 @@ namespace SOCAUD.Business.Core
            consulta.ESTCON = 10;
            this._safConsultaData.Update(consulta);
            
+       }
+
+
+       public IEnumerable<SAF_CONSULTA> ListarConsultaPorPublicacion(int codPub)
+       {
+           var result = this._safConsultaData.GetMany(c => c.CODPUB == codPub);
+           return result.ToList();
+       }
+
+
+       public SAF_CONSULTA buscarPorId(int id)
+       {
+           return (SAF_CONSULTA)this._safConsultaData.GetById(id);
        }
     }
 }

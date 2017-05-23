@@ -188,12 +188,14 @@
     <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ConsultaController.cs" />
     <Compile Include="Controllers\CronogramaController.cs" />
     <Compile Include="Controllers\EntidadController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PropuestaController.cs" />
+    <Compile Include="Controllers\PublicacionModel.cs" />
     <Compile Include="Controllers\PuntajeController.cs" />
     <Compile Include="Controllers\SolicitudAdminController.cs" />
     <Compile Include="Controllers\WorkflowController.cs" />
@@ -212,7 +214,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PropuestaModel.cs" />
-    <Compile Include="Models\PublicacionModels.cs" />
+    <Compile Include="Models\ConsultaModel.cs" />
     <Compile Include="Models\PuntajeModel.cs" />
     <Compile Include="Models\ServicioAuditoriaModels.cs" />
     <Compile Include="Models\SoaModel.cs" />
@@ -511,6 +513,7 @@
     <Content Include="Views\Base\CreateReporteBase.cshtml" />
     <Content Include="Views\Entidad\Index.cshtml" />
     <Content Include="Views\Puntaje\Index.cshtml" />
+    <Content Include="Views\Consulta\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -179,6 +179,7 @@
           <Property Name="CODPUB" Type="int" />
           <Property Name="CODSOA" Type="int" />
           <Property Name="ESTCON" Type="int" />
+          <Property Name="RESCON" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="SAF_CORTE_AUDITOR">
           <Key>
@@ -2243,23 +2244,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <NavigationProperty Name="SAF_CAPACITACION" Relationship="Self.R_8" FromRole="SAF_CARRERA" ToRole="SAF_CAPACITACION" />
           <NavigationProperty Name="SAF_SOLCAPACITACION" Relationship="Self.R_13" FromRole="SAF_CARRERA" ToRole="SAF_SOLCAPACITACION" />
         </EntityType>
-        <EntityType Name="SAF_CONSULTA">
-          <Key>
-            <PropertyRef Name="CODCON" />
-          </Key>
-          <Property Name="CODCON" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DESCON" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="FECREG" Type="DateTime" Precision="3" />
-          <Property Name="FECMOD" Type="DateTime" Precision="3" />
-          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="CODPUB" Type="Int32" />
-          <Property Name="CODSOA" Type="Int32" />
-          <Property Name="ESTCON" Type="Int32" />
-          <NavigationProperty Name="SAF_PUBLICACION" Relationship="Self.R_27" FromRole="SAF_CONSULTA" ToRole="SAF_PUBLICACION" />
-          <NavigationProperty Name="SAF_SOA" Relationship="Self.R_28" FromRole="SAF_CONSULTA" ToRole="SAF_SOA" />
-        </EntityType>
         <EntityType Name="SAF_CORTE_AUDITOR">
           <Key>
             <PropertyRef Name="CODCORAUD" />
@@ -2630,7 +2614,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <Property Name="FECMAXPREPROP" Type="DateTime" Precision="3" />
           <Property Name="ESTPUB" Type="Int32" />
           <NavigationProperty Name="SAF_BASE" Relationship="Self.R_44" FromRole="SAF_PUBLICACION" ToRole="SAF_BASE" />
-          <NavigationProperty Name="SAF_CONSULTA" Relationship="Self.R_27" FromRole="SAF_PUBLICACION" ToRole="SAF_CONSULTA" />
           <NavigationProperty Name="SAF_CORTE_AUDITOR" Relationship="Self.R_50" FromRole="SAF_PUBLICACION" ToRole="SAF_CORTE_AUDITOR" />
           <NavigationProperty Name="SAF_CORTE_AUDITOR_CARGO" Relationship="Self.R_52" FromRole="SAF_PUBLICACION" ToRole="SAF_CORTE_AUDITOR_CARGO" />
           <NavigationProperty Name="SAF_INVITACION" Relationship="Self.R_37" FromRole="SAF_PUBLICACION" ToRole="SAF_INVITACION" />
@@ -2638,6 +2621,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <NavigationProperty Name="SAF_PUBLICACIONBASE" Relationship="SI_SOCAUDModel.FK_SAF_PUBLICACIONBASE_CODPUB" FromRole="SAF_PUBLICACION" ToRole="SAF_PUBLICACIONBASE" />
           <Property Name="CODCRO" Type="Int32" />
           <NavigationProperty Name="SAF_CRONOGRAMA" Relationship="SI_SOCAUDModel.FK_SAF_PUBLICACION_CODCRO" FromRole="SAF_PUBLICACION" ToRole="SAF_CRONOGRAMA" />
+          <NavigationProperty Name="SAF_CONSULTA" Relationship="SI_SOCAUDModel.R_27" FromRole="SAF_PUBLICACION" ToRole="SAF_CONSULTA" />
         </EntityType>
         <EntityType Name="SAF_SERAUDCARCAP">
           <Key>
@@ -2733,10 +2717,10 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <Property Name="ARCCOLCONSOA" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PASUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SAF_CONSULTA" Relationship="Self.R_28" FromRole="SAF_SOA" ToRole="SAF_CONSULTA" />
           <NavigationProperty Name="SAF_INVITACION" Relationship="Self.R_33" FromRole="SAF_SOA" ToRole="SAF_INVITACION" />
           <NavigationProperty Name="SAF_PROPUESTA" Relationship="Self.R_31" FromRole="SAF_SOA" ToRole="SAF_PROPUESTA" />
           <NavigationProperty Name="SAF_SOLICITUD" Relationship="Self.R_2" FromRole="SAF_SOA" ToRole="SAF_SOLICITUD" />
+          <NavigationProperty Name="SAF_CONSULTA" Relationship="SI_SOCAUDModel.R_28" FromRole="SAF_SOA" ToRole="SAF_CONSULTA" />
         </EntityType>
         <EntityType Name="SAF_SOLCAPACITACION">
           <Key>
@@ -3146,30 +3130,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="R_27">
-          <End Role="SAF_PUBLICACION" Type="Self.SAF_PUBLICACION" Multiplicity="0..1" />
-          <End Role="SAF_CONSULTA" Type="Self.SAF_CONSULTA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_PUBLICACION">
-              <PropertyRef Name="CODPUB" />
-            </Principal>
-            <Dependent Role="SAF_CONSULTA">
-              <PropertyRef Name="CODPUB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_28">
-          <End Role="SAF_SOA" Type="Self.SAF_SOA" Multiplicity="0..1" />
-          <End Role="SAF_CONSULTA" Type="Self.SAF_CONSULTA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_SOA">
-              <PropertyRef Name="CODSOA" />
-            </Principal>
-            <Dependent Role="SAF_CONSULTA">
-              <PropertyRef Name="CODSOA" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="R_50">
           <End Role="SAF_PUBLICACION" Type="Self.SAF_PUBLICACION" Multiplicity="0..1" />
           <End Role="SAF_CORTE_AUDITOR" Type="Self.SAF_CORTE_AUDITOR" Multiplicity="*" />
@@ -3503,7 +3463,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <EntitySet Name="SAF_CAPACITACION" EntityType="Self.SAF_CAPACITACION" />
           <EntitySet Name="SAF_CARGO" EntityType="Self.SAF_CARGO" />
           <EntitySet Name="SAF_CARRERA" EntityType="Self.SAF_CARRERA" />
-          <EntitySet Name="SAF_CONSULTA" EntityType="Self.SAF_CONSULTA" />
           <EntitySet Name="SAF_CORTE_AUDITOR" EntityType="Self.SAF_CORTE_AUDITOR" />
           <EntitySet Name="SAF_CORTE_AUDITOR_CARGO" EntityType="Self.SAF_CORTE_AUDITOR_CARGO" />
           <EntitySet Name="SAF_CRONOENTIDAD" EntityType="Self.SAF_CRONOENTIDAD" />
@@ -3627,14 +3586,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <AssociationSet Name="R_13" Association="Self.R_13">
             <End Role="SAF_CARRERA" EntitySet="SAF_CARRERA" />
             <End Role="SAF_SOLCAPACITACION" EntitySet="SAF_SOLCAPACITACION" />
-          </AssociationSet>
-          <AssociationSet Name="R_27" Association="Self.R_27">
-            <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
-            <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
-          </AssociationSet>
-          <AssociationSet Name="R_28" Association="Self.R_28">
-            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
-            <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
           </AssociationSet>
           <AssociationSet Name="R_50" Association="Self.R_50">
             <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
@@ -3880,6 +3831,15 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <AssociationSet Name="R_14" Association="SI_SOCAUDModel.R_14">
             <End Role="SAF_ENTIDADES" EntitySet="SAF_ENTIDADES" />
             <End Role="SAF_CRONOENTIDAD" EntitySet="SAF_CRONOENTIDAD" />
+          </AssociationSet>
+          <EntitySet Name="SAF_CONSULTA" EntityType="SI_SOCAUDModel.SAF_CONSULTA" />
+          <AssociationSet Name="R_27" Association="SI_SOCAUDModel.R_27">
+            <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
+            <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
+          </AssociationSet>
+          <AssociationSet Name="R_28" Association="SI_SOCAUDModel.R_28">
+            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
+            <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
@@ -4435,6 +4395,48 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SAF_CONSULTA">
+          <Key>
+            <PropertyRef Name="CODCON" />
+          </Key>
+          <Property Name="CODCON" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCON" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODPUB" Type="Int32" />
+          <Property Name="CODSOA" Type="Int32" />
+          <Property Name="ESTCON" Type="Int32" />
+          <Property Name="RESCON" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SAF_PUBLICACION" Relationship="SI_SOCAUDModel.R_27" FromRole="SAF_CONSULTA" ToRole="SAF_PUBLICACION" />
+          <NavigationProperty Name="SAF_SOA" Relationship="SI_SOCAUDModel.R_28" FromRole="SAF_CONSULTA" ToRole="SAF_SOA" />
+        </EntityType>
+        <Association Name="R_27">
+          <End Type="SI_SOCAUDModel.SAF_PUBLICACION" Role="SAF_PUBLICACION" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CONSULTA" Role="SAF_CONSULTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_PUBLICACION">
+              <PropertyRef Name="CODPUB" />
+            </Principal>
+            <Dependent Role="SAF_CONSULTA">
+              <PropertyRef Name="CODPUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_28">
+          <End Type="SI_SOCAUDModel.SAF_SOA" Role="SAF_SOA" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CONSULTA" Role="SAF_CONSULTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_SOA">
+              <PropertyRef Name="CODSOA" />
+            </Principal>
+            <Dependent Role="SAF_CONSULTA">
+              <PropertyRef Name="CODSOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4592,22 +4594,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
                 <ScalarProperty Name="USUREG" ColumnName="USUREG" />
                 <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
                 <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SAF_CONSULTA">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_CONSULTA">
-              <MappingFragment StoreEntitySet="SAF_CONSULTA">
-                <ScalarProperty Name="CODCON" ColumnName="CODCON" />
-                <ScalarProperty Name="DESCON" ColumnName="DESCON" />
-                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
-                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
-                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
-                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
-                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
-                <ScalarProperty Name="ESTCON" ColumnName="ESTCON" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5714,6 +5700,23 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
                 <ScalarProperty Name="RUCENT" ColumnName="RUCENT" />
                 <ScalarProperty Name="RAZSOCENT" ColumnName="RAZSOCENT" />
                 <ScalarProperty Name="CODENT" ColumnName="CODENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_CONSULTA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_CONSULTA">
+              <MappingFragment StoreEntitySet="SAF_CONSULTA">
+                <ScalarProperty Name="RESCON" ColumnName="RESCON" />
+                <ScalarProperty Name="ESTCON" ColumnName="ESTCON" />
+                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="DESCON" ColumnName="DESCON" />
+                <ScalarProperty Name="CODCON" ColumnName="CODCON" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
