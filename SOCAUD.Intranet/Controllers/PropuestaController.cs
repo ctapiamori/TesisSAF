@@ -29,15 +29,15 @@ namespace SOCAUD.Intranet.Controllers
         // GET: Propuesta
         public ActionResult Index()
         {
-            var publicaciones = this._publicacionLogic.ListarTodos();// this.modelEntity.SAF_PUBLICACION.ToList();
+            var publicaciones = this._publicacionLogic.ListarTodos();
+            var listaPublicacionesPublicadas = publicaciones.Where(c => c.ESTPUB == 13).ToList(); // estado PUBLICADA
             var model = new PropuestaModel();
-            model.cboPublicaciones = (from c in publicaciones select new SelectListItem() { Text = c.NUMPUB, Value = c.CODPUB.ToString() }).ToList();
+            model.cboPublicaciones = (from c in listaPublicacionesPublicadas select new SelectListItem() { Text = c.NUMPUB, Value = c.CODPUB.ToString() }).ToList();
             return View(model);
         }
 
         public JsonResult ListadoPropuestasCalificar(int? idPub)
         {
-
             var propuestas = this._propuestaLogic.ListadoPropuestasCalificar(idPub);// this.propues this.modelEntity.SP_SAF_PROPUESTAS().Where(c => (c.CODPUB == idPub || idPub == null) && (c.ESTPROP == (int)Estado.Propuesta.Enviada || c.ESTPROP == (int)Estado.Propuesta.Ganadora || c.ESTPROP == (int)Estado.Propuesta.Descalifica));
             var data = propuestas.Select(c => new string[] { 
                 c.CODPRO.ToString(),

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5df81f28557245319613e620eee561bb" Name="Diagram1">
+      <Diagram DiagramId="5df81f28557245319613e620eee561bb" Name="Diagram1" ZoomLevel="89">
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_ARCHIVO" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_AUDITOR" Width="1.5" PointX="0.75" PointY="20.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_AUDITORIA" Width="1.5" PointX="28" PointY="28.75" IsExpanded="true" />
@@ -115,6 +115,8 @@
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CONSULTA" Width="1.5" PointX="22.75" PointY="24.625" />
         <AssociationConnector Association="SI_SOCAUDModel.R_27" />
         <AssociationConnector Association="SI_SOCAUDModel.R_28" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO" Width="1.5" PointX="13.375" PointY="9.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE" Width="1.5" PointX="15.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

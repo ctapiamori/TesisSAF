@@ -1,4 +1,5 @@
 ﻿using SOCAUD.Business.Core;
+using SOCAUD.Common.Constantes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,10 @@ namespace SOCAUD.Intranet.Controllers
 
             var model = new ConsultaModel();
 
-            var listaPublicaciones = this._publicacionLogic.ListarPublicacion();
+            var listaPublicaciones = this._publicacionLogic.ListarTodos(); //this._publicacionLogic.ListarPublicacion();
             var listaPublicacionesPublicadas = listaPublicaciones.Where(c => c.ESTPUB == 13).ToList(); // estado PUBLICADA
 
-            model.lista = (from c in listaPublicacionesPublicadas select new SelectListItem() { Value = c.CODPUB.ToString(),  Text = string.Format("{0}-{1}", c.NUMPUB, c.DESBAS) }).ToList();
+            model.lista = (from c in listaPublicacionesPublicadas select new SelectListItem() { Value = c.CODPUB.ToString(), Text = string.Format("{0}", (c.NUMPUB == null ? "" : c.NUMPUB)) }).ToList();
 
             return View(model);
         }
@@ -54,6 +55,21 @@ namespace SOCAUD.Intranet.Controllers
             consultaEntidad.DescripcionConsulta = consulta.DESCON;
             consultaEntidad.RespuestaConsulta = consulta.RESCON;
             return PartialView("_ResponderConsulta", consultaEntidad);
+        }
+
+
+        public JsonResult GrabarRespuesta(ConsultaEntidadModel model) {
+            try
+            {
+                _consultaLogic.GrabarRespuesta(model.CodigoConsulta, model.RespuestaConsulta);
+                 return Json(new MensajeRespuesta("Se grabo la respuesta satisfactoria", true));
+            }
+            catch (Exception)
+            {
+                return Json(new MensajeRespuesta("No se pudo grabar la respuesta", false));
+            }
+
+            
         }
 
     }

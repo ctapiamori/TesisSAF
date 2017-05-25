@@ -25,7 +25,7 @@ namespace SOCAUD.Intranet.Controllers
             var codigoEntidad = Convert.ToInt32(Session["codigoEntidadDelUsuario"]);
             var infoEntidad = this.entidadLogic.BuscarPorId(codigoEntidad);
             var model = new EntidadModel();
-            model.Ruc = infoEntidad.RUCENT;
+            model.Ruc = infoEntidad.RUCENT.Trim();
             model.CodigoEntidad = infoEntidad.CODENT;
             model.Mision = infoEntidad.MISENT;
             model.Vision = infoEntidad.VISENT;

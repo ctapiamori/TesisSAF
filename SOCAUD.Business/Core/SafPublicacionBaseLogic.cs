@@ -12,6 +12,7 @@ namespace SOCAUD.Business.Core
 {
     public interface ISafPublicacionBaseLogic : IFacadeOperacionCRUD<SAF_PUBLICACIONBASE>
     {
+        IEnumerable<VW_SAF_PUBLICACIONBASE> ListarPublicacionesEstadoPublicadaYBases();
         IEnumerable<SAF_PUBLICACIONBASE> ListarPorPublicacion(int publicacionId);
         IEnumerable<TcSAFPUBLICACIONBASERPT> ListarBasesPublicacionRpt(int idPublicacion);
     }
@@ -21,12 +22,13 @@ namespace SOCAUD.Business.Core
         private readonly IUnitOfWork _uow;
         private readonly IDatabaseFactory _dataFactory;
         private readonly ISafPublicacionBaseData _safPublicacionBaseData;
-
+        private readonly IVwSafPublicacionBaseData _vwsafPublicacionesBaseData;
         public SafPublicacionBaseLogic()
         {
             this._uow = new UnitOfWork();
             this._dataFactory = new DatabaseFactory();
             this._safPublicacionBaseData = new SafPublicacionBaseData(_uow);
+            this._vwsafPublicacionesBaseData = new VwSafPublicacionBaseData(_uow);
         }
 
         public IEnumerable<SAF_PUBLICACIONBASE> ListarPorPublicacion(int publicacionId)
@@ -71,6 +73,12 @@ namespace SOCAUD.Business.Core
         public IEnumerable<TcSAFPUBLICACIONBASERPT> ListarBasesPublicacionRpt(int idPublicacion)
         {
             return this._safPublicacionBaseData.ListarBasesPublicacionRpt(idPublicacion);
+        }
+
+        public IEnumerable<VW_SAF_PUBLICACIONBASE> ListarPublicacionesEstadoPublicadaYBases()
+        {
+            var result = _vwsafPublicacionesBaseData.GetAll().Where(c => c.ESTPUB == 13);
+            return result;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SOCAUD.Business.Core
     public interface ISafBaseLogic : IFacadeOperacionCRUD<SAF_BASE>
     {
         int CorrelativoCronograma(int cronograma);
-        IEnumerable<SAF_BASE> BuscarPorCronograma(int cronograma);
+        IEnumerable<SAF_BASE> BuscarPorCronograma(int? cronograma);
         IEnumerable<TcSAFBASERPT> BaseRpt(int idBase);
 
     }
@@ -83,9 +83,12 @@ namespace SOCAUD.Business.Core
         }
 
 
-        public IEnumerable<SAF_BASE> BuscarPorCronograma(int cronograma)
+        public IEnumerable<SAF_BASE> BuscarPorCronograma(int? cronograma)
         {
-            return this._safBaseData.GetMany(c => c.CODCRO == cronograma);
+            if (cronograma.HasValue)
+                return this._safBaseData.GetMany(c => c.CODCRO == cronograma);
+            else
+                return this._safBaseData.GetAll();
         }
 
         public IEnumerable<TcSAFBASERPT> BaseRpt(int idBase)

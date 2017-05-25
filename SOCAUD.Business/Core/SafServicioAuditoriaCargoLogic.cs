@@ -17,18 +17,21 @@ namespace SOCAUD.Business.Core
         void RegistrarCargoCompleto(SAF_SERAUDCARGO cargo, SAF_SERAUDCAREXP experiencia, SAF_SERAUDCARCAP capacitacion);
         void ActualizarCargoCompleto(SAF_SERAUDCARGO cargo, SAF_SERAUDCAREXP experiencia, SAF_SERAUDCARCAP capacitacion);
         bool EliminarCompleto(int id);
+        IEnumerable<VW_SAF_CARGOSENSERVICIO> ListarCargosPorServicioAuditoria(int idServicio);
     }
 
     public class SafServicioAuditoriaCargoLogic : ISafServicioAuditoriaCargoLogic
     {
         private readonly IUnitOfWork _uow;
         private readonly ISafServicioAuditoriaCargoData _safServicioAuditoriaCargoData;
+        private readonly IVwSafCargosEnServicioAuditoriaData _safCargosEnServicioAuditoriaData;
         private readonly ISafServAudCargoExperienciaLogic _safServAudCargoExperienciaLogic;
         private readonly ISafServAudCargoCapacitacionLogic _safServAudCargoCapacitacionLogic;
 
         public SafServicioAuditoriaCargoLogic()
         {
             this._uow = new UnitOfWork();
+            this._safCargosEnServicioAuditoriaData = new VwSafCargosEnServicioAuditoriaData(_uow);
             this._safServicioAuditoriaCargoData = new SafServicioAuditoriaCargoData(_uow);
             this._safServAudCargoCapacitacionLogic = new SafServAudCargoCapacitacionLogic();
             this._safServAudCargoExperienciaLogic = new SafServAudCargoExperienciaLogic();
@@ -141,13 +144,13 @@ namespace SOCAUD.Business.Core
                 {
                     var experiencia = this._safServAudCargoExperienciaLogic.BuscarPorServicioCargo(id);
 
-                    if (this._safServAudCargoExperienciaLogic.Eliminar(experiencia.CODSERAUDCAREXP)) return false;
+                    this._safServAudCargoExperienciaLogic.Eliminar(experiencia.CODSERAUDCAREXP);
 
                     var capacitacion = this._safServAudCargoCapacitacionLogic.BuscarPorServicioCargo(id);
 
-                    if (this._safServAudCargoCapacitacionLogic.Eliminar(capacitacion.CODSERAUDCARCAP)) return false;
+                    this._safServAudCargoCapacitacionLogic.Eliminar(capacitacion.CODSERAUDCARCAP);
 
-                    if(this.Eliminar(id)) return false;
+                    this.Eliminar(id);
 
                     scope.Complete();
 
@@ -159,6 +162,14 @@ namespace SOCAUD.Business.Core
                 return false;
             }
 
+        }
+
+
+        public IEnumerable<VW_SAF_CARGOSENSERVICIO> ListarCargosPorServicioAuditoria(int idServicio)
+        {
+            var listaCargos = this._safCargosEnServicioAuditoriaData.GetAll();
+            var listaPorServicio = listaCargos.Where(c => c.CODSERAUD == idServicio);
+            return listaPorServicio;
         }
     }
 }

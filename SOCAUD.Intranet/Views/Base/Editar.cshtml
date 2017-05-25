@@ -163,12 +163,13 @@
         });
 
         listarFlujos();
-
+        listarServiciosAuditoria();
     });
 
     var tabFlujo;
+    var tabServicioAuditoria;
     var _dataFlujo_ = null;
-
+    var _dataServicioAuditoria_ = null;
     function listarFlujos() {
 
         if (tabFlujo == undefined) {
@@ -190,7 +191,7 @@
             url: '@Url.Action("ListarWorkflowDocumento", "Workflow", new { Area = "" })',
             type: 'POST',
             async: false,
-            data: { idDocumento: $("#Codigo").val() },
+            data: { idDocumento: $("#Codigo").val(), tipoDocumento : "B" },
             success: function (result) {
                 _dataFlujo_ = result;
                 tabFlujo.fnReloadData(_dataFlujo_);
@@ -198,8 +199,52 @@
         });
     }
 
+
+    function listarServiciosAuditoria() {
+
+        if (tabServicioAuditoria == undefined) {
+            tabServicioAuditoria = $("#tabServicios").dataTable({
+                "info": false,
+                "bServerSide": false,
+                "data": _dataServicioAuditoria_,
+                //"order": [[1, "asc"]],
+                "columns": [
+                    {
+                        "bSortable": false,
+                        "sClass": "center",
+                        "sWidth": "5%",
+                        "render": function (data, type, row) {
+                            return '<center><button class="btn btn-success" title="Editar" type="button" onclick="editarServicio(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                        }
+                    },
+                    { "sTitle": "Periodo" },
+                    { "sTitle": "Fecha Inicio" },
+                    { "sTitle": "Fecha Fin" },
+                    { "sTitle": "Retribucion Eco." },
+                    { "sTitle": "Viaticos" }
+                ]
+
+            });
+        }
+
+        $.ajax({
+            url: '@Url.Action("ListarServicios", "Base", new { Area = "" })',
+            type: 'POST',
+            async: false,
+            data: { idBase: $("#Codigo").val() },
+            success: function (result) {
+                _dataServicioAuditoria_ = result;
+                tabServicioAuditoria.fnReloadData(_dataServicioAuditoria_);
+            }
+        });
+    }
+
         function agregarServicio() {
             document.location = '@Url.Action("ServicioAuditoria", "Base", new { idBase = Model.Codigo, servicio = 0 })';
+        }
+
+        function editarServicio(idServicio) {
+            document.location = '@Url.Action("ServicioAuditoria", "Base", new { idBase = Model.Codigo, servicio = "_idSer_" })'.replace("_idSer_",idServicio);
         }
 
     function solicitarAprobacion() {

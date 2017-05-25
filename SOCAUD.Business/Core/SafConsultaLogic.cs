@@ -25,6 +25,8 @@ namespace SOCAUD.Business.Core
         void SendConsulta(int idCon);
 
         SAF_CONSULTA buscarPorId(int id);
+
+        void GrabarRespuesta(int codigoRes, string Respuesta);
     }
 
 
@@ -84,6 +86,14 @@ namespace SOCAUD.Business.Core
        public SAF_CONSULTA buscarPorId(int id)
        {
            return (SAF_CONSULTA)this._safConsultaData.GetById(id);
+       }
+
+
+       public void GrabarRespuesta(int codigoRes, string Respuesta)
+       {
+           var consulta = (SAF_CONSULTA)this._safConsultaData.GetById(codigoRes);
+           consulta.RESCON = Respuesta;
+           this._safConsultaData.Update(consulta);
        }
     }
 }

@@ -13,7 +13,7 @@ namespace SOCAUD.Business.Core
     public interface ISafCronogramaLogic : IFacadeOperacionCRUD<SAF_CRONOGRAMA>
     {
 
-        IEnumerable<SAF_CRONOGRAMA> ListarPorAnio(int anio);
+        IEnumerable<SAF_CRONOGRAMA> ListarPorAnio(int? anio);
         int NewCorrelativoBase(int cronograma);
         int NewCorrelativoPublicacion(int cronograma);
         IEnumerable<TcSAFCRONOGRAMARPT> CronogramaRpt(int idCronograma);
@@ -71,9 +71,12 @@ namespace SOCAUD.Business.Core
         }
 
 
-        public IEnumerable<SAF_CRONOGRAMA> ListarPorAnio(int anio)
+        public IEnumerable<SAF_CRONOGRAMA> ListarPorAnio(int? anio)
         {
-            return this._safCronogramaData.GetMany(c => c.ANIOCRO == anio);
+            if (anio.HasValue)
+                return this._safCronogramaData.GetMany(c => c.ANIOCRO == anio);
+            else
+                return this._safCronogramaData.GetAll();
         }
 
 

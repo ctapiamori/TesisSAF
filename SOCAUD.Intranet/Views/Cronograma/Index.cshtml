@@ -20,6 +20,7 @@
                             @Html.DropDownList("anios", (List<SelectListItem>)ViewBag.Anios, "Seleccione", new { @class = "form-control" })
                         </div>
                         <div class="col-md-3">
+                            <br />
                             <button id="btnBuscar" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Buscar</button>
                             <button id="btnNuevo" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Nuevo</button>
                         </div>
@@ -77,7 +78,7 @@
 
 
     $(document).ready(function () {
-        //listarCronogramas();
+        listarCronogramas();
         $("#btnBuscar").click(listarCronogramas);
         $("#btnNuevo").click(nuevoCronograma);
     });

@@ -514,6 +514,7 @@
     <Content Include="Views\Entidad\Index.cshtml" />
     <Content Include="Views\Puntaje\Index.cshtml" />
     <Content Include="Views\Consulta\Index.cshtml" />
+    <Content Include="Views\Consulta\_ResponderConsulta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

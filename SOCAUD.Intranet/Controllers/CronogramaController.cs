@@ -122,6 +122,15 @@ namespace SOCAUD.Intranet.Controllers
         public JsonResult SaveCronograma(CronogramaModel model)
         {
             var entidad = new SAF_CRONOGRAMA();
+
+            if (Convert.ToDateTime(model.FechaPublicacion) >= Convert.ToDateTime(model.FechaMaximaCreacionBase))
+                return Json(new MensajeRespuesta("La fecha de publicacion debe ser mayor a la fecha de creacion de Bases.", false));
+
+            var cronogramaExiste = this._cronogramaLogic.ListarPorAnio(model.Anio);
+
+            if (cronogramaExiste.Count()>0)
+                return Json(new MensajeRespuesta("Ya existe un crongrama para el año ingresado.", false));
+            
             try
             {
                 if (!model.Codigo.Equals(0))
@@ -164,7 +173,7 @@ namespace SOCAUD.Intranet.Controllers
             }
         }
 
-        public JsonResult ListarCronogramas(int anio)
+        public JsonResult ListarCronogramas(int? anio)
         {
             var listado = this._cronogramaLogic.ListarPorAnio(anio);
             var data = listado.Select(c => new string[]{ 

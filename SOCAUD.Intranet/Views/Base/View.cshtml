@@ -147,7 +147,7 @@
                 url: '@Url.Action("ListarWorkflowDocumento", "Workflow", new { Area = "" })',
                 type: 'POST',
                 async: false,
-                data: { idDocumento: $("#Codigo").val() },
+                data: { idDocumento: $("#Codigo").val(), tipoDocumento : "B" },
                 success: function (result) {
                     _dataFlujo_ = result;
                     tabFlujo.fnReloadData(_dataFlujo_);

@@ -56,7 +56,24 @@
         "order": [[0, "asc"]],
         "columns": [
             { "sTitle": "Auditor" },
-            { "sTitle": "Cargo" },
+                {
+                    "sTitle": "Cargo",
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (data == "Asistente")
+                            return "<span style='color:#FE2E2E;'><i>" + data + "</i></span>";
+                        else if (data == "Auditor")
+                            return "<span style='color:#0080FF;'><i>" + data + "</i></span>";
+                        else if (data == "Jefe Equipo")
+                            return "<span style='color:#04B404;'><i>" + data + "</i></span>";
+                        else if (data == "Supervisor")
+                            return "<span style='color:#0B0B61;'><i>" + data + "</i></span>";
+                        else
+                            return "";
+                    }
+                },
             { "sTitle": "Capacitacion" },
             { "sTitle": "Experiencia" },
             { "sTitle": "Total" }

@@ -6,12 +6,13 @@
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="box box-primary color-palette-box">
-    <div class="box-header with-border">
-        <h3 class="box-title">Base</h3>
-    </div>
-    <div class="box-body">
-        <form id="frmBases">
+<form id="frmGrabarServicioAuditoria">
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Base</h3>
+        </div>
+        <div class="box-body">
+            <form id="frmBases">
             @Html.HiddenFor(c => c.IdServicioAuditoria)
             @Html.HiddenFor(c => c.IdCodigoBase)
             <div class="form-group">
@@ -87,10 +88,10 @@
                     </div>
                 </div>
             </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-
+</form>
 <div class="box box-primary color-palette-box">
     <div class="box-header with-border">
         <h3 class="box-title">Equipo Requerido</h3>
@@ -109,10 +110,13 @@
 
 <div class="modal fade" id="modalWorkflow" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
+<div class="modal fade" id="modalEquipoServicio" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
 @section scripts {
 
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
+            listarEquipoServicioAuditoria();
             $('#FechaInicio').datepicker({
                 format: "dd/mm/yyyy"
             }).next().on(ace.click_event, function () {
@@ -124,7 +128,103 @@
             }).next().on(ace.click_event, function () {
                 $(this).prev().focus();
             });
+
+
+        });
+
+
+        var _cargosAuditoria_ = null;
+        var tabEquipo = $("#tabEquipo").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _cargosAuditoria_,
+            "order": [[1, "asc"]],
+            "columns": [
+                { "sTitle": "Codigo", "visible" : false },
+                { "sTitle": "Cargo" },
+                { "sTitle": "Minimo Integrantes" },
+                { "sTitle": "Minimo Participación(H)" },
+                { "sTitle": "Minimo Capacitación (H)" },
+                { "sTitle": "Minimo Capacitación (H)" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarCargoEquipo(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                    }
+                }
+            ]
+        });
+
+
+        function EliminarCargoEquipo(id) {
+            $.ajax({
+                url: '@Url.Action("EliminarCargoEquipo", "Base")',
+                type: 'POST',
+                async: false,
+                data: { id: id },
+                success: function (result) {
+                    listarEquipoServicioAuditoria();
+                }
+            });
+        }
+            
+        function listarEquipoServicioAuditoria() {
+            $.ajax({
+                url: '@Url.Action("ListarEquipoRequerido", "Base")',
+                type: 'POST',
+                async: false,
+                data: { idServicio: $("#IdServicioAuditoria").val() },
+                success: function (result) {
+                    _cargosAuditoria_ = result;
+                    tabEquipo.fnReloadData(_cargosAuditoria_);
+                }
+            });
+        }
+
+
+        $('#modalEquipoServicio').on('hidden.bs.modal', function () {
+            listarEquipoServicioAuditoria();
         })
+
+        function regresar() {
+            document.location.href = '@Url.Action("Editar","Base", new { id = "_id_" })'.replace("_id_", $("#IdCodigoBase").val());
+        }
+
+        function agregarEquipo() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ViewCargoEquipo", "Base")',
+                data: { IdServicio: $("#IdServicioAuditoria").val() },
+                success: function (result) {
+                    $("#modalEquipoServicio").empty().html(result).modal();
+                }
+            });
+        }
+
+        function grabarServicio() {
+
+            if (!$("#frmGrabarServicioAuditoria").isValid()) { return; }
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GrabarServicioAuditoria", "Base")',
+                        data: $("#frmGrabarServicioAuditoria").serialize(),
+                        dataType: "json",
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            if (result.Exito) {
+                                $("#IdServicioAuditoria").val(result.Data)
+                                $("#btnGrabar").prop("disabled", true);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
     </script>
 
 }

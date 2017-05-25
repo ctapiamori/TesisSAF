@@ -23,6 +23,7 @@ namespace SOCAUD.Business.Core
         IEnumerable<SAF_WORKFLOW> ListarPorTipoUsuario(int idTipoUsuario);
         IEnumerable<SAF_WORKFLOW> ListarPorUsuarioAndTipoUsuario(int idUsuario, int idTipoUsuario);
         IEnumerable<SAF_WORKFLOW> ListarPorDocumento(int idDocumento);
+        IEnumerable<SAF_WORKFLOW> ListarPorDocumento(int idDocumento, string tipoDocumento);
 
     }
 
@@ -115,9 +116,9 @@ namespace SOCAUD.Business.Core
 
             entidad.FLGNOTREP = flagFlujo;
 
-            var result = this.Registrar(entidad);
+            var result = (SAF_WORKFLOW)this.Registrar(entidad);
 
-            var flujo = this.BuscarPorId(IdFlujo);
+            var flujo = this.BuscarPorId(result.CODWORFLO);
             flujo.FLGNOTREP = "1";
             this.Actualizar(flujo);
 
@@ -212,6 +213,13 @@ namespace SOCAUD.Business.Core
         public IEnumerable<SAF_WORKFLOW> ListarPorDocumento(int idDocumento)
         {
             var result = _safWorkFlowData.GetMany(c => c.CODDOC == idDocumento);
+            return result;
+        }
+
+
+        public IEnumerable<SAF_WORKFLOW> ListarPorDocumento(int idDocumento, string tipoDocumento)
+        {
+            var result = _safWorkFlowData.GetMany(c => c.CODDOC == idDocumento && c.TIPDOC == tipoDocumento);
             return result;
         }
     }

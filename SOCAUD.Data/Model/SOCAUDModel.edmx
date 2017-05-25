@@ -820,6 +820,23 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_AUDITORIAEQUIPO' no tie
           <Property Name="NOMCAR" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_CARGOSENSERVICIO' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VW_SAF_CARGOSENSERVICIO">
+          <Key>
+            <PropertyRef Name="CODSERAUDCAR" />
+            <PropertyRef Name="CODCAR" />
+          </Key>
+          <Property Name="CODBAS" Type="int" />
+          <Property Name="CODSERAUD" Type="int" />
+          <Property Name="CODSERAUDCAR" Type="int" Nullable="false" />
+          <Property Name="CODCAR" Type="int" Nullable="false" />
+          <Property Name="NOMCAR" Type="varchar" MaxLength="50" />
+          <Property Name="NUMMINHORPARSERAUDCAR" Type="int" />
+          <Property Name="NUMMININTSERAUDCAR" Type="int" />
+          <Property Name="NUMMINHORSERAUDCAREXP" Type="int" />
+          <Property Name="NUMMINHORSERAUDCAPCAP" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_INVITACION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VW_SAF_INVITACION">
           <Key>
@@ -877,6 +894,22 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_PUBLICACION' no tiene d
           <Property Name="FECMOD" Type="datetime" />
           <Property Name="USUREG" Type="varchar" MaxLength="50" />
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_PUBLICACIONBASE' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VW_SAF_PUBLICACIONBASE">
+          <Key>
+            <PropertyRef Name="CODPUB" />
+            <PropertyRef Name="CODBAS" />
+          </Key>
+          <Property Name="CODPUB" Type="int" Nullable="false" />
+          <Property Name="NUMPUB" Type="varchar" MaxLength="50" />
+          <Property Name="ESTPUB" Type="int" />
+          <Property Name="CODBAS" Type="int" Nullable="false" />
+          <Property Name="CODCRO" Type="int" />
+          <Property Name="CODCROENT" Type="int" />
+          <Property Name="DESBAS" Type="varchar" MaxLength="300" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
@@ -1769,6 +1802,19 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
     [VW_SAF_AUDITORIAEQUIPO].[NOMCAR] AS [NOMCAR]
     FROM [dbo].[VW_SAF_AUDITORIAEQUIPO] AS [VW_SAF_AUDITORIAEQUIPO]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VW_SAF_CARGOSENSERVICIO" EntityType="Self.VW_SAF_CARGOSENSERVICIO" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_SAF_CARGOSENSERVICIO].[CODBAS] AS [CODBAS], 
+    [VW_SAF_CARGOSENSERVICIO].[CODSERAUD] AS [CODSERAUD], 
+    [VW_SAF_CARGOSENSERVICIO].[CODSERAUDCAR] AS [CODSERAUDCAR], 
+    [VW_SAF_CARGOSENSERVICIO].[CODCAR] AS [CODCAR], 
+    [VW_SAF_CARGOSENSERVICIO].[NOMCAR] AS [NOMCAR], 
+    [VW_SAF_CARGOSENSERVICIO].[NUMMINHORPARSERAUDCAR] AS [NUMMINHORPARSERAUDCAR], 
+    [VW_SAF_CARGOSENSERVICIO].[NUMMININTSERAUDCAR] AS [NUMMININTSERAUDCAR], 
+    [VW_SAF_CARGOSENSERVICIO].[NUMMINHORSERAUDCAREXP] AS [NUMMINHORSERAUDCAREXP], 
+    [VW_SAF_CARGOSENSERVICIO].[NUMMINHORSERAUDCAPCAP] AS [NUMMINHORSERAUDCAPCAP]
+    FROM [dbo].[VW_SAF_CARGOSENSERVICIO] AS [VW_SAF_CARGOSENSERVICIO]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VW_SAF_INVITACION" EntityType="Self.VW_SAF_INVITACION" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VW_SAF_INVITACION].[CODINV] AS [CODINV], 
@@ -1814,6 +1860,18 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
     [VW_SAF_PUBLICACION].[USUMOD] AS [USUMOD], 
     [VW_SAF_PUBLICACION].[ESTREG] AS [ESTREG]
     FROM [dbo].[VW_SAF_PUBLICACION] AS [VW_SAF_PUBLICACION]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_SAF_PUBLICACIONBASE" EntityType="Self.VW_SAF_PUBLICACIONBASE" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_SAF_PUBLICACIONBASE].[CODPUB] AS [CODPUB], 
+    [VW_SAF_PUBLICACIONBASE].[NUMPUB] AS [NUMPUB], 
+    [VW_SAF_PUBLICACIONBASE].[ESTPUB] AS [ESTPUB], 
+    [VW_SAF_PUBLICACIONBASE].[CODBAS] AS [CODBAS], 
+    [VW_SAF_PUBLICACIONBASE].[CODCRO] AS [CODCRO], 
+    [VW_SAF_PUBLICACIONBASE].[CODCROENT] AS [CODCROENT], 
+    [VW_SAF_PUBLICACIONBASE].[DESBAS] AS [DESBAS], 
+    [VW_SAF_PUBLICACIONBASE].[ESTREG] AS [ESTREG]
+    FROM [dbo].[VW_SAF_PUBLICACIONBASE] AS [VW_SAF_PUBLICACIONBASE]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VW_SAF_SOLICITUD" EntityType="Self.VW_SAF_SOLICITUD" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -3841,6 +3899,8 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
             <End Role="SAF_SOA" EntitySet="SAF_SOA" />
             <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
           </AssociationSet>
+          <EntitySet Name="VW_SAF_CARGOSENSERVICIO" EntityType="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO" />
+          <EntitySet Name="VW_SAF_PUBLICACIONBASE" EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE" />
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
@@ -4437,6 +4497,35 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VW_SAF_CARGOSENSERVICIO">
+          <Key>
+            <PropertyRef Name="CODSERAUDCAR" />
+            <PropertyRef Name="CODCAR" />
+          </Key>
+          <Property Name="CODBAS" Type="Int32" />
+          <Property Name="CODSERAUD" Type="Int32" />
+          <Property Name="CODSERAUDCAR" Type="Int32" Nullable="false" />
+          <Property Name="CODCAR" Type="Int32" Nullable="false" />
+          <Property Name="NOMCAR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NUMMINHORPARSERAUDCAR" Type="Int32" />
+          <Property Name="NUMMININTSERAUDCAR" Type="Int32" />
+          <Property Name="NUMMINHORSERAUDCAREXP" Type="Int32" />
+          <Property Name="NUMMINHORSERAUDCAPCAP" Type="Int32" />
+        </EntityType>
+        <EntityType Name="VW_SAF_PUBLICACIONBASE">
+          <Key>
+            <PropertyRef Name="CODPUB" />
+            <PropertyRef Name="CODBAS" />
+          </Key>
+          <Property Name="CODPUB" Type="Int32" Nullable="false" />
+          <Property Name="NUMPUB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTPUB" Type="Int32" />
+          <Property Name="CODBAS" Type="Int32" Nullable="false" />
+          <Property Name="CODCRO" Type="Int32" />
+          <Property Name="CODCROENT" Type="Int32" />
+          <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5717,6 +5806,35 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
                 <ScalarProperty Name="FECREG" ColumnName="FECREG" />
                 <ScalarProperty Name="DESCON" ColumnName="DESCON" />
                 <ScalarProperty Name="CODCON" ColumnName="CODCON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_CARGOSENSERVICIO">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO">
+              <MappingFragment StoreEntitySet="VW_SAF_CARGOSENSERVICIO">
+                <ScalarProperty Name="NUMMINHORSERAUDCAPCAP" ColumnName="NUMMINHORSERAUDCAPCAP" />
+                <ScalarProperty Name="NUMMINHORSERAUDCAREXP" ColumnName="NUMMINHORSERAUDCAREXP" />
+                <ScalarProperty Name="NUMMININTSERAUDCAR" ColumnName="NUMMININTSERAUDCAR" />
+                <ScalarProperty Name="NUMMINHORPARSERAUDCAR" ColumnName="NUMMINHORPARSERAUDCAR" />
+                <ScalarProperty Name="NOMCAR" ColumnName="NOMCAR" />
+                <ScalarProperty Name="CODCAR" ColumnName="CODCAR" />
+                <ScalarProperty Name="CODSERAUDCAR" ColumnName="CODSERAUDCAR" />
+                <ScalarProperty Name="CODSERAUD" ColumnName="CODSERAUD" />
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_PUBLICACIONBASE">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE">
+              <MappingFragment StoreEntitySet="VW_SAF_PUBLICACIONBASE">
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
+                <ScalarProperty Name="CODCROENT" ColumnName="CODCROENT" />
+                <ScalarProperty Name="CODCRO" ColumnName="CODCRO" />
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+                <ScalarProperty Name="ESTPUB" ColumnName="ESTPUB" />
+                <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

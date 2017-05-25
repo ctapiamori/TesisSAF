@@ -66,7 +66,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(c => c.FirmaPcaob)
+                            Requiere Firma PCAOB
                             <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-primary">
                                     <input type="radio" name="FirmaPcaob" id="FirmaPcaob1" value="S" autocomplete="off"> SI
@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(c => c.FirmaInternacional)
+                            Requiere Firma Internacional
                             <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-primary">
                                     <input type="radio" name="FirmaInternacional" id="FirmaInternacional1" value="S" autocomplete="off"> SI
@@ -120,6 +120,10 @@
         $("#Cronograma").on("change", function () {
             var cronograma = $(this).val();
             Entidades(cronograma);
+        });
+        
+        $("#btnRegresar").click(function () {
+            document.location.href = '@Url.Action("Index","Base")';
         });
 
     });

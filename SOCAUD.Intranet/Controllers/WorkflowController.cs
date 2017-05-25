@@ -49,9 +49,9 @@ namespace SOCAUD.Intranet.Controllers
             return Json(data);
         }
 
-        public JsonResult ListarWorkflowDocumento(int idDocumento)
+        public JsonResult ListarWorkflowDocumento(int idDocumento, string tipoDocumento)
         {
-            var listado = this._workflowLogic.ListarPorDocumento(idDocumento);
+            var listado = this._workflowLogic.ListarPorDocumento(idDocumento, tipoDocumento);
             var data = listado.Select(c => new string[]{
                 c.DESTIPDOC,
                 c.NOTWORFLO,
@@ -107,8 +107,10 @@ namespace SOCAUD.Intranet.Controllers
 
             if (tipoUsuarioLogIn.Equals(TipoUsuario.Gerente.GetHashCode()))
             {
+                tiposUsuario.Add(new SelectListItem() { Value = TipoUsuario.Gerente.GetHashCode().ToString(), Text = "Gerente" });
                 tiposUsuario.Add(new SelectListItem() { Value = TipoUsuario.Jefe.GetHashCode().ToString(), Text = "Jefe" });
                 tiposUsuario.Add(new SelectListItem() { Value = TipoUsuario.Operador.GetHashCode().ToString(), Text = "Operador" });
+
             }
 
             if (tipoUsuarioLogIn.Equals(TipoUsuario.Jefe.GetHashCode()) || tipoUsuarioLogIn.Equals(TipoUsuario.Gerente.GetHashCode()))

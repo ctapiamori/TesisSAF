@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-
+            
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-6">
@@ -262,7 +262,7 @@
             url: '@Url.Action("ListarWorkflowDocumento", "Workflow", new { Area = "" })',
             type: 'POST',
             async: false,
-            data: { idDocumento: $("#CodigoPublicacion").val() },
+            data: { idDocumento: $("#CodigoPublicacion").val(), tipoDocumento : "P" },
             success: function (result) {
                 _dataFlujo_ = result;
                 tabFlujo.fnReloadData(_dataFlujo_);

@@ -227,8 +227,15 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
 
         public JsonResult PublicarPublicacion(int id)
         {
-            var result = this._publicacionLogic.PublicarPublicacion(id); //this._agenteConcursoPublicoMerito.PublicarPublicacion(id);
-            return Json(result);
+            try
+            {
+                var result = this._publicacionLogic.PublicarPublicacion(id); //this._agenteConcursoPublicoMerito.PublicarPublicacion(id);
+                return Json(new MensajeRespuesta("Se genero la publicacion Safistactoriamente", true));
+            }
+            catch (Exception)
+            {
+                return Json(new MensajeRespuesta("Ocurrio un inconveniente al realizar los calculos de experiencia y capacitacion de los auditores", true));
+            }
         }
 
         public JsonResult EliminarPublicacion(int id)

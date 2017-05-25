@@ -20,6 +20,8 @@ namespace SOCAUD.Web.Controllers
         private readonly ISafGeneralLogic _generalLogic;
         private readonly ISafNotificacionLogic _notificacionLogic;
 
+        private readonly ISafPublicacionBaseLogic _publicacionYBasesLogic;
+
         public InvitacionAuditorController()
         {
             _publicacionLogic = new SafPublicacionLogic();
@@ -29,20 +31,28 @@ namespace SOCAUD.Web.Controllers
             _generalLogic = new SafGeneralLogic();
             _invitacionDetalleLogic = new SafInvitacionDetalleLogic();
             _notificacionLogic = new SafNotificacionLogic();
+            _publicacionYBasesLogic = new SafPublicacionBaseLogic();
         }
 
         public ActionResult Index()
         {
             var model = new InvitacionModel();
-            var publicaciones = this._publicacionLogic.ListarTodos();// modelEntity.SAF_PUBLICACION.ToList().Where(c => c.ESTREG == "1");
-            model.cboPublicaciones = (from c in publicaciones select new SelectListItem() { Value = string.Format("{0}-{1}", c.CODPUB, c.CODBAS), Text = c.NUMPUB }).ToList();
+            var publicaciones = this._publicacionYBasesLogic.ListarPublicacionesEstadoPublicadaYBases();
+            model.cboPublicaciones = (from c in publicaciones select new SelectListItem() { Value = string.Format("{0}-{1}", c.CODPUB, c.CODBAS), Text = string.Format("{0} {1}", (c.NUMPUB == null)? string.Empty : c.NUMPUB, c.DESBAS) }).ToList();
             return View(model);
         }
 
         public JsonResult listarServicios(int idBase)
         {
             var serviciosAuditoria = this._servicioAuditoriaLogic.ServiciosPorBase(idBase);// modelEntity.SAF_SERVICIOAUDITORIA.ToList().Where(c => c.CODBAS == idBase && c.ESTREG == "1");
-            var result = (from c in serviciosAuditoria select new SelectListItem() { Text = c.PERSERAUD, Value = c.CODSERAUD.ToString() });
+            List<SelectListItem> lista = new List<SelectListItem>();
+            int i = 1;
+            foreach (var item in serviciosAuditoria)
+	        {
+		        lista.Add(new SelectListItem (){ Value = item.CODSERAUD.ToString(), Text = string.Format("{0}-{1}", item.PERSERAUD, i.ToString()) });
+                i++;
+	        }
+            var result = lista;//(from c in serviciosAuditoria select new SelectListItem() { Text = c.PERSERAUD, Value = c.CODSERAUD.ToString() });
             return Json(result);
         }
 

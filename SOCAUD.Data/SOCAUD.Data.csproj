@@ -100,8 +100,10 @@
     <Compile Include="Core\SpSafMejorEquipoData.cs" />
     <Compile Include="Core\SpSafResultadoCorteData.cs" />
     <Compile Include="Core\VwSafAuditoriaEquipoData.cs" />
+    <Compile Include="Core\VwSafCargosEnServicioAuditoriaData.cs" />
     <Compile Include="Core\VwSafInvitacionData.cs" />
     <Compile Include="Core\VwSafPropuestaEjecucionData.cs" />
+    <Compile Include="Core\VwSafPublicacionBaseData.cs" />
     <Compile Include="Core\VwSafPublicacionData.cs" />
     <Compile Include="Core\VwSafSolicitudData.cs" />
     <Compile Include="Model\SAF_ARCHIVO.cs">
@@ -371,6 +373,9 @@
     <Compile Include="Model\VW_SAF_AUDITORIAEQUIPO.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\VW_SAF_CARGOSENSERVICIO.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\VW_SAF_INVITACION.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
@@ -378,6 +383,9 @@
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VW_SAF_PUBLICACION.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\VW_SAF_PUBLICACIONBASE.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VW_SAF_SOLICITUD.cs">

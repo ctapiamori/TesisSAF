@@ -64,7 +64,8 @@ namespace SOCAUD.Intranet.Controllers
         // GET: Base
         public ActionResult Index()
         {
-            var cronogramas = this._cronogramaLogic.ListarTodos();
+            var cronogramas = this._cronogramaLogic.ListarTodos().Where(c=>c.ESTCRO == 2); // Aprobada
+            
             ViewBag.Cronogramas = cronogramas.Select(c => new SelectListItem() { Value = c.CODCRO.ToString(), Text = c.ANIOCRO.GetValueOrDefault().ToString() }).ToList();
             return View();
         }
@@ -130,13 +131,71 @@ namespace SOCAUD.Intranet.Controllers
             model.RetribucionBase = _base.TOTRETECOBAS.GetValueOrDefault();
 
             model.Cargos = cargos.Select(c => new SelectListItem() { Value = c.CODCAR.ToString(), Text = c.NOMCAR });
+
+            if (servicio.HasValue && servicio != 0) {
+                model.IdServicioAuditoria = servicio.Value;
+                var infoServicio = this._safServicioAuditoriaLogic.BuscarPorId(servicio.Value);
+                model.FechaInicio = (infoServicio.FECINISERAUD.HasValue)?infoServicio.FECINISERAUD.Value.ToString("dd/MM/yyyy") : "";
+                model.FechaTermino = (infoServicio.FECFINSERAUD.HasValue) ? infoServicio.FECFINSERAUD.Value.ToString("dd/MM/yyyy") : "";
+                model.RetribucionServicio = (infoServicio.RETECOSERAUD.HasValue) ? infoServicio.RETECOSERAUD.Value : 0;
+                model.IgvServicio = (infoServicio.IGVSERAUD.HasValue) ? infoServicio.IGVSERAUD.Value : 0;
+                model.ViaticosServicio = (infoServicio.VIASERAUD.HasValue) ? infoServicio.VIASERAUD.Value : 0;
+            }
+
             return View(model);
         }
 
-        public ActionResult ViewCargoEquipo(int id)
+
+        public JsonResult GrabarServicioAuditoria(ServicioAuditoriaModel model) {
+
+            var infoBase = this._baseLogic.BuscarPorId(model.IdCodigoBase);
+            var infoCroEntidad = this._cronoEntidadLogic.BuscarPorId(infoBase.CODCROENT.Value);
+            var infoCrono = this._cronogramaLogic.BuscarPorId(infoBase.CODCRO.Value);
+            var listaServiciosAuditoria = this._safServicioAuditoriaLogic.ListarTodos().Where(c => c.CODBAS == model.IdCodigoBase);
+
+            var sumaRetribucion = listaServiciosAuditoria.Where(c=>c.CODSERAUD != model.IdServicioAuditoria).Sum(c => c.RETECOSERAUD);
+
+            sumaRetribucion = sumaRetribucion + model.RetribucionServicio;
+
+            if (sumaRetribucion > infoBase.TOTRETECOBAS) {
+                return Json(new MensajeRespuesta("La suma de retribuciones economicas no puede ser mayor a la retribucion economica ingresada en las Bases del Concurso.", false));
+            }
+
+            if (model.IdServicioAuditoria == 0)
+            {
+                var nuevoServicio = new SAF_SERVICIOAUDITORIA();
+                nuevoServicio.CODBAS = model.IdCodigoBase;
+                nuevoServicio.FECFINSERAUD = Convert.ToDateTime(model.FechaTermino);
+                nuevoServicio.FECINISERAUD = Convert.ToDateTime(model.FechaInicio);
+                nuevoServicio.RETECOSERAUD = model.RetribucionServicio;
+                nuevoServicio.VIASERAUD = model.ViaticosServicio;
+                nuevoServicio.IGVSERAUD = model.IgvServicio;
+                nuevoServicio.PERSERAUD = model.PeriodoBase.ToString();
+                var servicioGrabado = this._safServicioAuditoriaLogic.Registrar(nuevoServicio);
+                return Json(new MensajeRespuesta("Se registro el servicio de Auditoria satisfactoriamente", true, servicioGrabado.CODSERAUD));
+            }
+            else {
+                var servicioExiste = this._safServicioAuditoriaLogic.BuscarPorId(model.IdServicioAuditoria);
+                servicioExiste.FECFINSERAUD = Convert.ToDateTime(model.FechaTermino);
+                servicioExiste.FECINISERAUD = Convert.ToDateTime(model.FechaInicio);
+                servicioExiste.RETECOSERAUD = model.RetribucionServicio;
+                servicioExiste.VIASERAUD = model.ViaticosServicio;
+                servicioExiste.IGVSERAUD = model.IgvServicio;
+                servicioExiste.PERSERAUD = model.PeriodoBase.ToString();
+                this._safServicioAuditoriaLogic.Actualizar(servicioExiste);
+                return Json(new MensajeRespuesta("Se actualizo el servicio de Auditoria satisfactoriamente", true, model.IdServicioAuditoria));
+            }
+        }
+
+        public ActionResult ViewCargoEquipo(int IdServicio, int? idCargoServicio)
         {
             var model = new CargoEquipoServicioAuditoriaModel();
-            return PartialView("");
+            var listaCargos = this._safGeneralLogic.ListarCargos();
+
+            model.IdServicioAuditoria = IdServicio;
+            model.IdCargoServicioAuditoria = idCargoServicio.HasValue? idCargoServicio.Value : 0;
+            model.CargosServicioAuditoria = (from c in listaCargos select new SelectListItem() { Text = c.NOMCAR, Value = c.CODCAR.ToString() });
+            return PartialView("_cargoequipo", model);
         }
 
         public JsonResult GrabarCargoEquipo(CargoEquipoServicioAuditoriaModel model)
@@ -144,7 +203,7 @@ namespace SOCAUD.Intranet.Controllers
             var cargo = new SAF_SERAUDCARGO()
             {
                 CODSERAUD = model.IdServicioAuditoria,
-                CODCAR = model.IdCargoServicioAuditoria,
+                CODCAR = model.IdCargoSeleted,
                 NUMMININTSERAUDCAR = model.CantidadIntegrantes,
                 NUMMINHORPARSERAUDCAR = model.MinimoHoras
             };
@@ -166,7 +225,7 @@ namespace SOCAUD.Intranet.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new MensajeRespuesta("Ocurrio un error no controlado, comuniquese con su Administrador.", TipoMensaje.error, ex.Message));
+                return Json(new MensajeRespuesta("Ocurrio un error no controlado, comuniquese con su Administrador.", false));
             }
 
         }
@@ -216,33 +275,42 @@ namespace SOCAUD.Intranet.Controllers
             }
         }
 
-        public JsonResult ListarServicios(int id)
+        public JsonResult ListarServicios(int idBase)
         {
-            //var 
-            return Json(new { });
+            var listado = this._safServicioAuditoriaLogic.ServiciosPorBase(idBase);
+            var data = listado.Select(c => new string[]{ 
+                c.CODSERAUD.ToString(),
+                c.PERSERAUD,
+                (c.FECINISERAUD.HasValue)? c.FECINISERAUD.Value.ToString("dd/MM/yyyy") : "",
+                (c.FECFINSERAUD.HasValue)? c.FECFINSERAUD.Value.ToString("dd/MM/yyyy") : "",
+                (c.RETECOSERAUD.HasValue)?c.RETECOSERAUD.Value.ToString(): "0",
+                (c.VIASERAUD.HasValue)?c.VIASERAUD.Value.ToString(): "0"
+            }).ToArray();
+
+            return Json(data);
         }
 
-        public JsonResult GrabarServicioAuditoria(ServicioAuditoriaModel servicio)
-        {
-            var servicioAuditoria = new SAF_SERVICIOAUDITORIA();
-            servicioAuditoria.CODBAS = servicio.IdCodigoBase;
-            servicioAuditoria.CODSERAUD = servicio.IdServicioAuditoria;
-            servicioAuditoria.FECINISERAUD = Texto.GetDateTime(servicio.FechaInicio);
-            servicioAuditoria.FECFINSERAUD = Texto.GetDateTime(servicio.FechaTermino);
-            servicioAuditoria.RETECOSERAUD = servicio.RetribucionServicio;
-            servicioAuditoria.VIASERAUD = servicio.ViaticosServicio;
-            servicioAuditoria.IGVSERAUD = servicio.IgvServicio;
+        //public JsonResult GrabarServicioAuditoria(ServicioAuditoriaModel servicio)
+        //{
+        //    var servicioAuditoria = new SAF_SERVICIOAUDITORIA();
+        //    servicioAuditoria.CODBAS = servicio.IdCodigoBase;
+        //    servicioAuditoria.CODSERAUD = servicio.IdServicioAuditoria;
+        //    servicioAuditoria.FECINISERAUD = Texto.GetDateTime(servicio.FechaInicio);
+        //    servicioAuditoria.FECFINSERAUD = Texto.GetDateTime(servicio.FechaTermino);
+        //    servicioAuditoria.RETECOSERAUD = servicio.RetribucionServicio;
+        //    servicioAuditoria.VIASERAUD = servicio.ViaticosServicio;
+        //    servicioAuditoria.IGVSERAUD = servicio.IgvServicio;
 
-            try
-            {
-                var result = this._safServicioAuditoriaLogic.Registrar(servicioAuditoria);
-                return Json(new MensajeRespuesta("Registro satisfactorio", true, result));
-            }
-            catch (Exception ex)
-            {
-                return Json(new MensajeRespuesta("Ocurrio un error no controlado, comuniquese con su Administrador.", TipoMensaje.error, ex.Message));
-            }
-        }
+        //    try
+        //    {
+        //        var result = this._safServicioAuditoriaLogic.Registrar(servicioAuditoria);
+        //        return Json(new MensajeRespuesta("Registro satisfactorio", true, result));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new MensajeRespuesta("Ocurrio un error no controlado, comuniquese con su Administrador.", TipoMensaje.error, ex.Message));
+        //    }
+        //}
 
         public JsonResult AgregarCargo(int idSerAud, int idCar, int canInt, int horPar)
         {
@@ -304,7 +372,7 @@ namespace SOCAUD.Intranet.Controllers
             return Json(entidades.Select(c => new SelectListItem() { Value = c.CODCROENT.ToString(), Text = c.DESCROENT }));
         }
 
-        public JsonResult ListarBases(int cronograma)
+        public JsonResult ListarBases(int? cronograma)
         {
             var listado = this._baseLogic.BuscarPorCronograma(cronograma);
             var data = listado.Select(c => new string[]{ 
@@ -334,8 +402,8 @@ namespace SOCAUD.Intranet.Controllers
                 entidad.FECMAXCREPUBBAS = WebHelper.GetDateTimeOrNull(model.FechaMaxPublicacion);
                 entidad.TOTRETECOBAS = model.TotalRetribucion;
                 entidad.TOTVIABAS = model.TotalViaticos;
-                entidad.FIRPCAOBBAS = model.FirmaPcaob;
-                entidad.FIRINTBAS = model.FirmaInternacional;
+                entidad.FIRPCAOBBAS = (model.FirmaPcaob == null)? "N" : model.FirmaPcaob;
+                entidad.FIRINTBAS = (model.FirmaInternacional == null)? "N" : model.FirmaInternacional;
                
                 if (model.Codigo.Equals(0))
                 {
@@ -455,6 +523,22 @@ namespace SOCAUD.Intranet.Controllers
             var file = localReport.Render("pdf", deviceInfoA4, out mimeType, out encoding, out fileNameExtension, out streams, out warnings);
 
             return file;
+        }
+
+
+        public JsonResult ListarEquipoRequerido(int idServicio)
+        {
+            var listado = this._safServicioAuditoriaCargoLogic.ListarCargosPorServicioAuditoria(idServicio);
+            var data = listado.Select(c => new string[]{ 
+                c.CODSERAUDCAR.ToString(),
+                c.NOMCAR,
+                c.NUMMININTSERAUDCAR.GetValueOrDefault().ToString(),
+                c.NUMMINHORPARSERAUDCAR.GetValueOrDefault().ToString(),
+                c.NUMMINHORSERAUDCAPCAP.GetValueOrDefault().ToString(),
+                c.NUMMINHORSERAUDCAREXP.GetValueOrDefault().ToString()
+            }).ToArray();
+
+            return Json(data);
         }
 
     }

@@ -50,14 +50,14 @@
         "info": false,
         "bServerSide": false,
         "data": _dataConsulta_,
-        "order": [[0, "asc"]],
+        "order": [[1, "asc"]],
         "columns": [
             {
                 "bSortable": false,
                 "sClass": "center",
                 "sWidth": "5%",
                 "render": function (data, type, row) {
-                    return '<center><button class="btn btn-success" title="Responder" type="button" onclick="ResponderConsulta(' + row[0], + ');"><i class="fa fa-pencil"></i></button></center>';
+                    return '<center><button class="btn btn-success" title="Responder" type="button" onclick="ResponderConsulta(' + row[0] + ');"><i class="fa fa-tasks"></i></button></center>';
                 }
             },
             { "sTitle": "Consulta" },
@@ -71,6 +71,9 @@
         $("#btnBuscar").click(listarConsultas);
 
     });
+
+
+    $('#modalResponder').on('hidden.bs.modal', function () { listarConsultas(); });
 
     function ResponderConsulta(idConsulta) {
 

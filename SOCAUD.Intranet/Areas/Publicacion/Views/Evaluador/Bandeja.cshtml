@@ -130,18 +130,27 @@
     }
 
     function publicarPublicacion(id) {
-        $.ajax({
-            url: '@Url.Action("PublicarPublicacion", "Evaluador", new { Area = "Publicacion" })',
-            type: 'POST',
-            async: false,
-            data: { id: id },
-            success: function (result) {
-                if (result.Exito) {
-                    listarPublicacion();
-                }
-                mostrarNotificacion(result);
+
+
+        bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+            if (result) {
+                $.ajax({
+                    url: '@Url.Action("PublicarPublicacion", "Evaluador", new { Area = "Publicacion" })',
+                    type: 'POST',
+                    async: false,
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.Exito) {
+                            listarPublicacion();
+                        }
+                        mostrarNotificacion(result);
+                    }
+                });
             }
         });
+
+
     }
 
     function eliminarPublicacion(id) {

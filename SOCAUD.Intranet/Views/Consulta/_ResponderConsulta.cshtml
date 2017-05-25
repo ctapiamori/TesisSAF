@@ -1,5 +1,7 @@
 ﻿@model SOCAUD.Intranet.Controllers.ConsultaEntidadModel
 
+
+<form id="frmGrabarRespuesta" name="frmGrabarRespuesta">
 @Html.HiddenFor(c => c.CodigoConsulta)
  
 <div class="modal-dialog modal-lg">
@@ -9,7 +11,7 @@
             <h4 class="modal-title">Respuesta Consulta</h4>
         </div>
         <div class="modal-body">
-            <div class="callout callout-warning">
+            <div class="callout callout-info">
                 <h4><i class="icon fa fa-info"></i>&nbsp;Advertencia</h4>
                 <p>
                     Las respuestas seran publicadas para las Sociedades de Auditoria
@@ -28,7 +30,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         @Html.LabelFor(c => c.RespuestaConsulta)
-                            <textarea   class="form-control" rows="5">@Model.RespuestaConsulta</textarea>
+                            <textarea id="RespuestaConsulta" name="RespuestaConsulta"  class="form-control" rows="5">@Model.RespuestaConsulta</textarea>
                     </div>
                 </div>
             </div>
@@ -36,6 +38,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>&nbsp;
                         <button type="button" id="ResponderConsulta" class="btn btn-primary" >Grabar</button>
                     </div>
                 </div>
@@ -47,191 +50,35 @@
     </div>
 </div>
 
-
+</form>
 
 
 
 
 <script type="text/javascript">
 
-    var _dataDisponibilidadAuditor_ = null;
-    var _dataFechasAsigAuditor_ = null;
-
+ 
     $(document).ready(function () {
-        listarFechasAsignadasAuditor();
-        $("#btnRegistrarAgenda").click(registrarAgendaAuditor);
-        $("#btnEliminarFechaAsignada").click(eliminarFechasAgendaAuditor);
-
-        $("#btnBusquedaDisponibilidad").click(listarDisponibilidadAuditor);
-        $('#fechaInicio').datepicker({
-            format: "dd/mm/yyyy"
-        }).next().on(ace.click_event, function () {
-            $(this).prev().focus();
-        });
-
-        $('#fechaFinal').datepicker({
-            format: "dd/mm/yyyy"
-        }).next().on(ace.click_event, function () {
-            $(this).prev().focus();
-        });
+        
+        $("#ResponderConsulta").click(registrarRespuesta);
+ 
     });
 
+ 
 
-    var tabDisponibilidadAuditor = $("#tabDisponibilidadAuditor").dataTable({
-        "info": false,
-        "bServerSide": false,
-        "data": _dataDisponibilidadAuditor_,
-        "order": [[1, "asc"]],
-        "columns": [
-
-            { "sTitle": "Fecha Disponible" },
-            {
-                "sTitle": "<center><input type='checkbox' id='chkSeleccionarTodo' onclick='javascript:seleccionarTodasFechas();' /></center>",
-                "bSortable": false,
-                "sClass": "center",
-                "sWidth": "5%",
-                "render": function (data, type, row) {
-                    return "<center><input type='checkbox' name='chkDia' value = '" + row[0] + "' /></center>";
-                }
-            }
-
-        ]
-    });
-
-    var tabFechasAsig = $("#tabFechasAsig").dataTable({
-        "info": false,
-        "bServerSide": false,
-        "data": _dataFechasAsigAuditor_,
-        "order": [[1, "asc"]],
-        "columns": [
-
-            { "sTitle": "Fechas Asignadas" },
-            {
-                "sTitle": "<center><input type='checkbox' id='chkSeleccionarTodoAsig' onclick='javascript:seleccionarTodasFechasAsignadas();' /></center>",
-                "bSortable": false,
-                "sClass": "center",
-                "sWidth": "5%",
-                "render": function (data, type, row) {
-                    return "<center><input type='checkbox' name='chkDiaAsignado' value = '" + row[1] + "' /></center>";
-                }
-            }
-
-        ]
-    });
-
-    function listarDisponibilidadAuditor() {
+    function registrarRespuesta() {
         $.ajax({
-            url: '@Url.Action("ListadoDisponibilidadAuditor", "InvitacionAuditor")',
+            url: '@Url.Action("GrabarRespuesta", "Consulta")',
             type: 'POST',
             async: false,
-            data: { idAuditor: $("#codigoAuditorAgenda").val(), fechaInicio: $("#fechaInicio").val(), fechaFin: $("#fechaFinal").val() },
-            success: function (result) {
-                _dataDisponibilidadAuditor_ = result;
-                tabDisponibilidadAuditor.fnReloadData(_dataDisponibilidadAuditor_);
-            }
-        });
-    }
-
-
-    function listarFechasAsignadasAuditor() {
-        $.ajax({
-            url: '@Url.Action("ListadoFechasAsig", "InvitacionAuditor")',
-            type: 'POST',
-            async: false,
-            data: { idInvitacion: $("#codigoInvitacionAgenda").val() },
-            success: function (result) {
-                _dataFechasAsigAuditor_ = result;
-                tabFechasAsig.fnReloadData(_dataFechasAsigAuditor_);
-            }
-        });
-    }
-
-    function seleccionarTodasFechas() {
-        if ($("#chkSeleccionarTodo").is(":checked")) {
-            $("input[name='chkDia']").prop("checked", true);
-        } else {
-            $("input[name='chkDia']").prop("checked", false);
-        }
-    }
-
-    function seleccionarTodasFechasAsignadas() {
-        if ($("#chkSeleccionarTodoAsig").is(":checked")) {
-            $("input[name='chkDiaAsignado']").prop("checked", true);
-        } else {
-            $("input[name='chkDiaAsignado']").prop("checked", false);
-        }
-    }
-
-
-    function registrarAgendaAuditor() {
-        var fechasSeleccionadas = "";
-
-        $("input[name='chkDia']:checked").each(function (i, v) {
-            if (fechasSeleccionadas == "")
-                fechasSeleccionadas = $(this).val();
-            else
-                fechasSeleccionadas = fechasSeleccionadas + "#" + $(this).val();
-        });
-
-        if (fechasSeleccionadas == "") {
-            new PNotify({
-                title: 'Respuesta Sistema!',
-                type: "error",
-                text: "Debe seleccionar al una fecha"
-            });
-            return
-        }
-
-        $.ajax({
-            url: '@Url.Action("RegistrarFechasAgendaAuditor", "InvitacionAuditor")',
-            type: 'POST',
-            async: false,
-            data: {
-                idInvitacion: $("#codigoInvitacionAgenda").val(),
-                fechas: fechasSeleccionadas
-            },
+            data: $("#frmGrabarRespuesta").serialize(),
             success: function (result) {
                 mostrarNotificacion(result);
-                listarDisponibilidadAuditor();
-                listarFechasAsignadasAuditor();
             }
         });
     }
 
-    function eliminarFechasAgendaAuditor() {
-        var fechasAgendaAuditor = "";
 
-        $("input[name='chkDiaAsignado']:checked").each(function (i, v) {
-            if (fechasAgendaAuditor == "")
-                fechasAgendaAuditor = $(this).val();
-            else
-                fechasAgendaAuditor = fechasAgendaAuditor + "," + $(this).val();
-        });
-
-        if (fechasAgendaAuditor == "") {
-            new PNotify({
-                title: 'Respuesta Sistema!',
-                type: "error",
-                text: "Debe seleccionar al una fecha"
-            });
-            return
-        }
-
-        $.ajax({
-            url: '@Url.Action("EliminarFechasAgenda", "InvitacionAuditor")',
-            type: 'POST',
-            async: false,
-            data: {
-                idInvitacion: $("#codigoInvitacionAgenda").val(),
-                fechasAgendaAuditor: fechasAgendaAuditor
-            },
-            success: function (result) {
-                mostrarNotificacion(result);
-                listarDisponibilidadAuditor();
-                listarFechasAsignadasAuditor();
-            }
-        });
-    }
-
+    
 
 </script>
