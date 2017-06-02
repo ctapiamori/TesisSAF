@@ -1,0 +1,116 @@
+﻿@using SOCAUD.Intranet.Models;
+
+ 
+ 
+@{
+    ViewBag.PageTitle = "Perfil";
+    ViewBag.PageDescription = "Perfil";
+    ViewBag.PageDescription = "Perfiles del Sistema";
+}
+ 
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Perfiles del Sistema</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabPerfil" name="tabPerfil" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                        <button id="btnAgregarNuevo" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Agregar Nuevo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section scripts {
+
+    <script type="text/ecmascript">
+        
+        $(document).ready(function () {
+            listarPerfil();
+            $("#btnAgregarNuevo").click(function () {
+                document.location.href = '@Url.Action("Agregar","Perfil")';
+            });
+        });
+
+        var _dataPerfil_ = null;
+        var tabPerfil = $("#tabPerfil").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataPerfil_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarPerfil(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+
+                    }
+                },
+                { "sTitle": "Nombre" },
+                { "sTitle": "Descripcion" },
+                { "sTitle": "Tipo" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarPerfil(' + row[0] + ');"><i class="fa fa-trash"></i></button></center>';
+
+                    }
+                }
+            ]
+        });
+
+
+        function listarPerfil() {
+            $.ajax({
+                url: '@Url.Action("ListarPerfil", "Perfil")',
+                type: 'POST',
+                async: false,
+                data: {},
+                success: function (result) {
+                    _dataPerfil_ = result;
+                    tabPerfil.fnReloadData(_dataPerfil_);
+                }
+            });
+        }
+
+        function EliminarPerfil(idPer) {
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarPerfil", "Perfil")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: idPer },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarPerfil();
+                        }
+                    });
+                }
+            });
+
+
+        }
+
+        function EditarPerfil(id) {
+            document.location.href = '@Url.Action("Editar","Perfil")' + "/" + id;
+        }
+
+    </script>
+}

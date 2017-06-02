@@ -215,7 +215,7 @@ namespace SOCAUD.Web.Controllers
 
         public JsonResult crearNuevaSolicitud()
         {
-            if ((int)Session["sessionTipoUsuario"] == (int)Tipo.TipoUsuarioExtranet.Auditor)
+            if (Convert.ToInt32(Session["sessionTipoUsuario"]) == (int)Tipo.TipoUsuarioExtranet.Auditor)
                 return Json(crearSolicitudAuditor((int)Session["sessionCodigoResponsableLogin"]));
 
             return Json(crearSolicitudSoa((int)Session["sessionCodigoResponsableLogin"]));

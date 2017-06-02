@@ -57,5 +57,15 @@ namespace SOCAUD.Web.Controllers
             }
             return Json(result);
         }
+
+        public ActionResult ByPass(int CodigoUsuario, string NombreUsuario, string UsuarioSOAAuditor, string TipoExterno, string Usuario)
+        {
+            Session["sessionCodigoResponsableLogin"] = CodigoUsuario;
+            Session["sessionNombreCompletoUsuario"] = NombreUsuario;
+            Session["sessionTipoUsuario"] = TipoExterno;
+            Session["sessionUsuario"] = Usuario;
+            return RedirectToAction("Index","Solicitud");
+            
+        }
     }
 }

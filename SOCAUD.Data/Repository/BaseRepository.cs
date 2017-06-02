@@ -59,6 +59,7 @@ namespace SOCAUD.Data.Repository
         {
 
             SetValue(ref entity, "FECREG", DateTime.Now.ToShortDateString());
+            SetValue(ref entity, "USUREG", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
             SetValue(ref entity, "ESTREG", ((int)Estado.Auditoria.Activo).ToString());
             dynamic obj = dbSet.Add(entity);
             this._unitOfWork.Db.SaveChanges();
@@ -68,6 +69,7 @@ namespace SOCAUD.Data.Repository
         public virtual T Update(T entity)
         {
             SetValue(ref entity, "FECMOD", DateTime.Now.ToShortDateString());
+            SetValue(ref entity, "USUMOD", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
             SetValue(ref entity, "ESTREG", ((int)Estado.Auditoria.Activo).ToString());
             dbSet.Attach(entity);
             _unitOfWork.Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
@@ -77,6 +79,8 @@ namespace SOCAUD.Data.Repository
         public void Delete(object id)
         {
             T entity = dbSet.Find(id);
+            SetValue(ref entity, "FECMOD", DateTime.Now.ToShortDateString());
+            SetValue(ref entity, "USUMOD", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
             SetValue(ref entity, "ESTREG", ((int)Estado.Auditoria.Inactivo).ToString());
             dbSet.Attach(entity);
             _unitOfWork.Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;

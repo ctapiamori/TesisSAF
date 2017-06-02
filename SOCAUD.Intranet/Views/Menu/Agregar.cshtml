@@ -1,0 +1,86 @@
+﻿@using SOCAUD.Intranet.Models;
+@model MenuModel
+ 
+@{
+    ViewBag.PageTitle = "Agregar Menu";
+    ViewBag.PageDescription = "Agregar Menu";
+    ViewBag.PageDescription = "Agregar Menu";
+}
+ 
+<form id="frmGrabarMenu">
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Nuevo Item Menu</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Descripcion</label>                      
+                        <!--<textarea id="DESMEN" name="DESMEN" rows="4" class="form-control"></textarea>-->
+                        @Html.TextAreaFor(m => m.DESMEN, new { @class = "form-control", @rows = "5" })
+                        @Html.ValidationMessageFor(c => c.DESMEN)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Ruta</label>
+                        <!--<input type="text" id="RUTAMEN" name="RUTAMEN" class="form-control" />-->
+                        @Html.TextBoxFor(m => m.RUTAMEN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.RUTAMEN)
+                    </div>
+                    <div class="col-md-6">
+                        <label>Icono</label>
+                        @Html.DropDownListFor(c=>c.ICONCSS, Model.ListaIconos, "Seleccione", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.ICONCSS)                        
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                        <button id="btnAgregar" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Agregar</button>
+                        <button id="btnRegresar" type="button" class="btn">&nbsp;Regresar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+
+    <script type="text/ecmascript">
+
+        $(document).ready(function () {
+            
+            $("#btnRegresar").click(function () {
+                document.location.href = '@Url.Action("Index","Menu")';
+            });
+
+
+            $("#btnAgregar").click(function () {
+                if (!$("#frmGrabarMenu").isValid()) return;
+
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                    if (result) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("AgregarMenu","Menu")',
+                            data: $("#frmGrabarMenu").serialize(),
+                            success: function (result) {
+                                mostrarNotificacion(result);
+                            }
+                        });
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+}

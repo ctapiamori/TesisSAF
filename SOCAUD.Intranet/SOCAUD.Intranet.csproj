@@ -194,10 +194,14 @@
     <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\PerfilController.cs" />
+    <Compile Include="Controllers\PerfilMenuController.cs" />
     <Compile Include="Controllers\PropuestaController.cs" />
     <Compile Include="Controllers\PublicacionModel.cs" />
     <Compile Include="Controllers\PuntajeController.cs" />
     <Compile Include="Controllers\SolicitudAdminController.cs" />
+    <Compile Include="Controllers\SubMenuController.cs" />
     <Compile Include="Controllers\WorkflowController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -213,11 +217,15 @@
     <Compile Include="Models\EntidadModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\PerfilMenuModel.cs" />
+    <Compile Include="Models\PerfilModel.cs" />
     <Compile Include="Models\PropuestaModel.cs" />
     <Compile Include="Models\ConsultaModel.cs" />
     <Compile Include="Models\PuntajeModel.cs" />
     <Compile Include="Models\ServicioAuditoriaModels.cs" />
     <Compile Include="Models\SoaModel.cs" />
+    <Compile Include="Models\SubMenuModel.cs" />
     <Compile Include="Models\WorkflowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\Datasets\dsPropuesta.Designer.cs">
@@ -515,6 +523,18 @@
     <Content Include="Views\Puntaje\Index.cshtml" />
     <Content Include="Views\Consulta\Index.cshtml" />
     <Content Include="Views\Consulta\_ResponderConsulta.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\Agregar.cshtml" />
+    <Content Include="Views\Menu\Editar.cshtml" />
+    <Content Include="Views\Perfil\Agregar.cshtml" />
+    <Content Include="Views\Perfil\Editar.cshtml" />
+    <Content Include="Views\Perfil\Index.cshtml" />
+    <Content Include="Views\SubMenu\Agregar.cshtml" />
+    <Content Include="Views\SubMenu\Editar.cshtml" />
+    <Content Include="Views\SubMenu\Index.cshtml" />
+    <Content Include="Views\PerfilMenu\Agregar.cshtml" />
+    <Content Include="Views\PerfilMenu\Editar.cshtml" />
+    <Content Include="Views\PerfilMenu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

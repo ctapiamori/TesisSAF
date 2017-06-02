@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
-                            <label>A&ntilde;o</label>
+                            <label>Periodo</label>
                             @Html.DropDownList("anios", (List<SelectListItem>)ViewBag.Anios, "Seleccione", new { @class = "form-control" })
                         </div>
                         <div class="col-md-3">
@@ -54,20 +54,21 @@
                 "sClass": "center",
                 "sWidth": "5%",
                 "render": function (data, type, row) {
-                    if (row[4] == "1")
+                    if (row[5] == "1")
                         return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarCronograma(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
                     else
                         return '<center><button class="btn btn-primary" title="Mostrar" type="button" onclick="ViewCronograma(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
                 }
             },
-            { "sTitle": "Año" },
+            { "sTitle": "Periodo" },
             { "sTitle": "Fecha Publicación" },
-            { "sTitle": "Fecha Publicación" },
+            { "sTitle": "Max. Elaboración Bases" },
+            { "sTitle": "Estado" },
             {
                 "bSortable": false,
                 "sClass": "center",
                 "render": function (data, type, row) {
-                    if (row[4] == "1")
+                    if (row[5] == "1")
                         return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarCronograma(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
                     else
                         return "";

@@ -1,0 +1,86 @@
+﻿@using SOCAUD.Intranet.Models;
+@model PerfilModel
+ 
+@{
+    ViewBag.PageTitle = "Editar Menu";
+    ViewBag.PageDescription = "Editar Menu";
+    ViewBag.PageDescription = "Editar Menu";
+}
+ 
+<form id="frmEditarPerfil">
+
+    @Html.HiddenFor(m => m.CODPER)
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Nuevo Perfil</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.NOMPER)
+                        @Html.TextBoxFor(m => m.NOMPER, new { @class = "form-control", @rows = "5" })
+                        @Html.ValidationMessageFor(c => c.NOMPER)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.DESPER)
+                        @Html.TextBoxFor(m => m.DESPER, new { @class = "form-control", @rows = "5" })
+                        @Html.ValidationMessageFor(c => c.DESPER)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.TIPOPER)
+                        @Html.DropDownListFor(c=>c.TIPOPER, Model.ListaTipoPerfil, "Seleccione", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.TIPOPER)   
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                        <button id="btnEditar" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                        <button id="btnRegresar" type="button" class="btn btn-info"> &nbsp;Regresar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+
+    <script type="text/ecmascript">
+
+        $(document).ready(function () {
+
+            $("#btnRegresar").click(function () {
+                document.location.href = '@Url.Action("Index","Perfil")';
+            });
+
+
+            $("#btnEditar").click(function () {
+
+                if (!$("#frmEditarPerfil").isValid()) return;
+
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                    if (result) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("EditarPerfil","Perfil")',
+                            data: $("#frmEditarPerfil").serialize(),
+                            success: function (result) {
+                                mostrarNotificacion(result);
+                            }
+                        });
+                    }
+                });
+            });
+
+
+        });
+    </script>
+}

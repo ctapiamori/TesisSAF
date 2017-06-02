@@ -55,6 +55,7 @@
     <Compile Include="Constantes\Indicador.cs" />
     <Compile Include="Constantes\Mensaje.cs" />
     <Compile Include="Constantes\MensajeRespuesta.cs" />
+    <Compile Include="Constantes\TiposLogin.cs" />
     <Compile Include="Constantes\Variables.cs" />
     <Compile Include="Enum\Estado.cs" />
     <Compile Include="Enum\Notificacion.cs" />

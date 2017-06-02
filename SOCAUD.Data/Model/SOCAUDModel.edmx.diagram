@@ -117,6 +117,16 @@
         <AssociationConnector Association="SI_SOCAUDModel.R_28" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO" Width="1.5" PointX="13.375" PointY="9.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE" Width="1.5" PointX="15.375" PointY="8.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_MENU" Width="1.5" PointX="5.375" PointY="26" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_PERFIL" Width="1.5" PointX="5.375" PointY="22" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_PERFIL_MENU" Width="1.5" PointX="7.625" PointY="22" />
+        <AssociationConnector Association="SI_SOCAUDModel.FK__SAF_PERFI__CODME__318258D2" />
+        <AssociationConnector Association="SI_SOCAUDModel.FK__SAF_PERFI__CODPE__32767D0B" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_SUBMENU" Width="1.5" PointX="7.625" PointY="26.125" />
+        <AssociationConnector Association="SI_SOCAUDModel.FK__SAF_SUBME__CODME__41B8C09B" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_SUBMENU" Width="1.5" PointX="10.375" PointY="21.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PERFILMENU" Width="1.5" PointX="22.375" PointY="7.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_CRONOGRAMA" Width="1.5" PointX="23.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

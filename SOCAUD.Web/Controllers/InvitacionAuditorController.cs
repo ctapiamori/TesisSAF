@@ -38,9 +38,13 @@ namespace SOCAUD.Web.Controllers
         {
             var model = new InvitacionModel();
             var publicaciones = this._publicacionYBasesLogic.ListarPublicacionesEstadoPublicadaYBases();
-            model.cboPublicaciones = (from c in publicaciones select new SelectListItem() { Value = string.Format("{0}-{1}", c.CODPUB, c.CODBAS), Text = string.Format("{0} {1}", (c.NUMPUB == null)? string.Empty : c.NUMPUB, c.DESBAS) }).ToList();
+            model.cboPublicaciones = (from c in publicaciones select new SelectListItem() { Value = c.CODPUB.ToString(), Text = c.NUMPUB }).ToList();
             return View(model);
         }
+
+
+        public JsonResult listarBases(int idBase)
+        {
 
         public JsonResult listarServicios(int idBase)
         {

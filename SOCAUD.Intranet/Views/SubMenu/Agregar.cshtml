@@ -1,0 +1,85 @@
+﻿@using SOCAUD.Intranet.Models;
+@model SubMenuModel
+ 
+@{
+    ViewBag.PageTitle = "Agregar Sub-Menu";
+    ViewBag.PageDescription = "Agregar Sub-Menu";
+    ViewBag.PageDescription = "Agregar Sub-Menu";
+}
+ 
+<form id="frmGrabarSubMenu">
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Nuevo Item Sub-Menu</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(c=>c.CODMEN)
+                        @Html.DropDownListFor(c=>c.CODMEN, Model.ListaMenu, "Seleccione", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.CODMEN)                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(c=>c.DESSUBMEN)                      
+                        @Html.TextBoxFor(m => m.DESSUBMEN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.DESSUBMEN)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(c=>c.RUTASUBMEN)
+                        @Html.TextBoxFor(m => m.RUTASUBMEN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.RUTASUBMEN)
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                        <button id="btnAgregar" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Agregar</button>
+                        <button id="btnRegresar" type="button" class="btn">&nbsp;Regresar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+
+    <script type="text/ecmascript">
+
+        $(document).ready(function () {
+            
+            $("#btnRegresar").click(function () {
+                document.location.href = '@Url.Action("Index","SubMenu")';
+            });
+
+
+            $("#btnAgregar").click(function () {
+                if (!$("#frmGrabarSubMenu").isValid()) return;
+
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                    if (result) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("AgregarSubMenu","SubMenu")',
+                            data: $("#frmGrabarSubMenu").serialize(),
+                            success: function (result) {
+                                mostrarNotificacion(result);
+                            }
+                        });
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+}

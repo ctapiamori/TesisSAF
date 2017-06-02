@@ -14,6 +14,8 @@ namespace SOCAUD.Business.Core
     {
 
         IEnumerable<SAF_CRONOGRAMA> ListarPorAnio(int? anio);
+
+        IEnumerable<VW_SAF_CRONOGRAMA> ListarPorAnioCompleto(int? anio);
         int NewCorrelativoBase(int cronograma);
         int NewCorrelativoPublicacion(int cronograma);
         IEnumerable<TcSAFCRONOGRAMARPT> CronogramaRpt(int idCronograma);
@@ -23,12 +25,13 @@ namespace SOCAUD.Business.Core
     {
         private readonly IUnitOfWork _uow;
         private readonly ISafCronogramaData _safCronogramaData;
-
+        private readonly IVwSafCronogramaData _vwSafCronogramaData;
 
         public SafCronogramaLogic()
         {
             this._uow = new UnitOfWork();
             this._safCronogramaData = new SafCronogramaData(_uow);
+            this._vwSafCronogramaData = new VwSafCronogramaData(_uow);
 
         }
 
@@ -100,6 +103,12 @@ namespace SOCAUD.Business.Core
         public IEnumerable<TcSAFCRONOGRAMARPT> CronogramaRpt(int idCronograma)
         {
             return _safCronogramaData.CronogramaRpt(idCronograma);
+        }
+
+
+        public IEnumerable<VW_SAF_CRONOGRAMA> ListarPorAnioCompleto(int? anio)
+        {
+            return this._vwSafCronogramaData.GetAll();
         }
     }
 }

@@ -449,6 +449,20 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="ESTREG" Type="char" MaxLength="1" />
           <Property Name="CODINV" Type="int" />
         </EntityType>
+        <EntityType Name="SAF_MENU">
+          <Key>
+            <PropertyRef Name="CODMEN" />
+          </Key>
+          <Property Name="CODMEN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESMEN" Type="varchar" MaxLength="200" />
+          <Property Name="RUTAMEN" Type="varchar" MaxLength="200" />
+          <Property Name="ICONCSS" Type="varchar" MaxLength="200" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+        </EntityType>
         <EntityType Name="SAF_NOTIFICACION">
           <Key>
             <PropertyRef Name="CODNOT" />
@@ -474,6 +488,34 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="NOMPAR" Type="varchar(max)" />
           <Property Name="VALOR" Type="varchar(max)" />
           <Property Name="CODTIPPAR" Type="int" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SAF_PERFIL">
+          <Key>
+            <PropertyRef Name="CODPER" />
+          </Key>
+          <Property Name="CODPER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMPER" Type="varchar" MaxLength="100" />
+          <Property Name="TIPOPER" Type="char" MaxLength="1" />
+          <Property Name="DESPER" Type="varchar" MaxLength="500" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="CODTIPUSU" Type="int" />
+        </EntityType>
+        <EntityType Name="SAF_PERFIL_MENU">
+          <Key>
+            <PropertyRef Name="CODPERMEN" />
+          </Key>
+          <Property Name="CODPERMEN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CODMEN" Type="int" />
+          <Property Name="CODPER" Type="int" />
           <Property Name="FECREG" Type="datetime" />
           <Property Name="FECMOD" Type="datetime" />
           <Property Name="USUREG" Type="varchar" MaxLength="50" />
@@ -730,6 +772,20 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="CODAUD" Type="int" />
           <Property Name="OBSSOL" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="SAF_SUBMENU">
+          <Key>
+            <PropertyRef Name="CODSUBMEN" />
+          </Key>
+          <Property Name="CODSUBMEN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESSUBMEN" Type="varchar" MaxLength="200" />
+          <Property Name="RUTASUBMEN" Type="varchar" MaxLength="200" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="CODMEN" Type="int" />
+        </EntityType>
         <EntityType Name="SAF_TIPOPARAMETRICA">
           <Key>
             <PropertyRef Name="CODTIPPAR" />
@@ -837,6 +893,29 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_CARGOSENSERVICIO' no ti
           <Property Name="NUMMINHORSERAUDCAPCAP" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_CRONOGRAMA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VW_SAF_CRONOGRAMA">
+          <Key>
+            <PropertyRef Name="CODCRO" />
+            <PropertyRef Name="CODPAR" />
+          </Key>
+          <Property Name="CODCRO" Type="int" Nullable="false" />
+          <Property Name="ANIOCRO" Type="int" />
+          <Property Name="FECPUBCRO" Type="datetime" />
+          <Property Name="FECMAXCREBASCRO" Type="datetime" />
+          <Property Name="NUMREPCRO" Type="int" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="ESTCRO" Type="int" />
+          <Property Name="NUMBAS" Type="int" />
+          <Property Name="NUMPUB" Type="int" />
+          <Property Name="CODPAR" Type="int" Nullable="false" />
+          <Property Name="NOMPAR" Type="varchar(max)" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_INVITACION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VW_SAF_INVITACION">
           <Key>
@@ -857,6 +936,21 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_INVITACION' no tiene de
           <Property Name="DNIAUD" Type="char" MaxLength="8" />
           <Property Name="CODSOA" Type="int" Nullable="false" />
           <Property Name="RAZSOCSOA" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_PERFILMENU' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VW_SAF_PERFILMENU">
+          <Key>
+            <PropertyRef Name="CODPERMEN" />
+            <PropertyRef Name="CODPER" />
+            <PropertyRef Name="CODMEN" />
+          </Key>
+          <Property Name="CODPERMEN" Type="int" Nullable="false" />
+          <Property Name="CODPER" Type="int" Nullable="false" />
+          <Property Name="CODMEN" Type="int" Nullable="false" />
+          <Property Name="DESPER" Type="varchar" MaxLength="500" />
+          <Property Name="DESMEN" Type="varchar" MaxLength="200" />
+          <Property Name="NOMPER" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_PROPUESTAEJECUCION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -933,6 +1027,25 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <Property Name="CODAUD" Type="int" />
           <Property Name="NOMESTSOL" Type="varchar(max)" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SUBMENU' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VW_SAF_SUBMENU">
+          <Key>
+            <PropertyRef Name="CODSUBMEN" />
+          </Key>
+          <Property Name="CODSUBMEN" Type="int" Nullable="false" />
+          <Property Name="DESSUBMEN" Type="varchar" MaxLength="200" />
+          <Property Name="RUTASUBMEN" Type="varchar" MaxLength="200" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="CODMEN" Type="int" />
+          <Property Name="DESMEN" Type="varchar" MaxLength="200" />
+          <Property Name="RUTAMEN" Type="varchar" MaxLength="200" />
+          <Property Name="ICONCSS" Type="varchar" MaxLength="200" />
+        </EntityType>
         <Association Name="FK__SAF_ASIST__CODPR__02FC7413">
           <End Role="SAF_PROPEQUIPO" Type="Self.SAF_PROPEQUIPO" Multiplicity="0..1" />
           <End Role="SAF_ASISTENCIA" Type="Self.SAF_ASISTENCIA" Multiplicity="*" />
@@ -981,6 +1094,30 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__SAF_PERFI__CODME__318258D2">
+          <End Role="SAF_MENU" Type="Self.SAF_MENU" Multiplicity="0..1" />
+          <End Role="SAF_PERFIL_MENU" Type="Self.SAF_PERFIL_MENU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_MENU">
+              <PropertyRef Name="CODMEN" />
+            </Principal>
+            <Dependent Role="SAF_PERFIL_MENU">
+              <PropertyRef Name="CODMEN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SAF_PERFI__CODPE__32767D0B">
+          <End Role="SAF_PERFIL" Type="Self.SAF_PERFIL" Multiplicity="0..1" />
+          <End Role="SAF_PERFIL_MENU" Type="Self.SAF_PERFIL_MENU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_PERFIL">
+              <PropertyRef Name="CODPER" />
+            </Principal>
+            <Dependent Role="SAF_PERFIL_MENU">
+              <PropertyRef Name="CODPER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SAF_PROVI__CODDE__245D67DE">
           <End Role="SAF_DEPARTAMENTO" Type="Self.SAF_DEPARTAMENTO" Multiplicity="0..1" />
           <End Role="SAF_PROVINCIA" Type="Self.SAF_PROVINCIA" Multiplicity="*" />
@@ -990,6 +1127,18 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
             </Principal>
             <Dependent Role="SAF_PROVINCIA">
               <PropertyRef Name="CODDEP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SAF_SUBME__CODME__41B8C09B">
+          <End Role="SAF_MENU" Type="Self.SAF_MENU" Multiplicity="0..1" />
+          <End Role="SAF_SUBMENU" Type="Self.SAF_SUBMENU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_MENU">
+              <PropertyRef Name="CODMEN" />
+            </Principal>
+            <Dependent Role="SAF_SUBMENU">
+              <PropertyRef Name="CODMEN" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1757,8 +1906,11 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <EntitySet Name="SAF_FLUJO_DOCUMENTO" EntityType="Self.SAF_FLUJO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_INVITACION" EntityType="Self.SAF_INVITACION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_INVITACIONDETALLE" EntityType="Self.SAF_INVITACIONDETALLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAF_MENU" EntityType="Self.SAF_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_NOTIFICACION" EntityType="Self.SAF_NOTIFICACION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_PARAMETRICA" EntityType="Self.SAF_PARAMETRICA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAF_PERFIL" EntityType="Self.SAF_PERFIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAF_PERFIL_MENU" EntityType="Self.SAF_PERFIL_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_PROPEQUIPO" EntityType="Self.SAF_PROPEQUIPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_PROPEQUIPODETALLE" EntityType="Self.SAF_PROPEQUIPODETALLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_PROPUESTA" EntityType="Self.SAF_PROPUESTA" Schema="dbo" store:Type="Tables" />
@@ -1773,6 +1925,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <EntitySet Name="SAF_SOLCAPACITACION" EntityType="Self.SAF_SOLCAPACITACION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_SOLEXPERIENCIA" EntityType="Self.SAF_SOLEXPERIENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_SOLICITUD" EntityType="Self.SAF_SOLICITUD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAF_SUBMENU" EntityType="Self.SAF_SUBMENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_TIPOPARAMETRICA" EntityType="Self.SAF_TIPOPARAMETRICA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_TIPOSOLICITUD" EntityType="Self.SAF_TIPOSOLICITUD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_UNIVERSIDAD" EntityType="Self.SAF_UNIVERSIDAD" Schema="dbo" store:Type="Tables" />
@@ -1815,6 +1968,25 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
     [VW_SAF_CARGOSENSERVICIO].[NUMMINHORSERAUDCAPCAP] AS [NUMMINHORSERAUDCAPCAP]
     FROM [dbo].[VW_SAF_CARGOSENSERVICIO] AS [VW_SAF_CARGOSENSERVICIO]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VW_SAF_CRONOGRAMA" EntityType="Self.VW_SAF_CRONOGRAMA" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_SAF_CRONOGRAMA].[CODCRO] AS [CODCRO], 
+    [VW_SAF_CRONOGRAMA].[ANIOCRO] AS [ANIOCRO], 
+    [VW_SAF_CRONOGRAMA].[FECPUBCRO] AS [FECPUBCRO], 
+    [VW_SAF_CRONOGRAMA].[FECMAXCREBASCRO] AS [FECMAXCREBASCRO], 
+    [VW_SAF_CRONOGRAMA].[NUMREPCRO] AS [NUMREPCRO], 
+    [VW_SAF_CRONOGRAMA].[FECREG] AS [FECREG], 
+    [VW_SAF_CRONOGRAMA].[FECMOD] AS [FECMOD], 
+    [VW_SAF_CRONOGRAMA].[USUREG] AS [USUREG], 
+    [VW_SAF_CRONOGRAMA].[USUMOD] AS [USUMOD], 
+    [VW_SAF_CRONOGRAMA].[ESTREG] AS [ESTREG], 
+    [VW_SAF_CRONOGRAMA].[ESTCRO] AS [ESTCRO], 
+    [VW_SAF_CRONOGRAMA].[NUMBAS] AS [NUMBAS], 
+    [VW_SAF_CRONOGRAMA].[NUMPUB] AS [NUMPUB], 
+    [VW_SAF_CRONOGRAMA].[CODPAR] AS [CODPAR], 
+    [VW_SAF_CRONOGRAMA].[NOMPAR] AS [NOMPAR]
+    FROM [dbo].[VW_SAF_CRONOGRAMA] AS [VW_SAF_CRONOGRAMA]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VW_SAF_INVITACION" EntityType="Self.VW_SAF_INVITACION" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VW_SAF_INVITACION].[CODINV] AS [CODINV], 
@@ -1831,6 +2003,16 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
     [VW_SAF_INVITACION].[CODSOA] AS [CODSOA], 
     [VW_SAF_INVITACION].[RAZSOCSOA] AS [RAZSOCSOA]
     FROM [dbo].[VW_SAF_INVITACION] AS [VW_SAF_INVITACION]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_SAF_PERFILMENU" EntityType="Self.VW_SAF_PERFILMENU" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_SAF_PERFILMENU].[CODPERMEN] AS [CODPERMEN], 
+    [VW_SAF_PERFILMENU].[CODPER] AS [CODPER], 
+    [VW_SAF_PERFILMENU].[CODMEN] AS [CODMEN], 
+    [VW_SAF_PERFILMENU].[DESPER] AS [DESPER], 
+    [VW_SAF_PERFILMENU].[DESMEN] AS [DESMEN], 
+    [VW_SAF_PERFILMENU].[NOMPER] AS [NOMPER]
+    FROM [dbo].[VW_SAF_PERFILMENU] AS [VW_SAF_PERFILMENU]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VW_SAF_PROPUESTAEJECUCION" EntityType="Self.VW_SAF_PROPUESTAEJECUCION" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1891,6 +2073,22 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
     [VW_SAF_SOLICITUD].[NOMESTSOL] AS [NOMESTSOL]
     FROM [dbo].[VW_SAF_SOLICITUD] AS [VW_SAF_SOLICITUD]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VW_SAF_SUBMENU" EntityType="Self.VW_SAF_SUBMENU" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_SAF_SUBMENU].[CODSUBMEN] AS [CODSUBMEN], 
+    [VW_SAF_SUBMENU].[DESSUBMEN] AS [DESSUBMEN], 
+    [VW_SAF_SUBMENU].[RUTASUBMEN] AS [RUTASUBMEN], 
+    [VW_SAF_SUBMENU].[FECREG] AS [FECREG], 
+    [VW_SAF_SUBMENU].[FECMOD] AS [FECMOD], 
+    [VW_SAF_SUBMENU].[USUREG] AS [USUREG], 
+    [VW_SAF_SUBMENU].[USUMOD] AS [USUMOD], 
+    [VW_SAF_SUBMENU].[ESTREG] AS [ESTREG], 
+    [VW_SAF_SUBMENU].[CODMEN] AS [CODMEN], 
+    [VW_SAF_SUBMENU].[DESMEN] AS [DESMEN], 
+    [VW_SAF_SUBMENU].[RUTAMEN] AS [RUTAMEN], 
+    [VW_SAF_SUBMENU].[ICONCSS] AS [ICONCSS]
+    FROM [dbo].[VW_SAF_SUBMENU] AS [VW_SAF_SUBMENU]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__SAF_ASIST__CODPR__02FC7413" Association="Self.FK__SAF_ASIST__CODPR__02FC7413">
             <End Role="SAF_PROPEQUIPO" EntitySet="SAF_PROPEQUIPO" />
             <End Role="SAF_ASISTENCIA" EntitySet="SAF_ASISTENCIA" />
@@ -1907,9 +2105,21 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
             <End Role="SAF_PROPEQUIPO" EntitySet="SAF_PROPEQUIPO" />
             <End Role="SAF_FALTAJUSTIFICA" EntitySet="SAF_FALTAJUSTIFICA" />
           </AssociationSet>
+          <AssociationSet Name="FK__SAF_PERFI__CODME__318258D2" Association="Self.FK__SAF_PERFI__CODME__318258D2">
+            <End Role="SAF_MENU" EntitySet="SAF_MENU" />
+            <End Role="SAF_PERFIL_MENU" EntitySet="SAF_PERFIL_MENU" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SAF_PERFI__CODPE__32767D0B" Association="Self.FK__SAF_PERFI__CODPE__32767D0B">
+            <End Role="SAF_PERFIL" EntitySet="SAF_PERFIL" />
+            <End Role="SAF_PERFIL_MENU" EntitySet="SAF_PERFIL_MENU" />
+          </AssociationSet>
           <AssociationSet Name="FK__SAF_PROVI__CODDE__245D67DE" Association="Self.FK__SAF_PROVI__CODDE__245D67DE">
             <End Role="SAF_DEPARTAMENTO" EntitySet="SAF_DEPARTAMENTO" />
             <End Role="SAF_PROVINCIA" EntitySet="SAF_PROVINCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SAF_SUBME__CODME__41B8C09B" Association="Self.FK__SAF_SUBME__CODME__41B8C09B">
+            <End Role="SAF_MENU" EntitySet="SAF_MENU" />
+            <End Role="SAF_SUBMENU" EntitySet="SAF_SUBMENU" />
           </AssociationSet>
           <AssociationSet Name="FK_SAF_CAPACITACION_SAF_ARCHIVO" Association="Self.FK_SAF_CAPACITACION_SAF_ARCHIVO">
             <End Role="SAF_ARCHIVO" EntitySet="SAF_ARCHIVO" />
@@ -3901,6 +4111,25 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           </AssociationSet>
           <EntitySet Name="VW_SAF_CARGOSENSERVICIO" EntityType="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO" />
           <EntitySet Name="VW_SAF_PUBLICACIONBASE" EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE" />
+          <EntitySet Name="SAF_MENU" EntityType="SI_SOCAUDModel.SAF_MENU" />
+          <EntitySet Name="SAF_PERFIL" EntityType="SI_SOCAUDModel.SAF_PERFIL" />
+          <EntitySet Name="SAF_PERFIL_MENU" EntityType="SI_SOCAUDModel.SAF_PERFIL_MENU" />
+          <AssociationSet Name="FK__SAF_PERFI__CODME__318258D2" Association="SI_SOCAUDModel.FK__SAF_PERFI__CODME__318258D2">
+            <End Role="SAF_MENU" EntitySet="SAF_MENU" />
+            <End Role="SAF_PERFIL_MENU" EntitySet="SAF_PERFIL_MENU" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SAF_PERFI__CODPE__32767D0B" Association="SI_SOCAUDModel.FK__SAF_PERFI__CODPE__32767D0B">
+            <End Role="SAF_PERFIL" EntitySet="SAF_PERFIL" />
+            <End Role="SAF_PERFIL_MENU" EntitySet="SAF_PERFIL_MENU" />
+          </AssociationSet>
+          <EntitySet Name="SAF_SUBMENU" EntityType="SI_SOCAUDModel.SAF_SUBMENU" />
+          <AssociationSet Name="FK__SAF_SUBME__CODME__41B8C09B" Association="SI_SOCAUDModel.FK__SAF_SUBME__CODME__41B8C09B">
+            <End Role="SAF_MENU" EntitySet="SAF_MENU" />
+            <End Role="SAF_SUBMENU" EntitySet="SAF_SUBMENU" />
+          </AssociationSet>
+          <EntitySet Name="VW_SAF_SUBMENU" EntityType="SI_SOCAUDModel.VW_SAF_SUBMENU" />
+          <EntitySet Name="VW_SAF_PERFILMENU" EntityType="SI_SOCAUDModel.VW_SAF_PERFILMENU" />
+          <EntitySet Name="VW_SAF_CRONOGRAMA" EntityType="SI_SOCAUDModel.VW_SAF_CRONOGRAMA" />
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
@@ -4525,6 +4754,155 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <Property Name="CODCROENT" Type="Int32" />
           <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SAF_MENU">
+          <Key>
+            <PropertyRef Name="CODMEN" />
+          </Key>
+          <Property Name="CODMEN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RUTAMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ICONCSS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="SAF_PERFIL_MENU" Relationship="SI_SOCAUDModel.FK__SAF_PERFI__CODME__318258D2" FromRole="SAF_MENU" ToRole="SAF_PERFIL_MENU" />
+          <NavigationProperty Name="SAF_SUBMENU" Relationship="SI_SOCAUDModel.FK__SAF_SUBME__CODME__41B8C09B" FromRole="SAF_MENU" ToRole="SAF_SUBMENU" />
+        </EntityType>
+        <EntityType Name="SAF_PERFIL">
+          <Key>
+            <PropertyRef Name="CODPER" />
+          </Key>
+          <Property Name="CODPER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMPER" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TIPOPER" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESPER" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="SAF_PERFIL_MENU" Relationship="SI_SOCAUDModel.FK__SAF_PERFI__CODPE__32767D0B" FromRole="SAF_PERFIL" ToRole="SAF_PERFIL_MENU" />
+          <Property Name="CODTIPUSU" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SAF_PERFIL_MENU">
+          <Key>
+            <PropertyRef Name="CODPERMEN" />
+          </Key>
+          <Property Name="CODPERMEN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CODMEN" Type="Int32" />
+          <Property Name="CODPER" Type="Int32" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="SAF_MENU" Relationship="SI_SOCAUDModel.FK__SAF_PERFI__CODME__318258D2" FromRole="SAF_PERFIL_MENU" ToRole="SAF_MENU" />
+          <NavigationProperty Name="SAF_PERFIL" Relationship="SI_SOCAUDModel.FK__SAF_PERFI__CODPE__32767D0B" FromRole="SAF_PERFIL_MENU" ToRole="SAF_PERFIL" />
+        </EntityType>
+        <Association Name="FK__SAF_PERFI__CODME__318258D2">
+          <End Type="SI_SOCAUDModel.SAF_MENU" Role="SAF_MENU" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_PERFIL_MENU" Role="SAF_PERFIL_MENU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_MENU">
+              <PropertyRef Name="CODMEN" />
+            </Principal>
+            <Dependent Role="SAF_PERFIL_MENU">
+              <PropertyRef Name="CODMEN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SAF_PERFI__CODPE__32767D0B">
+          <End Type="SI_SOCAUDModel.SAF_PERFIL" Role="SAF_PERFIL" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_PERFIL_MENU" Role="SAF_PERFIL_MENU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_PERFIL">
+              <PropertyRef Name="CODPER" />
+            </Principal>
+            <Dependent Role="SAF_PERFIL_MENU">
+              <PropertyRef Name="CODPER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SAF_SUBMENU">
+          <Key>
+            <PropertyRef Name="CODSUBMEN" />
+          </Key>
+          <Property Name="CODSUBMEN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESSUBMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RUTASUBMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODMEN" Type="Int32" />
+          <NavigationProperty Name="SAF_MENU" Relationship="SI_SOCAUDModel.FK__SAF_SUBME__CODME__41B8C09B" FromRole="SAF_SUBMENU" ToRole="SAF_MENU" />
+        </EntityType>
+        <Association Name="FK__SAF_SUBME__CODME__41B8C09B">
+          <End Type="SI_SOCAUDModel.SAF_MENU" Role="SAF_MENU" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_SUBMENU" Role="SAF_SUBMENU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_MENU">
+              <PropertyRef Name="CODMEN" />
+            </Principal>
+            <Dependent Role="SAF_SUBMENU">
+              <PropertyRef Name="CODMEN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VW_SAF_SUBMENU">
+          <Key>
+            <PropertyRef Name="CODSUBMEN" />
+          </Key>
+          <Property Name="CODSUBMEN" Type="Int32" Nullable="false" />
+          <Property Name="DESSUBMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RUTASUBMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODMEN" Type="Int32" />
+          <Property Name="DESMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RUTAMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ICONCSS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VW_SAF_PERFILMENU">
+          <Key>
+            <PropertyRef Name="CODPERMEN" />
+            <PropertyRef Name="CODPER" />
+            <PropertyRef Name="CODMEN" />
+          </Key>
+          <Property Name="CODPERMEN" Type="Int32" Nullable="false" />
+          <Property Name="CODPER" Type="Int32" Nullable="false" />
+          <Property Name="CODMEN" Type="Int32" Nullable="false" />
+          <Property Name="DESPER" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DESMEN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="NOMPER" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VW_SAF_CRONOGRAMA">
+          <Key>
+            <PropertyRef Name="CODCRO" />
+            <PropertyRef Name="CODPAR" />
+          </Key>
+          <Property Name="CODCRO" Type="Int32" Nullable="false" />
+          <Property Name="ANIOCRO" Type="Int32" />
+          <Property Name="FECPUBCRO" Type="DateTime" Precision="3" />
+          <Property Name="FECMAXCREBASCRO" Type="DateTime" Precision="3" />
+          <Property Name="NUMREPCRO" Type="Int32" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESTCRO" Type="Int32" />
+          <Property Name="NUMBAS" Type="Int32" />
+          <Property Name="NUMPUB" Type="Int32" />
+          <Property Name="CODPAR" Type="Int32" Nullable="false" />
+          <Property Name="NOMPAR" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5835,6 +6213,117 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
                 <ScalarProperty Name="ESTPUB" ColumnName="ESTPUB" />
                 <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
                 <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_MENU">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_MENU">
+              <MappingFragment StoreEntitySet="SAF_MENU">
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="ICONCSS" ColumnName="ICONCSS" />
+                <ScalarProperty Name="RUTAMEN" ColumnName="RUTAMEN" />
+                <ScalarProperty Name="DESMEN" ColumnName="DESMEN" />
+                <ScalarProperty Name="CODMEN" ColumnName="CODMEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_PERFIL">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_PERFIL">
+              <MappingFragment StoreEntitySet="SAF_PERFIL">
+                <ScalarProperty Name="CODTIPUSU" ColumnName="CODTIPUSU" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="DESPER" ColumnName="DESPER" />
+                <ScalarProperty Name="TIPOPER" ColumnName="TIPOPER" />
+                <ScalarProperty Name="NOMPER" ColumnName="NOMPER" />
+                <ScalarProperty Name="CODPER" ColumnName="CODPER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_PERFIL_MENU">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_PERFIL_MENU">
+              <MappingFragment StoreEntitySet="SAF_PERFIL_MENU">
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="CODPER" ColumnName="CODPER" />
+                <ScalarProperty Name="CODMEN" ColumnName="CODMEN" />
+                <ScalarProperty Name="CODPERMEN" ColumnName="CODPERMEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_SUBMENU">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_SUBMENU">
+              <MappingFragment StoreEntitySet="SAF_SUBMENU">
+                <ScalarProperty Name="CODMEN" ColumnName="CODMEN" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="RUTASUBMEN" ColumnName="RUTASUBMEN" />
+                <ScalarProperty Name="DESSUBMEN" ColumnName="DESSUBMEN" />
+                <ScalarProperty Name="CODSUBMEN" ColumnName="CODSUBMEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_SUBMENU">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_SUBMENU">
+              <MappingFragment StoreEntitySet="VW_SAF_SUBMENU">
+                <ScalarProperty Name="ICONCSS" ColumnName="ICONCSS" />
+                <ScalarProperty Name="RUTAMEN" ColumnName="RUTAMEN" />
+                <ScalarProperty Name="DESMEN" ColumnName="DESMEN" />
+                <ScalarProperty Name="CODMEN" ColumnName="CODMEN" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="RUTASUBMEN" ColumnName="RUTASUBMEN" />
+                <ScalarProperty Name="DESSUBMEN" ColumnName="DESSUBMEN" />
+                <ScalarProperty Name="CODSUBMEN" ColumnName="CODSUBMEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_PERFILMENU">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_PERFILMENU">
+              <MappingFragment StoreEntitySet="VW_SAF_PERFILMENU">
+                <ScalarProperty Name="NOMPER" ColumnName="NOMPER" />
+                <ScalarProperty Name="DESMEN" ColumnName="DESMEN" />
+                <ScalarProperty Name="DESPER" ColumnName="DESPER" />
+                <ScalarProperty Name="CODMEN" ColumnName="CODMEN" />
+                <ScalarProperty Name="CODPER" ColumnName="CODPER" />
+                <ScalarProperty Name="CODPERMEN" ColumnName="CODPERMEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_CRONOGRAMA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_CRONOGRAMA">
+              <MappingFragment StoreEntitySet="VW_SAF_CRONOGRAMA">
+                <ScalarProperty Name="NOMPAR" ColumnName="NOMPAR" />
+                <ScalarProperty Name="CODPAR" ColumnName="CODPAR" />
+                <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
+                <ScalarProperty Name="NUMBAS" ColumnName="NUMBAS" />
+                <ScalarProperty Name="ESTCRO" ColumnName="ESTCRO" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="NUMREPCRO" ColumnName="NUMREPCRO" />
+                <ScalarProperty Name="FECMAXCREBASCRO" ColumnName="FECMAXCREBASCRO" />
+                <ScalarProperty Name="FECPUBCRO" ColumnName="FECPUBCRO" />
+                <ScalarProperty Name="ANIOCRO" ColumnName="ANIOCRO" />
+                <ScalarProperty Name="CODCRO" ColumnName="CODCRO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

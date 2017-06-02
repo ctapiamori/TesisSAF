@@ -30,6 +30,21 @@
         <div class="login-box-body">
             <p class="login-box-msg">Inicia sesion en el sistema</p>
             <form action="../../index2.html" method="post">
+
+                <div class="form-group has-feedback">
+                    <select id="tipoUsuario" name="tipoUsuario" class="form-control">
+                        <option value="I">Usuario Interno</option>
+                        <option value="E">Usuario Externo</option>
+                    </select>
+                </div>
+
+                <div class="form-group has-feedback" id="contentTipoExterno" style="display:none;">
+                    <select id="tipoExterno" name="tipoExterno" class="form-control">
+                        <option value='@Convert.ToInt32(Tipo.TipoUsuarioExtranet.Auditor)'>Auditor</option>
+                        <option value='@Convert.ToInt32(Tipo.TipoUsuarioExtranet.SociedadAuditoria)'>Sociedad Auditoria</option>
+                    </select>
+                </div>
+
                 <div class="form-group has-feedback">
                     @Html.TextBoxFor(c => c.Usuario, new { @class = "form-control", @placeholder = "Usuario" })
                     <!--<input type="email" class="form-control" placeholder="Usuario">-->
@@ -65,22 +80,42 @@
 
         $(document).ready(function () {
             $("#btnIngresarSistema").click(ingresarSistema);
+            $("#tipoUsuario").change(function () {
+ 
+                if ($(this).val() == "E")
+                    $("#contentTipoExterno").show();
+                else
+                    $("#contentTipoExterno").hide();
+            });
         });
 
         function ingresarSistema() {
-
+            
+            var tipousu = $("#tipoUsuario").val();
+            var tipoex = $("#tipoExterno").val();
+            
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("AccederSistema", "Acceso")',
                 data: {
+                    tipoUsuario: tipousu,
+                    tipoExterno: tipoex,
                     usuario: $("#Usuario").val(),
                     contrasenia: $("#Password").val()
                 },
                 success: function (result) {
-                    if (result.Exito)
+                    if (result.Correcto && result.TipoUsuario == "I")
                         document.location = '@Url.Action("Index", "SolicitudAdmin")';
-                    else
-                        mostrarNotificacion(result);
+                    else if (result.Correcto && result.TipoUsuario == "E")
+                        document.location = "http://localhost:14117/Acceso/ByPass?CodigoUsuario=" + result.CodigoUsuario + "&NombreUsuario=" + result.NombreUsuario + "&UsuarioSOAAuditor=" + result.UsuarioSOAAuditor + "&TipoExterno=" + result.TipoExterno + "&Usuario=" + result.Usuario;
+                    else {
+                        new PNotify({
+                            title: 'Respuesta Sistema!',
+                            type: "error",
+                            text: result.Mensaje
+                        });
+                    }
+                        
                 }
             });
         }

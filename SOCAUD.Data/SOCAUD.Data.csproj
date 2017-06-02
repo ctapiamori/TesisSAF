@@ -48,6 +48,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,6 +73,9 @@
     <Compile Include="Core\SafEmpresaData.cs" />
     <Compile Include="Core\SafEntidadData.cs" />
     <Compile Include="Core\SafExperienciaData.cs" />
+    <Compile Include="Core\SafMenuData.cs" />
+    <Compile Include="Core\SafPefilMenuData.cs" />
+    <Compile Include="Core\SafPerfilData.cs" />
     <Compile Include="Core\SafPropuestaEquipoData.cs" />
     <Compile Include="Core\SafFaltaJustificadaData.cs" />
     <Compile Include="Core\SafInvitacionData.cs" />
@@ -91,6 +95,7 @@
     <Compile Include="Core\SafSolCapacitacionData.cs" />
     <Compile Include="Core\SafSolExperienciaData.cs" />
     <Compile Include="Core\SafSolicitudData.cs" />
+    <Compile Include="Core\SafSubMenuData.cs" />
     <Compile Include="Core\SafTipoSolicitudData.cs" />
     <Compile Include="Core\SafUniversidadData.cs" />
     <Compile Include="Core\SafUsuarioData.cs" />
@@ -101,11 +106,14 @@
     <Compile Include="Core\SpSafResultadoCorteData.cs" />
     <Compile Include="Core\VwSafAuditoriaEquipoData.cs" />
     <Compile Include="Core\VwSafCargosEnServicioAuditoriaData.cs" />
+    <Compile Include="Core\VwSafCronogramaData.cs" />
     <Compile Include="Core\VwSafInvitacionData.cs" />
+    <Compile Include="Core\VwSafPerfilMenuData.cs" />
     <Compile Include="Core\VwSafPropuestaEjecucionData.cs" />
     <Compile Include="Core\VwSafPublicacionBaseData.cs" />
     <Compile Include="Core\VwSafPublicacionData.cs" />
     <Compile Include="Core\VwSafSolicitudData.cs" />
+    <Compile Include="Core\VwSafSubMenuData.cs" />
     <Compile Include="Model\SAF_ARCHIVO.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
@@ -184,10 +192,19 @@
     <Compile Include="Model\SAF_INVITACIONDETALLE.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\SAF_MENU.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\SAF_NOTIFICACION.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SAF_PARAMETRICA.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SAF_PERFIL.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SAF_PERFIL_MENU.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SAF_PROPEQUIPO.cs">
@@ -230,6 +247,9 @@
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SAF_SOLICITUD.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SAF_SUBMENU.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SAF_TIPOPARAMETRICA.cs">
@@ -376,7 +396,13 @@
     <Compile Include="Model\VW_SAF_CARGOSENSERVICIO.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\VW_SAF_CRONOGRAMA.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\VW_SAF_INVITACION.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\VW_SAF_PERFILMENU.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VW_SAF_PROPUESTAEJECUCION.cs">
@@ -389,6 +415,9 @@
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VW_SAF_SOLICITUD.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\VW_SAF_SUBMENU.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

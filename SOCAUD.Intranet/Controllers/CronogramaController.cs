@@ -25,6 +25,7 @@ namespace SOCAUD.Intranet.Controllers
 
         public ReporteCronograma()
         {
+            
             this.cronograma = new TcSAFCRONOGRAMARPT();
             this.listaEntidades = new List<TcSAFCRONOENTIDADCRONORPT>();
         }
@@ -175,12 +176,13 @@ namespace SOCAUD.Intranet.Controllers
 
         public JsonResult ListarCronogramas(int? anio)
         {
-            var listado = this._cronogramaLogic.ListarPorAnio(anio);
+            var listado = this._cronogramaLogic.ListarPorAnioCompleto(anio);
             var data = listado.Select(c => new string[]{ 
                 c.CODCRO.ToString(),
                 c.ANIOCRO.ToString(),
                 WebHelper.GetShortDateString(c.FECPUBCRO),
                 WebHelper.GetShortDateString(c.FECMAXCREBASCRO),
+                c.NOMPAR,
                 c.ESTCRO.GetValueOrDefault().Equals(Estado.Cronograma.Elaboracion.GetHashCode()) ? "1" : "0"
             }).ToArray();
 

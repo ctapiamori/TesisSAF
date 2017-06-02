@@ -58,8 +58,11 @@
     <Compile Include="Core\SafExperienciaLogic.cs" />
     <Compile Include="Core\SafInvitacionDetalleLogic.cs" />
     <Compile Include="Core\SafInvitacionLogic.cs" />
+    <Compile Include="Core\SafMenuLogic.cs" />
     <Compile Include="Core\SafNotificacionLogic.cs" />
     <Compile Include="Core\SafParametricaLogic.cs" />
+    <Compile Include="Core\SafPerfilLogic.cs" />
+    <Compile Include="Core\SafPerfilMenuLogic.cs" />
     <Compile Include="Core\SafPropuestaEquipoDetalleLogic.cs" />
     <Compile Include="Core\SafPropuestaEquipoLogic.cs" />
     <Compile Include="Core\SafPropuestaLogic.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Core\SafSolExperienciaLogic.cs" />
     <Compile Include="Core\SafSolicitudLogic.cs" />
     <Compile Include="Core\SafGeneralLogic.cs" />
+    <Compile Include="Core\SafSubMenuLogic.cs" />
     <Compile Include="Core\SafUsuarioLogic.cs" />
     <Compile Include="Core\SafWorkFlowLogic.cs" />
     <Compile Include="Core\SeguridadLogic.cs" />

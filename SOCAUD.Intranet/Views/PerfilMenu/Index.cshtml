@@ -1,0 +1,218 @@
+﻿@using SOCAUD.Intranet.Models;
+
+@model PerfilMenuModel
+ 
+@{
+    ViewBag.PageTitle = "Perfil Menu";
+    ViewBag.PageDescription = "Perfil Menu";
+    ViewBag.PageDescription = "Menu asignado a un Perfil";
+}
+ 
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Perfiles y Asignaciones</h3>
+        </div>
+        <div class="box-body">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(c=>c.CODPER_SELECT)
+                        @Html.DropDownListFor(c=>c.CODPER_SELECT, Model.ListaPerfil, new { @class = "form-control", @multiple = "multiple", @size="10" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Opciones Asignadas</label>
+                        <select class="form-control" id="CODMEN_ASIG" name="CODMEN_ASIG" multiple="multiple" size="10"></select>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <br /><br />
+                        <button id="btnAsignar" style="width:100px;" class="btn btn-primary">Asignar</button><br /><br />
+                        <button id="btnDesasignar" style="width:100px;" class="btn btn-danger">Desasignar</button>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Opciones Disponibles</label>
+                        <select class="form-control" id="CODMEN_DISPO" name="CODMEN_DISPO" multiple="multiple" size="10"></select>
+                    </div>
+                </div>
+
+
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabPerfilMenu" name="tabPerfil" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                    </div>
+                </div>
+            </div>
+ 
+        </div>
+    </div>
+
+
+@section scripts {
+
+    <script type="text/ecmascript">
+        
+        $(document).ready(function () {
+            listarPerfilMenu();
+            $("#CODPER_SELECT").change(function () {
+                 
+                var seleccionPerfil = $("#CODPER_SELECT").val()[0];
+                listarOpcionesMenuAsignadad(seleccionPerfil);
+                listarOpcionesLibres(seleccionPerfil);
+            });
+
+            $("#btnAsignar").click(function () {
+                var seleccionPerfil = $("#CODPER_SELECT").val()[0];
+                asignarMenu();
+                listarOpcionesMenuAsignadad(seleccionPerfil);
+                listarOpcionesLibres(seleccionPerfil);
+                listarPerfilMenu();
+
+            });
+            $("#btnDesasignar").click(function () {
+                var seleccionPerfil = $("#CODPER_SELECT").val()[0];
+                DeasignarMultiple();
+                listarOpcionesMenuAsignadad(seleccionPerfil);
+                listarOpcionesLibres(seleccionPerfil);
+                listarPerfilMenu();
+            });
+            
+        });
+
+        function listarOpcionesMenuAsignadad(seleccionPerfil) {
+            $.ajax({
+                url: '@Url.Action("OpcionesAsignadas", "PerfilMenu")',
+                type: 'POST',
+                async: false,
+                data: { idPer: seleccionPerfil },
+                success: function (result) {
+                    $("#CODMEN_ASIG option").remove();
+
+                    $.each(result, function (ind, val) {
+              
+                        $("#CODMEN_ASIG").append("<option value='" + val.CODPERMEN + "'>" + val.DESMEN + "</option>");
+                    });
+
+                    
+                }
+            });
+        }
+
+        function listarOpcionesLibres(seleccionPerfil) {
+
+            $.ajax({
+                url: '@Url.Action("OpcionesDisponibles", "PerfilMenu")',
+                type: 'POST',
+                async: false,
+                data: { idPer: seleccionPerfil },
+                success: function (result) {
+                    console.log(result);
+                    $("#CODMEN_DISPO option").remove();
+
+                    $.each(result, function (ind, val) {
+                        $("#CODMEN_DISPO").append("<option value='" + val.CODMEN + "'>" + val.DESMEN + "</option>");
+                    });
+ 
+                }
+            });
+        }
+
+
+        function DeasignarMultiple() {
+
+            var codigos = $("#CODMEN_ASIG").val();
+
+            $.ajax({
+                url: '@Url.Action("DesasignarMultiple", "PerfilMenu")',
+                type: 'POST',
+                async: false,
+                data: { idMenus: codigos },
+                success: function (result) {
+                    console.log(result);
+                    $("#CODMEN_DISPO option").remove();
+
+                    $.each(result, function (ind, val) {
+                        $("#CODMEN_DISPO").append("<option value='" + val.CODMEN + "'>" + val.DESMEN + "</option>");
+                    });
+
+                }
+            });
+        }
+
+
+        function asignarMenu() {
+            var codigoPerfil = $("#CODPER_SELECT").val()[0];
+            var codigosMenu = $("#CODMEN_DISPO").val();
+
+            $.ajax({
+                url: '@Url.Action("AsignarMenu", "PerfilMenu")',
+                type: 'POST',
+                async: false,
+                data: { idPer: codigoPerfil, idsMenu: codigosMenu },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                }
+            });
+
+        }
+
+        var _dataPerfilMenu_ = null;
+        var tabPerfilMenu = $("#tabPerfilMenu").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataPerfilMenu_,
+            "order": [[1, "asc"]],
+            "columns": [
+                { "sTitle": "", "visible" : false },
+                { "sTitle": "Perfil" },
+                { "sTitle": "Asignaciones" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-danger" title="Desasignar" type="button" onclick="EliminarMenu(' + row[0] + ');"><i class="fa fa-trash"></i></button></center>';
+
+                    }
+                },
+            ]
+        });
+
+
+        function EliminarMenu(idItem) {
+            $.ajax({
+                url: '@Url.Action("EliminarPerfilMenu", "PerfilMenu")',
+                type: 'POST',
+                async: false,
+                data: { id: idItem },
+                success: function (result) {
+                    mostrarNotificacion(result);
+                    var seleccionPerfil = $("#CODPER_SELECT").val()[0];
+                    
+                    listarOpcionesMenuAsignadad(seleccionPerfil);
+                    listarOpcionesLibres(seleccionPerfil);
+                    listarPerfilMenu();
+                }
+            });
+        }
+
+        function listarPerfilMenu() {
+            $.ajax({
+                url: '@Url.Action("ListarPerfilMenu", "PerfilMenu")',
+                type: 'POST',
+                async: false,
+                data: {},
+                success: function (result) {
+                    _dataPerfilMenu_ = result;
+                    tabPerfilMenu.fnReloadData(_dataPerfilMenu_);
+                }
+            });
+        }
+
+ 
+
+
+    </script>
+}
