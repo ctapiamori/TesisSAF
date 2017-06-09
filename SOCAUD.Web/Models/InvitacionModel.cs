@@ -39,6 +39,9 @@ namespace SOCAUD.Web.Models
 
 
 
+        [Display(Name = "Base")]
+        public int CODBAS { get; set; }
+
         [Display(Name = "Codigo Invitacion")]
         public int CODINV { get; set; }
 
@@ -53,7 +56,7 @@ namespace SOCAUD.Web.Models
         public Nullable<int> CODAUD { get; set; }
 
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
-        [Display(Name = "Serv. Auditoria")]
+        [Display(Name = "Servicio Auditoria")]
         public Nullable<int> CODSERAUD { get; set; }
 
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
@@ -64,12 +67,15 @@ namespace SOCAUD.Web.Models
 
         public List<SelectListItem> cboPublicaciones { get; set; }
 
+        public List<SelectListItem> cboBases { get; set; }
+
         public List<SelectListItem> cboServiciosAuditoria { get; set; }
 
         public InvitacionModel()
         {
             this.cboPublicaciones = new List<SelectListItem>();
             this.cboServiciosAuditoria = new List<SelectListItem>();
+            this.cboBases = new List<SelectListItem>();
         }
     }
 }

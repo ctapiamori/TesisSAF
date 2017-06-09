@@ -1,0 +1,116 @@
+﻿@using SOCAUD.Intranet.Models;
+@model UsuarioModel
+ 
+@{
+    ViewBag.PageTitle = "Editar Usuario";
+    ViewBag.PageDescription = "Editar Usuario";
+    ViewBag.PageDescription = "Editar datos del usuario";
+}
+ 
+<form id="frmEditarUsuario">
+    @Html.HiddenFor(c=>c.CODUSU)
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Editar Usuario</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.DNIUSU)
+                        @Html.TextBoxFor(m => m.DNIUSU, new { @class = "form-control",   @readonly="readonly" })
+                        @Html.ValidationMessageFor(c => c.DNIUSU)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.NOMPERUSU)
+                        @Html.TextBoxFor(m => m.NOMPERUSU, new { @class = "form-control",   @readonly="readonly" })
+                        @Html.ValidationMessageFor(c => c.NOMPERUSU)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.APEPERUSU)
+                        @Html.TextBoxFor(m => m.APEPERUSU, new { @class = "form-control", @readonly="readonly" })
+                        @Html.ValidationMessageFor(c => c.APEPERUSU)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.TIPCARUSU)
+                        @Html.DropDownListFor(m => m.TIPCARUSU, Model.cboListaCargo , "Seleccione", new { @class = "form-control", @rows = "5" })
+                        @Html.ValidationMessageFor(c => c.TIPCARUSU)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.CODENT)
+                        @Html.DropDownListFor(m => m.CODENT, Model.cboListaEntidad , "Seleccione", new { @class = "form-control", @rows = "5" })
+                        @Html.ValidationMessageFor(c => c.CODENT)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.NOMUSU)
+                        @Html.TextBoxFor(m => m.NOMUSU, new { @class = "form-control", @readonly="readonly" })
+                        @Html.ValidationMessageFor(c => c.NOMUSU)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.PASUSU)
+                        @Html.TextBoxFor(m => m.PASUSU, new { @class = "form-control",   })
+                        @Html.ValidationMessageFor(c => c.PASUSU)
+                    </div>
+                </div>
+
+
+ 
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                        <button id="btnAgregar" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Agregar</button>
+                        <button id="btnRegresar" type="button" class="btn btn-info"> &nbsp;Regresar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+
+    <script type="text/ecmascript">
+
+        $(document).ready(function () {
+
+            $("#btnRegresar").click(function () {
+                document.location.href = '@Url.Action("BandejaUsuario","Usuario")';
+            });
+
+
+            $("#btnEditar").click(function () {
+
+                if (!$("#frmEditarUsuario").isValid()) return;
+
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                    if (result) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("EditarUsuario","Usuario")',
+                            data: $("#frmEditarUsuario").serialize(),
+                            success: function (result) {
+                                mostrarNotificacion(result);
+                            }
+                        });
+                    }
+                });
+            });
+
+
+        });
+    </script>
+}

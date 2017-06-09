@@ -97,7 +97,7 @@ namespace SOCAUD.Common.Enum
 
         public enum Workflow
         {
-            [Description("Pendiente de Apronación")]
+            [Description("Pendiente de Aprobación")]
             PendienteAprobacion = 42,
             [Description("Aprobado")]
             Aprobado = 43,

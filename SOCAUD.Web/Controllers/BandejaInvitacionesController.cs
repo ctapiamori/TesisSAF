@@ -18,6 +18,7 @@ namespace SOCAUD.Web.Controllers
         private readonly ISafNotificacionLogic _notificacionLogic;
         private readonly ISafInvitacionDetalleLogic _invitacionDetalleLogic;
 
+        private readonly ISafPublicacionBaseLogic _publicacionYBasesLogic;
         public BandejaInvitacionesController()
         {
             this._publicacionLogic = new SafPublicacionLogic();
@@ -25,21 +26,42 @@ namespace SOCAUD.Web.Controllers
             this._invitacionLogic = new SafInvitacionLogic();
             this._notificacionLogic = new SafNotificacionLogic();
             this._invitacionDetalleLogic = new SafInvitacionDetalleLogic();
+
+            _publicacionYBasesLogic = new SafPublicacionBaseLogic();
         }
 
         // GET: BandejaInvitaciones
         public ActionResult Index()
         {
             var model = new InvitacionModel();
-            var publicaciones = this._publicacionLogic.ListarTodos();// modelEntity.SAF_PUBLICACION.ToList().Where(c => c.ESTREG == "1");
-            model.cboPublicaciones = (from c in publicaciones select new SelectListItem() { Value = string.Format("{0}-{1}", c.CODPUB, c.CODBAS), Text = c.NUMPUB }).ToList();
+            var publicaciones = this._publicacionYBasesLogic.ListarPublicacionesEstadoPublicadaYBases();
+            model.cboPublicaciones = (from c in publicaciones select new SelectListItem() { Value = c.CODPUB.ToString(), Text = c.NUMPUB }).ToList();
             return View(model);
         }
+
+
+        public JsonResult listarBases(int idPub)
+        {
+            var publicaciones = this._publicacionYBasesLogic.ListarPublicacionesEstadoPublicadaYBases();
+            var Bases = publicaciones.Where(c => c.CODPUB == idPub);
+            return Json(Bases);
+        }
+
+
+
 
         public JsonResult listarServicios(int idBase)
         {
             var serviciosAuditoria = this._servicioAuditoriaLogic.ServiciosPorBase(idBase);// modelEntity.SAF_SERVICIOAUDITORIA.ToList().Where(c => c.CODBAS == idBase && c.ESTREG == "1");
-            var result = (from c in serviciosAuditoria select new SelectListItem() { Text = c.PERSERAUD, Value = c.CODSERAUD.ToString() });
+            List<SelectListItem> lista = new List<SelectListItem>();
+
+            foreach (var item in serviciosAuditoria)
+            {
+                var fechaInicio = item.FECINISERAUD.HasValue ? item.FECINISERAUD.Value.ToString("dd/MM/yyyy") : "";
+                var fechaFin = item.FECFINSERAUD.HasValue ? item.FECFINSERAUD.Value.ToString("dd/MM/yyyy") : "";
+                lista.Add(new SelectListItem() { Value = item.CODSERAUD.ToString(), Text = string.Format("{0} ::: {1}-{2}", item.PERSERAUD, fechaInicio, fechaFin) });
+            }
+            var result = lista;
             return Json(result);
         }
 

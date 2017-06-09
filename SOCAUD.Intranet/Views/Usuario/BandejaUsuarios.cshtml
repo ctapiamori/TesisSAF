@@ -1,0 +1,116 @@
+﻿@using SOCAUD.Intranet.Models;
+
+ 
+ 
+@{
+    ViewBag.PageTitle = "Usuario";
+    ViewBag.PageDescription = "Usuario";
+    ViewBag.PageDescription = "Usuarios del Sistema";
+}
+ 
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Usuarios del Sistema</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabUsuario" name="tabPerfil" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                        <button id="btnAgregarNuevo" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Agregar Nuevo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section scripts {
+
+    <script type="text/ecmascript">
+        
+        $(document).ready(function () {
+            listarPerfil();
+            $("#btnAgregarNuevo").click(function () {
+                document.location.href = '@Url.Action("AgregarUsuario","Usuario")';
+            });
+        });
+
+        var _dataUsuario_ = null;
+        var tabUsuario = $("#tabUsuario").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataUsuario_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarUsuario(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+
+                    }
+                },
+                { "sTitle": "Nombre" },
+                { "sTitle": "Descripcion" },
+                { "sTitle": "Tipo" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarUsuario(' + row[0] + ');"><i class="fa fa-trash"></i></button></center>';
+
+                    }
+                }
+            ]
+        });
+
+
+        function listarUsuario() {
+            $.ajax({
+                url: '@Url.Action("ListarUsuarios", "Usuario")',
+                type: 'POST',
+                async: false,
+                data: {},
+                success: function (result) {
+                    _dataUsuario_ = result;
+                    tabUsuario.fnReloadData(_dataUsuario_);
+                }
+            });
+        }
+
+        function EliminarUsuario(idUsu) {
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarUsuario", "Usuario")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: idUsu },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarUsuario();
+                        }
+                    });
+                }
+            });
+
+
+        }
+
+        function EditarUsuario(id) {
+            document.location.href = '@Url.Action("EditarUsuario","Usuario")' + "/" + id;
+        }
+
+    </script>
+}

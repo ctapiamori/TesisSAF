@@ -76,7 +76,6 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<VW_SAF_PROPUESTAEJECUCION> VW_SAF_PROPUESTAEJECUCION { get; set; }
         public virtual DbSet<SAF_PUBLICACIONBASE> SAF_PUBLICACIONBASE { get; set; }
         public virtual DbSet<SAF_WORKFLOW> SAF_WORKFLOW { get; set; }
-        public virtual DbSet<SAF_USUARIO> SAF_USUARIO { get; set; }
         public virtual DbSet<SAF_ENTIDADES> SAF_ENTIDADES { get; set; }
         public virtual DbSet<SAF_CONSULTA> SAF_CONSULTA { get; set; }
         public virtual DbSet<VW_SAF_CARGOSENSERVICIO> VW_SAF_CARGOSENSERVICIO { get; set; }
@@ -88,6 +87,8 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<VW_SAF_SUBMENU> VW_SAF_SUBMENU { get; set; }
         public virtual DbSet<VW_SAF_PERFILMENU> VW_SAF_PERFILMENU { get; set; }
         public virtual DbSet<VW_SAF_CRONOGRAMA> VW_SAF_CRONOGRAMA { get; set; }
+        public virtual DbSet<VW_SAF_PUBLICACION_BASE> VW_SAF_PUBLICACION_BASE { get; set; }
+        public virtual DbSet<SAF_USUARIO> SAF_USUARIO { get; set; }
     
         public virtual ObjectResult<TcCORTEPUBLICACION> SP_SAF_CORTEPUBLICACION(Nullable<int> cODPUB)
         {
@@ -412,6 +413,16 @@ namespace SOCAUD.Data.Model
                 new ObjectParameter("CODPUB", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcSAFPUBLICACIONBASERPT>("SP_SAF_PUBLICACIONBASE_RPT", cODPUBParameter);
+        }
+    
+        public virtual ObjectResult<string> USP_CORRELATIVO_SOLICITUD()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("USP_CORRELATIVO_SOLICITUD");
+        }
+    
+        public virtual ObjectResult<string> SP_SAF_CORRELATIVOSOLICITUD()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_SAF_CORRELATIVOSOLICITUD");
         }
     }
 }

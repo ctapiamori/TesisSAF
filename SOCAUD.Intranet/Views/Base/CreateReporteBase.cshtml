@@ -1,15 +1,18 @@
 ﻿@model SOCAUD.Intranet.Controllers.ReporteBase
  
-<br/>
-<img src="@Model.ImageUrl" width="200" height="64" /> 
-<br/> <br/> 
- 
+<br />
+<img src="@Model.ImageUrl" width="200" height="64" />
+<br />
+<br />
+
 <table>
     <tr>
-        <td width="100%" align="center"><h2>Bases de Concurso</h2></td> 
+        <td width="100%" align="center">
+            <h2>Bases de Concurso</h2>
+        </td>
     </tr>
     <tr>
-        <td width="100%" align="center">BC - @Model.bases.NUMBAS</td> 
+        <td width="100%" align="center">BC - @Model.bases.NUMBAS</td>
     </tr>
 </table>
 <br />
@@ -26,41 +29,43 @@
         <td colspan="2">&nbsp;</td>
     </tr>
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Cronograma</td>
-        <td style="font-size:10px;">@Model.bases.ANIOCRO</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Cronograma</td>
+        <td style="font-size: 10px;">@Model.bases.ANIOCRO</td>
     </tr>
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Entidad</td>
-        <td style="font-size:10px;"><strong>@Model.bases.DESBAS</strong></td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Entidad</td>
+        <td style="font-size: 10px;"><strong>@Model.bases.DESBAS</strong></td>
     </tr>
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Total Retri. Economica</td>
-        <td style="font-size:10px;">@Model.bases.TOTRETECOBAS</td>
-    </tr>
-
-    <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Total Viaticos</td>
-        <td style="font-size:10px;">@Model.bases.TOTVIABAS</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Total Retri. Economica</td>
+        <td style="font-size: 10px;">@Model.bases.TOTRETECOBAS</td>
     </tr>
 
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Fec. Max. Publicación oficial</td>
-        <td style="font-size:10px;">@Model.bases.FECMAXCREPUBBAS</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Total Viaticos</td>
+        <td style="font-size: 10px;">@Model.bases.TOTVIABAS</td>
     </tr>
 
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Requiere Firma PCAOB</td>
-        <td style="font-size:10px;">@Model.bases.FIRPCAOBBAS</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Fec. Max. Publicación oficial</td>
+        <td style="font-size: 10px;">@Model.bases.FECMAXCREPUBBAS</td>
     </tr>
 
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Requiere Firma Inter.</td>
-        <td style="font-size:10px;">@Model.bases.FIRINTBAS</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Requiere Firma PCAOB</td>
+        <td style="font-size: 10px;">@Model.bases.FIRPCAOBBAS</td>
+    </tr>
+
+    <tr>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Requiere Firma Inter.</td>
+        <td style="font-size: 10px;">@Model.bases.FIRINTBAS</td>
     </tr>
     <tr>
         <td colspan="2">&nbsp;</td>
     </tr>
-</table><br /><br />
+</table>
+<br />
+<br />
 <table>
     <tr>
         <td colspan="2"><strong>II. Antecedentes de la Entidad</strong></td>
@@ -69,40 +74,44 @@
         <td colspan="2">&nbsp;</td>
     </tr>
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Ruc</td>
-        <td style="font-size:10px;">@Model.RUCEntidad</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Ruc</td>
+        <td style="font-size: 10px;">@Model.RUCEntidad</td>
     </tr>
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Razon Social</td>
-        <td style="font-size:10px;">@Model.RazonSocial</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Razon Social</td>
+        <td style="font-size: 10px;">@Model.RazonSocial</td>
     </tr>
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Dirección</td>
-        <td style="font-size:10px;">@Model.DomicilioLegalEntidad</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Dirección</td>
+        <td style="font-size: 10px;">@Model.DomicilioLegalEntidad</td>
     </tr>
     <tr>
-        <td width="30%" style="font-size:10px;font-weight:bold;">Pagina Web</td>
-        <td style="font-size:10px;">@Model.PaginaWebEntidad</td>
+        <td width="30%" style="font-size: 10px; font-weight: bold;">Pagina Web</td>
+        <td style="font-size: 10px;">@Model.PaginaWebEntidad</td>
     </tr>
 </table>
-<p style="font-size:10px;text-align:justify;">
-    <span style="font-weight:bold;">Mision:</span><br />
+<p style="font-size: 10px; text-align: justify;">
+    <span style="font-weight: bold;">Mision:</span><br />
     @Model.MisionEntidad
-</p><br />
-<p style="font-size:10px;text-align:justify;">
-    <span style="font-weight:bold;">Vision:</span><br />
+</p>
+<br />
+<p style="font-size: 10px; text-align: justify;">
+    <span style="font-weight: bold;">Vision:</span><br />
     @Model.VisionEntidad
-</p><br />
-<p style="font-size:10px;text-align:justify;">
-    <span style="font-weight:bold;">Actividad Principal:</span><br />
+</p>
+<br />
+<p style="font-size: 10px; text-align: justify;">
+    <span style="font-weight: bold;">Actividad Principal:</span><br />
     @Model.ActividadPrincipalEntidad
-</p><br />
-<p style="font-size:10px;text-align:justify;">
-    <span style="font-weight:bold;">Base Legal:</span><br />
+</p>
+<br />
+<p style="font-size: 10px; text-align: justify;">
+    <span style="font-weight: bold;">Base Legal:</span><br />
     @Model.BaseLegalEntidad
 </p>
 
-<br /><br />
+<br />
+<br />
 
 <table>
     <tr>
@@ -110,9 +119,11 @@
     </tr>
 </table>
 
-<p style="font-size:10px;text-align:justify;">
+<p style="font-size: 10px; text-align: justify;">
     Comprende la auditoría a los estados presupuestarios y los estados financieros. Los objetivos de la Auditoría están detallados en el numeral 6.3 de la Directiva N° 005-2014-CG/AFIN “Auditoría Financiera Gubernamental” y “Manual de Auditoría Financiera Gubernamental”, aprobada por Resolución de Contraloría N° 445-2014-CG de 03 de Octubre 2014 (en adelante, la Directiva y Manual de Auditoría Financiera Gubernamental) que forman parte integrante de estas bases.
-</p><br /><br />
+</p>
+<br />
+<br />
 
 <table>
     <tr>
@@ -120,27 +131,26 @@
     </tr>
 </table>
 
-<p style="font-size:10px;text-align:justify;">
-<ul>
-    <li>Para fines de control del desarrollo de la auditoría, la primera y segunda visita deberá ser programada considerando un cronograma de actividades que distribuya el total de horas en las etapas de: planificación 40%, ejecución 40% e informe 20%. La permanencia del jefe de comisión durante todo el proceso de la auditoría será 100% y para los demás integrantes del equipo de auditoría la distribución de sus horas se realizará de manera proporcional a los porcentajes indicados para cada una de las etapas de la Auditoría, este cronograma será presentado en el memorando de planificación.</li>
-    <li>El desarrollo y la supervisión de la Auditoría, así como la evaluación de los informes de auditoría, reportes y otros entregables, se efectúa cumpliendo las normas aprobadas para la auditoría gubernamental. Los informes de auditoría solo podrán ser modificados por reformulación requerida por el Departamento de Auditoría Financiera de la CGR (en adelante, el AFI).</li>
-    <li>El Departamento de Gestión de Sociedades de Auditoría o el AFI pueden efectuar, en cualquier momento, visitas de trabajo a la Entidad o a la SOA. Asimismo, el AFI está facultado a requerir la presentación o entrega de los papeles de trabajo que sustenten la Auditoría.</li>
-    <li>En el marco de la NIA 240 – “Responsabilidad del auditor en la auditoría de estados financieros con respecto al fraude”, la SOA deberá comunicar de manera documentada al AFI los hechos relacionados a fraude, para su registro, evaluación y adopción de acciones que correspondan.</li>
-    <li>La NIA 510 Compromisos de Auditoria Inicial - Saldos de Apertura, es de aplicación obligatoria por la SOA cuando el período anterior no haya sido auditado o haya sido auditado por una SOA distinta.</li>
-</ul>
- 
-</p> <br /><br />
+<p style="font-size: 10px; text-align: justify;">
+    <ul>
+        <li>Para fines de control del desarrollo de la auditoría, la primera y segunda visita deberá ser programada considerando un cronograma de actividades que distribuya el total de horas en las etapas de: planificación 40%, ejecución 40% e informe 20%. La permanencia del jefe de comisión durante todo el proceso de la auditoría será 100% y para los demás integrantes del equipo de auditoría la distribución de sus horas se realizará de manera proporcional a los porcentajes indicados para cada una de las etapas de la Auditoría, este cronograma será presentado en el memorando de planificación.</li>
+        <li>El desarrollo y la supervisión de la Auditoría, así como la evaluación de los informes de auditoría, reportes y otros entregables, se efectúa cumpliendo las normas aprobadas para la auditoría gubernamental. Los informes de auditoría solo podrán ser modificados por reformulación requerida por el Departamento de Auditoría Financiera de la CGR (en adelante, el AFI).</li>
+        <li>El Departamento de Gestión de Sociedades de Auditoría o el AFI pueden efectuar, en cualquier momento, visitas de trabajo a la Entidad o a la SOA. Asimismo, el AFI está facultado a requerir la presentación o entrega de los papeles de trabajo que sustenten la Auditoría.</li>
+        <li>En el marco de la NIA 240 – “Responsabilidad del auditor en la auditoría de estados financieros con respecto al fraude”, la SOA deberá comunicar de manera documentada al AFI los hechos relacionados a fraude, para su registro, evaluación y adopción de acciones que correspondan.</li>
+        <li>La NIA 510 Compromisos de Auditoria Inicial - Saldos de Apertura, es de aplicación obligatoria por la SOA cuando el período anterior no haya sido auditado o haya sido auditado por una SOA distinta.</li>
+    </ul>
+
+</p>
+<br />
+<br />
 
 <table cellpadding="3" cellspacing="3">
     <tr border="1" bgcolor="#777777" color="#ffffff">
-        <td width="60%" align="center">
-            Entidad
+        <td width="60%" align="center">Entidad
         </td>
-        <td width="20%" align="center">
-            Fecha Inicio
+        <td width="20%" align="center">Fecha Inicio
         </td>
-        <td width="20%" align="center">
-            Fecha Fin
+        <td width="20%" align="center">Fecha Fin
         </td>
     </tr>
     @{
@@ -150,15 +160,15 @@
     }
     @foreach (var item in Model.listaEntidades)
     {
-        <tr border="1" bgcolor="@Odd" >
-            <td style="font-size:10px;">@item.DESCROENT
+        <tr border="1" bgcolor="@Odd">
+            <td style="font-size: 10px;">@item.DESCROENT
             </td>
-            <td style="font-size:10px;">@item.FECINICROENT
+            <td style="font-size: 10px;">@item.FECINICROENT
             </td>
-            <td style="font-size:10px;">@item.FECFINCROENT
+            <td style="font-size: 10px;">@item.FECFINCROENT
             </td>
         </tr>
-        if (Odd == OddColor)
+    if (Odd == OddColor)
         {
             Odd = evenColor;
         }
@@ -169,22 +179,25 @@
 
     }
 </table>
-<br /><br />
+<br />
+<br />
 
 <table>
     <tr>
         <td colspan="2"><strong>V. Aspectos Economicos</strong></td>
     </tr>
 </table>
-<p style="text-align:justify; font-size:10px;">
-<span style="font-weight:bold;">Viáticos y Pasajes en el ámbito de la Entidad auditada (opcional)</span><br />
+<p style="text-align: justify; font-size: 10px;">
+    <span style="font-weight: bold;">Viáticos y Pasajes en el ámbito de la Entidad auditada (opcional)</span><br />
     La SOA solicitará cuando su Plan de Auditoría remitido a la Contraloría General de la República, incorpora visitas a unidades operativas, para aplicar procedimientos de auditoría a obras concluidas, en curso y otros bienes de propiedad de la entidad, que se encuentren fuera del ambiente geográfico del lugar donde se realiza la auditoría.                                  
     El monto y la rendición de éstos serán conforme a lo dispuesto en la normativa interna de la Entidad.
-</p><br />
-<p style="text-align:justify; font-size:10px;">
-<span style="font-weight:bold;">Garantías Aplicables al Contrato de Auditoria Financiera Gubernamental</span><br />
+</p>
+<br />
+<p style="text-align: justify; font-size: 10px;">
+    <span style="font-weight: bold;">Garantías Aplicables al Contrato de Auditoria Financiera Gubernamental</span><br />
     A fin de garantizar el fiel cumplimiento del Contrato de Auditoría Financiera Gubernamental (en adelante, el Contrato) y los adelantos de retribución económica, la SOA otorgará a favor de la Entidad las garantías establecidas en el numeral 7.3.5 de la Directiva de Sociedades. La garantía de adelanto de retribución económica se presenta solo cuando se solicite dicho adelanto. 
-</p><br />
+</p>
+<br />
 <br />
 <br />
 <table>
@@ -192,14 +205,16 @@
         <td colspan="2"><strong>VI. Presentacion, Metodologia de Evaluacion y Calificacion de Propuestas</strong></td>
     </tr>
 </table>
-<p style="text-align:justify; font-size:10px;">
+<p style="text-align: justify; font-size: 10px;">
     Las propuestas se presentan de acuerdo a lo establecido en las presentes bases, el aviso de convocatoria, el manual de propuestas, el procedimiento publicado en la página web de la CGR y la Directiva de Sociedades.
     La evaluación y calificación de las propuestas se realizará conforme a lo establecido en el numeral 7.2.2.2 de la Directiva de Sociedades. 
-</p><br /><br />
+</p>
+<br />
+<br />
 
-<p style="text-align:justify; font-size:10px;">
-    <span style="font-weight:bold;">Información Importante:</span><br />
-La Ley regula el ingreso a la carrera administrativa, y los derechos, deberes y responsabilidades de
+<p style="text-align: justify; font-size: 10px;">
+    <span style="font-weight: bold;">Información Importante:</span><br />
+    La Ley regula el ingreso a la carrera administrativa, y los derechos, deberes y responsabilidades de
 los servidores públicos. No están comprendidos en dicha carrera los funcionarios que desempeñan
 cargos políticos o de confianza. Ningún funcionario o servidor público puede desempeñar más de un
 empleo o cargo público remunerado, con excepción de uno o más por función docente. No están

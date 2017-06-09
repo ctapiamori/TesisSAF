@@ -43,20 +43,25 @@ namespace SOCAUD.Web.Controllers
         }
 
 
-        public JsonResult listarBases(int idBase)
+        public JsonResult listarBases(int idPub)
         {
+            var publicaciones = this._publicacionYBasesLogic.ListarPublicacionesEstadoPublicadaYBases();
+            var Bases = publicaciones.Where(c => c.CODPUB == idPub);
+            return Json(Bases);
+        }
 
         public JsonResult listarServicios(int idBase)
         {
             var serviciosAuditoria = this._servicioAuditoriaLogic.ServiciosPorBase(idBase);// modelEntity.SAF_SERVICIOAUDITORIA.ToList().Where(c => c.CODBAS == idBase && c.ESTREG == "1");
             List<SelectListItem> lista = new List<SelectListItem>();
-            int i = 1;
+           
             foreach (var item in serviciosAuditoria)
-	        {
-		        lista.Add(new SelectListItem (){ Value = item.CODSERAUD.ToString(), Text = string.Format("{0}-{1}", item.PERSERAUD, i.ToString()) });
-                i++;
+            {
+                var fechaInicio = item.FECINISERAUD.HasValue? item.FECINISERAUD.Value.ToString("dd/MM/yyyy") :  "";
+                var fechaFin = item.FECFINSERAUD.HasValue? item.FECFINSERAUD.Value.ToString("dd/MM/yyyy") :  "";
+                lista.Add(new SelectListItem() { Value = item.CODSERAUD.ToString(), Text = string.Format("{0} ::: {1}-{2}", item.PERSERAUD, fechaInicio, fechaFin) });
 	        }
-            var result = lista;//(from c in serviciosAuditoria select new SelectListItem() { Text = c.PERSERAUD, Value = c.CODSERAUD.ToString() });
+            var result = lista;
             return Json(result);
         }
 

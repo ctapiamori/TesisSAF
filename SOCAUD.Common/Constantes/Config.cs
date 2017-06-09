@@ -14,6 +14,21 @@ namespace SOCAUD.Common.Constantes
         {
             get { return Convert.ToSingle(ConfigurationManager.AppSettings["MaxTamanioPorArchivo"]); }
         }
+
+        public static string RutaByPassLogin
+        {
+            get { return ConfigurationManager.AppSettings["RutaByPassLogin"]; }
+        }
+
+        public static string RutaByPassLogout
+        {
+            get { return ConfigurationManager.AppSettings["RutaByPassLogout"]; }
+        }
+
+        public static string RutaRegisterNewSoaAuditor
+        {
+            get { return ConfigurationManager.AppSettings["RutaByRegistrarSOAAuditor"]; }
+        }
         #endregion
     }
 }

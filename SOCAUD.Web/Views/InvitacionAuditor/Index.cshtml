@@ -28,20 +28,25 @@
                     <div class="row">
                         @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmBusquedaAuditores" }))
                         {
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 @Html.LabelFor(c => c.CODPUB)
                                 @Html.DropDownListFor(c => c.CODPUB, Model.cboPublicaciones, "Seleccione", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(c => c.CODPUB)
                             </div>
-                            <div class="col-md-4">
-                                @Html.LabelFor(c => c.CODSERAUD)
+                        <div class="col-md-3">
+                            @Html.LabelFor(c => c.CODBAS)
+                                @Html.DropDownListFor(c => c.CODBAS, Model.cboBases, "Seleccione", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.CODBAS)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(c => c.CODSERAUD)
                                 @Html.DropDownListFor(c => c.CODSERAUD, Model.cboServiciosAuditoria, "Seleccione", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(c => c.CODSERAUD)
-                            </div>
+                        </div>
 
                         }
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <br />
                             <button class="btn btn-primary" type="button" id="btnBuscarInvitaciones"><i class="fa fa-search"></i>&nbsp;Buscar Invitaciones</button>
                             <button class="btn btn-info" type="button" id="btnBuscar"><i class="fa fa-search-plus"></i>&nbsp;Buscar Auditores</button>
@@ -134,6 +139,10 @@
                 listarInvitaciones();
             });
             $("#CODPUB").change(function () {
+                cargarComboBases();
+            });
+
+            $("#CODBAS").change(function () {
                 cargarServiciosAuditoria();
             });
         });
@@ -166,11 +175,29 @@
             });
         }
 
+
+        function cargarComboBases() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("listarBases", "InvitacionAuditor")',
+                data: { idPub: $("#CODPUB").val() },
+                dataType: "json",
+                success: function (result) {
+                    $("#CODBAS option").not(":first").remove();
+                    $.each(result, function (i, v) {
+                        $("#CODBAS").append("<option value='" + v.CODBAS + "'>" + v.DESBAS + "</option>");
+                    });
+                }
+            });
+        }
+
+
+
         function cargarServiciosAuditoria() {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("listarServicios", "InvitacionAuditor")',
-                data: { idBase: $("#CODPUB").val().split("-")[1] },
+                data: { idBase: $("#CODBAS").val() },
                 dataType: "json",
                 success: function (result) {
                     $("#CODSERAUD option").not(":first").remove();
@@ -194,42 +221,41 @@
             });
         }
 
-        function enviarInvitacion(id) {
-            $.ajax({
-                url: '@Url.Action("EnviarInvitacionAuditor", "InvitacionAuditor")',
-                type: 'POST',
-                async: false,
-                data: { idPub: $("#CODPUB").val(), idSerAud: $("#CODSERAUD").val() },
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    listarInvitaciones();
-                }
-            });
-        }
+
 
 
         function enviarInvitacion(id) {
-            $.ajax({
-                url: '@Url.Action("EnviarInvitacionAuditor", "InvitacionAuditor")',
-                type: 'POST',
-                async: false,
-                data: { id: id },
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    listarInvitaciones();
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EnviarInvitacionAuditor", "InvitacionAuditor")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: id },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarInvitaciones();
+                        }
+                    });
                 }
             });
         }
 
         function eliminarInvitacion(id) {
-            $.ajax({
-                url: '@Url.Action("EliminarInvitacion", "InvitacionAuditor")',
-                type: 'POST',
-                async: false,
-                data: { id: id },
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    listarInvitaciones();
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarInvitacion", "InvitacionAuditor")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: id },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarInvitaciones();
+                        }
+                    });
                 }
             });
         }

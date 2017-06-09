@@ -30,6 +30,11 @@
                             @Html.LabelFor(c => c.CODPUB)
                             @Html.DropDownListFor(c => c.CODPUB, Model.cboPublicaciones, "Seleccione", new { @class = "form-control" })
                         </div>
+
+                        <div class="col-md-4">
+                            @Html.LabelFor(c => c.CODBAS)
+                            @Html.DropDownListFor(c => c.CODBAS, Model.cboBases, "Seleccione", new { @class = "form-control" })
+                        </div>
                         <div class="col-md-4">
                             @Html.LabelFor(c => c.CODSERAUD)
                             @Html.DropDownListFor(c => c.CODSERAUD, Model.cboServiciosAuditoria, "Seleccione", new { @class = "form-control" })
@@ -65,9 +70,25 @@
 
         $(document).ready(function () {
             $("#btnBuscarInvitaciones").click(listarInvitaciones);
-            $("#CODPUB").change(cargarServiciosAuditoria);
+            $("#CODPUB").change(function () { cargarComboBases(); });
+            $("#CODBAS").change(function () { cargarServiciosAuditoria(); });
             listarInvitaciones();
         });
+
+        function cargarComboBases() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("listarBases", "BandejaInvitaciones")',
+                data: { idPub: $("#CODPUB").val() },
+                dataType: "json",
+                success: function (result) {
+                    $("#CODBAS option").not(":first").remove();
+                    $.each(result, function (i, v) {
+                        $("#CODBAS").append("<option value='" + v.CODBAS + "'>" + v.DESBAS + "</option>");
+                    });
+                }
+            });
+        }
 
         var tabInvitaciones = $("#tabInvitaciones").dataTable({
             "info": false,
@@ -118,7 +139,7 @@
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("listarServicios", "BandejaInvitaciones")',
-                data: { idBase: $("#CODPUB").val().split("-")[1] },
+                data: { idBase: $("#CODBAS").val() },
                 dataType: "json",
                 success: function (result) {
                     $("#CODSERAUD option").not(":first").remove();
@@ -143,27 +164,36 @@
         }
 
         function aceptarInvitacion(id) {
-            $.ajax({
-                url: '@Url.Action("AceptarInvitacion", "BandejaInvitaciones")',
-                type: 'POST',
-                async: false,
-                data: { id: id },
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    listarInvitaciones();
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("AceptarInvitacion", "BandejaInvitaciones")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: id },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarInvitaciones();
+                        }
+                    });
                 }
             });
         }
 
         function cancelarInvitacion(id) {
-            $.ajax({
-                url: '@Url.Action("CancelarInvitacion", "BandejaInvitaciones")',
-                type: 'POST',
-                async: false,
-                data: { id: id },
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    listarInvitaciones();
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("CancelarInvitacion", "BandejaInvitaciones")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: id },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarInvitaciones();
+                        }
+                    });
                 }
             });
         }

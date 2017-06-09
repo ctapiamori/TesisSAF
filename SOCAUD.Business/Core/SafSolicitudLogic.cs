@@ -36,9 +36,13 @@ namespace SOCAUD.Business.Core
         private readonly ISafCapacitacionLogic _capacitacionLogic;
         private readonly ISafExperienciaLogic _experienciaLogic;
 
+        private readonly ISpSafCorrelativoSolicitudData _spSafSolicitudCorrelativo;
+        private readonly IDatabaseFactory _dataFactory;
+
         public SafSolicitudLogic()
         {
             this._uow = new UnitOfWork();
+             this._dataFactory = new DatabaseFactory();
             this._safSolicitudData = new SafSolicitudData(_uow);
             this._viewSafSolicitudData = new VwSafSolicitudData(_uow);
             this._auditorLogic = new SafAuditorLogic();
@@ -46,6 +50,7 @@ namespace SOCAUD.Business.Core
             this._solExperienciaLogic = new SafSolExperienciaLogic();
             this._solCapacitacionLogic = new SafSolCapacitacionLogic();
             this._experienciaLogic = new SafExperienciaLogic();
+            this._spSafSolicitudCorrelativo = new SpSafCorrelativoSolicitudData(_dataFactory, _uow);
         }
 
         public SAF_SOLICITUD Registrar(SAF_SOLICITUD entidad)
@@ -106,9 +111,10 @@ namespace SOCAUD.Business.Core
             {
                 try
                 {
+                    var numeroSol = _spSafSolicitudCorrelativo.GenerarCorrelativo();
                     var resultRegAuditor = this._auditorLogic.Registrar(auditor);
                     solicitud.CODAUD = resultRegAuditor.CODAUD;
-
+                    solicitud.NUMSOL = numeroSol;
                     var resultRegSolicitud = this.Registrar(solicitud);
                     tran.Complete();
                     return true;
@@ -132,9 +138,10 @@ namespace SOCAUD.Business.Core
             {
                 try
                 {
+                    var numeroSol = _spSafSolicitudCorrelativo.GenerarCorrelativo();
                     var resultRegSoa = this._soaLogic.Registrar(soa);
                     solicitud.CODSOA = resultRegSoa.CODSOA;
-
+                    solicitud.NUMSOL = numeroSol;
                     var resultRegSolicitud = this.Registrar(solicitud);
                     tran.Complete();
                     return true;

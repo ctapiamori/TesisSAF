@@ -1,4 +1,6 @@
-﻿@model SOCAUD.Intranet.Models.AccesoModel
+﻿@using SOCAUD.Common.Constantes;
+
+@model SOCAUD.Intranet.Models.AccesoModel
 
 @using SOCAUD.Common.Enum
 @{
@@ -66,8 +68,8 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-xs-12">
-                        @*<a href='@Url.Action("Registro","SolReg")'>Registrar como Nuevo</a>*@<br />
-                        <a href="#" class="text-center">Olvide mi Contraseña</a>
+                        <a href='@Config.RutaRegisterNewSoaAuditor'>Registrar como Nuevo</a><br />                        
+                        <a href="#" class="text-center">Olvide mi Contraseñaaaa</a>
                     </div>
                 </div>
             </div>
@@ -107,7 +109,7 @@
                     if (result.Correcto && result.TipoUsuario == "I")
                         document.location = '@Url.Action("Index", "SolicitudAdmin")';
                     else if (result.Correcto && result.TipoUsuario == "E")
-                        document.location = "http://localhost:14117/Acceso/ByPass?CodigoUsuario=" + result.CodigoUsuario + "&NombreUsuario=" + result.NombreUsuario + "&UsuarioSOAAuditor=" + result.UsuarioSOAAuditor + "&TipoExterno=" + result.TipoExterno + "&Usuario=" + result.Usuario;
+                        document.location = "@Config.RutaByPassLogin" + "?CodigoUsuario=" + result.CodigoUsuario + "&NombreUsuario=" + result.NombreUsuario + "&UsuarioSOAAuditor=" + result.UsuarioSOAAuditor + "&TipoExterno=" + result.TipoExterno + "&Usuario=" + result.Usuario;
                     else {
                         new PNotify({
                             title: 'Respuesta Sistema!',
