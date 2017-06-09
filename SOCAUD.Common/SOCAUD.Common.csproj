@@ -55,6 +55,7 @@
     <Compile Include="Constantes\Indicador.cs" />
     <Compile Include="Constantes\Mensaje.cs" />
     <Compile Include="Constantes\MensajeRespuesta.cs" />
+    <Compile Include="Constantes\StringRegularExpression.cs" />
     <Compile Include="Constantes\TiposLogin.cs" />
     <Compile Include="Constantes\Variables.cs" />
     <Compile Include="Enum\Estado.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Enum\Tipo.cs" />
     <Compile Include="Enum\TipoBandeja.cs" />
     <Compile Include="Enum\TipoMensaje.cs" />
+    <Compile Include="Enum\TipoParametrica.cs" />
     <Compile Include="Enum\TipoUsuario.cs" />
     <Compile Include="Exceptions\ExcepcionNegocio.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />

@@ -14,6 +14,7 @@ namespace SOCAUD.Business.Core
     {
         SAF_USUARIO BuscarPorUsuario(string usuario);
         TcACCEDERSISTEMAADMIN AccederSistema(string usuario, string contrasenia);
+        IEnumerable<VW_SAF_USUARIOS> ListarUsuariosCompleto();
     }
 
     public class SafUsuarioLogic : ISafUsuarioLogic
@@ -21,11 +22,12 @@ namespace SOCAUD.Business.Core
 
         private readonly IUnitOfWork _uow;
         private readonly ISafUsuarioData _safUsuarioData;
-
+        private readonly IVwSafUsuarioData _vwSafUsuarioData;
         public SafUsuarioLogic()
         {
             this._uow = new UnitOfWork();
             this._safUsuarioData = new SafUsuarioData(_uow);
+            this._vwSafUsuarioData = new VwSafUsuarioData(_uow);
         }
 
 
@@ -71,6 +73,13 @@ namespace SOCAUD.Business.Core
         public SAF_USUARIO BuscarPorUsuario(string usuario)
         {
             return this._safUsuarioData.Get(c => c.NOMUSU == usuario);
+        }
+
+
+        public IEnumerable<VW_SAF_USUARIOS> ListarUsuariosCompleto()
+        {
+            var lista = this._vwSafUsuarioData.GetAll();
+            return lista;
         }
     }
 }

@@ -15,12 +15,12 @@ namespace SOCAUD.Intranet.Models
         [Display(Name="Año")]
         public int Anio { get; set; }
 
-        [Display(Name="Fecha Publicación")]
+        [Display(Name = "Fecha máxima para aprobar")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public string FechaPublicacion { get; set; }
 
 
-        [Display(Name = "Fecha Máxima Creación Base")]
+        [Display(Name = "Fecha máxima para crear Bases")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public string FechaMaximaCreacionBase { get; set; }
 
@@ -31,6 +31,9 @@ namespace SOCAUD.Intranet.Models
         public CronoEntidadModel Entidad { get; set; }
 
         public IList<SelectListItem> ListaAnios { get; set; }
+
+        public Nullable<int> CodigoWorkFlow { get; set; }
+        public string FlgMostrarFlujoAprobacion { get; set; }
 
         public CronogramaModel() {
             this.ListaAnios = new List<SelectListItem>();

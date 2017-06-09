@@ -37,12 +37,15 @@ namespace SOCAUD.Intranet.Controllers
         private readonly ISafCronoEntidadLogic _cronoEntidadLogic;
         private readonly ISafGeneralLogic _safGeneralLogic;
 
+        private readonly ISafWorkFlowLogic _safWorkFlowLogic;
+
         public CronogramaController()
         {
             this._cronogramaLogic = new SafCronogramaLogic();
             this._entidadLogic = new SafEntidadLogic();
             this._cronoEntidadLogic = new SafCronoEntidadLogic();
             this._safGeneralLogic = new SafGeneralLogic();
+            this._safWorkFlowLogic = new SafWorkFlowLogic();
         }
 
         // GET: Cronograma
@@ -75,6 +78,9 @@ namespace SOCAUD.Intranet.Controllers
         public ActionResult Configurar(int id)
         {
             var cronograma = this._cronogramaLogic.BuscarPorId(id);
+            var listaFlujoAprobacion = this._safWorkFlowLogic.ListarTodos();
+
+            listaFlujoAprobacion = listaFlujoAprobacion.Where(c => c.TIPDOC == "C" && c.CODDOC == id).ToList();
 
             if (!cronograma.ESTCRO.GetValueOrDefault().Equals(Estado.Cronograma.Elaboracion.GetHashCode()))
                 return RedirectToAction("View", new { id = id });
@@ -95,11 +101,33 @@ namespace SOCAUD.Intranet.Controllers
                 Cronograma = cronograma.CODCRO
             };
 
+            if (listaFlujoAprobacion.Count() >= 1)
+            {
+                var codigoTipoCargoUsuario = Convert.ToInt32(Session["tipoUsuario"]);
+                var workFlowDelTipoDeUsuario = listaFlujoAprobacion.LastOrDefault();
+
+                if (workFlowDelTipoDeUsuario.TIPCARUSU == codigoTipoCargoUsuario)
+                {
+                    model.CodigoWorkFlow = workFlowDelTipoDeUsuario.CODWORFLO;
+                    model.FlgMostrarFlujoAprobacion = "S";
+                }else
+                    model.FlgMostrarFlujoAprobacion = "N";
+            }
+            else
+            {
+                model.FlgMostrarFlujoAprobacion = "S";
+            }
+
             return View(model);
         }
 
         public ActionResult View(int id)
         {
+
+            var listaFlujoAprobacion = this._safWorkFlowLogic.ListarWorkFlowCompleto();
+            listaFlujoAprobacion = listaFlujoAprobacion.Where(c => c.CODTIPDOC == "C" && c.CODDOC == id).ToList();
+
+
             var cronograma = this._cronogramaLogic.BuscarPorId(id);
             var model = new CronogramaModel();
 
@@ -117,6 +145,32 @@ namespace SOCAUD.Intranet.Controllers
                 Cronograma = cronograma.CODCRO
             };
 
+
+            if (listaFlujoAprobacion.Count() >= 1) // SI ES EL PRIMER PASO
+            {
+                var codigoTipoCargoUsuario = Convert.ToInt32(Session["tipoUsuario"]);
+                var workFlowDelTipoDeUsuario = listaFlujoAprobacion.LastOrDefault();
+
+                if (workFlowDelTipoDeUsuario.TIPCARUSU == codigoTipoCargoUsuario) // SI ES PARA ESTE TIPO DE USUARIO
+                {
+                    if (workFlowDelTipoDeUsuario.CODESTDOC == Estado.Cronograma.Aprobado.GetHashCode()) // SI AUN ESTA EN PROCESO Y NO APROBADO
+                    {
+                        model.FlgMostrarFlujoAprobacion = "N";
+                    }
+                    else {
+                        model.CodigoWorkFlow = workFlowDelTipoDeUsuario.CODWORFLO;
+                        model.FlgMostrarFlujoAprobacion = "S";
+                    }
+
+                }
+                else
+                    model.FlgMostrarFlujoAprobacion = "N";
+            }
+            else
+            {
+                model.FlgMostrarFlujoAprobacion = "S";
+            }
+
             return View(model);
         }
 
@@ -127,11 +181,13 @@ namespace SOCAUD.Intranet.Controllers
             if (Convert.ToDateTime(model.FechaPublicacion) >= Convert.ToDateTime(model.FechaMaximaCreacionBase))
                 return Json(new MensajeRespuesta("La fecha de publicacion debe ser mayor a la fecha de creacion de Bases.", false));
 
-            var cronogramaExiste = this._cronogramaLogic.ListarPorAnio(model.Anio);
+            if (model.Codigo == 0) { 
+                var cronogramaExiste = this._cronogramaLogic.ListarPorAnio(model.Anio);
 
-            if (cronogramaExiste.Count()>0)
-                return Json(new MensajeRespuesta("Ya existe un crongrama para el año ingresado.", false));
-            
+                if (cronogramaExiste.Count()>0)
+                    return Json(new MensajeRespuesta("Ya existe un crongrama para el año ingresado.", false));
+            }
+
             try
             {
                 if (!model.Codigo.Equals(0))
@@ -151,7 +207,7 @@ namespace SOCAUD.Intranet.Controllers
                 {
                     entidad.CODCRO = model.Codigo;
                     var result = this._cronogramaLogic.Actualizar(entidad);
-                    return Json(new MensajeRespuesta("Actualización satisfactoria", true, result));
+                    return Json(new MensajeRespuesta("Actualización satisfactoria", true));
                 }
             }
             catch (Exception ex)

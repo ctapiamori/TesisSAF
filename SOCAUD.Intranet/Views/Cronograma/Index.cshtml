@@ -22,7 +22,6 @@
                         <div class="col-md-3">
                             <br />
                             <button id="btnBuscar" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Buscar</button>
-                            <button id="btnNuevo" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Nuevo</button>
                         </div>
                     </div>
                 </div>
@@ -30,6 +29,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <table id="tabCronogramas" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12 center">
+                            <button id="btnNuevo" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Registrar Nuevo Cronograma</button>
                         </div>
                     </div>
                 </div>
@@ -42,74 +48,73 @@
 
     <script type="text/javascript" language="javascript">
 
-    var _dataCronogramas_ = null;
-    var tabCronogramas = $("#tabCronogramas").dataTable({
-        "info": false,
-        "bServerSide": false,
-        "data": _dataCronogramas_,
-        "order": [[1, "asc"]],
-        "columns": [
-            {
-                "bSortable": false,
-                "sClass": "center",
-                "sWidth": "5%",
-                "render": function (data, type, row) {
-                    if (row[5] == "1")
-                        return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarCronograma(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
-                    else
-                        return '<center><button class="btn btn-primary" title="Mostrar" type="button" onclick="ViewCronograma(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+        var _dataCronogramas_ = null;
+        var tabCronogramas = $("#tabCronogramas").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataCronogramas_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (row[5] == "1")
+                            return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarCronograma(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                        else
+                            return '<center><button class="btn btn-primary" title="Mostrar" type="button" onclick="ViewCronograma(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Periodo" },
+                { "sTitle": "Fecha Publicación" },
+                { "sTitle": "Max. Elaboración Bases" },
+                { "sTitle": "Estado" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "render": function (data, type, row) {
+                        if (row[5] == "1")
+                            return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarCronograma(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                        else
+                            return "";
+                    }
                 }
-            },
-            { "sTitle": "Periodo" },
-            { "sTitle": "Fecha Publicación" },
-            { "sTitle": "Max. Elaboración Bases" },
-            { "sTitle": "Estado" },
-            {
-                "bSortable": false,
-                "sClass": "center",
-                "render": function (data, type, row) {
-                    if (row[5] == "1")
-                        return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarCronograma(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
-                    else
-                        return "";
-                }
-            }
-        ]
-    });
-
-
-    $(document).ready(function () {
-        listarCronogramas();
-        $("#btnBuscar").click(listarCronogramas);
-        $("#btnNuevo").click(nuevoCronograma);
-    });
-
-    function listarCronogramas() {
-        $.ajax({
-            url: '@Url.Action("ListarCronogramas", "Cronograma")',
-            type: 'POST',
-            async: false,
-            data: { anio: $("#anios").val() },
-            success: function (result) {
-                _dataCronogramas_ = result;
-                tabCronogramas.fnReloadData(_dataCronogramas_);
-            }
+            ]
         });
-    }
 
-    function nuevoCronograma() {
-        document.location = '@Url.Action("Registrar", "Cronograma")';
-    }
+
+        $(document).ready(function () {
+            listarCronogramas();
+            $("#btnBuscar").click(listarCronogramas);
+            $("#btnNuevo").click(nuevoCronograma);
+        });
+
+        function listarCronogramas() {
+            $.ajax({
+                url: '@Url.Action("ListarCronogramas", "Cronograma")',
+                type: 'POST',
+                async: false,
+                data: { anio: $("#anios").val() },
+                success: function (result) {
+                    _dataCronogramas_ = result;
+                    tabCronogramas.fnReloadData(_dataCronogramas_);
+                }
+            });
+        }
+
+        function nuevoCronograma() {
+            document.location = '@Url.Action("Registrar", "Cronograma")';
+        }
         function ViewCronograma(id) {
             document.location = '@Url.Action("View", "Cronograma")/' + id;
         }
 
-    function EditarCronograma(id) {
-        document.location = '@Url.Action("Configurar", "Cronograma")/' + id;
+        function EditarCronograma(id) {
+            document.location = '@Url.Action("Configurar", "Cronograma")/' + id;
         }
 
-        function EliminarCronograma(id)
-        {
+        function EliminarCronograma(id) {
             $.ajax({
                 url: '@Url.Action("EliminarCronograma", "Cronograma")/' + id,
                 type: 'POST',

@@ -10,7 +10,7 @@ namespace SOCAUD.Intranet.Models
     public class BaseModel
     {
         public int Codigo { get; set; }
-        [Display(Name="Fecha máxima de Publiación")]
+        [Display(Name="Fecha máxima de Publicación")]
         public string FechaMaxPublicacion { get; set; }
         [Display(Name = "Cronograma")]
         public int Cronograma { get; set; }

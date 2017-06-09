@@ -1,4 +1,5 @@
 ﻿using SOCAUD.Business.Infraestructure;
+using SOCAUD.Common.Enum;
 using SOCAUD.Data.Core;
 using SOCAUD.Data.Model;
 using SOCAUD.Data.Repository;
@@ -15,6 +16,10 @@ namespace SOCAUD.Business.Core
 
         void ActualizaParametroPuntaje(SAF_PARAMETRICA param);
 
+        IEnumerable<SAF_PARAMETRICA> ListarTipoUsuario();
+
+        IEnumerable<VW_SAF_PARAMETRICA> ListarParametricaCompleta();
+
     }
 
     public class SafParametricaLogic : ISafParametricaLogic {
@@ -22,18 +27,20 @@ namespace SOCAUD.Business.Core
 
         private readonly IUnitOfWork _uow;
         private readonly ISafParametricaData _safParametricaData;
-
+        private readonly IVwSafParametroData _vwSafParametricaData;
 
         public SafParametricaLogic()
         {
             this._uow = new UnitOfWork();
             this._safParametricaData = new SafParametricaData(_uow);
+            this._vwSafParametricaData = new VwSafParametroData(_uow);
 
         }
 
         public SAF_PARAMETRICA Registrar(SAF_PARAMETRICA entidad)
         {
-            throw new NotImplementedException();
+            var result = this._safParametricaData.Add(entidad);
+            return result;
         }
 
         public SAF_PARAMETRICA Actualizar(SAF_PARAMETRICA entidad)
@@ -44,7 +51,15 @@ namespace SOCAUD.Business.Core
 
         public bool Eliminar(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this._safParametricaData.Delete(id);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public SAF_PARAMETRICA BuscarPorId(int id)
@@ -55,7 +70,7 @@ namespace SOCAUD.Business.Core
 
         public IEnumerable<SAF_PARAMETRICA> ListarTodos()
         {
-            throw new NotImplementedException();
+            return this._safParametricaData.GetAll();
         }
 
         public void ActualizaParametroPuntaje(SAF_PARAMETRICA param)
@@ -63,6 +78,20 @@ namespace SOCAUD.Business.Core
             var parametro = this.BuscarPorId(param.CODPAR);
             parametro.VALOR = param.VALOR;
             this.Actualizar(parametro);
+        }
+
+
+        public IEnumerable<SAF_PARAMETRICA> ListarTipoUsuario()
+        {
+            var codigo =TipoParametrica.Codigo.TipoUsuario.GetHashCode();
+            var parametros = this._safParametricaData.GetMany(c => c.CODTIPPAR == codigo);
+            return parametros;
+        }
+
+
+        public IEnumerable<VW_SAF_PARAMETRICA> ListarParametricaCompleta()
+        {
+            return this._vwSafParametricaData.GetAll();
         }
     }
 }

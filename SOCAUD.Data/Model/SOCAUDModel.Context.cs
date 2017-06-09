@@ -89,6 +89,9 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<VW_SAF_CRONOGRAMA> VW_SAF_CRONOGRAMA { get; set; }
         public virtual DbSet<VW_SAF_PUBLICACION_BASE> VW_SAF_PUBLICACION_BASE { get; set; }
         public virtual DbSet<SAF_USUARIO> SAF_USUARIO { get; set; }
+        public virtual DbSet<VW_SAF_USUARIOS> VW_SAF_USUARIOS { get; set; }
+        public virtual DbSet<VW_SAF_PARAMETRICA> VW_SAF_PARAMETRICA { get; set; }
+        public virtual DbSet<VW_SAF_WORKFLOW> VW_SAF_WORKFLOW { get; set; }
     
         public virtual ObjectResult<TcCORTEPUBLICACION> SP_SAF_CORTEPUBLICACION(Nullable<int> cODPUB)
         {

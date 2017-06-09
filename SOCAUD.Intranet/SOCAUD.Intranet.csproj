@@ -195,6 +195,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\ParametroController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PerfilMenuController.cs" />
     <Compile Include="Controllers\PropuestaController.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\ParametroModel.cs" />
     <Compile Include="Models\PerfilMenuModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />
     <Compile Include="Models\PropuestaModel.cs" />
@@ -248,6 +250,8 @@
     <Content Include="Content\datepicker3.css" />
     <Content Include="Content\daterangepicker-bs3.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\LogoCGRFull.jpg" />
+    <Content Include="Content\Images\LogoCGRMini.jpg" />
     <Content Include="Content\Images\sort_asc.png" />
     <Content Include="Content\Images\sort_asc_disabled.png" />
     <Content Include="Content\Images\sort_both.png" />
@@ -540,6 +544,9 @@
     <Content Include="Views\Usuario\AgregarUsuario.cshtml" />
     <Content Include="Views\Usuario\EditarUsuario.cshtml" />
     <Content Include="Views\Usuario\BandejaUsuarios.cshtml" />
+    <Content Include="Views\Parametro\AgregarParametro.cshtml" />
+    <Content Include="Views\Parametro\BandejaParametros.cshtml" />
+    <Content Include="Views\Parametro\EditarParametro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

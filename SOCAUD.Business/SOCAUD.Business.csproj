@@ -78,6 +78,7 @@
     <Compile Include="Core\SafSolicitudLogic.cs" />
     <Compile Include="Core\SafGeneralLogic.cs" />
     <Compile Include="Core\SafSubMenuLogic.cs" />
+    <Compile Include="Core\SafTipoParametricaLogic.cs" />
     <Compile Include="Core\SafUsuarioLogic.cs" />
     <Compile Include="Core\SafWorkFlowLogic.cs" />
     <Compile Include="Core\SeguridadLogic.cs" />

@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-md-6">
                         @Html.LabelFor(m => m.CODENT)
-                        @Html.DropDownListFor(m => m.CODENT, Model.cboListaEntidad , "Seleccione", new { @class = "form-control"  })
+                        @Html.DropDownListFor(m => m.CODENT, Model.cboListaEntidad , "Seleccione", new { @class = "form-control", @disabled = "true"  })
                         @Html.ValidationMessageFor(c => c.CODENT)
                     </div>
                 </div>
@@ -89,6 +89,15 @@
                 document.location.href = '@Url.Action("BandejaUsuarios","Usuario")';
             });
 
+            $("#TIPCARUSU").change(function () {
+                if ($("#TIPCARUSU").val() == "45") {
+                    //SI tipo cargo es EXTERNO
+                    $("#CODENT").attr("disabled", false);
+                } else {
+                    $("#CODENT").val(null);
+                    $("#CODENT").attr("disabled", true);
+                }
+            });
 
             $("#btnAgregar").click(function () {
                 if (!$("#frmGrabarUsuario").isValid()) return;
@@ -98,7 +107,7 @@
                     if (result) {
                         $.ajax({
                             type: 'POST',
-                            url: '@Url.Action("AgregarUsuario","Usuario")',
+                            url: '@Url.Action("AgregarNuevoUsuario","Usuario")',
                             data: $("#frmGrabarUsuario").serialize(),
                             success: function (result) {
                                 mostrarNotificacion(result);

@@ -63,7 +63,9 @@ namespace SOCAUD.Intranet.Controllers
 
         public JsonResult listarFlujos()
         {
-            var listado = this._safWorkflowLogic.ListarTodos();
+            var listado = this._safWorkflowLogic.ListarTodos().ToList();
+
+             
 
             var data = listado.Select(c => new string[] { 
                 c.CODWORFLO.ToString(),

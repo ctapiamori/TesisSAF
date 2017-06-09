@@ -40,12 +40,12 @@
                 <div class="row">
                     <div class="col-md-6">
                         @Html.LabelFor(m => m.TIPCARUSU)
-                        @Html.DropDownListFor(m => m.TIPCARUSU, Model.cboListaCargo , "Seleccione", new { @class = "form-control", @rows = "5" })
+                        @Html.DropDownListFor(m => m.TIPCARUSU, Model.cboListaCargo , "Seleccione", new { @class = "form-control"  })
                         @Html.ValidationMessageFor(c => c.TIPCARUSU)
                     </div>
                     <div class="col-md-6">
                         @Html.LabelFor(m => m.CODENT)
-                        @Html.DropDownListFor(m => m.CODENT, Model.cboListaEntidad , "Seleccione", new { @class = "form-control", @rows = "5" })
+                        @Html.DropDownListFor(m => m.CODENT, Model.cboListaEntidad , "Seleccione", new { @class = "form-control", @disabled = "true"  })
                         @Html.ValidationMessageFor(c => c.CODENT)
                     </div>
                 </div>
@@ -70,7 +70,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12" style="text-align:center;">
-                        <button id="btnAgregar" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Agregar</button>
+                        <button id="btnEditar" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Grabar</button>
                         <button id="btnRegresar" type="button" class="btn btn-info"> &nbsp;Regresar</button>
                     </div>
 
@@ -86,8 +86,28 @@
 
         $(document).ready(function () {
 
+            if ($("#TIPCARUSU").val() == "45") {
+                //SI tipo cargo es EXTERNO
+                $("#CODENT").attr("disabled", false);
+            } else {
+                $("#CODENT").val(null);
+                $("#CODENT").attr("disabled", true);
+            }
+
+            $("#TIPCARUSU").change(function () {
+                if ($("#TIPCARUSU").val() == "45") {
+                    //SI tipo cargo es EXTERNO
+                    $("#CODENT").attr("disabled", false);
+                } else {
+                    $("#CODENT").val(null);
+                    $("#CODENT").attr("disabled", true);
+                }
+            });
+
+
+
             $("#btnRegresar").click(function () {
-                document.location.href = '@Url.Action("BandejaUsuario","Usuario")';
+                document.location.href = '@Url.Action("BandejaUsuarios","Usuario")';
             });
 
 
@@ -100,7 +120,7 @@
                     if (result) {
                         $.ajax({
                             type: 'POST',
-                            url: '@Url.Action("EditarUsuario","Usuario")',
+                            url: '@Url.Action("EditarDatosUsuario","Usuario")',
                             data: $("#frmEditarUsuario").serialize(),
                             success: function (result) {
                                 mostrarNotificacion(result);

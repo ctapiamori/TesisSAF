@@ -57,8 +57,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <button type="button" id="btnGrabar" class="btn btn-success" onclick="grabarCronograma();"><i class="fa fa-fw fa-save"></i>Grabar Información del Cronograma</button>
-                            <button type="button" id="btnRegresar" class="btn btn-info" onclick="regresar();">Regresar</button>
+                            <button type="button" id="btnGrabar" class="btn btn-primary" onclick="grabarCronograma();"><i class="fa fa-fw fa-save"></i>Grabar Información del Cronograma</button>
+                            <button type="button" id="btnRegresar" onclick="regresar();" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+
+ 
                         </div>
                     </div>
                 </div>
@@ -78,6 +80,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-md-6">
+                    @Html.HiddenFor(c=>c.CodigoWorkFlow)
                     @Html.LabelFor(c => c.EstadoCronograma) : @Html.Raw(Model.EstadoCronograma)
                 </div>
             </div>
@@ -89,9 +92,10 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button type="button" id="btnSolicitar" class="btn btn-primary" onclick="solicitarAprobacion();"><i class="fa fa-fw fa-share"></i>Enviar WorkFlow Aprobación</button>
-                &nbsp;
-            <button type="button" id="btnRegresar2" class="btn btn-info" onclick="regresar();">Regresar</button>
+                @if (Model.FlgMostrarFlujoAprobacion == "S") {
+                    <button type="button" id="btnSolicitar" class="btn btn-primary" onclick="solicitarAprobacion();"><i class="fa fa-fw fa-share"></i>Enviar WorkFlow Aprobación</button>
+                }
+                <button type="button" id="btnRegresar2" onclick="regresar();" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
             </div>
         </div>
         
@@ -129,7 +133,7 @@
                 url: '@Url.Action("ListarWorkflowDocumento", "Workflow", new { Area = "" })',
                 type: 'POST',
                 async: false,
-                data: { idDocumento: $("#Codigo").val(), tipoDocumento: "C" },
+                data: { idDocumento: $("#Codigo").val(), tipoDocumento: "C", idFlujo: $("#CodigoWorkFlow").val() },
                 success: function (result) {
                     _dataFlujo_ = result;
                     tabFlujo.fnReloadData(_dataFlujo_);
@@ -180,6 +184,7 @@
                     data: $("#frmCronograma").serialize(),
                     dataType: "json",
                     success: function (result) {
+                         
                         mostrarNotificacion(result);
                     }
                 });

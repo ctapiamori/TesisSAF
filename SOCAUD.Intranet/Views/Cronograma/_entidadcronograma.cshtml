@@ -1,184 +1,192 @@
-﻿
-@model SOCAUD.Intranet.Models.CronoEntidadModel
+﻿@model SOCAUD.Intranet.Models.CronoEntidadModel
 
 <div class="box box-primary color-palette-box">
     <div class="box-header with-border">
         <h3 class="box-title">Entidades</h3>
     </div>
     <div class="panel-body">
-        <div class="row">
+        <form id="frmEntidad"> 
+            <div class="row">
+                @Html.HiddenFor(c => c.Cronograma)
+                @Html.HiddenFor(c => c.Codigo)
             <div class="col-md-6">
-                <table id="tabEntidades" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                @Html.LabelFor(c => c.Entidad)
+                @Html.DropDownListFor(c => c.Entidad, (IEnumerable<SelectListItem>)ViewBag.Entidades, "Seleccione", new { @class = "form-control" })
+                @Html.ValidationMessageFor(c => c.Entidad)
             </div>
-            <div class="col-md-6">
-                <form id="frmEntidad">
-                    @Html.HiddenFor(c => c.Cronograma)
-                    <div class="form-group">
-                        @Html.LabelFor(c => c.Codigo)
-                        @Html.TextBoxFor(c => c.Codigo, new { @class = "form-control", @readonly = "true" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(c => c.Entidad)
-                        @Html.DropDownListFor(c => c.Entidad, (IEnumerable<SelectListItem>)ViewBag.Entidades, "(Seleccionar Entidad)", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(c => c.Entidad)
-                    </div>
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(c => c.FechaInicio)
-                        <div class="input-group date">
-                            @Html.TextBoxFor(c => c.FechaInicio, new { @class = "form-control" })
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar bigger-110"></i>
-                            </span>
-                        </div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(c => c.FechaInicio, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
                         @Html.ValidationMessageFor(c => c.FechaInicio)
                     </div>
+                </div>
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(c => c.FechaTermino)
-                        <div class="input-group date">
-                            @Html.TextBoxFor(c => c.FechaTermino, new { @class = "form-control" })
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar bigger-110"></i>
-                            </span>
-                        </div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(c => c.FechaTermino, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
                         @Html.ValidationMessageFor(c => c.FechaTermino)
                     </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" onclick="grabarPublicacion();"><i class="fa fa-fw fa-save"></i>Grabar Entidad</button>
-                        <button type="button" class="btn btn-default" onclick="clearEntidad();">Limpiar Entidad</button>
-                    </div>
-                </form>
+                </div>
+
+
             </div>
-        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" onclick="grabarPublicacion();"><i class="fa fa-fw fa-save"></i>&nbsp;Grabar Información Entidad</button>
+                        <button type="button" class="btn btn-default" onclick="clearEntidad();"><i class="fa fa-file-o" aria-hidden="true"></i>&nbsp;Limpiar Formulario Entidad</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tabEntidades" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                </div>
+            </div>
+
+
+
+
+        </form> 
 
     </div>
 
 </div>
 
 <script type="text/javascript">
-    console.log("aqui")
+
     var _dataEntidades_ = null;
     var tabEntidades;
 
-        $(document).ready(function () {
-
-            $('#FechaInicio').datepicker({
-                format: "dd/mm/yyyy",
-                startDate: '@DateTime.Now.ToString("dd/MM/yyyy")'
-            }).next().on(ace.click_event, function () {
-                $(this).prev().focus();
-            });
-
-            $('#FechaTermino').datepicker({
-                format: "dd/mm/yyyy",
-                startDate: '@DateTime.Now.ToString("dd/MM/yyyy")'
-            }).next().on(ace.click_event, function () {
-                $(this).prev().focus();
-            });
-
-            tabEntidades = $("#tabEntidades").dataTable({
-                "info": false,
-                "bServerSide": false,
-                "data": _dataEntidades_,
-                "order": [[1, "asc"]],
-                "columns": [
-                    {
-                        "bSortable": false,
-                        "sClass": "center",
-                        "sWidth": "5%",
-                        "render": function (data, type, row) {
-                            return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarEntidad(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
-                        }
-                    },
-                    { "sTitle": "Entidad" },
-                    { "sTitle": "Fecha Inicio" },
-                    { "sTitle": "Fecha Termino" },
-                    {
-                        "bSortable": false,
-                        "sClass": "center",
-                        "render": function (data, type, row) {
-                            return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarEntidad(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
-                        }
-                    }
-                ]
-            });
-
-            listarEntidades();
+    $(document).ready(function () {
+        var anioCronograma = $("#Anio").val();
+        var inicioCalendarios = "01/01/" + anioCronograma.toString();
+        $('#FechaInicio').datepicker({
+            format: "dd/mm/yyyy",
+            startDate: inicioCalendarios
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
         });
 
-        function listarEntidades() {
-            $.ajax({
-                url: '@Url.Action("ListarEntidadCronograma", "Cronograma")',
-                type: 'POST',
-                async: false,
-                data: { cronograma: $("#Cronograma").val() },
-                success: function (result) {
-                    _dataEntidades_ = result;
-                    tabEntidades.fnReloadData(_dataEntidades_);
-                }
-            });
-        }
+        $('#FechaTermino').datepicker({
+            format: "dd/mm/yyyy",
+            startDate: inicioCalendarios
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
 
-    function clearEntidad()
-    {
+        tabEntidades = $("#tabEntidades").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataEntidades_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarEntidad(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Entidad" },
+                { "sTitle": "Fecha Inicio" },
+                { "sTitle": "Fecha Termino" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarEntidad(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                    }
+                }
+            ]
+        });
+
+        listarEntidades();
+    });
+
+    function listarEntidades() {
+        $.ajax({
+            url: '@Url.Action("ListarEntidadCronograma", "Cronograma")',
+            type: 'POST',
+            async: false,
+            data: { cronograma: $("#Cronograma").val() },
+            success: function (result) {
+                _dataEntidades_ = result;
+                tabEntidades.fnReloadData(_dataEntidades_);
+            }
+        });
+    }
+
+    function clearEntidad() {
         $("#frmEntidad #Codigo").val("0");
         $("#frmEntidad #Entidad").val("");
         $("#frmEntidad #FechaInicio").val("");
         $("#frmEntidad #FechaTermino").val("");
     }
 
-        function EditarEntidad(id)
-        {
-            var entidad;
-            $.each(_dataEntidades_, function (key, row) {
-                if (row[0] == id) {
-                    return entidad = row;
-                }
-            });
-            clearEntidad();
-            if(entidad != undefined)
-            {
-                $("#frmEntidad #Codigo").val(entidad[0]);
-                $("#frmEntidad #Entidad").val(entidad[5]);
-                $("#frmEntidad #FechaInicio").val(entidad[2]);
-                $("#frmEntidad #FechaTermino").val(entidad[3]);
+    function EditarEntidad(id) {
+        var entidad;
+        $.each(_dataEntidades_, function (key, row) {
+            if (row[0] == id) {
+                return entidad = row;
             }
+        });
+        clearEntidad();
+        if (entidad != undefined) {
+            $("#frmEntidad #Codigo").val(entidad[0]);
+            $("#frmEntidad #Entidad").val(entidad[5]);
+            $("#frmEntidad #FechaInicio").val(entidad[2]);
+            $("#frmEntidad #FechaTermino").val(entidad[3]);
         }
+    }
 
-        function EliminarEntidad(id)
-        {
-            $.ajax({
-                url: '@Url.Action("EliminarEntidad", "Cronograma")/' + id,
-                type: 'POST',
-                async: false,
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    listarEntidades();
-                }
-            });
-        }
+    function EliminarEntidad(id) {
+        $.ajax({
+            url: '@Url.Action("EliminarEntidad", "Cronograma")/' + id,
+            type: 'POST',
+            async: false,
+            success: function (result) {
+                mostrarNotificacion(result);
+                listarEntidades();
+            }
+        });
+    }
 
-        function grabarPublicacion() {
-            if (!$("#frmEntidad").isValid()) { return; }
+    function grabarPublicacion() {
+        if (!$("#frmEntidad").isValid()) { return; }
 
-            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+        bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
 
-                if (result) {
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("SaveCronoEntidad", "Cronograma")',
-                        data: $("#frmEntidad").serialize(),
-                        dataType: "json",
-                        success: function (result) {
-                            mostrarNotificacion(result);
-                            if (result.Exito) {
-                                clearEntidad();
-                                listarEntidades();
-                            }
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SaveCronoEntidad", "Cronograma")',
+                    data: $("#frmEntidad").serialize(),
+                    dataType: "json",
+                    success: function (result) {
+                        mostrarNotificacion(result);
+                        if (result.Exito) {
+                            clearEntidad();
+                            listarEntidades();
                         }
-                    });
-                }
+                    }
+                });
+            }
 
-            });
-        }
+        });
+    }
 
 </script>

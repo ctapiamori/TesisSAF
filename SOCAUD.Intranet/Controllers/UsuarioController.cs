@@ -27,6 +27,22 @@ namespace SOCAUD.Intranet.Controllers
             return View();
         }
 
+        public JsonResult ListarUsuarios()
+        {
+            var listado = this._usuarioLogic.ListarUsuariosCompleto();
+
+
+            var data = listado.Select(c => new string[]{ 
+               c.CODUSU.ToString(),
+               c.DNIUSU,
+               c.NOMPERUSU,
+               c.APEPERUSU,
+               c.NOMUSU,
+               c.NOMCARGO
+            }).ToArray();
+            return Json(data);
+        }
+
 
         public ActionResult AgregarUsuario()
         {
@@ -34,12 +50,25 @@ namespace SOCAUD.Intranet.Controllers
             return View(model);
         }
 
-        public JsonResult AgregarUsuario(UsuarioModel model)
+        public JsonResult AgregarNuevoUsuario(UsuarioModel model)
         {
             try
             {
+
+                var listaUsuarios = this._usuarioLogic.ListarTodos().ToList();
+
+                var existeUsuario = listaUsuarios.Where(c => c.NOMUSU == model.NOMUSU.ToUpper()).Count();
+
+                var existeDNI = listaUsuarios.Where(c => c.DNIUSU == model.DNIUSU.ToUpper()).Count();
+
+                if (existeUsuario > 0)
+                    return Json(new MensajeRespuesta("El usuario que intenta registrar ya existe en la Base de Datos", false));
+
+                if (existeDNI > 0)
+                    return Json(new MensajeRespuesta("Ya existe un registro de usuario para el DNI ingresado", false));
+
                 var entity = new SAF_USUARIO();
-                entity.NOMUSU = model.NOMUSU;
+                entity.NOMUSU = model.NOMUSU.ToUpper();
                 entity.PASUSU = model.PASUSU;
                 entity.NOMPERUSU = model.NOMPERUSU;
                 entity.APEPERUSU = model.APEPERUSU;
@@ -47,11 +76,11 @@ namespace SOCAUD.Intranet.Controllers
                 entity.TIPCARUSU = model.TIPCARUSU;
                 entity.CODENT = model.CODENT;
                 var result = this._usuarioLogic.Registrar(entity);
-                return Json(new MensajeRespuesta("Se agrego un nuevo Usuario satisfactoriamente", true));
+                return Json(new MensajeRespuesta(Mensaje.MensajeOperacionRealizadaExito, true));
             }
             catch (Exception)
             {
-                return Json(new MensajeRespuesta("No se pudo agregar el Usuario.", false));
+                return Json(new MensajeRespuesta(Mensaje.MensajeErrorNoControlado, false));
             }
         }
 
@@ -70,7 +99,7 @@ namespace SOCAUD.Intranet.Controllers
             return View(model);
         }
 
-        public JsonResult EditarUsuario(UsuarioModel model)
+        public JsonResult EditarDatosUsuario(UsuarioModel model)
         {
             try
             {
@@ -80,11 +109,11 @@ namespace SOCAUD.Intranet.Controllers
                 usuario.CODENT = model.CODENT;
                 this._usuarioLogic.Actualizar(usuario);
 
-                return Json(new MensajeRespuesta("Se modifico el Usuario satisfactoriamente", true));
+                return Json(new MensajeRespuesta(Mensaje.MensajeOperacionRealizadaExito, true));
             }
             catch (Exception)
             {
-                return Json(new MensajeRespuesta("No se pudo modificar el Usuario.", false));
+                return Json(new MensajeRespuesta(Mensaje.MensajeErrorNoControlado, false));
             }
         }
 
@@ -93,11 +122,11 @@ namespace SOCAUD.Intranet.Controllers
             try
             {
                 this._usuarioLogic.Eliminar(id);
-                return Json(new MensajeRespuesta("Elimino el Usuario satisfactoriamente", true));
+                return Json(new MensajeRespuesta(Mensaje.MensajeOperacionRealizadaExito, true));
             }
             catch (Exception)
             {
-                return Json(new MensajeRespuesta("No pudo eliminar el Usuario", true));
+                return Json(new MensajeRespuesta(Mensaje.MensajeErrorNoControlado, false));
             }
         }
     }

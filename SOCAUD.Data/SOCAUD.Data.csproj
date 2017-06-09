@@ -96,6 +96,7 @@
     <Compile Include="Core\SafSolExperienciaData.cs" />
     <Compile Include="Core\SafSolicitudData.cs" />
     <Compile Include="Core\SafSubMenuData.cs" />
+    <Compile Include="Core\SafTipoParametricaData.cs" />
     <Compile Include="Core\SafTipoSolicitudData.cs" />
     <Compile Include="Core\SafUniversidadData.cs" />
     <Compile Include="Core\SafUsuarioData.cs" />
@@ -109,12 +110,15 @@
     <Compile Include="Core\VwSafCargosEnServicioAuditoriaData.cs" />
     <Compile Include="Core\VwSafCronogramaData.cs" />
     <Compile Include="Core\VwSafInvitacionData.cs" />
+    <Compile Include="Core\VwSafParametroData.cs" />
     <Compile Include="Core\VwSafPerfilMenuData.cs" />
     <Compile Include="Core\VwSafPropuestaEjecucionData.cs" />
     <Compile Include="Core\VwSafPublicacionBaseData.cs" />
     <Compile Include="Core\VwSafPublicacionData.cs" />
     <Compile Include="Core\VwSafSolicitudData.cs" />
     <Compile Include="Core\VwSafSubMenuData.cs" />
+    <Compile Include="Core\VwSafUsuarioData.cs" />
+    <Compile Include="Core\VwSafWorkFlowData.cs" />
     <Compile Include="Model\SAF_ARCHIVO.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
@@ -403,6 +407,9 @@
     <Compile Include="Model\VW_SAF_INVITACION.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\VW_SAF_PARAMETRICA.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\VW_SAF_PERFILMENU.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
@@ -422,6 +429,12 @@
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VW_SAF_SUBMENU.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\VW_SAF_USUARIOS.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\VW_SAF_WORKFLOW.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

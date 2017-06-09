@@ -36,7 +36,7 @@
     <script type="text/ecmascript">
         
         $(document).ready(function () {
-            listarPerfil();
+            listarUsuario();
             $("#btnAgregarNuevo").click(function () {
                 document.location.href = '@Url.Action("AgregarUsuario","Usuario")';
             });
@@ -58,9 +58,11 @@
 
                     }
                 },
+                { "sTitle": "DNI" },
                 { "sTitle": "Nombre" },
-                { "sTitle": "Descripcion" },
-                { "sTitle": "Tipo" },
+                { "sTitle": "Apellidos" },
+                { "sTitle": "Usuario" },
+                { "sTitle": "Cargo" },
                 {
                     "bSortable": false,
                     "sClass": "center",

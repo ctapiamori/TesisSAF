@@ -41,8 +41,8 @@ namespace SOCAUD.Intranet.Controllers
                 }
                 else
                 {
-                    Session["sessionUsuario"] = usuario;
-                    Session["sessionUsuarioNombreCompleto"] = string.Format("{0} {1}", datosUsuario.NOMPERUSU, datosUsuario.APEPERUSU);
+                    Session["sessionUsuario"] = usuario.ToUpper();
+                    Session["sessionUsuarioNombreCompleto"] = string.Format("{0} {1}", datosUsuario.NOMPERUSU, datosUsuario.APEPERUSU).ToUpper();
                     Session["tipoUsuario"] = datosUsuario.TIPCARUSU.GetValueOrDefault();
                     Session["idUsuario"] = datosUsuario.CODUSU;
                     Session["codigoEntidadDelUsuario"] = (datosUsuario.CODENT.HasValue) ? datosUsuario.CODENT.Value : 0;
@@ -80,10 +80,10 @@ namespace SOCAUD.Intranet.Controllers
                                       Correcto = true, 
                                       TipoUsuario = "E",
                                       CodigoUsuario = codigoUsuario,
-                                      NombreUsuario = NombreUsuario,
-                                      UsuarioSOAAuditor = usuarioSOAAuditor,
+                                      NombreUsuario = NombreUsuario.ToUpper(),
+                                      UsuarioSOAAuditor = usuarioSOAAuditor.ToUpper(),
                                       TipoExterno = tipoExterno,
-                                      Usuario = usuario
+                                      Usuario = usuario.ToUpper()
 
                     });
                 }
