@@ -58,7 +58,7 @@
                         </div>
                        
                          <div class="modal-footer">
-                            <button type="button" class="btn btn-success" onclick="grabarCargoEquipo();"><i class="fa fa-fw fa-save"></i>Grabar</button>
+                            <button type="button" class="btn btn-primary" onclick="grabarCargoEquipo();"><i class="fa fa-fw fa-save"></i>Grabar</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
                         </div>
                     </form>
@@ -78,20 +78,21 @@
 
     $(document).ready(function () {
 
-
+        $.validator.unobtrusive.parse($('#frmCargoEquipo'));
     });
 
 
 
     function limpiarFormularioRegistrarEquipoServicio() {
-        $("#IdCargoSeleted").val(0);
-        $("#CantidadIntegrantes").val("0");
-        $("#MinimoHoras").val("0");
-        $("#MinimoHorasCapacitacion").val("0");
-        $("#MinimoHorasExperiencia").val("0");
+        $("#IdCargoSeleted").val(null);
+        $("#CantidadIntegrantes").val("");
+        $("#MinimoHoras").val("");
+        $("#MinimoHorasCapacitacion").val("");
+        $("#MinimoHorasExperiencia").val("");
     }
 
     function grabarCargoEquipo() {
+        
         if (!$("#frmCargoEquipo").isValid()) { return; }
 
         bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {

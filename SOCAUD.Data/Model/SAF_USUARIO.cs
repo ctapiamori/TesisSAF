@@ -27,5 +27,7 @@ namespace SOCAUD.Data.Model
         public string USUMOD { get; set; }
         public string ESTREG { get; set; }
         public Nullable<int> CODENT { get; set; }
+        public Nullable<int> CODPER { get; set; }
+        public string CORREOUSER { get; set; }
     }
 }

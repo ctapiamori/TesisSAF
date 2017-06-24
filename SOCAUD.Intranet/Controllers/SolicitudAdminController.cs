@@ -75,7 +75,7 @@ namespace SOCAUD.Intranet.Controllers
                 c.TIPDOC,
                 c.ESTWORFLO.GetValueOrDefault().ToString(),
                 c.CODDOC.GetValueOrDefault().ToString(),
-                c.FLGNOTREP == "0" && c.TIPCARUSU.GetValueOrDefault().Equals(int.Parse(Session["tipoUsuario"].ToString())) ? "1" : "0",
+                (c.FLGNOTREP == "0" && c.TIPCARUSU.GetValueOrDefault().Equals(int.Parse(Session["tipoUsuario"].ToString()))) ? "1" : "0",
                 
             }).ToArray();
 

@@ -189,6 +189,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConsultaController.cs" />
+    <Compile Include="Controllers\ConsultasGeneralController.cs" />
+    <Compile Include="Controllers\ContrasenaController.cs" />
     <Compile Include="Controllers\CronogramaController.cs" />
     <Compile Include="Controllers\EntidadController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Models\Archivo.cs" />
     <Compile Include="Models\AuditorModel.cs" />
     <Compile Include="Models\BaseModels.cs" />
+    <Compile Include="Models\ContrasenaModel.cs" />
     <Compile Include="Models\CronogramaModels.cs" />
     <Compile Include="Models\EntidadModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -250,6 +253,7 @@
     <Content Include="Content\datepicker3.css" />
     <Content Include="Content\daterangepicker-bs3.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\img-logo-home_.png" />
     <Content Include="Content\Images\LogoCGRFull.jpg" />
     <Content Include="Content\Images\LogoCGRMini.jpg" />
     <Content Include="Content\Images\sort_asc.png" />
@@ -547,6 +551,9 @@
     <Content Include="Views\Parametro\AgregarParametro.cshtml" />
     <Content Include="Views\Parametro\BandejaParametros.cshtml" />
     <Content Include="Views\Parametro\EditarParametro.cshtml" />
+    <Content Include="Views\ConsultasGeneral\ConsultaConcurso.cshtml" />
+    <Content Include="Views\Acceso\RecuperaPassword.cshtml" />
+    <Content Include="Views\Contrasena\CambiarContrasena.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

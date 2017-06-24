@@ -14,5 +14,7 @@ namespace SOCAUD.Intranet.Models
         public string Usuario { get; set; }
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
+        [Display(Name = "Correo")]
+        public string Correo { get; set; }
     }
 }

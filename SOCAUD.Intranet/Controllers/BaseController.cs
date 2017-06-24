@@ -61,19 +61,25 @@ namespace SOCAUD.Intranet.Controllers
             this._safServicioAuditoriaCargoLogic = new SafServicioAuditoriaCargoLogic();
         }
 
+        public JsonResult infoEntidadCronograma(int idCronoEntidad) {
+            var infoEntidadCronograma = this._cronoEntidadLogic.BuscarPorId(idCronoEntidad);
+            return Json(new { 
+                FechaIni = infoEntidadCronograma.FECINICROENT.Value.ToString("dd/MM/yyyy"),
+                FechaFin = infoEntidadCronograma.FECFINCROENT.Value.ToString("dd/MM/yyyy"),
+            });
+        }
+
         // GET: Base
         public ActionResult Index()
         {
-            var cronogramas = this._cronogramaLogic.ListarTodos().Where(c=>c.ESTCRO == 2); // Aprobada
-            
+            var cronogramas = this._cronogramaLogic.ListarTodos().Where(c=>c.ESTCRO == Estado.Cronograma.Aprobado.GetHashCode()); // Aprobada
             ViewBag.Cronogramas = cronogramas.Select(c => new SelectListItem() { Value = c.CODCRO.ToString(), Text = c.ANIOCRO.GetValueOrDefault().ToString() }).ToList();
             return View();
         }
 
         public ActionResult Registrar()
         {
-            var cronogramas = this._cronogramaLogic.ListarTodos();
-
+            var cronogramas = this._cronogramaLogic.ListarTodos().Where(c => c.ESTCRO == Estado.Cronograma.Aprobado.GetHashCode()); // Aprobada
             var model = new BaseModel();
             model.FirmaPcaob = "N";
             model.FirmaInternacional = "N";
@@ -86,6 +92,9 @@ namespace SOCAUD.Intranet.Controllers
         public ActionResult Editar(int id)
         {
             var _base = this._baseLogic.BuscarPorId(id);
+
+
+            var _croEntidad = this._cronoEntidadLogic.BuscarPorId(_base.CODCROENT.Value);
 
             if (!_base.ESTBAS.GetValueOrDefault().Equals(Estado.Bases.Elaboracion.GetHashCode()))
                 return RedirectToAction("View", new { id = id });
@@ -101,7 +110,10 @@ namespace SOCAUD.Intranet.Controllers
                 FirmaInternacional = _base.FIRINTBAS,
                 Cronograma = _base.CODCRO.GetValueOrDefault(),
                 CronoEntidad = _base.CODCROENT.GetValueOrDefault(),
-                EstadoBase = _base.ESTBAS.GetValueOrDefault()
+                EstadoBase = _base.ESTBAS.GetValueOrDefault(),
+                TotalIgv = _base.TOTIGVBAS,
+                FecIniAuditoriaCronograma = _croEntidad.FECINICROENT.Value.ToString("dd/MM/yyyy"),
+                FecFinAuditoriaCronograma = _croEntidad.FECFINCROENT.Value.ToString("dd/MM/yyyy"),
             };
 
             model.EstadoBaseDescripcion = this._safGeneralLogic.GetParametro(_base.ESTBAS.GetValueOrDefault()).NOMPAR;
@@ -120,6 +132,13 @@ namespace SOCAUD.Intranet.Controllers
             var model = new ServicioAuditoriaModel();
             var cargos = this._safGeneralLogic.ListarCargos();
             var _base = this._baseLogic.BuscarPorId(idBase);
+
+            var _croEntidad = this._cronoEntidadLogic.BuscarPorId(_base.CODCROENT.Value);
+
+
+            model.FechaInicioSegunCronograma = _croEntidad.FECINICROENT.Value.ToString("dd/MM/yyyy");
+            model.FechaFinSegunCronograma = _croEntidad.FECFINCROENT.Value.ToString("dd/MM/yyyy");
+
             var entidad = _base.SAF_CRONOENTIDAD;
             var anioInicial = entidad.FECINICROENT.GetValueOrDefault().Year;
             var anioTermino = entidad.FECFINCROENT.GetValueOrDefault().Year;
@@ -404,7 +423,7 @@ namespace SOCAUD.Intranet.Controllers
                 entidad.TOTVIABAS = model.TotalViaticos;
                 entidad.FIRPCAOBBAS = (model.FirmaPcaob == null)? "N" : model.FirmaPcaob;
                 entidad.FIRINTBAS = (model.FirmaInternacional == null)? "N" : model.FirmaInternacional;
-               
+                entidad.TOTIGVBAS = model.TotalIgv;
                 if (model.Codigo.Equals(0))
                 {
                     var numeroBase = string.Empty;

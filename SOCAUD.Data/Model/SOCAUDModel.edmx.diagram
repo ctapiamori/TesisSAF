@@ -127,10 +127,10 @@
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PERFILMENU" Width="1.5" PointX="22.375" PointY="7.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_CRONOGRAMA" Width="1.5" PointX="23.375" PointY="0.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACION_BASE" Width="1.5" PointX="11.375" PointY="16.75" />
-        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_USUARIO" Width="1.5" PointX="24.375" PointY="5.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_USUARIOS" Width="1.5" PointX="23.375" PointY="10.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PARAMETRICA" Width="1.5" PointX="20.375" PointY="10.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_WORKFLOW" Width="1.5" PointX="12.375" PointY="24.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_USUARIO" Width="1.5" PointX="24.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

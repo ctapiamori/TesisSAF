@@ -27,7 +27,7 @@ namespace SOCAUD.Business.Core
 
 
         IEnumerable<VW_SAF_WORKFLOW> ListarWorkFlowCompleto();
-
+        Tuple<int, string> MostrarWorkFlow(int numeroDocumento, string tipoDocumento);
     }
 
     public class SafWorkFlowLogic : ISafWorkFlowLogic
@@ -124,12 +124,20 @@ namespace SOCAUD.Business.Core
                         }
                     }
 
+
+                    if (IdFlujo != null && IdFlujo != 0) {
+                        var flujoAnterior = this.BuscarPorId(IdFlujo);
+                        flujoAnterior.FLGNOTREP = "1";
+                        this.Actualizar(flujoAnterior);
+                    }
+
+
                     entidad.FLGNOTREP = flagFlujo;
 
                     var result = (SAF_WORKFLOW)this.Registrar(entidad);
 
                     var flujo = this.BuscarPorId(result.CODWORFLO);
-                    flujo.FLGNOTREP = "1";
+                    //flujo.FLGNOTREP = "1";
                     this.Actualizar(flujo);
                     tran.Complete();
                     return result;
@@ -260,6 +268,42 @@ namespace SOCAUD.Business.Core
         public IEnumerable<VW_SAF_WORKFLOW> ListarWorkFlowCompleto()
         {
             return this._vwSafWorkFlowData.GetAll();
+        }
+
+        public Tuple<int, string> MostrarWorkFlow(int numeroDocumento, string tipoDocumento) {
+            int codigoWorkFlow = 0;
+            string FlgMostrarEnWorkFlow = string.Empty;
+            var listaFlujoAprobacion = ListarWorkFlowCompleto();
+            listaFlujoAprobacion = listaFlujoAprobacion.Where(c => c.CODTIPDOC == tipoDocumento && c.CODDOC == numeroDocumento).ToList();
+
+            if (listaFlujoAprobacion.Count() >= 1) // SI ES EL PRIMER PASO
+            {
+                var codigoTipoCargoUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["tipoUsuario"]);
+                var workFlowDelTipoDeUsuario = listaFlujoAprobacion.LastOrDefault();
+
+                if (workFlowDelTipoDeUsuario.TIPCARUSU == codigoTipoCargoUsuario) // SI ES PARA ESTE TIPO DE USUARIO
+                {
+                    if (workFlowDelTipoDeUsuario.CODESTDOC == Estado.Cronograma.Aprobado.GetHashCode()) // SI AUN ESTA EN PROCESO Y NO APROBADO
+                    {
+                        FlgMostrarEnWorkFlow = "N";
+                    }
+                    else
+                    {
+                        codigoWorkFlow = workFlowDelTipoDeUsuario.CODWORFLO;
+                        FlgMostrarEnWorkFlow = "S";
+                    }
+
+                }
+                else
+                    FlgMostrarEnWorkFlow = "N";
+            }
+            else
+            {
+                FlgMostrarEnWorkFlow = "S";
+            }
+
+            return Tuple.Create<int, string>(codigoWorkFlow, FlgMostrarEnWorkFlow);
+
         }
     }
 }

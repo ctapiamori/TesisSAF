@@ -16,6 +16,43 @@
         <form id="frmBases">
             @Html.HiddenFor(c => c.Codigo)
             <div class="form-group">
+
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.Cronograma)
+                            @Html.DropDownListFor(c => c.Cronograma, Model.Cronogramas, "Seleccionar", new { @class = "form-control", @readonly = "true" })
+                            @Html.ValidationMessageFor(c => c.Cronograma)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(c => c.CronoEntidad)
+                            @Html.DropDownListFor(c => c.CronoEntidad, Model.Entidades, "Seleccionar", new { @class = "form-control", @readonly = "true" })
+                            @Html.ValidationMessageFor(c => c.CronoEntidad)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.FecIniAuditoriaCronograma)
+                            @Html.TextBoxFor(c => c.FecIniAuditoriaCronograma, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.FecFinAuditoriaCronograma)
+                            @Html.TextBoxFor(c => c.FecFinAuditoriaCronograma, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-6">
@@ -33,22 +70,8 @@
                             @Html.ValidationMessageFor(c => c.FechaMaxPublicacion)
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            @Html.LabelFor(c => c.Cronograma)
-                            @Html.DropDownListFor(c => c.Cronograma, Model.Cronogramas, "(Seleccionar Cronograma)", new { @class = "form-control", @disabled ="disabled" })
-                            @Html.ValidationMessageFor(c => c.Cronograma)
-                        </div>
-                        <div class="col-md-6">
-                            @Html.LabelFor(c => c.CronoEntidad)
-                            @Html.DropDownListFor(c => c.CronoEntidad, Model.Entidades, "(Seleccionar Entidad)", new { @class = "form-control", @disabled = "disabled" })
-                            @Html.ValidationMessageFor(c => c.CronoEntidad)
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+                 </div>
+                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(c => c.TotalRetribucion)
@@ -67,12 +90,22 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
+                            @Html.LabelFor(c => c.TotalIgv)
+                            @Html.TextBoxFor(c => c.TotalIgv, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.TotalIgv)
+                        </div>
+                    </div>
+ 
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
                             @Html.LabelFor(c => c.FirmaPcaob)
                             <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary @Html.Raw(Model.FirmaPcaob == "S" ? "active" : "")">
+                                <label class="btn btn-default @Html.Raw(Model.FirmaPcaob == "S" ? "active" : "")">
                                     <input type="radio" name="FirmaPcaob" id="FirmaPcaob1" value="S" autocomplete="off" @Html.Raw(Model.FirmaPcaob == "S" ? "checked" : "")> SI
                                 </label>
-                                <label class="btn btn-danger @Html.Raw(Model.FirmaPcaob == "N" ? "active" : "")">
+                                <label class="btn btn-default @Html.Raw(Model.FirmaPcaob == "N" ? "active" : "")">
                                     <input type="radio" name="FirmaPcaob" id="FirmaPcaob2" value="N" autocomplete="off" @Html.Raw(Model.FirmaPcaob == "N" ? "checked" : "")> NO
                                 </label>
                             </div>
@@ -82,10 +115,10 @@
                         <div class="form-group">
                             @Html.LabelFor(c => c.FirmaInternacional)
                             <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary @Html.Raw(Model.FirmaInternacional == "S" ? "active" : "")">
+                                <label class="btn btn-default @Html.Raw(Model.FirmaInternacional == "S" ? "active" : "")">
                                     <input type="radio" name="FirmaInternacional" id="FirmaInternacional1" value="S" autocomplete="off" @Html.Raw(Model.FirmaInternacional == "S" ? "checked" : "")> SI
                                 </label>
-                                <label class="btn btn-danger @Html.Raw(Model.FirmaInternacional == "N" ? "active" : "")">
+                                <label class="btn btn-default @Html.Raw(Model.FirmaInternacional == "N" ? "active" : "")">
                                     <input type="radio" name="FirmaInternacional" id="FirmaInternacional2" value="N" autocomplete="off" @Html.Raw(Model.FirmaInternacional == "N" ? "checked" : "")> NO
                                 </label>
                             </div>
@@ -95,8 +128,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <button type="button" id="btnGrabar" class="btn btn-success" onclick="grabarCronograma();"><i class="fa fa-fw fa-save"></i>Grabar</button>
-                            <button type="button" id="btnRegresar" class="btn btn-default" onclick="regresar();"><i class="fa fa-fw fa-reply"></i>Regresar</button>
+                            <button type="button" id="btnGrabar" class="btn btn-primary" onclick="grabarCronograma();"><i class="fa fa-fw fa-save"></i>Grabar Información de la Base</button>
+                            <button type="button" id="btnRegresar" onclick="regresar();" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
                         </div>
                     </div>
                 </div>
@@ -116,12 +149,23 @@
                 <div class="col-md-6">
                     @Html.LabelFor(c => c.EstadoBaseDescripcion) : @Html.Raw(Model.EstadoBaseDescripcion)
                 </div>
-                <div class="col-md-6">
-                    <button type="button" id="btnAuditoria" class="btn btn-info" onclick="agregarServicio();"><i class="fa fa-fw fa-plus"></i>Agregar Auditoria</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <table id="tabServicios" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                </div>   
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <button type="button" id="btnAuditoria" class="btn btn-primary" onclick="agregarServicio();"><i class="fa fa-fw fa-plus"></i>Agregar Auditoria</button>
                 </div>
             </div>
         </div>
-        <table id="tabServicios" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+        
     </div>
 </div>
 
@@ -136,12 +180,24 @@
                 <div class="col-md-6">
                     @Html.LabelFor(c => c.EstadoBaseDescripcion) : @Html.Raw(Model.EstadoBaseDescripcion)
                 </div>
-                <div class="col-md-6">
-                    <button type="button" id="btnSolicitar" class="btn btn-info" onclick="solicitarAprobacion();"><i class="fa fa-fw fa-share"></i>Enviar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <table id="tabFlujo" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>            
                 </div>
             </div>
         </div>
-        <table id="tabFlujo" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <button type="button" id="btnSolicitar" class="btn btn-primary" onclick="solicitarAprobacion();"><i class="fa fa-fw fa-share"></i>Enviar WorkFlow Aprobación</button>
+                    <button type="button" id="btnRegresar2" onclick="regresar();" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 

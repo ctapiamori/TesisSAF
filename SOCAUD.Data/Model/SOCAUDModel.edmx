@@ -841,6 +841,8 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
           <Property Name="CODENT" Type="int" />
+          <Property Name="CODPER" Type="int" />
+          <Property Name="CORREOUSER" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="SAF_WORKFLOW">
           <Key>
@@ -4247,10 +4249,10 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <FunctionImport Name="USP_CORRELATIVO_SOLICITUD" ReturnType="Collection(String)" />
           <FunctionImport Name="SP_SAF_CORRELATIVOSOLICITUD" ReturnType="Collection(String)" />
           <EntitySet Name="VW_SAF_PUBLICACION_BASE" EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACION_BASE" />
-          <EntitySet Name="SAF_USUARIO" EntityType="SI_SOCAUDModel.SAF_USUARIO" />
           <EntitySet Name="VW_SAF_USUARIOS" EntityType="SI_SOCAUDModel.VW_SAF_USUARIOS" />
           <EntitySet Name="VW_SAF_PARAMETRICA" EntityType="SI_SOCAUDModel.VW_SAF_PARAMETRICA" />
           <EntitySet Name="VW_SAF_WORKFLOW" EntityType="SI_SOCAUDModel.VW_SAF_WORKFLOW" />
+          <EntitySet Name="SAF_USUARIO" EntityType="SI_SOCAUDModel.SAF_USUARIO" />
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
@@ -5016,24 +5018,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Name="CODBAS" Type="Int32" Nullable="false" />
           <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="SAF_USUARIO">
-          <Key>
-            <PropertyRef Name="CODUSU" />
-          </Key>
-          <Property Name="CODUSU" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PASUSU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="NOMPERUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="APEPERUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DNIUSU" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="TIPCARUSU" Type="Int32" />
-          <Property Name="FECREG" Type="DateTime" Precision="3" />
-          <Property Name="FECMOD" Type="DateTime" Precision="3" />
-          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="CODENT" Type="Int32" />
-        </EntityType>
         <EntityType Name="VW_SAF_USUARIOS">
           <Key>
             <PropertyRef Name="CODUSU" />
@@ -5079,6 +5063,26 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Name="NOMBRECOMPUSU" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
           <Property Name="CODTIPCARUSU" Type="Int32" />
           <Property Name="DESTIPCARUSU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SAF_USUARIO">
+          <Key>
+            <PropertyRef Name="CODUSU" />
+          </Key>
+          <Property Name="CODUSU" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASUSU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NOMPERUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APEPERUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DNIUSU" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="TIPCARUSU" Type="Int32" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODENT" Type="Int32" />
+          <Property Name="CODPER" Type="Int32" />
+          <Property Name="CORREOUSER" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -6495,25 +6499,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SAF_USUARIO">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_USUARIO">
-              <MappingFragment StoreEntitySet="SAF_USUARIO">
-                <ScalarProperty Name="CODENT" ColumnName="CODENT" />
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
-                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
-                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
-                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
-                <ScalarProperty Name="TIPCARUSU" ColumnName="TIPCARUSU" />
-                <ScalarProperty Name="DNIUSU" ColumnName="DNIUSU" />
-                <ScalarProperty Name="APEPERUSU" ColumnName="APEPERUSU" />
-                <ScalarProperty Name="NOMPERUSU" ColumnName="NOMPERUSU" />
-                <ScalarProperty Name="PASUSU" ColumnName="PASUSU" />
-                <ScalarProperty Name="NOMUSU" ColumnName="NOMUSU" />
-                <ScalarProperty Name="CODUSU" ColumnName="CODUSU" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VW_SAF_USUARIOS">
             <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_USUARIOS">
               <MappingFragment StoreEntitySet="VW_SAF_USUARIOS">
@@ -6560,6 +6545,27 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
                 <ScalarProperty Name="CODDOC" ColumnName="CODDOC" />
                 <ScalarProperty Name="CODTIPDOC" ColumnName="CODTIPDOC" />
                 <ScalarProperty Name="CODWORFLO" ColumnName="CODWORFLO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_USUARIO">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_USUARIO">
+              <MappingFragment StoreEntitySet="SAF_USUARIO">
+                <ScalarProperty Name="CORREOUSER" ColumnName="CORREOUSER" />
+                <ScalarProperty Name="CODPER" ColumnName="CODPER" />
+                <ScalarProperty Name="CODENT" ColumnName="CODENT" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="TIPCARUSU" ColumnName="TIPCARUSU" />
+                <ScalarProperty Name="DNIUSU" ColumnName="DNIUSU" />
+                <ScalarProperty Name="APEPERUSU" ColumnName="APEPERUSU" />
+                <ScalarProperty Name="NOMPERUSU" ColumnName="NOMPERUSU" />
+                <ScalarProperty Name="PASUSU" ColumnName="PASUSU" />
+                <ScalarProperty Name="NOMUSU" ColumnName="NOMUSU" />
+                <ScalarProperty Name="CODUSU" ColumnName="CODUSU" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

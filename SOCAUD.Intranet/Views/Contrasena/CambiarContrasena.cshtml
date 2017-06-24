@@ -1,0 +1,94 @@
+﻿@using SOCAUD.Intranet.Models;
+
+@model ContrasenaModel
+ 
+@{
+    ViewBag.PageTitle = "Seguridad";
+    ViewBag.PageDescription = "Seguridad";
+    ViewBag.PageDescription = "Cambiar contraseña";
+}
+ 
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Cambiar Contraseña</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.Usuario, new { @class = "form-control"  })
+                        @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control"  })
+                        @Html.ValidationMessageFor(c => c.Usuario)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">}
+                        @Html.LabelFor(m => m.Contrasena, new { @class = "form-control"  })
+                        @Html.PasswordFor(m => m.Contrasena, new { @class = "form-control"  })
+                        @Html.ValidationMessageFor(c => c.Contrasena)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.RepitaConstrasena, new { @class = "form-control"  })
+                        @Html.PasswordFor(m => m.RepitaConstrasena, new { @class = "form-control"  })
+                        @Html.ValidationMessageFor(c => c.RepitaConstrasena)
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                        <button id="btnCambiarPassword" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Grabar Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section scripts {
+
+    <script type="text/ecmascript">
+        
+        $(document).ready(function () {
+         
+            $("#btnCambiarPassword").click(function () {
+                cambiarContrasenia();
+            });
+        });
+
+   
+
+
+        function cambiarContrasenia() {
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("GrabarCambiosContrasenia", "Contrasena")',
+                        type: 'POST',
+                        async: false,
+                        data: {
+                            usuario: $("#Usuario").val(),
+                            contrasenia: $("#Contrasena").val(),
+                            repitaContrasenia: $("#RepitaConstrasena").val()
+                        },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                        }
+                    });
+                }
+            
+            });
+
+  
+        }
+
+       
+     
+
+    </script>
+}

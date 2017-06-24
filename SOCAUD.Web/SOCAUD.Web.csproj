@@ -201,6 +201,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BandejaInvitacionesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ContrasenaController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvitacionAuditorController.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Models\AccesoModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuditorModel.cs" />
+    <Compile Include="Models\ContrasenaModel.cs" />
     <Compile Include="Models\EquipoAuditoriaModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvitacionModel.cs" />
@@ -855,6 +857,7 @@
     <Content Include="Views\Propuesta\VerPropuesta.cshtml" />
     <Content Include="Views\Propuesta\_AsignarFechaEquipo.cshtml" />
     <Content Include="Views\SolReg\Registro.cshtml" />
+    <Content Include="Views\Contrasena\CambiarContrasena.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

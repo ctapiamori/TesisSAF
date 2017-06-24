@@ -10,12 +10,47 @@
 @Html.HiddenFor(c => c.Codigo)
 <div class="box box-primary color-palette-box">
     <div class="box-header with-border">
-        <h3 class="box-title">Base</h3>
+        <h3 class="box-title">Información General de la Base</h3>
     </div>
     <div class="box-body">
         <form id="frmBases">
             @Html.HiddenFor(c => c.Codigo)
             <div class="form-group">
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.Cronograma)
+                            @Html.DropDownListFor(c => c.Cronograma, Model.Cronogramas, "Seleccionar", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.Cronograma)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(c => c.CronoEntidad)
+                            @Html.DropDownListFor(c => c.CronoEntidad, Model.Entidades, "Seleccionar", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.CronoEntidad)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.FecIniAuditoriaCronograma)
+                            @Html.TextBoxFor(c => c.FecIniAuditoriaCronograma, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.FecFinAuditoriaCronograma)
+                            @Html.TextBoxFor(c => c.FecFinAuditoriaCronograma, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-6">
@@ -34,20 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            @Html.LabelFor(c => c.Cronograma)
-                            @Html.DropDownListFor(c => c.Cronograma, Model.Cronogramas, "(Seleccionar Cronograma)", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(c => c.Cronograma)
-                        </div>
-                        <div class="col-md-6">
-                            @Html.LabelFor(c => c.CronoEntidad)
-                            @Html.DropDownListFor(c => c.CronoEntidad, Model.Entidades, "(Seleccionar Entidad)", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(c => c.CronoEntidad)
-                        </div>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -67,12 +89,21 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            Requiere Firma PCAOB
+                            @Html.LabelFor(c => c.TotalIgv)
+                            @Html.TextBoxFor(c => c.TotalIgv, new { @class = "form-control", @readonly="true" })
+                            @Html.ValidationMessageFor(c => c.TotalIgv)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Requiere Firma PCAOB</label>
                             <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary">
+                                <label class="btn btn-default">
                                     <input type="radio" name="FirmaPcaob" id="FirmaPcaob1" value="S" autocomplete="off"> SI
                                 </label>
-                                <label class="btn btn-danger active">
+                                <label class="btn btn-default active">
                                     <input type="radio" name="FirmaPcaob" id="FirmaPcaob2" value="N" autocomplete="off" checked> NO
                                 </label>
                             </div>
@@ -80,12 +111,12 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            Requiere Firma Internacional
+                            <label>Requiere Firma Internacional</label>
                             <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary">
+                                <label class="btn btn-default">
                                     <input type="radio" name="FirmaInternacional" id="FirmaInternacional1" value="S" autocomplete="off"> SI
                                 </label>
-                                <label class="btn btn-danger active">
+                                <label class="btn btn-default active">
                                     <input type="radio" name="FirmaInternacional" id="FirmaInternacional2" value="N" autocomplete="off" checked> NO
                                 </label>
                             </div>
@@ -95,8 +126,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <button type="button" id="btnGrabar" class="btn btn-success" onclick="grabarCronograma();"><i class="fa fa-fw fa-save"></i>Grabar</button>
-                            <button type="button" id="btnRegresar" class="btn btn-default" onclick="cancelar();"><i class="fa fa-fw fa-reply"></i>Regresar</button>
+                            <button type="button" id="btnGrabar" class="btn btn-primary" onclick="grabarCronograma();"><i class="fa fa-fw fa-save"></i>Grabar Información</button>
+                            <button type="button" id="btnRegresar" onclick="cancelar();" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                            
                         </div>
                     </div>
                 </div>
@@ -111,6 +143,13 @@
 
     <script type="text/javascript" language="javascript">
     $(document).ready(function () {
+        
+        $("#TotalViaticos").blur(function () {
+            var totalRetribucion = $("#TotalRetribucion").val();
+            var totalViaticos = $("#TotalViaticos").val();
+            var totalIgv = (( parseFloat(totalRetribucion) + parseFloat(totalViaticos)) * 0.08).toFixed(2);
+            $("#TotalIgv").val(totalIgv);
+        });
 
         $('#FechaMaxPublicacion').datepicker({
             format: "dd/mm/yyyy",
@@ -123,12 +162,38 @@
             var cronograma = $(this).val();
             Entidades(cronograma);
         });
+
+        $("#CronoEntidad").on("change", function () {
+            var croEntidad = $(this).val();
+            InforAuditoriaCronograma(croEntidad);
+        });
         
         $("#btnRegresar").click(function () {
             document.location.href = '@Url.Action("Index","Base")';
         });
 
     });
+
+
+    function InforAuditoriaCronograma(croEntidad) {
+        
+        if (croEntidad == null || croEntidad == undefined || croEntidad == "") {
+            $("#FecIniAuditoriaCronograma").val("");
+            $("#FecFinAuditoriaCronograma").val("");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("infoEntidadCronograma", "Base")',
+            data: { "idCronoEntidad": croEntidad },
+            dataType: "json",
+            success: function (result) {
+                $("#FecIniAuditoriaCronograma").val(result.FechaIni);
+                $("#FecFinAuditoriaCronograma").val(result.FechaFin);
+            }
+        });
+    }
 
     function Entidades(cronograma)
     {

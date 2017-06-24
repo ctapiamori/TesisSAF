@@ -29,6 +29,43 @@ namespace SOCAUD.Intranet.Controllers
             return View();
         }
 
+
+        public ActionResult RecuperaPassword()
+        {
+            return View();
+        }
+
+        public JsonResult RecuperarContrasenaMail(string tipoUsuario, int tipoExterno, string usuario, string correo) {
+            string CorreoRegistrado = "";
+            if (tipoUsuario == TiposLogin.TipoUsuarioInterno)
+            {
+                CorreoRegistrado = this._usuarioLogic.BuscarPorUsuario(usuario).CORREOUSER;
+            }
+            else {
+                if (tipoExterno == (int)Tipo.TipoUsuarioExtranet.Auditor)
+                {
+                    CorreoRegistrado = this._auditorLogic.GetAuditorByUsuario(usuario).CORAUD;
+                }
+                else {
+                    CorreoRegistrado = this._soaLogic.InformacionPorUsuario(usuario).CORREPLEGSOA;
+                }
+            }
+
+            if (string.IsNullOrEmpty(CorreoRegistrado))
+            {
+                return Json(new { Mensaje = "El usuario no tiene un correo registrado, debe comunicarse con el Administrador del Sistema", Correcto = false });
+            }
+            else if (CorreoRegistrado.Trim().ToUpper() != correo.ToUpper())
+            {
+                return Json(new { Mensaje = "El correo que ingreso no coincide con el registrado", Correcto = false });
+            }
+            else
+            {
+                return Json(new { Mensaje = "Se le enviara un correo con su nueva contraseña", Correcto = true });
+            }
+        }
+
+
         public JsonResult AccederSistema(string tipoUsuario, int tipoExterno, string usuario, string contrasenia)
         {
             if (tipoUsuario == TiposLogin.TipoUsuarioInterno)
@@ -90,8 +127,6 @@ namespace SOCAUD.Intranet.Controllers
                 else {
                     return Json(new { Mensaje = "Usuario y/o Contraseñia incorrectos", Correcto = false, TipoUsuario = "E" });
                 }
-
-
             }
         }
     }

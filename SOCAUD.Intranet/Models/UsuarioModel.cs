@@ -48,6 +48,13 @@ namespace SOCAUD.Intranet.Models
         [Display(Name = "Entidad")]
         public Nullable<int> CODENT { get; set; }
 
+        [Display(Name = "Perfil")]
+        public int CODPER { get; set; }
+
+         [Display(Name = "Correo")]
+        public string CORREOUSER { get; set; }
+
+
         public IEnumerable<SelectListItem> cboListaCargo { get; set; }
         public IEnumerable<SelectListItem> cboListaEntidad { get; set; }
 
