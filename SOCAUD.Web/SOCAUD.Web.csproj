@@ -248,6 +248,7 @@
     <Content Include="Content\datepicker3.css" />
     <Content Include="Content\daterangepicker-bs3.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\img-logo-home_.png" />
     <Content Include="Content\Images\sort_asc_disabled.png" />
     <Content Include="Content\Images\sort_both.png" />
     <Content Include="Content\Images\sort_desc.png" />

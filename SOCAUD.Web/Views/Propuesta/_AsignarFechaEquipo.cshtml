@@ -14,8 +14,8 @@
 
 
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#tabsFechasInvitadas" aria-controls="home" role="tab" data-toggle="tab">Fechas invitadas</a></li>
-                <li role="presentation"><a href="#tabsFechasAsignadas" aria-controls="profile" role="tab" data-toggle="tab">Fechas Asignadas</a></li>
+                <li role="presentation" class="active"><a href="#tabsFechasInvitadas" onclick="mostrarBotonAsignar();" aria-controls="home" role="tab" data-toggle="tab">Fechas invitadas</a></li>
+                <li role="presentation"><a href="#tabsFechasAsignadas" onclick="mostrarBotonQuitar();" aria-controls="profile" role="tab" data-toggle="tab">Fechas Asignadas</a></li>
             </ul>
 
             <div class="tab-content">
@@ -33,14 +33,6 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <table id="tabFechasInvitadas" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button class="btn btn-primary" type="button" id="btnAsignarFechas"><i class="fa fa-check"></i>&nbsp;Asignar fechas</button>
                                             </div>
                                         </div>
                                     </div>
@@ -70,13 +62,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button class="btn btn-danger" type="button" id="btnEliminarFechas"><i class="fa fa-trash"></i>&nbsp;Eliminar Fechas</button>
-                                            </div>
-                                        </div>
-                                    </div>
+
 
                                 </div>
                             </div>
@@ -88,6 +74,16 @@
             </div>
 
 
+        </div>
+        <div class="modal-footer">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" type="button" id="btnAsignarFechas"><i class="fa fa-check"></i>&nbsp;Asignar fechas</button>
+                        <button class="btn btn-danger" type="button" id="btnEliminarFechas"><i class="fa fa-trash"></i>&nbsp;Eliminar Fechas</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -108,8 +104,18 @@
         listarFechasAsignadas();
         $("#btnAsignarFechas").click(asignarFechas);
         $("#btnEliminarFechas").click(eliminarFechasAsignada);
-
+        mostrarBotonAsignar();
     });
+
+    function mostrarBotonAsignar() {
+        $("#btnAsignarFechas").show();
+        $("#btnEliminarFechas").hide();
+    }
+
+    function mostrarBotonQuitar() {
+        $("#btnAsignarFechas").hide();
+        $("#btnEliminarFechas").show();
+    }
 
     var tabFechasInvitadas = $("#tabFechasInvitadas").dataTable({
         "info": false,

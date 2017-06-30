@@ -23,6 +23,8 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
         private readonly ISafBaseLogic _baseLogic;
         private readonly ISafGeneralLogic _safGeneralLogic;
 
+        private readonly ISafWorkFlowLogic _safWorkFlowLogic;
+
         public EvaluadorController()
         {
             //this._agenteConcursoPublicoMerito = new ConcursoPublicoMeritoAgente();
@@ -32,6 +34,7 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
             this._cronogramaLogic = new SafCronogramaLogic();
             this._baseLogic = new SafBaseLogic();
             this._safGeneralLogic = new SafGeneralLogic();
+            this._safWorkFlowLogic = new SafWorkFlowLogic();
         }
 
         public ActionResult Bandeja()
@@ -60,6 +63,12 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
                 model.FechaMaximaPresentacionPropuestas = publicacion.FECMAXPREPROP.GetValueOrDefault().ToShortDateString();
                 model.estadoPublicacion = publicacion.ESTPUB.GetValueOrDefault();
                 model.EstadoDescripcion = this._safGeneralLogic.GetParametro(publicacion.ESTPUB.GetValueOrDefault()).NOMPAR;
+
+                var estadoWorkFlow = this._safWorkFlowLogic.MostrarWorkFlow(idPub.Value, "P");
+
+                model.CodigoWorkFlow = estadoWorkFlow.Item1;
+                model.FlgMostrarFlujoAprobacion = estadoWorkFlow.Item2;
+
                 //var bases = this._baseLogic.BuscarPorCronograma(model.Cronograma);
                 //model.Bases = bases.Select(c => new SelectListItem() { Value = c.CODBAS.ToString(), Text = c.DESBAS }).ToList();
             }
@@ -89,6 +98,13 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
             model.estadoPublicacion = publicacion.ESTPUB.GetValueOrDefault();
             model.EstadoDescripcion = this._safGeneralLogic.GetParametro(publicacion.ESTPUB.GetValueOrDefault()).NOMPAR;
 
+            var estadoWorkFlow = this._safWorkFlowLogic.MostrarWorkFlow(id, "P");
+
+            model.CodigoWorkFlow = estadoWorkFlow.Item1;
+            model.FlgMostrarFlujoAprobacion = estadoWorkFlow.Item2;
+
+
+
             return View(model);
 
         }
@@ -97,6 +113,8 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
         {
             var cronograma = this._publicacionLogic.BuscarPorId(publicacion).CODCRO.GetValueOrDefault();
             var bases = this._baseLogic.BuscarPorCronograma(cronograma);
+            var estadoBaseAprobado = Estado.Bases.Aprobado.GetHashCode();
+            bases = bases.Where(c => c.ESTBAS == estadoBaseAprobado);
             var basesPublicacion = this._publicacionBaseLogic.ListarPorPublicacion(publicacion);
             if (basesPublicacion.Any())
                 bases = bases.Where(c => !basesPublicacion.Any(b=> b.CODBAS == c.CODBAS));
@@ -219,7 +237,7 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
                 WebHelper.GetShortDateString(c.FECMAXCRECON),
                 WebHelper.GetShortDateString(c.FECMAXPREPROP),
                 WebHelper.GetShortDateString(c.FECMAXRESCONS),
-                c.ESTPUB == Estado.Publicacion.Elaboracion.GetHashCode() ? "Elaboracion" : (c.ESTPUB == Estado.Publicacion.Publicado.GetHashCode() ? "Publicado" : (c.ESTPUB == Estado.Publicacion.Aprobado.GetHashCode() ? "Aprobado" : "Elaboracion")),
+                c.ESTPUB == Estado.Publicacion.Elaboracion.GetHashCode() ? "Elaboracion" : (c.ESTPUB == Estado.Publicacion.Publicado.GetHashCode() ? "Publicado" : (c.ESTPUB == Estado.Publicacion.Aprobado.GetHashCode() ? "Aprobado" : "Pendiente Aprobación")),
                 c.ESTPUB.GetValueOrDefault().ToString()
             }).ToArray();
             return Json(data);

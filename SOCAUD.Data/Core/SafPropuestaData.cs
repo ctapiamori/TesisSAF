@@ -11,7 +11,7 @@ namespace SOCAUD.Data.Core
 {
     public interface ISafPropuestaData : IBaseRepository<SAF_PROPUESTA>
     {
-        TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idSoa);
+        TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idBase, int idSoa);
         IEnumerable<TcPROPUESTAS> ListarPropuestas(int idPublicacion, int idSoa);
         TcPROPUESTAS PropuestaPorId(int idPropuesta);
         IEnumerable<TcPROPUESTAS> ListadoPropuestasCalificar(int? idPublicacion);
@@ -30,9 +30,9 @@ namespace SOCAUD.Data.Core
         }
 
 
-        public TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idSoa)
+        public TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idBase, int idSoa)
         {
-            return this._uow.DataContext().SP_SAF_CREARPROPUESTA(idPublicacion, idSoa).FirstOrDefault();
+            return this._uow.DataContext().SP_SAF_CREARPROPUESTA1(idPublicacion, idBase, idSoa).FirstOrDefault();
         }
 
 

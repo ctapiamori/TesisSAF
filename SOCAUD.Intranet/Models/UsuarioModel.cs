@@ -49,30 +49,40 @@ namespace SOCAUD.Intranet.Models
         public Nullable<int> CODENT { get; set; }
 
         [Display(Name = "Perfil")]
+        [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public int CODPER { get; set; }
 
          [Display(Name = "Correo")]
+         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public string CORREOUSER { get; set; }
 
 
         public IEnumerable<SelectListItem> cboListaCargo { get; set; }
         public IEnumerable<SelectListItem> cboListaEntidad { get; set; }
+        public IEnumerable<SelectListItem> cboListaPerfil { get; set; }
 
         ISafParametricaLogic _safParametricaLogic;
         ISafEntidadLogic _safEntidadLogic;
+        ISafPerfilLogic _safPerfilLogic;
+
         public UsuarioModel() { 
             this._safParametricaLogic = new SafParametricaLogic();
             this._safEntidadLogic = new SafEntidadLogic();
+            this._safPerfilLogic = new SafPerfilLogic();
 
             var listaTipoUsuario = this._safParametricaLogic.ListarTipoUsuario();
             var listaEntidades = this._safEntidadLogic.ListarTodos();
+            var listaPerfil = this._safPerfilLogic.ListarTodos();
 
             this.cboListaCargo = new List<SelectListItem>();
             this.cboListaEntidad = new List<SelectListItem>();
+            this.cboListaPerfil = new List<SelectListItem>();
 
             this.cboListaCargo = (from c in listaTipoUsuario select new SelectListItem(){ Text = c.NOMPAR, Value = c.CODPAR.ToString() });
 
             this.cboListaEntidad = (from c in listaEntidades select new SelectListItem() { Text = c.RAZSOCENT, Value = c.CODENT.ToString() });
+
+            this.cboListaPerfil = (from c in listaPerfil select new SelectListItem() { Text = c.NOMPER, Value = c.CODPER.ToString() });
 
         }
     }

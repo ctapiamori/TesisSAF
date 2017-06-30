@@ -15,23 +15,23 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Models
         public int Cronograma { get; set; }
         //[Display(Name = "Base")]
         //public int Base { get; set; }
-        [Display(Name = "Codigo Publicaicion")]
+        [Display(Name = "Codigo Publicación")]
         public int? CodigoPublicacion { get; set; }
 
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
-        [Display(Name = "Fecha Maxima elaborar consulta")]
+        [Display(Name = "Elaboración Consultas (Fec. máxima)")]
         public string FechaMaximaCreacionConsulta { get; set; }
 
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
-        [Display(Name = "Fecha maxima publicar concurso")]
+        [Display(Name = "Publicación Concurso (Fec. máxima)")]
         public string FechaMaximaPublicacionConcurso { get; set; }
 
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
-        [Display(Name = "Fecha maxima responder consulta")]
+        [Display(Name = "Absolución de Consultas (Fec. máxima)")]
         public string FechaMaximaResponderConsultas { get; set; }
 
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
-        [Display(Name = "Fecha maxima presentacion propuestas")]
+        [Display(Name = "Presentación de Propuestas (Fec. máxima)")]
         public string FechaMaximaPresentacionPropuestas { get; set; }
 
         public IEnumerable<SelectListItem> Cronogramas { get; set; }
@@ -40,6 +40,9 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Models
         public int estadoPublicacion { get; set; }
         [Display(Name = "Estado")]
         public string EstadoDescripcion { get; set; }
+
+        public int CodigoWorkFlow { get; set; }
+        public string FlgMostrarFlujoAprobacion { get; set; }
 
         public PublicacionViewModel()
         {

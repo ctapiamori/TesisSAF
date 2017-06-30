@@ -79,7 +79,6 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_ENTIDADES> SAF_ENTIDADES { get; set; }
         public virtual DbSet<SAF_CONSULTA> SAF_CONSULTA { get; set; }
         public virtual DbSet<VW_SAF_CARGOSENSERVICIO> VW_SAF_CARGOSENSERVICIO { get; set; }
-        public virtual DbSet<VW_SAF_PUBLICACIONBASE> VW_SAF_PUBLICACIONBASE { get; set; }
         public virtual DbSet<SAF_MENU> SAF_MENU { get; set; }
         public virtual DbSet<SAF_PERFIL> SAF_PERFIL { get; set; }
         public virtual DbSet<SAF_PERFIL_MENU> SAF_PERFIL_MENU { get; set; }
@@ -92,6 +91,7 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<VW_SAF_PARAMETRICA> VW_SAF_PARAMETRICA { get; set; }
         public virtual DbSet<VW_SAF_WORKFLOW> VW_SAF_WORKFLOW { get; set; }
         public virtual DbSet<SAF_USUARIO> SAF_USUARIO { get; set; }
+        public virtual DbSet<VW_SAF_PUBLICACIONBASE> VW_SAF_PUBLICACIONBASE { get; set; }
     
         public virtual ObjectResult<TcCORTEPUBLICACION> SP_SAF_CORTEPUBLICACION(Nullable<int> cODPUB)
         {
@@ -271,19 +271,6 @@ namespace SOCAUD.Data.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcAUDITORIAS>("SP_SAF_AUDITORIAS", cODPROParameter);
         }
     
-        public virtual ObjectResult<TcCREARPROPUESTA> SP_SAF_CREARPROPUESTA(Nullable<int> cODPUB, Nullable<int> cODSOA)
-        {
-            var cODPUBParameter = cODPUB.HasValue ?
-                new ObjectParameter("CODPUB", cODPUB) :
-                new ObjectParameter("CODPUB", typeof(int));
-    
-            var cODSOAParameter = cODSOA.HasValue ?
-                new ObjectParameter("CODSOA", cODSOA) :
-                new ObjectParameter("CODSOA", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcCREARPROPUESTA>("SP_SAF_CREARPROPUESTA", cODPUBParameter, cODSOAParameter);
-        }
-    
         public virtual ObjectResult<TcDETALLEEQUIPOPORAUDITORIA> SP_SAF_DETALLEEQUIPOPORAUDITORIA(Nullable<int> cODAUDITORIA)
         {
             var cODAUDITORIAParameter = cODAUDITORIA.HasValue ?
@@ -426,6 +413,40 @@ namespace SOCAUD.Data.Model
         public virtual ObjectResult<string> SP_SAF_CORRELATIVOSOLICITUD()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_SAF_CORRELATIVOSOLICITUD");
+        }
+    
+        public virtual ObjectResult<SP_SAF_CREARPROPUESTA_Result> SP_SAF_CREARPROPUESTA(Nullable<int> cODPUB, Nullable<int> cODBAS, Nullable<int> cODSOA)
+        {
+            var cODPUBParameter = cODPUB.HasValue ?
+                new ObjectParameter("CODPUB", cODPUB) :
+                new ObjectParameter("CODPUB", typeof(int));
+    
+            var cODBASParameter = cODBAS.HasValue ?
+                new ObjectParameter("CODBAS", cODBAS) :
+                new ObjectParameter("CODBAS", typeof(int));
+    
+            var cODSOAParameter = cODSOA.HasValue ?
+                new ObjectParameter("CODSOA", cODSOA) :
+                new ObjectParameter("CODSOA", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SAF_CREARPROPUESTA_Result>("SP_SAF_CREARPROPUESTA", cODPUBParameter, cODBASParameter, cODSOAParameter);
+        }
+    
+        public virtual ObjectResult<TcCREARPROPUESTA> SP_SAF_CREARPROPUESTA1(Nullable<int> cODPUB, Nullable<int> cODBAS, Nullable<int> cODSOA)
+        {
+            var cODPUBParameter = cODPUB.HasValue ?
+                new ObjectParameter("CODPUB", cODPUB) :
+                new ObjectParameter("CODPUB", typeof(int));
+    
+            var cODBASParameter = cODBAS.HasValue ?
+                new ObjectParameter("CODBAS", cODBAS) :
+                new ObjectParameter("CODBAS", typeof(int));
+    
+            var cODSOAParameter = cODSOA.HasValue ?
+                new ObjectParameter("CODSOA", cODSOA) :
+                new ObjectParameter("CODSOA", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcCREARPROPUESTA>("SP_SAF_CREARPROPUESTA1", cODPUBParameter, cODBASParameter, cODSOAParameter);
         }
     }
 }

@@ -283,7 +283,16 @@ namespace SOCAUD.Business.Core
 
                 if (workFlowDelTipoDeUsuario.TIPCARUSU == codigoTipoCargoUsuario) // SI ES PARA ESTE TIPO DE USUARIO
                 {
-                    if (workFlowDelTipoDeUsuario.CODESTDOC == Estado.Cronograma.Aprobado.GetHashCode()) // SI AUN ESTA EN PROCESO Y NO APROBADO
+                    int codigoEstado = 0;
+
+                    if (tipoDocumento == "B") 
+                        codigoEstado = Estado.Bases.Aprobado.GetHashCode();
+                    if (tipoDocumento == "C")
+                        codigoEstado = Estado.Cronograma.Aprobado.GetHashCode();
+                    if (tipoDocumento == "P")
+                        codigoEstado = Estado.Publicacion.Aprobado.GetHashCode();
+
+                    if (workFlowDelTipoDeUsuario.CODESTDOC == codigoEstado) // SI AUN ESTA EN PROCESO Y NO APROBADO
                     {
                         FlgMostrarEnWorkFlow = "N";
                     }

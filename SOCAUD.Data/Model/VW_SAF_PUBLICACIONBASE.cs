@@ -17,6 +17,10 @@ namespace SOCAUD.Data.Model
         public int CODPUB { get; set; }
         public string NUMPUB { get; set; }
         public Nullable<int> ESTPUB { get; set; }
+        public Nullable<System.DateTime> FECMAXCONS { get; set; }
+        public Nullable<System.DateTime> FECMAXRESCONS { get; set; }
+        public Nullable<System.DateTime> FECMAXPREPROP { get; set; }
+        public Nullable<System.DateTime> FECMAXCRECON { get; set; }
         public int CODBAS { get; set; }
         public Nullable<int> CODCRO { get; set; }
         public Nullable<int> CODCROENT { get; set; }

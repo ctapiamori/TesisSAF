@@ -65,9 +65,14 @@ namespace SOCAUD.Web.Models
 
 
         public List<SelectListItem> cboPublicaciones { get; set; }
+
+        public int CODBAS { get; set; }
+        public List<SelectListItem> cboBases { get; set; }
+        
         public PropuestaModel()
         {
             this.cboPublicaciones = new List<SelectListItem>();
+            this.cboBases = new List<SelectListItem>();
         }
     }
 }

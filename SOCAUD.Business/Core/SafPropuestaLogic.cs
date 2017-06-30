@@ -13,7 +13,7 @@ namespace SOCAUD.Business.Core
 {
     public interface ISafPropuestaLogic : IFacadeOperacionCRUD<SAF_PROPUESTA>
     {
-        TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idSoa);
+        TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idBase, int idSoa);
         IEnumerable<SAF_PROPUESTA> ListarPropuestasPorPublicacion(int idPublicacion);
         IEnumerable<TcPROPUESTAS> ListadoPropuestasCalificar(int? idPublicacion);
         IEnumerable<TcPROPUESTAS> ListarPropuestas(int idPublicacion, int idSoa);
@@ -69,9 +69,9 @@ namespace SOCAUD.Business.Core
             }
         }
 
-        public TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idSoa)
+        public TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idBase, int idSoa)
         {
-            return this._safPropuestaData.CrearPropuesta(idPublicacion, idSoa);
+            return this._safPropuestaData.CrearPropuesta(idPublicacion,idBase, idSoa);
         }
 
 

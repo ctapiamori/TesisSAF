@@ -50,6 +50,8 @@ namespace SOCAUD.Intranet.Controllers
         private readonly ISafServicioAuditoriaLogic _safServicioAuditoriaLogic;
         private readonly ISafServicioAuditoriaCargoLogic _safServicioAuditoriaCargoLogic;
 
+        private readonly ISafWorkFlowLogic _workFlowLogic;
+
         public BaseController()
         {
             this._cronogramaLogic = new SafCronogramaLogic();
@@ -59,6 +61,7 @@ namespace SOCAUD.Intranet.Controllers
             this._safEntidadLogic = new SafEntidadLogic();
             this._safServicioAuditoriaLogic = new SafServicioAuditoriaLogic();
             this._safServicioAuditoriaCargoLogic = new SafServicioAuditoriaCargoLogic();
+            this._workFlowLogic = new SafWorkFlowLogic();
         }
 
         public JsonResult infoEntidadCronograma(int idCronoEntidad) {
@@ -382,6 +385,11 @@ namespace SOCAUD.Intranet.Controllers
 
             var entidades = this._cronoEntidadLogic.ListarPorCronograma(_base.CODCRO.GetValueOrDefault());
             model.Entidades = entidades.Select(c => new SelectListItem() { Value = c.CODCROENT.ToString(), Text = c.DESCROENT, Selected = c.DESCROENT.Equals(_base.CODCROENT.GetValueOrDefault()) });
+
+            var mostrarWorkFlow = _workFlowLogic.MostrarWorkFlow(id, "B");
+
+            model.CodigoWorkFlow = mostrarWorkFlow.Item1;
+            model.FlgMostrarFlujoAprobacion = mostrarWorkFlow.Item2;
             return View(model);
         }
 

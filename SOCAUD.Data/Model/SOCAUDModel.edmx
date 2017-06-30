@@ -1025,6 +1025,10 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_PUBLICACIONBASE' no tie
           <Property Name="CODPUB" Type="int" Nullable="false" />
           <Property Name="NUMPUB" Type="varchar" MaxLength="50" />
           <Property Name="ESTPUB" Type="int" />
+          <Property Name="FECMAXCONS" Type="datetime" />
+          <Property Name="FECMAXRESCONS" Type="datetime" />
+          <Property Name="FECMAXPREPROP" Type="datetime" />
+          <Property Name="FECMAXCRECON" Type="datetime" />
           <Property Name="CODBAS" Type="int" Nullable="false" />
           <Property Name="CODCRO" Type="int" />
           <Property Name="CODCROENT" Type="int" />
@@ -1885,6 +1889,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
         </Function>
         <Function Name="SP_SAF_CREARPROPUESTA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODPUB" Type="int" Mode="In" />
+          <Parameter Name="CODBAS" Type="int" Mode="In" />
           <Parameter Name="CODSOA" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_SAF_CREARSOLICITUDAUDITOR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -2131,6 +2136,10 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
     [VW_SAF_PUBLICACIONBASE].[CODPUB] AS [CODPUB], 
     [VW_SAF_PUBLICACIONBASE].[NUMPUB] AS [NUMPUB], 
     [VW_SAF_PUBLICACIONBASE].[ESTPUB] AS [ESTPUB], 
+    [VW_SAF_PUBLICACIONBASE].[FECMAXCONS] AS [FECMAXCONS], 
+    [VW_SAF_PUBLICACIONBASE].[FECMAXRESCONS] AS [FECMAXRESCONS], 
+    [VW_SAF_PUBLICACIONBASE].[FECMAXPREPROP] AS [FECMAXPREPROP], 
+    [VW_SAF_PUBLICACIONBASE].[FECMAXCRECON] AS [FECMAXCRECON], 
     [VW_SAF_PUBLICACIONBASE].[CODBAS] AS [CODBAS], 
     [VW_SAF_PUBLICACIONBASE].[CODCRO] AS [CODCRO], 
     [VW_SAF_PUBLICACIONBASE].[CODCROENT] AS [CODCROENT], 
@@ -4150,10 +4159,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <FunctionImport Name="SP_SAF_AUDITORIAS" ReturnType="Collection(SI_SOCAUDModel.TcAUDITORIAS)">
           <Parameter Name="CODPRO" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_SAF_CREARPROPUESTA" ReturnType="Collection(SI_SOCAUDModel.TcCREARPROPUESTA)">
-            <Parameter Name="CODPUB" Mode="In" Type="Int32" />
-            <Parameter Name="CODSOA" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_SAF_DETALLEEQUIPOPORAUDITORIA" ReturnType="Collection(SI_SOCAUDModel.TcDETALLEEQUIPOPORAUDITORIA)">
           <Parameter Name="CODAUDITORIA" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -4226,7 +4231,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
             <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
           </AssociationSet>
           <EntitySet Name="VW_SAF_CARGOSENSERVICIO" EntityType="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO" />
-          <EntitySet Name="VW_SAF_PUBLICACIONBASE" EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE" />
           <EntitySet Name="SAF_MENU" EntityType="SI_SOCAUDModel.SAF_MENU" />
           <EntitySet Name="SAF_PERFIL" EntityType="SI_SOCAUDModel.SAF_PERFIL" />
           <EntitySet Name="SAF_PERFIL_MENU" EntityType="SI_SOCAUDModel.SAF_PERFIL_MENU" />
@@ -4253,6 +4257,17 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <EntitySet Name="VW_SAF_PARAMETRICA" EntityType="SI_SOCAUDModel.VW_SAF_PARAMETRICA" />
           <EntitySet Name="VW_SAF_WORKFLOW" EntityType="SI_SOCAUDModel.VW_SAF_WORKFLOW" />
           <EntitySet Name="SAF_USUARIO" EntityType="SI_SOCAUDModel.SAF_USUARIO" />
+          <EntitySet Name="VW_SAF_PUBLICACIONBASE" EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE" />
+          <FunctionImport Name="SP_SAF_CREARPROPUESTA" ReturnType="Collection(SI_SOCAUDModel.SP_SAF_CREARPROPUESTA_Result)">
+            <Parameter Name="CODPUB" Mode="In" Type="Int32" />
+            <Parameter Name="CODBAS" Mode="In" Type="Int32" />
+            <Parameter Name="CODSOA" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_CREARPROPUESTA1" ReturnType="Collection(SI_SOCAUDModel.TcCREARPROPUESTA)">
+            <Parameter Name="CODPUB" Mode="In" Type="Int32" />
+            <Parameter Name="CODBAS" Mode="In" Type="Int32" />
+            <Parameter Name="CODSOA" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
@@ -4846,20 +4861,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Name="NUMMINHORSERAUDCAREXP" Type="Int32" />
           <Property Name="NUMMINHORSERAUDCAPCAP" Type="Int32" />
         </EntityType>
-        <EntityType Name="VW_SAF_PUBLICACIONBASE">
-          <Key>
-            <PropertyRef Name="CODPUB" />
-            <PropertyRef Name="CODBAS" />
-          </Key>
-          <Property Name="CODPUB" Type="Int32" Nullable="false" />
-          <Property Name="NUMPUB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTPUB" Type="Int32" />
-          <Property Name="CODBAS" Type="Int32" Nullable="false" />
-          <Property Name="CODCRO" Type="Int32" />
-          <Property Name="CODCROENT" Type="Int32" />
-          <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
         <EntityType Name="SAF_MENU">
           <Key>
             <PropertyRef Name="CODMEN" />
@@ -5084,6 +5085,28 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Name="CODPER" Type="Int32" />
           <Property Name="CORREOUSER" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="VW_SAF_PUBLICACIONBASE">
+          <Key>
+            <PropertyRef Name="CODPUB" />
+            <PropertyRef Name="CODBAS" />
+          </Key>
+          <Property Name="CODPUB" Type="Int32" Nullable="false" />
+          <Property Name="NUMPUB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTPUB" Type="Int32" />
+          <Property Name="FECMAXCONS" Type="DateTime" Precision="3" />
+          <Property Name="FECMAXRESCONS" Type="DateTime" Precision="3" />
+          <Property Name="FECMAXPREPROP" Type="DateTime" Precision="3" />
+          <Property Name="FECMAXCRECON" Type="DateTime" Precision="3" />
+          <Property Name="CODBAS" Type="Int32" Nullable="false" />
+          <Property Name="CODCRO" Type="Int32" />
+          <Property Name="CODCROENT" Type="Int32" />
+          <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="SP_SAF_CREARPROPUESTA_Result">
+          <Property Type="Int32" Name="RESULTADO" Nullable="false" />
+          <Property Type="String" Name="MENSAJE" Nullable="false" MaxLength="56" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6079,14 +6102,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_SAF_CREARPROPUESTA" FunctionName="SI_SOCAUDModel.Store.SP_SAF_CREARPROPUESTA">
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcCREARPROPUESTA">
-                <ScalarProperty Name="RESULTADO" ColumnName="RESULTADO" />
-                <ScalarProperty Name="MENSAJE" ColumnName="MENSAJE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_SAF_DETALLEEQUIPOPORAUDITORIA" FunctionName="SI_SOCAUDModel.Store.SP_SAF_DETALLEEQUIPOPORAUDITORIA">
           <ResultMapping>
               <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcDETALLEEQUIPOPORAUDITORIA">
@@ -6363,20 +6378,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VW_SAF_PUBLICACIONBASE">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE">
-              <MappingFragment StoreEntitySet="VW_SAF_PUBLICACIONBASE">
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
-                <ScalarProperty Name="CODCROENT" ColumnName="CODCROENT" />
-                <ScalarProperty Name="CODCRO" ColumnName="CODCRO" />
-                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
-                <ScalarProperty Name="ESTPUB" ColumnName="ESTPUB" />
-                <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
-                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SAF_MENU">
             <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_MENU">
               <MappingFragment StoreEntitySet="SAF_MENU">
@@ -6569,6 +6570,40 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_PUBLICACIONBASE">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE">
+              <MappingFragment StoreEntitySet="VW_SAF_PUBLICACIONBASE">
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
+                <ScalarProperty Name="CODCROENT" ColumnName="CODCROENT" />
+                <ScalarProperty Name="CODCRO" ColumnName="CODCRO" />
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+                <ScalarProperty Name="FECMAXCRECON" ColumnName="FECMAXCRECON" />
+                <ScalarProperty Name="FECMAXPREPROP" ColumnName="FECMAXPREPROP" />
+                <ScalarProperty Name="FECMAXRESCONS" ColumnName="FECMAXRESCONS" />
+                <ScalarProperty Name="FECMAXCONS" ColumnName="FECMAXCONS" />
+                <ScalarProperty Name="ESTPUB" ColumnName="ESTPUB" />
+                <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_CREARPROPUESTA" FunctionName="SI_SOCAUDModel.Store.SP_SAF_CREARPROPUESTA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.SP_SAF_CREARPROPUESTA_Result">
+                <ScalarProperty Name="RESULTADO" ColumnName="RESULTADO" />
+                <ScalarProperty Name="MENSAJE" ColumnName="MENSAJE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_CREARPROPUESTA1" FunctionName="SI_SOCAUDModel.Store.SP_SAF_CREARPROPUESTA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcCREARPROPUESTA">
+                <ScalarProperty Name="RESULTADO" ColumnName="RESULTADO" />
+                <ScalarProperty Name="MENSAJE" ColumnName="MENSAJE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

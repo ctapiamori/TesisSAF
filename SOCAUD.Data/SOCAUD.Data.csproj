@@ -293,6 +293,9 @@
     <Compile Include="Model\SP_SAF_BASE_RPT_Result1.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\SP_SAF_CREARPROPUESTA_Result.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\SP_SAF_CRONOENTIDAD_CRONO_RPT_Result.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>

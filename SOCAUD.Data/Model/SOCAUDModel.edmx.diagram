@@ -115,7 +115,6 @@
         <AssociationConnector Association="SI_SOCAUDModel.R_27" />
         <AssociationConnector Association="SI_SOCAUDModel.R_28" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO" Width="1.5" PointX="13.375" PointY="9.75" />
-        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE" Width="1.5" PointX="15.375" PointY="8.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_MENU" Width="1.5" PointX="5.375" PointY="26" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_PERFIL" Width="1.5" PointX="5.375" PointY="22" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_PERFIL_MENU" Width="1.5" PointX="7.625" PointY="22" />
@@ -131,6 +130,7 @@
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PARAMETRICA" Width="1.5" PointX="20.375" PointY="10.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_WORKFLOW" Width="1.5" PointX="12.375" PointY="24.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_USUARIO" Width="1.5" PointX="24.375" PointY="5.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACIONBASE" Width="1.5" PointX="15.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

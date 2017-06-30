@@ -21,7 +21,7 @@ namespace SOCAUD.Web.Controllers
         private readonly ISafInvitacionDetalleLogic _invitacionDetalleLogic;
         private readonly ISafPropuestaEquipoDetalleLogic _propuestaEquipoDetalleLogic;
         private readonly ISafGeneralLogic _generalLogic;
-
+        private readonly ISafPublicacionBaseLogic _publicacionYBasesLogic;
         public PropuestaController()
         {
             _publicacionLogic = new SafPublicacionLogic();
@@ -31,24 +31,47 @@ namespace SOCAUD.Web.Controllers
             _invitacionDetalleLogic = new SafInvitacionDetalleLogic();
             _propuestaEquipoDetalleLogic = new SafPropuestaEquipoDetalleLogic();
             _generalLogic = new SafGeneralLogic();
+
+            _publicacionYBasesLogic = new SafPublicacionBaseLogic();
         }
 
         #region Creacion de Propuesto
         public ActionResult Index()
         {
-            var publicaciones = this._publicacionLogic.ListarTodos();
             var model = new PropuestaModel();
-            //model.cboPublicaciones = (from c in modelEntity.SAF_PUBLICACION.ToList() select new SelectListItem() { Text = c.NUMPUB, Value = c.CODPUB.ToString() }).ToList();
-            model.cboPublicaciones = (from c in publicaciones select new SelectListItem() { Text = c.NUMPUB, Value = c.CODPUB.ToString() }).ToList();
+
+
+            var publicaciones = this._publicacionYBasesLogic.ListarPublicacionesEstadoPublicadaYBases();
+            var listaPublicacion = (from c in publicaciones select new SelectListItem() { Value = c.CODPUB.ToString(), Text = c.NUMPUB }).ToList();
+            var result = listaPublicacion.GroupBy(c => new
+            {
+                c.Value,
+                c.Text
+            }).OrderBy(g => g.Key.Value)
+            .Select(g => new SelectListItem
+            {
+                Text = g.Key.Text,
+                Value = g.Key.Value
+            });
+            model.cboPublicaciones = result.ToList();
             return View(model);
         }
 
-        public JsonResult CrearPropuesta(int idPub)
+
+        public JsonResult listarBases(int idPub)
+        {
+            var publicaciones = this._publicacionYBasesLogic.ListarPublicacionesEstadoPublicadaYBases();
+            var Bases = publicaciones.Where(c => c.CODPUB == idPub);
+            return Json(Bases);
+        }
+
+
+        public JsonResult CrearPropuesta(int idPub, int idBase)
         {
             try
             {
                 var idSoa = (int)Session["sessionCodigoResponsableLogin"];
-                var resut = this._propuestaLogic.CrearPropuesta(idPub, idSoa);// this.modelEntity.SP_SAF_CREARPROPUESTA(idPub, (int)Session["sessionCodigoResponsableLogin"]).FirstOrDefault();
+                var resut = this._propuestaLogic.CrearPropuesta(idPub,idBase, idSoa);// this.modelEntity.SP_SAF_CREARPROPUESTA(idPub, (int)Session["sessionCodigoResponsableLogin"]).FirstOrDefault();
                 if (resut.RESULTADO.Equals(0))
                     return Json(new MensajeRespuesta(resut.MENSAJE, false));
                 else

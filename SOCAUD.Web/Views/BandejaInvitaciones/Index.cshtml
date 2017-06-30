@@ -26,22 +26,22 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             @Html.LabelFor(c => c.CODPUB)
                             @Html.DropDownListFor(c => c.CODPUB, Model.cboPublicaciones, "Seleccione", new { @class = "form-control" })
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             @Html.LabelFor(c => c.CODBAS)
                             @Html.DropDownListFor(c => c.CODBAS, Model.cboBases, "Seleccione", new { @class = "form-control" })
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             @Html.LabelFor(c => c.CODSERAUD)
                             @Html.DropDownListFor(c => c.CODSERAUD, Model.cboServiciosAuditoria, "Seleccione", new { @class = "form-control" })
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <br />
-                            <button class="btn btn-primary" type="button" id="btnBuscarInvitaciones"><i class="fa fa-search"></i>&nbsp;Buscar Invitaciones</button>
+                            <button class="btn btn-default" type="button" id="btnBuscarInvitaciones"><i class="fa fa-search"></i>&nbsp;Buscar</button>
                         </div>
                     </div>
                 </div>
