@@ -44,6 +44,7 @@ namespace SOCAUD.Data.Model
         public Nullable<decimal> RETRECOTOTALREQ { get; set; }
         public Nullable<decimal> MONTVIATICOREQ { get; set; }
         public Nullable<int> ESTPROP { get; set; }
+        public Nullable<int> CODBAS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_AUDITORIA> SAF_AUDITORIA { get; set; }

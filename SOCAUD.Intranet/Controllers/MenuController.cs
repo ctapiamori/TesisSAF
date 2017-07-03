@@ -109,6 +109,5 @@ namespace SOCAUD.Intranet.Controllers
                 return Json(new MensajeRespuesta("No pudo eliminar el menu", true));
             }
         }
-
     }
 }

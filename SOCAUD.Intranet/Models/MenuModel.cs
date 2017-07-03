@@ -30,8 +30,18 @@ namespace SOCAUD.Intranet.Models
         public MenuModel() {
             ListaIconos = new List<SelectListItem>();
             ListaIconos.Add(new SelectListItem() { Text = "DISCO DURO", Value = "fa fa-save" });
+            ListaIconos.Add(new SelectListItem() { Text = "LINEAS", Value = "fa fa-bars" });
             ListaIconos.Add(new SelectListItem() { Text = "LAPIZ EDITAR", Value = "fa fa-edit" });
- 
+            ListaIconos.Add(new SelectListItem() { Text = "REPORTE", Value = "fa fa-bar-chart" });
+            ListaIconos.Add(new SelectListItem() { Text = "PUBLICACION", Value = "fa fa-file-powerpoint-o" });
+            ListaIconos.Add(new SelectListItem() { Text = "USUARIOS", Value = "fa fa-users" });
+            ListaIconos.Add(new SelectListItem() { Text = "BUSQUEDA", Value = "fa fa-search" });
+            ListaIconos.Add(new SelectListItem() { Text = "CHECK LIST", Value = "fa fa-check-square-o" });
+            ListaIconos.Add(new SelectListItem() { Text = "CONFIGURACION", Value = "fa fa-cogs" });
+            ListaIconos.Add(new SelectListItem() { Text = "LAPIZ", Value = "fa fa-pencil" });
+            ListaIconos.Add(new SelectListItem() { Text = "HOJA LINEAS", Value = "fa fa-file-text-o" });
+            ListaIconos.Add(new SelectListItem() { Text = "HOJA BLANCO", Value = "fa fa-file-o" });
+            ListaIconos.OrderBy(c => c.Text);
         }
     }
 }

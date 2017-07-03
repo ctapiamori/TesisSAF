@@ -10,7 +10,7 @@
 <form id="frmGrabarUsuario">
     <div class="box box-primary color-palette-box">
         <div class="box-header with-border">
-            <h3 class="box-title">Nuevo Usuario</h3>
+            <h3 class="box-title">Información del Personal</h3>
         </div>
         <div class="box-body">
             <div class="form-group">
@@ -55,16 +55,26 @@
                         @Html.TextBoxFor(m => m.CORREOUSER, new { @class = "form-control"  })
                         @Html.ValidationMessageFor(c => c.CORREOUSER)
                     </div>
-     
-                </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Información del Usuario</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
                 <div class="row">
                     <div class="col-md-6">
                         @Html.LabelFor(m => m.CODPER)
-                        @Html.DropDownListFor(m => m.CODPER, Model.cboListaPerfiles , "Seleccione", new { @class = "form-control"   })
+                        @Html.DropDownListFor(m => m.CODPER, Model.cboListaPerfil , "Seleccione", new { @class = "form-control"   })
                         @Html.ValidationMessageFor(c => c.CODPER)
                     </div>
-     
+
                 </div>
 
                 <div class="row">
@@ -79,22 +89,19 @@
                         @Html.ValidationMessageFor(c => c.PASUSU)
                     </div>
                 </div>
-
-
- 
-
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-12" style="text-align:center;">
-                        <button id="btnAgregar" type="button" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Agregar</button>
-                        <button type="button" id="btnRegresar" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12" style="text-align: center;">
+                <button id="btnAgregar" type="button" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Agregar</button>
+                <button type="button" id="btnRegresar" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+            </div>
+        </div>
+    </div>
+
 </form>
 
 @section scripts {

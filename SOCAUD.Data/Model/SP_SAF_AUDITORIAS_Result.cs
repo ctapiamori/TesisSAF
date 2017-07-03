@@ -11,7 +11,7 @@ namespace SOCAUD.Data.Model
 {
     using System;
     
-    public partial class TcAUDITORIAS
+    public partial class SP_SAF_AUDITORIAS_Result
     {
         public Nullable<int> CODPRO { get; set; }
         public int CODAUDITORIA { get; set; }

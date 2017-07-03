@@ -13,7 +13,8 @@ namespace SOCAUD.Business.Core
 
     public interface ISafMenuLogic : IFacadeOperacionCRUD<SAF_MENU>
     {
-
+        IEnumerable<TcMENUPORPERFIL> ObtenerMenuPorPerfil(int idPerfil);
+        IEnumerable<TcSUBMENUPORMENU> ObtenerSubMenuPorMenu(int idMenu);
     }
 
     public class SafMenuLogic : ISafMenuLogic
@@ -62,6 +63,16 @@ namespace SOCAUD.Business.Core
         public IEnumerable<SAF_MENU> ListarTodos()
         {
             return this._safMenuData.GetAll();
+        }
+
+        public IEnumerable<TcMENUPORPERFIL> ObtenerMenuPorPerfil(int idPerfil)
+        {
+            return this._safMenuData.ObtenerMenuPorPerfil(idPerfil);
+        }
+
+        public IEnumerable<TcSUBMENUPORMENU> ObtenerSubMenuPorMenu(int idMenu)
+        {
+            return this._safMenuData.ObtenerSubMenuPorMenu(idMenu);
         }
     }
 }

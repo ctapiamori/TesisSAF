@@ -223,6 +223,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\MenuOpcionesModel.cs" />
     <Compile Include="Models\ParametroModel.cs" />
     <Compile Include="Models\PerfilMenuModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />

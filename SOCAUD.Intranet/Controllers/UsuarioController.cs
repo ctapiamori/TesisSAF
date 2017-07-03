@@ -75,6 +75,7 @@ namespace SOCAUD.Intranet.Controllers
                 entity.DNIUSU = model.DNIUSU;
                 entity.TIPCARUSU = model.TIPCARUSU;
                 entity.CODENT = model.CODENT;
+                entity.CODPER = model.CODPER;
                 var result = this._usuarioLogic.Registrar(entity);
                 return Json(new MensajeRespuesta(Mensaje.MensajeOperacionRealizadaExito, true));
             }
@@ -96,6 +97,7 @@ namespace SOCAUD.Intranet.Controllers
             model.DNIUSU = entity.DNIUSU;
             model.TIPCARUSU = entity.TIPCARUSU;
             model.CODENT = entity.CODENT;
+            model.CODPER = entity.CODPER;
             return View(model);
         }
 
@@ -107,6 +109,7 @@ namespace SOCAUD.Intranet.Controllers
                 usuario.PASUSU = model.PASUSU;
                 usuario.TIPCARUSU = model.TIPCARUSU;
                 usuario.CODENT = model.CODENT;
+                usuario.CODPER = model.CODPER;
                 this._usuarioLogic.Actualizar(usuario);
 
                 return Json(new MensajeRespuesta(Mensaje.MensajeOperacionRealizadaExito, true));

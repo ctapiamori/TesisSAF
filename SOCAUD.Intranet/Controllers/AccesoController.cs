@@ -1,6 +1,7 @@
 ﻿using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
+using SOCAUD.Intranet.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,15 @@ namespace SOCAUD.Intranet.Controllers
 
         private readonly ISafAuditorLogic _auditorLogic;
         private readonly ISafSoaLogic _soaLogic;
+
+        private readonly ISafMenuLogic _menuLogic;
         public AccesoController()
         {
             _seguridadLogic = new SeguridadLogic();
             _usuarioLogic = new SafUsuarioLogic();
             _auditorLogic = new SafAuditorLogic();
             _soaLogic = new SafSoaLogic();
+            _menuLogic = new SafMenuLogic();
         }
 
         public ActionResult Login()
@@ -78,6 +82,23 @@ namespace SOCAUD.Intranet.Controllers
                 }
                 else
                 {
+                    var perfil = datosUsuario.CODPER.GetValueOrDefault();
+
+                    var MenuBD = _menuLogic.ObtenerMenuPorPerfil(perfil).ToList();
+
+                    var MenuFinal = (from c in MenuBD select new MenuOpcionesModel() {
+                        Css = c.ICONCSS,
+                        Nombre = c.DESMEN,
+                        Ruta = c.RUTAMEN,
+                        SubMenu = (from x in this._menuLogic.ObtenerSubMenuPorMenu(c.CODMEN).ToList()
+                                 select new SubMenuOpcionesModel(){
+                                  Nombre = x.DESSUBMEN,
+                                  Ruta = x.RUTASUBMEN
+                                 })
+                    });
+
+
+                    Session["sessionMenuSistema"] = MenuFinal.ToList();
                     Session["sessionUsuario"] = usuario.ToUpper();
                     Session["sessionUsuarioNombreCompleto"] = string.Format("{0} {1}", datosUsuario.NOMPERUSU, datosUsuario.APEPERUSU).ToUpper();
                     Session["tipoUsuario"] = datosUsuario.TIPCARUSU.GetValueOrDefault();

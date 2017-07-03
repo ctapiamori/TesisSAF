@@ -226,6 +226,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvitacionModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MenuOpcionesModel.cs" />
     <Compile Include="Models\PropuestaModel.cs" />
     <Compile Include="Models\SoaModel.cs" />
     <Compile Include="Models\SolicitudModel.cs" />
@@ -859,6 +860,8 @@
     <Content Include="Views\Propuesta\_AsignarFechaEquipo.cshtml" />
     <Content Include="Views\SolReg\Registro.cshtml" />
     <Content Include="Views\Contrasena\CambiarContrasena.cshtml" />
+    <Content Include="Views\Propuesta\_AsignarFechaEquipoLec.cshtml" />
+    <Content Include="Views\Propuesta\LecturaPropuesta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,7 +14,7 @@ namespace SOCAUD.Web.Models
         public int CODPRO { get; set; }
         public string NUMPRO { get; set; }
         public int CODSOA { get; set; }
-        [Display(Name = "Publicacion")]
+        [Display(Name = "Publicación")]
         public int CODPUB { get; set; }
         [Display(Name = "RUC")]
         public string RUCSOA { get; set; }
@@ -27,7 +27,7 @@ namespace SOCAUD.Web.Models
         [Display(Name = "Correo Representante Legal")]
         public string CORREPLEGSOA { get; set; }
 
-        [Display(Name = "Retribucion")]
+        [Display(Name = "Retribución")]
         public decimal TOTRETECOBASREQ { get; set; }
         [Display(Name = "IGV")]
         public decimal TOTIGVBASREQ { get; set; }
@@ -35,11 +35,11 @@ namespace SOCAUD.Web.Models
         public decimal TOTVIABASREQ { get; set; }
 
 
-        [Display(Name = "Monto Retribucion")]
+        [Display(Name = "Monto Retribución")]
         public decimal RETRECO { get; set; }
         [Display(Name = "IGV")]
         public decimal IGVTOTAL { get; set; }
-        [Display(Name = "Total Retribucion")]
+        [Display(Name = "Total Retribución")]
         public decimal RETRECOTOTAL { get; set; }
         [Display(Name = "Viaticos")]
         public decimal MONTVIATICO { get; set; }
@@ -66,6 +66,7 @@ namespace SOCAUD.Web.Models
 
         public List<SelectListItem> cboPublicaciones { get; set; }
 
+        [Display(Name = "Base")]
         public int CODBAS { get; set; }
         public List<SelectListItem> cboBases { get; set; }
         

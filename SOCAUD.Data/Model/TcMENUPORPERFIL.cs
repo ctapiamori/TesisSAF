@@ -11,13 +11,13 @@ namespace SOCAUD.Data.Model
 {
     using System;
     
-    public partial class TcAUDITORIAS
+    public partial class TcMENUPORPERFIL
     {
-        public Nullable<int> CODPRO { get; set; }
-        public int CODAUDITORIA { get; set; }
-        public string PERAUD { get; set; }
-        public string DESBAS { get; set; }
-        public Nullable<System.DateTime> FECINIAUDITORIA { get; set; }
-        public Nullable<System.DateTime> FECFINAUDITORIA { get; set; }
+        public int CODMEN { get; set; }
+        public Nullable<int> CODPER { get; set; }
+        public string DESMEN { get; set; }
+        public string RUTAMEN { get; set; }
+        public string ICONCSS { get; set; }
+        public string ESTREG { get; set; }
     }
 }

@@ -262,15 +262,6 @@ namespace SOCAUD.Data.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcASIGNARFECHASPROPUESTA>("SP_SAF_ASIGNARFECHASPROPUESTA", cODPROEQUParameter, sTRFECHASASIGNARParameter);
         }
     
-        public virtual ObjectResult<TcAUDITORIAS> SP_SAF_AUDITORIAS(Nullable<int> cODPRO)
-        {
-            var cODPROParameter = cODPRO.HasValue ?
-                new ObjectParameter("CODPRO", cODPRO) :
-                new ObjectParameter("CODPRO", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcAUDITORIAS>("SP_SAF_AUDITORIAS", cODPROParameter);
-        }
-    
         public virtual ObjectResult<TcDETALLEEQUIPOPORAUDITORIA> SP_SAF_DETALLEEQUIPOPORAUDITORIA(Nullable<int> cODAUDITORIA)
         {
             var cODAUDITORIAParameter = cODAUDITORIA.HasValue ?
@@ -309,11 +300,6 @@ namespace SOCAUD.Data.Model
                 new ObjectParameter("CODPROEQU", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcFECHASINVITADAS>("SP_SAF_FECHASINVITADAS", cODPROEQUParameter);
-        }
-    
-        public virtual ObjectResult<TcPROPUESTAS> SP_SAF_PROPUESTAS()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcPROPUESTAS>("SP_SAF_PROPUESTAS");
         }
     
         public virtual ObjectResult<TcACCEDERSISTEMAADMIN> SP_ACCEDERSISTEMAADMIN(string nOMUSU, string pASUSU)
@@ -447,6 +433,47 @@ namespace SOCAUD.Data.Model
                 new ObjectParameter("CODSOA", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcCREARPROPUESTA>("SP_SAF_CREARPROPUESTA1", cODPUBParameter, cODBASParameter, cODSOAParameter);
+        }
+    
+        public virtual ObjectResult<SP_SAF_AUDITORIAS_Result> SP_SAF_AUDITORIAS(Nullable<int> cODPRO)
+        {
+            var cODPROParameter = cODPRO.HasValue ?
+                new ObjectParameter("CODPRO", cODPRO) :
+                new ObjectParameter("CODPRO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SAF_AUDITORIAS_Result>("SP_SAF_AUDITORIAS", cODPROParameter);
+        }
+    
+        public virtual ObjectResult<TcAUDITORIAS> SP_SAF_AUDITORIAS1(Nullable<int> cODPRO)
+        {
+            var cODPROParameter = cODPRO.HasValue ?
+                new ObjectParameter("CODPRO", cODPRO) :
+                new ObjectParameter("CODPRO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcAUDITORIAS>("SP_SAF_AUDITORIAS1", cODPROParameter);
+        }
+    
+        public virtual ObjectResult<TcPROPUESTAS> SP_SAF_PROPUESTAS()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcPROPUESTAS>("SP_SAF_PROPUESTAS");
+        }
+    
+        public virtual ObjectResult<TcMENUPORPERFIL> SP_SAF_MENUPORPERFIL(Nullable<int> cODPER)
+        {
+            var cODPERParameter = cODPER.HasValue ?
+                new ObjectParameter("CODPER", cODPER) :
+                new ObjectParameter("CODPER", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcMENUPORPERFIL>("SP_SAF_MENUPORPERFIL", cODPERParameter);
+        }
+    
+        public virtual ObjectResult<TcSUBMENUPORMENU> SP_SAF_SUBMENUPORMENU(Nullable<int> cODMEN)
+        {
+            var cODMENParameter = cODMEN.HasValue ?
+                new ObjectParameter("CODMEN", cODMEN) :
+                new ObjectParameter("CODMEN", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcSUBMENUPORMENU>("SP_SAF_SUBMENUPORMENU", cODMENParameter);
         }
     }
 }

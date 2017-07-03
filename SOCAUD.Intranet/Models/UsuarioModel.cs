@@ -50,7 +50,7 @@ namespace SOCAUD.Intranet.Models
 
         [Display(Name = "Perfil")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
-        public int CODPER { get; set; }
+        public Nullable<int> CODPER { get; set; }
 
          [Display(Name = "Correo")]
          [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]

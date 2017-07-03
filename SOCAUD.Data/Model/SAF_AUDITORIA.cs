@@ -25,6 +25,8 @@ namespace SOCAUD.Data.Model
         public string ESTREG { get; set; }
         public Nullable<int> CODPRO { get; set; }
         public Nullable<int> CODSERAUD { get; set; }
+        public Nullable<System.DateTime> FECINIAUDITORIA { get; set; }
+        public Nullable<System.DateTime> FECFINAUDITORIA { get; set; }
     
         public virtual SAF_PROPUESTA SAF_PROPUESTA { get; set; }
     }

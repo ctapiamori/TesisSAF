@@ -12,7 +12,7 @@ namespace SOCAUD.Data.Core
     public interface ISafPropuestaData : IBaseRepository<SAF_PROPUESTA>
     {
         TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idBase, int idSoa);
-        IEnumerable<TcPROPUESTAS> ListarPropuestas(int idPublicacion, int idSoa);
+        IEnumerable<TcPROPUESTAS> ListarPropuestas(int? idPublicacion, int? idBase, int? idSoa);
         TcPROPUESTAS PropuestaPorId(int idPropuesta);
         IEnumerable<TcPROPUESTAS> ListadoPropuestasCalificar(int? idPublicacion);
         TcASIGNARGANADORPROPUESTA AsignarGanadorPropuesta(int idPropuesta, int idPublicacion);
@@ -36,10 +36,15 @@ namespace SOCAUD.Data.Core
         }
 
 
-        public IEnumerable<TcPROPUESTAS> ListarPropuestas(int idPublicacion, int idSoa)
+        public IEnumerable<TcPROPUESTAS> ListarPropuestas(int? idPublicacion, int? idBase, int? idSoa)
         {
             var propuestas = this._uow.DataContext().SP_SAF_PROPUESTAS().ToList();
-            return propuestas.Where(c => c.CODPUB == idPublicacion && c.CODSOA == idSoa);
+            if (idPublicacion.HasValue && !idBase.HasValue)
+                return propuestas.Where(c => c.CODPUB == idPublicacion.Value && c.CODSOA == idSoa.Value);
+            else if (idPublicacion.HasValue && idBase.HasValue)
+                return propuestas.Where(c => c.CODPUB == idPublicacion.Value && c.CODBAS == idBase.Value && c.CODSOA == idSoa.Value);
+            else
+                return propuestas.Where(c => c.CODSOA == idSoa.Value);
         }
 
 

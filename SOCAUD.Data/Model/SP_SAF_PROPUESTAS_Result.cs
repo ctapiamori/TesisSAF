@@ -11,11 +11,12 @@ namespace SOCAUD.Data.Model
 {
     using System;
     
-    public partial class TcPROPUESTAS
+    public partial class SP_SAF_PROPUESTAS_Result
     {
         public Nullable<int> CODPUB { get; set; }
         public int CODPRO { get; set; }
         public Nullable<int> CODSOA { get; set; }
+        public int CODBAS { get; set; }
         public string RUCSOA { get; set; }
         public string RAZSOCSOA { get; set; }
         public string NOMREPLEGSOA { get; set; }
@@ -38,6 +39,5 @@ namespace SOCAUD.Data.Model
         public decimal TOTVIABASREQ { get; set; }
         public string VALOR { get; set; }
         public Nullable<int> PUNTAJETOTAL { get; set; }
-        public int CODBAS { get; set; }
     }
 }

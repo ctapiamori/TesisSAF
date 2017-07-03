@@ -16,7 +16,7 @@ namespace SOCAUD.Business.Core
         TcCREARPROPUESTA CrearPropuesta(int idPublicacion, int idBase, int idSoa);
         IEnumerable<SAF_PROPUESTA> ListarPropuestasPorPublicacion(int idPublicacion);
         IEnumerable<TcPROPUESTAS> ListadoPropuestasCalificar(int? idPublicacion);
-        IEnumerable<TcPROPUESTAS> ListarPropuestas(int idPublicacion, int idSoa);
+        IEnumerable<TcPROPUESTAS> ListarPropuestas(int? idPublicacion, int? idBase, int? idSoa);
         TcPROPUESTAS PropuestaPorId(int idPropuesta);
         TcASIGNARGANADORPROPUESTA AsignarGanadorPropuesta(int idPropuesta, int idPublicacion);
         IEnumerable<TcPROPUESTARPT> ListarPropuestasRpt(int idPropuesta);
@@ -85,9 +85,9 @@ namespace SOCAUD.Business.Core
             return this._safPropuestaData.ListadoPropuestasCalificar(idPublicacion);
         }
 
-        public IEnumerable<TcPROPUESTAS> ListarPropuestas(int idPublicacion, int idSoa)
+        public IEnumerable<TcPROPUESTAS> ListarPropuestas(int? idPublicacion, int? idBase, int? idSoa)
         {
-            return this._safPropuestaData.ListarPropuestas(idPublicacion, idSoa);
+            return this._safPropuestaData.ListarPropuestas(idPublicacion,idBase, idSoa);
         }
 
 

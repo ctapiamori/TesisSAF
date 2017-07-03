@@ -80,6 +80,8 @@
           <Property Name="ESTREG" Type="char" MaxLength="1" />
           <Property Name="CODPRO" Type="int" />
           <Property Name="CODSERAUD" Type="int" />
+          <Property Name="FECINIAUDITORIA" Type="datetime" />
+          <Property Name="FECFINAUDITORIA" Type="datetime" />
         </EntityType>
         <EntityType Name="SAF_BASE">
           <Key>
@@ -579,6 +581,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="RETRECOTOTALREQ" Type="numeric" Precision="19" Scale="2" />
           <Property Name="MONTVIATICOREQ" Type="numeric" Precision="19" Scale="2" />
           <Property Name="ESTPROP" Type="int" />
+          <Property Name="CODBAS" Type="int" />
         </EntityType>
         <EntityType Name="SAF_PROVINCIA">
           <Key>
@@ -1938,6 +1941,9 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Parameter Name="CODPUB" Type="int" Mode="In" />
           <Parameter Name="CODSERAUD" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_SAF_MENUPORPERFIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CODPER" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_SAF_PROPUESTA_RPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODPRO" Type="int" Mode="In" />
         </Function>
@@ -1950,6 +1956,9 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
         </Function>
         <Function Name="SP_SAF_RESULTADOCORTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODPUB" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SAF_SUBMENUPORMENU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CODMEN" Type="int" Mode="In" />
         </Function>
         <Function Name="USP_CORRELATIVO_SOLICITUD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SI_SOCAUDModelStoreContainer">
@@ -2537,6 +2546,8 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Name="CODPRO" Type="Int32" />
           <Property Name="CODSERAUD" Type="Int32" />
           <NavigationProperty Name="SAF_PROPUESTA" Relationship="Self.R_43" FromRole="SAF_AUDITORIA" ToRole="SAF_PROPUESTA" />
+          <Property Name="FECINIAUDITORIA" Type="DateTime" Precision="3" />
+          <Property Name="FECFINAUDITORIA" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="SAF_BASE">
           <Key>
@@ -2974,6 +2985,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <NavigationProperty Name="SAF_AUDITORIA" Relationship="Self.R_43" FromRole="SAF_PROPUESTA" ToRole="SAF_AUDITORIA" />
           <NavigationProperty Name="SAF_SOA" Relationship="Self.R_31" FromRole="SAF_PROPUESTA" ToRole="SAF_SOA" />
           <NavigationProperty Name="SAF_PUBLICACION" Relationship="Self.R_32" FromRole="SAF_PROPUESTA" ToRole="SAF_PUBLICACION" />
+          <Property Name="CODBAS" Type="Int32" />
         </EntityType>
         <EntityType Name="SAF_PROVINCIA">
           <Key>
@@ -4156,9 +4168,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
             <Parameter Name="CODPROEQU" Mode="In" Type="Int32" />
             <Parameter Name="STRFECHASASIGNAR" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_SAF_AUDITORIAS" ReturnType="Collection(SI_SOCAUDModel.TcAUDITORIAS)">
-          <Parameter Name="CODPRO" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_SAF_DETALLEEQUIPOPORAUDITORIA" ReturnType="Collection(SI_SOCAUDModel.TcDETALLEEQUIPOPORAUDITORIA)">
           <Parameter Name="CODAUDITORIA" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -4172,7 +4181,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <FunctionImport Name="SP_SAF_FECHASINVITADAS" ReturnType="Collection(SI_SOCAUDModel.TcFECHASINVITADAS)">
           <Parameter Name="CODPROEQU" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_SAF_PROPUESTAS" ReturnType="Collection(SI_SOCAUDModel.TcPROPUESTAS)" />
           <FunctionImport Name="SP_ACCEDERSISTEMAADMIN" ReturnType="Collection(SI_SOCAUDModel.TcACCEDERSISTEMAADMIN)">
             <Parameter Name="NOMUSU" Mode="In" Type="String" />
             <Parameter Name="PASUSU" Mode="In" Type="String" />
@@ -4267,6 +4275,19 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
             <Parameter Name="CODPUB" Mode="In" Type="Int32" />
             <Parameter Name="CODBAS" Mode="In" Type="Int32" />
             <Parameter Name="CODSOA" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_AUDITORIAS" ReturnType="Collection(SI_SOCAUDModel.SP_SAF_AUDITORIAS_Result)">
+          <Parameter Name="CODPRO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_AUDITORIAS1" ReturnType="Collection(SI_SOCAUDModel.TcAUDITORIAS)">
+          <Parameter Name="CODPRO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_PROPUESTAS" ReturnType="Collection(SI_SOCAUDModel.TcPROPUESTAS)" />
+          <FunctionImport Name="SP_SAF_MENUPORPERFIL" ReturnType="Collection(SI_SOCAUDModel.TcMENUPORPERFIL)">
+            <Parameter Name="CODPER" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAF_SUBMENUPORMENU" ReturnType="Collection(SI_SOCAUDModel.TcSUBMENUPORMENU)">
+            <Parameter Name="CODMEN" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
@@ -4514,6 +4535,8 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Type="Int32" Name="CODAUDITORIA" Nullable="false" />
           <Property Type="String" Name="PERAUD" Nullable="true" MaxLength="150" />
           <Property Type="String" Name="DESBAS" Nullable="true" MaxLength="300" />
+          <Property Type="DateTime" Name="FECINIAUDITORIA" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FECFINAUDITORIA" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="TcCREARPROPUESTA">
           <Property Type="Int32" Name="RESULTADO" Nullable="false" />
@@ -4568,6 +4591,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Type="Decimal" Name="TOTVIABASREQ" Nullable="false" Precision="19" Scale="2" />
           <Property Type="String" Name="VALOR" Nullable="true" />
           <Property Type="Int32" Name="PUNTAJETOTAL" Nullable="true" />
+          <Property Type="Int32" Name="CODBAS" Nullable="false" />
         </ComplexType>
         <ComplexType Name="TcFECHASINVITADAS">
           <Property Type="DateTime" Name="FECINVDET" Nullable="true" Precision="23" />
@@ -5107,6 +5131,70 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Type="Int32" Name="RESULTADO" Nullable="false" />
           <Property Type="String" Name="MENSAJE" Nullable="false" MaxLength="56" />
         </ComplexType>
+        <ComplexType Name="SP_SAF_AUDITORIAS_Result">
+          <Property Type="Int32" Name="CODPRO" Nullable="true" />
+          <Property Type="Int32" Name="CODAUDITORIA" Nullable="false" />
+          <Property Type="String" Name="PERAUD" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="DESBAS" Nullable="true" MaxLength="300" />
+          <Property Type="DateTime" Name="FECINIAUDITORIA" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FECFINAUDITORIA" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_SAF_PROPUESTAS_Result">
+          <Property Type="Int32" Name="CODPUB" Nullable="true" />
+          <Property Type="Int32" Name="CODPRO" Nullable="false" />
+          <Property Type="Int32" Name="CODSOA" Nullable="true" />
+          <Property Type="Int32" Name="CODBAS" Nullable="false" />
+          <Property Type="String" Name="RUCSOA" Nullable="true" MaxLength="21" />
+          <Property Type="String" Name="RAZSOCSOA" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="NOMREPLEGSOA" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CELREPLEGSOA" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="CORREPLEGSOA" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESBAS" Nullable="true" MaxLength="300" />
+          <Property Type="Decimal" Name="RETRECOTOTAL" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="IGVTOTAL" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="MONTVIATICO" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="RETRECO" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Int32" Name="ESTPROP" Nullable="true" />
+          <Property Type="Int64" Name="CODARCFIRINT" Nullable="true" />
+          <Property Type="Int64" Name="CODARCFIRPCAOB" Nullable="true" />
+          <Property Type="String" Name="NOMBLABELFIRINT" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="NOMBLABELFIRPCAOB" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="INDREQFIRINT" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="INDREQFIRPCAOB" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="TOTRETECOBASREQ" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="TOTIGVBASREQ" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="TOTVIABASREQ" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="String" Name="VALOR" Nullable="true" />
+          <Property Type="Int32" Name="PUNTAJETOTAL" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_SAF_MENUPORPERFIL_Result">
+          <Property Type="Int32" Name="CODMEN" Nullable="false" />
+          <Property Type="Int32" Name="CODPER" Nullable="true" />
+          <Property Type="String" Name="DESMEN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="RUTAMEN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ICONCSS" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ESTREG" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_SAF_SUBMENUPORMENU_Result">
+          <Property Type="Int32" Name="CODSUBMEN" Nullable="false" />
+          <Property Type="String" Name="DESSUBMEN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="RUTASUBMEN" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="CODMEN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="TcMENUPORPERFIL">
+          <Property Type="Int32" Name="CODMEN" Nullable="false" />
+          <Property Type="Int32" Name="CODPER" Nullable="true" />
+          <Property Type="String" Name="DESMEN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="RUTAMEN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ICONCSS" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ESTREG" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="TcSUBMENUPORMENU">
+          <Property Type="Int32" Name="CODSUBMEN" Nullable="false" />
+          <Property Type="String" Name="DESSUBMEN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="RUTASUBMEN" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="CODMEN" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5164,6 +5252,8 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <EntitySetMapping Name="SAF_AUDITORIA">
             <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_AUDITORIA">
               <MappingFragment StoreEntitySet="SAF_AUDITORIA">
+                <ScalarProperty Name="FECFINAUDITORIA" ColumnName="FECFINAUDITORIA" />
+                <ScalarProperty Name="FECINIAUDITORIA" ColumnName="FECINIAUDITORIA" />
                 <ScalarProperty Name="CODAUD" ColumnName="CODAUD" />
                 <ScalarProperty Name="PERAUD" ColumnName="PERAUD" />
                 <ScalarProperty Name="INDCUMCAPAUDAUD" ColumnName="INDCUMCAPAUDAUD" />
@@ -5556,6 +5646,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <EntitySetMapping Name="SAF_PROPUESTA">
             <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_PROPUESTA">
               <MappingFragment StoreEntitySet="SAF_PROPUESTA">
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
                 <ScalarProperty Name="CODPRO" ColumnName="CODPRO" />
                 <ScalarProperty Name="NUMPRO" ColumnName="NUMPRO" />
                 <ScalarProperty Name="FECREG" ColumnName="FECREG" />
@@ -6092,16 +6183,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_SAF_AUDITORIAS" FunctionName="SI_SOCAUDModel.Store.SP_SAF_AUDITORIAS">
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcAUDITORIAS">
-                <ScalarProperty Name="CODPRO" ColumnName="CODPRO" />
-                <ScalarProperty Name="CODAUDITORIA" ColumnName="CODAUDITORIA" />
-                <ScalarProperty Name="PERAUD" ColumnName="PERAUD" />
-                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_SAF_DETALLEEQUIPOPORAUDITORIA" FunctionName="SI_SOCAUDModel.Store.SP_SAF_DETALLEEQUIPOPORAUDITORIA">
           <ResultMapping>
               <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcDETALLEEQUIPOPORAUDITORIA">
@@ -6141,37 +6222,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
             <ResultMapping>
               <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcFECHASINVITADAS">
                 <ScalarProperty Name="FECINVDET" ColumnName="FECINVDET" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_SAF_PROPUESTAS" FunctionName="SI_SOCAUDModel.Store.SP_SAF_PROPUESTAS">
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcPROPUESTAS">
-                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
-                <ScalarProperty Name="CODPRO" ColumnName="CODPRO" />
-                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
-                <ScalarProperty Name="RUCSOA" ColumnName="RUCSOA" />
-                <ScalarProperty Name="RAZSOCSOA" ColumnName="RAZSOCSOA" />
-                <ScalarProperty Name="NOMREPLEGSOA" ColumnName="NOMREPLEGSOA" />
-                <ScalarProperty Name="CELREPLEGSOA" ColumnName="CELREPLEGSOA" />
-                <ScalarProperty Name="CORREPLEGSOA" ColumnName="CORREPLEGSOA" />
-                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
-                <ScalarProperty Name="RETRECOTOTAL" ColumnName="RETRECOTOTAL" />
-                <ScalarProperty Name="IGVTOTAL" ColumnName="IGVTOTAL" />
-                <ScalarProperty Name="MONTVIATICO" ColumnName="MONTVIATICO" />
-                <ScalarProperty Name="RETRECO" ColumnName="RETRECO" />
-                <ScalarProperty Name="ESTPROP" ColumnName="ESTPROP" />
-                <ScalarProperty Name="CODARCFIRINT" ColumnName="CODARCFIRINT" />
-                <ScalarProperty Name="CODARCFIRPCAOB" ColumnName="CODARCFIRPCAOB" />
-                <ScalarProperty Name="NOMBLABELFIRINT" ColumnName="NOMBLABELFIRINT" />
-                <ScalarProperty Name="NOMBLABELFIRPCAOB" ColumnName="NOMBLABELFIRPCAOB" />
-                <ScalarProperty Name="INDREQFIRINT" ColumnName="INDREQFIRINT" />
-                <ScalarProperty Name="INDREQFIRPCAOB" ColumnName="INDREQFIRPCAOB" />
-                <ScalarProperty Name="TOTRETECOBASREQ" ColumnName="TOTRETECOBASREQ" />
-                <ScalarProperty Name="TOTIGVBASREQ" ColumnName="TOTIGVBASREQ" />
-                <ScalarProperty Name="TOTVIABASREQ" ColumnName="TOTVIABASREQ" />
-                <ScalarProperty Name="VALOR" ColumnName="VALOR" />
-                <ScalarProperty Name="PUNTAJETOTAL" ColumnName="PUNTAJETOTAL" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6601,6 +6651,84 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
               <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcCREARPROPUESTA">
                 <ScalarProperty Name="RESULTADO" ColumnName="RESULTADO" />
                 <ScalarProperty Name="MENSAJE" ColumnName="MENSAJE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_AUDITORIAS" FunctionName="SI_SOCAUDModel.Store.SP_SAF_AUDITORIAS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.SP_SAF_AUDITORIAS_Result">
+                <ScalarProperty Name="CODPRO" ColumnName="CODPRO" />
+                <ScalarProperty Name="CODAUDITORIA" ColumnName="CODAUDITORIA" />
+                <ScalarProperty Name="PERAUD" ColumnName="PERAUD" />
+                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
+                <ScalarProperty Name="FECINIAUDITORIA" ColumnName="FECINIAUDITORIA" />
+                <ScalarProperty Name="FECFINAUDITORIA" ColumnName="FECFINAUDITORIA" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_AUDITORIAS1" FunctionName="SI_SOCAUDModel.Store.SP_SAF_AUDITORIAS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcAUDITORIAS">
+                <ScalarProperty Name="CODPRO" ColumnName="CODPRO" />
+                <ScalarProperty Name="CODAUDITORIA" ColumnName="CODAUDITORIA" />
+                <ScalarProperty Name="PERAUD" ColumnName="PERAUD" />
+                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
+                <ScalarProperty Name="FECINIAUDITORIA" ColumnName="FECINIAUDITORIA" />
+                <ScalarProperty Name="FECFINAUDITORIA" ColumnName="FECFINAUDITORIA" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_PROPUESTAS" FunctionName="SI_SOCAUDModel.Store.SP_SAF_PROPUESTAS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcPROPUESTAS">
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="CODPRO" ColumnName="CODPRO" />
+                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
+                <ScalarProperty Name="RUCSOA" ColumnName="RUCSOA" />
+                <ScalarProperty Name="RAZSOCSOA" ColumnName="RAZSOCSOA" />
+                <ScalarProperty Name="NOMREPLEGSOA" ColumnName="NOMREPLEGSOA" />
+                <ScalarProperty Name="CELREPLEGSOA" ColumnName="CELREPLEGSOA" />
+                <ScalarProperty Name="CORREPLEGSOA" ColumnName="CORREPLEGSOA" />
+                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
+                <ScalarProperty Name="RETRECOTOTAL" ColumnName="RETRECOTOTAL" />
+                <ScalarProperty Name="IGVTOTAL" ColumnName="IGVTOTAL" />
+                <ScalarProperty Name="MONTVIATICO" ColumnName="MONTVIATICO" />
+                <ScalarProperty Name="RETRECO" ColumnName="RETRECO" />
+                <ScalarProperty Name="ESTPROP" ColumnName="ESTPROP" />
+                <ScalarProperty Name="CODARCFIRINT" ColumnName="CODARCFIRINT" />
+                <ScalarProperty Name="CODARCFIRPCAOB" ColumnName="CODARCFIRPCAOB" />
+                <ScalarProperty Name="NOMBLABELFIRINT" ColumnName="NOMBLABELFIRINT" />
+                <ScalarProperty Name="NOMBLABELFIRPCAOB" ColumnName="NOMBLABELFIRPCAOB" />
+                <ScalarProperty Name="INDREQFIRINT" ColumnName="INDREQFIRINT" />
+                <ScalarProperty Name="INDREQFIRPCAOB" ColumnName="INDREQFIRPCAOB" />
+                <ScalarProperty Name="TOTRETECOBASREQ" ColumnName="TOTRETECOBASREQ" />
+                <ScalarProperty Name="TOTIGVBASREQ" ColumnName="TOTIGVBASREQ" />
+                <ScalarProperty Name="TOTVIABASREQ" ColumnName="TOTVIABASREQ" />
+                <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+                <ScalarProperty Name="PUNTAJETOTAL" ColumnName="PUNTAJETOTAL" />
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_MENUPORPERFIL" FunctionName="SI_SOCAUDModel.Store.SP_SAF_MENUPORPERFIL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcMENUPORPERFIL">
+                <ScalarProperty Name="CODMEN" ColumnName="CODMEN" />
+                <ScalarProperty Name="CODPER" ColumnName="CODPER" />
+                <ScalarProperty Name="DESMEN" ColumnName="DESMEN" />
+                <ScalarProperty Name="RUTAMEN" ColumnName="RUTAMEN" />
+                <ScalarProperty Name="ICONCSS" ColumnName="ICONCSS" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_SUBMENUPORMENU" FunctionName="SI_SOCAUDModel.Store.SP_SAF_SUBMENUPORMENU">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcSUBMENUPORMENU">
+                <ScalarProperty Name="CODSUBMEN" ColumnName="CODSUBMEN" />
+                <ScalarProperty Name="DESSUBMEN" ColumnName="DESSUBMEN" />
+                <ScalarProperty Name="RUTASUBMEN" ColumnName="RUTASUBMEN" />
+                <ScalarProperty Name="CODMEN" ColumnName="CODMEN" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

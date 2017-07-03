@@ -152,7 +152,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     @Html.LabelFor(c => c.RETRECO)
-                                    @Html.TextBoxFor(c => c.RETRECO, new { @class = "form-control" })
+                                    @Html.TextBoxFor(c => c.RETRECO, new { @class = "form-control" , @readonly = "true"})
                                 </div>
                                 <div class="col-md-3">
                                     @Html.LabelFor(c => c.IGVTOTAL)
@@ -164,15 +164,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     @Html.LabelFor(c => c.MONTVIATICO)
-                                    @Html.TextBoxFor(c => c.MONTVIATICO, new { @class = "form-control" })
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" id="btnGrabarRetribucionEconomica" class="btn btn-primary pull-right"><i class="fa fa-save"></i>&nbsp;Grabar Retribucion</button>
+                                    @Html.TextBoxFor(c => c.MONTVIATICO, new { @class = "form-control" , @readonly = "true"})
                                 </div>
                             </div>
                         </div>
@@ -199,18 +191,30 @@
                                 <div class="row">
                                     @if (Model.INDREQFIRINT.Equals("S"))
                                     {
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="inline">
-                                                <h4><i class="fa fa-check-square-o">&nbsp;</i>&nbsp;Requiere Sustento Firma Internacional</h4>
+                                                <h4><i class="fa fa-check-square-o">&nbsp;</i>&nbsp;SI Requiere Sustento Firma Internacional</h4>
+                                            </div>
+                                        </div>
+                                    }else {
+                                        <div class="col-md-6">
+                                            <div class="inline">
+                                                <h4><i class="fa fa-check-square-o">&nbsp;</i>&nbsp;La Firma Internacional NO es requerida pero si cuenta con una puede adjuntarla</h4>
                                             </div>
                                         </div>
                                     }
 
-                                    @if (Model.INDREQFIRPCAOB.Equals("N"))
+                                    @if (Model.INDREQFIRPCAOB.Equals("S"))
                                     {
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="inline">
-                                                <h4><i class="fa fa-check-square-o">&nbsp;</i>&nbsp;Requiere Sustento PCAOB</h4>
+                                                <h4><i class="fa fa-check-square-o">&nbsp;</i>&nbsp;SI Requiere Sustento PCAOB</h4>
+                                            </div>
+                                        </div>
+                                    } else {
+                                        <div class="col-md-6">
+                                            <div class="inline">
+                                                <h4><i class="fa fa-check-square-o">&nbsp;</i>&nbsp;El sustento PCAOB NO es requerido pero si cuenta con una puede adjuntarla</h4>
                                             </div>
                                         </div>
                                     }
@@ -226,11 +230,6 @@
                                         </div>
                                         @Html.HiddenFor(m => m.codArchivoFirmaInternacional)
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
                                     <div class="col-md-6">
                                         @Html.LabelFor(m => m.nombreArchivoFirmaPCAOB)
                                         <div class="input-group">
@@ -240,16 +239,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button type="button" id="btnGrabarDocumentosAdicionales" class="btn btn-primary pull-right"><i class="fa fa-save"></i>&nbsp;Grabar Sustentos Adicionales</button>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -331,15 +320,7 @@
                             </div>
                         </div>
 
-                        @*<div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" id="btnGrabarFechasAuditor" class="btn btn-primary pull-right"><i class="fa fa-calendar"></i>&nbsp;Asignar fechas Propuesta</button>
-                                </div>
-                            </div>
-                        </div>
-                        *@
-
+       
                     </div>
                 </div>
             </div>
@@ -354,7 +335,6 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-primary" type="button" id="btnPresentarPropuesta"><i class="fa fa-check"></i>&nbsp;Presentar Propuesta</button>
             <button class="btn btn-default" id="btnRegresar" type="button"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
         </div>
     </div>
@@ -490,12 +470,9 @@
 
         $(document).ready(function () {
 
-            if (!editarPropuesta) {
-                $("#btnPresentarPropuesta").hide();
-                $("#btnGrabarDocumentosAdicionales").hide();
-                $("#btnGrabarRetribucionEconomica").hide();
-            }
-
+ 
+            $("#delete_nombreArchivoFirmaInternacional").hide();
+            $("#delete_nombreArchivoFirmaPCAOB").hide();
             listarAuditorias();
             $("#btnRegresar").click(regresarPropuestas);
             $("#btnGrabarRetribucionEconomica").click(registrarRetribucionEconomica);
@@ -551,7 +528,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("AsignarFechaEquipoPropuesta", "Propuesta")',
+                url: '@Url.Action("AsignarFechaEquipoPropuestaLec", "Propuesta")',
                 data: { idPropuesta: $("#CODPRO").val(), idEquipo: id },
                 success: function (result) {
                     $("#modalAsignaFechasAuditor").empty().html(result).modal();

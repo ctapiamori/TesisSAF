@@ -24,7 +24,7 @@ namespace SOCAUD.Data.Core
 
         public IEnumerable<TcAUDITORIAS> ListarAuditoriasPorPropuesta(int idPropuesta)
         {
-            return this._uow.DataContext().SP_SAF_AUDITORIAS(idPropuesta).ToList();
+            return this._uow.DataContext().SP_SAF_AUDITORIAS1(idPropuesta).ToList();
         }
     }
 }

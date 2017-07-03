@@ -1,6 +1,7 @@
 ﻿using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
+using SOCAUD.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,13 @@ namespace SOCAUD.Web.Controllers
         private readonly ISeguridadLogic _seguridadLogic;
         private readonly ISafAuditorLogic _auditorLogic;
         private readonly ISafSoaLogic _soaLogic;
-
+        private readonly ISafMenuLogic _menuLogic;
         public AccesoController()
         {
             _seguridadLogic = new SeguridadLogic();
             _auditorLogic = new SafAuditorLogic();
             _soaLogic = new SafSoaLogic();
+            _menuLogic = new SafMenuLogic();
         }
 
         // GET: Acceso
@@ -64,7 +66,36 @@ namespace SOCAUD.Web.Controllers
             Session["sessionNombreCompletoUsuario"] = NombreUsuario;
             Session["sessionTipoUsuario"] = TipoExterno;
             Session["sessionUsuario"] = Usuario;
-            return RedirectToAction("Index","Solicitud");
+            
+
+            var tipoExterno = Convert.ToInt32(Session["sessionTipoUsuario"]);
+            int perfilUsuarioExterno = 0;
+            if (tipoExterno == Tipo.TipoUsuarioExtranet.Auditor.GetHashCode())
+                perfilUsuarioExterno = 6;
+            else
+                perfilUsuarioExterno = 5;
+
+            var perfil = perfilUsuarioExterno;
+
+            
+            var MenuBD = _menuLogic.ObtenerMenuPorPerfil(perfil).ToList();
+
+            var MenuFinal = (from c in MenuBD
+                             select new MenuOpcionesModel()
+                             {
+                                 Css = c.ICONCSS,
+                                 Nombre = c.DESMEN,
+                                 Ruta = c.RUTAMEN,
+                                 SubMenu = (from x in this._menuLogic.ObtenerSubMenuPorMenu(c.CODMEN).ToList()
+                                            select new SubMenuOpcionesModel()
+                                            {
+                                                Nombre = x.DESSUBMEN,
+                                                Ruta = x.RUTASUBMEN
+                                            })
+                             });
+
+            Session["sessionMenuSistema"] = MenuFinal.ToList();
+            return RedirectToAction("Index", "Solicitud");
             
         }
     }

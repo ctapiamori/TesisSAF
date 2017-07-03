@@ -22,6 +22,10 @@ namespace SOCAUD.Web.Controllers
         private readonly ISafPropuestaEquipoDetalleLogic _propuestaEquipoDetalleLogic;
         private readonly ISafGeneralLogic _generalLogic;
         private readonly ISafPublicacionBaseLogic _publicacionYBasesLogic;
+        private readonly ISafServicioAuditoriaLogic _servicioAuditoriaLogic;
+        private readonly ISafServicioAuditoriaCargoLogic _safServicioAuditoriaCargoLogic;
+
+
         public PropuestaController()
         {
             _publicacionLogic = new SafPublicacionLogic();
@@ -31,8 +35,9 @@ namespace SOCAUD.Web.Controllers
             _invitacionDetalleLogic = new SafInvitacionDetalleLogic();
             _propuestaEquipoDetalleLogic = new SafPropuestaEquipoDetalleLogic();
             _generalLogic = new SafGeneralLogic();
-
             _publicacionYBasesLogic = new SafPublicacionBaseLogic();
+            _servicioAuditoriaLogic = new SafServicioAuditoriaLogic();
+            _safServicioAuditoriaCargoLogic = new SafServicioAuditoriaCargoLogic();
         }
 
         #region Creacion de Propuesto
@@ -83,10 +88,11 @@ namespace SOCAUD.Web.Controllers
             }
         }
 
-        public JsonResult ListadoPropuestas(int? idPub)
+        public JsonResult ListadoPropuestas(int? idPub, int? idBase)
         {
+           
             var idSoa = (int)Session["sessionCodigoResponsableLogin"];
-            var propuestas = this._propuestaLogic.ListarPropuestas(idPub.GetValueOrDefault(), idSoa);// this.modelEntity.SP_SAF_PROPUESTAS().ToList().Where(c => c.CODPUB == idPub.GetValueOrDefault());
+            var propuestas = this._propuestaLogic.ListarPropuestas(idPub, idBase, idSoa);// this.modelEntity.SP_SAF_PROPUESTAS().ToList().Where(c => c.CODPUB == idPub.GetValueOrDefault());
             //propuestas = propuestas.Where(c => c.CODSOA == (int)Session["sessionCodigoResponsableLogin"]).ToList();
             var data = propuestas.Select(c => new string[] { 
                 c.CODPRO.ToString(),
@@ -94,12 +100,43 @@ namespace SOCAUD.Web.Controllers
                 c.RETRECOTOTAL.ToString(),
                 c.IGVTOTAL.ToString(),
                 c.MONTVIATICO.ToString(),
-                c.VALOR
+                c.VALOR, // nombre estado prpuesta
+                c.ESTPROP.GetValueOrDefault().ToString()
             }).ToArray();
             return Json(data);
         }
 
         public ActionResult VerPropuesta(int idPropuesta)
+        {
+            var propuesta = this._propuestaLogic.PropuestaPorId(idPropuesta);// this.modelEntity.SP_SAF_PROPUESTAS().ToList().Where(c => c.CODPRO == idPropuesta).FirstOrDefault();
+            var model = new PropuestaModel();
+            model.CODPRO = propuesta.CODPRO;
+            model.codigoPropuestaSustento = propuesta.CODPRO;
+            model.RAZSOCSOA = propuesta.RAZSOCSOA;
+            model.RUCSOA = propuesta.RUCSOA;
+            model.NOMREPLEGSOA = propuesta.NOMREPLEGSOA;
+            model.CORREPLEGSOA = propuesta.CORREPLEGSOA;
+            model.CELREPLEGSOA = propuesta.CELREPLEGSOA;
+            model.TOTRETECOBASREQ = propuesta.TOTRETECOBASREQ;
+            model.TOTIGVBASREQ = propuesta.TOTIGVBASREQ;
+            model.TOTVIABASREQ = propuesta.TOTVIABASREQ;
+
+            model.RETRECO = propuesta.RETRECO;
+            model.RETRECOTOTAL = propuesta.RETRECOTOTAL;
+            model.IGVTOTAL = propuesta.IGVTOTAL;
+            model.MONTVIATICO = propuesta.MONTVIATICO;
+
+            model.codArchivoFirmaInternacional = propuesta.CODARCFIRINT;
+            model.codArchivoFirmaPCAOB = propuesta.CODARCFIRPCAOB;
+            model.nombreArchivoFirmaInternacional = propuesta.NOMBLABELFIRINT;
+            model.nombreArchivoFirmaPCAOB = propuesta.NOMBLABELFIRPCAOB;
+            model.INDREQFIRINT = propuesta.INDREQFIRINT;
+            model.INDREQFIRPCAOB = propuesta.INDREQFIRPCAOB;
+            model.ESTPRO = propuesta.ESTPROP;
+            return View(model);
+        }
+
+        public ActionResult LecturaPropuesta(int idPropuesta)
         {
             var propuesta = this._propuestaLogic.PropuestaPorId(idPropuesta);// this.modelEntity.SP_SAF_PROPUESTAS().ToList().Where(c => c.CODPRO == idPropuesta).FirstOrDefault();
             var model = new PropuestaModel();
@@ -203,6 +240,8 @@ namespace SOCAUD.Web.Controllers
             var data = auditorias.Select(c => new string[] { 
                 c.CODAUDITORIA.ToString(),
                 c.PERAUD,
+                (c.FECINIAUDITORIA.HasValue)? c.FECINIAUDITORIA.Value.ToString("dd/MM/yyyy") : "",
+                (c.FECFINAUDITORIA.HasValue)? c.FECFINAUDITORIA.Value.ToString("dd/MM/yyyy") : "",
                 c.DESBAS
             }).ToArray();
             return Json(data);
@@ -231,15 +270,44 @@ namespace SOCAUD.Web.Controllers
             return PartialView("_AsignarFechaEquipo", model);
         }
 
+        public PartialViewResult AsignarFechaEquipoPropuestaLec(int idPropuesta, int idEquipo)
+        {
+            var model = new EquipoAuditoriaModel();
+            model.CODPROEQU = idEquipo;
+            model.codigoPropuestaAsigFecha = idPropuesta;
+            return PartialView("_AsignarFechaEquipoLec", model);
+        }
+
+        
+
         public JsonResult listadoFechasInvitadas(int idEquipo)
         {
-            //var equipo = this.modelEntity.SAF_PROPEQUIPO.ToList().Where(c => c.CODPROEQU == idEquipo).FirstOrDefault();
-            //var fechasInvitadas = this.modelEntity.SAF_INVITACIONDETALLE.ToList().Where(c => c.CODINV == equipo.CODINV);
             var fechasInvitadas = this._invitacionDetalleLogic.FechasInvitadas(idEquipo);// this.modelEntity.SP_SAF_FECHASINVITADAS(idEquipo).ToList();
             var data = fechasInvitadas.Select(c => new string[] { 
                 c.FECINVDET.Value.ToString("dd/MM/yyyy")
             }).ToArray();
             return Json(data);
+        }
+
+        public JsonResult MostrarEquipoRequeridoServicioAuditoriaBase(int idAuditoria) { 
+            var auditoriaProp = this._auditoriaLogic.BuscarPorId(idAuditoria);
+            var servicioAuditoriaBase = _servicioAuditoriaLogic.BuscarPorId(auditoriaProp.CODSERAUD.GetValueOrDefault());
+
+            var idServicio = servicioAuditoriaBase.CODSERAUD;
+
+            var listado = this._safServicioAuditoriaCargoLogic.ListarCargosPorServicioAuditoria(idServicio);
+            var data = listado.Select(c => new string[]{ 
+                c.CODSERAUDCAR.ToString(),
+                c.NOMCAR,
+                c.NUMMININTSERAUDCAR.GetValueOrDefault().ToString(),
+                c.NUMMINHORPARSERAUDCAR.GetValueOrDefault().ToString(),
+                c.NUMMINHORSERAUDCAPCAP.GetValueOrDefault().ToString(),
+                c.NUMMINHORSERAUDCAREXP.GetValueOrDefault().ToString()
+            }).ToArray();
+
+            return Json(data);
+
+
         }
 
         public JsonResult listadoFechasAsignadas(int idEquipo)
