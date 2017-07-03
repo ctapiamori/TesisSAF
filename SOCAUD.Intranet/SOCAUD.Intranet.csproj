@@ -217,6 +217,8 @@
     <Compile Include="Models\Archivo.cs" />
     <Compile Include="Models\AuditorModel.cs" />
     <Compile Include="Models\BaseModels.cs" />
+    <Compile Include="Models\ConsultaBases.cs" />
+    <Compile Include="Models\ConsultaConcurso.cs" />
     <Compile Include="Models\ContrasenaModel.cs" />
     <Compile Include="Models\CronogramaModels.cs" />
     <Compile Include="Models\EntidadModel.cs" />
@@ -555,6 +557,8 @@
     <Content Include="Views\ConsultasGeneral\ConsultaConcurso.cshtml" />
     <Content Include="Views\Acceso\RecuperaPassword.cshtml" />
     <Content Include="Views\Contrasena\CambiarContrasena.cshtml" />
+    <Content Include="Views\ConsultasGeneral\Cronograma.cshtml" />
+    <Content Include="Views\ConsultasGeneral\Bases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
