@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reporting.WebForms;
+using ReportManagement;
 using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
@@ -13,7 +14,28 @@ using System.Web.Mvc;
 
 namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
 {
-    public class EvaluadorController : Controller
+
+
+    public class ReporteConcursoPublico
+    {
+
+        public string NroConcurso { get; set; }
+        public string FechaMaxConsultas { get; set; }
+        public string FechaMaxResponderConsultas { get; set; }
+        public string FechaMaxPropuestas { get; set; }
+        public string ImageUrl { get; set; }
+        public IList<string> Entidades { get; set; }
+
+        public ReporteConcursoPublico()
+        {
+
+            this.Entidades = new List<string>();
+            
+        }
+    }
+
+
+    public class EvaluadorController : PdfViewController
     {
         //private readonly ConcursoPublicoMeritoAgente _agenteConcursoPublicoMerito;
         private readonly ISafPublicacionLogic _publicacionLogic;
@@ -359,5 +381,36 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
 
             return file;
         }
+
+
+        private void FillImageUrl(ReporteConcursoPublico model, string imageName)
+        {
+            string url = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+            model.ImageUrl = url + "Content/" + imageName;
+        }
+
+        public ActionResult CreateReporteConcurso(int id)
+        {
+            var model = new ReporteConcursoPublico();
+            FillImageUrl(model, "logo_contraloria.png");
+            var concurso = _publicacionLogic.BuscarPorId(id);
+            model.NroConcurso = concurso.NUMPUB;
+            model.FechaMaxConsultas = concurso.FECMAXCONS.GetValueOrDefault().ToString("dd/MM/yyyy");
+            model.FechaMaxResponderConsultas = concurso.FECMAXRESCONS.GetValueOrDefault().ToString("dd/MM/yyyy");
+            model.FechaMaxPropuestas = concurso.FECMAXPREPROP.GetValueOrDefault().ToString("dd/MM/yyyy");
+
+
+            var basesPublicacion = this._publicacionBaseLogic.ListarPorPublicacion(id);
+
+            foreach (var item in basesPublicacion)
+	        {
+                model.Entidades.Add(item.DESPUBBAS);
+	        }
+            
+
+            return this.ViewPdf("", "CreateReportPublicacion", model);
+        }
+
+
     }
 }
