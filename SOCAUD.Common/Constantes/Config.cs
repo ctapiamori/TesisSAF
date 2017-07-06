@@ -5,7 +5,7 @@ namespace SOCAUD.Common.Constantes
 {
     public class Config
     {
-        #region Web Config
+      
         public static string RutaArchivo
         {
             get { return ConfigurationManager.AppSettings["RutaArchivo"]; }
@@ -29,6 +29,11 @@ namespace SOCAUD.Common.Constantes
         {
             get { return ConfigurationManager.AppSettings["RutaByRegistrarSOAAuditor"]; }
         }
-        #endregion
+
+        public static string RutaPantallaLogin
+        {
+            get { return ConfigurationManager.AppSettings["RutaGoToLogin"]; }
+        }
+        
     }
 }

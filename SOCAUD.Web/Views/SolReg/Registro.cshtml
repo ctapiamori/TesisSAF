@@ -1,5 +1,7 @@
-﻿@model SOCAUD.Web.Models.SolRegModel
+﻿
+@model SOCAUD.Web.Models.SolRegModel
 @using SOCAUD.Common.Enum;
+@using SOCAUD.Common.Constantes;
 @{
     Layout = null;
 }
@@ -24,9 +26,8 @@
 
 
     <section class="content-header">
-        <h1>
+        <h1 style="color:white !important;">
             <i class="fa fa-check-square-o"></i>&nbsp;Solicitud Registro
-            <small>Inscripción Auditores / Sociedades Auditoria</small>
         </h1>
     </section>
 
@@ -35,9 +36,10 @@
         <div class="wrapper">
 
             <section class="content">
-                <div class="callout callout-info">
+                <div class="callout callout-warning">
                     <h4><i class="icon fa fa-warning"></i>&nbsp;Información Confidencial!</h4>
-                    <p>Toda información ingresada sera validada!</p>
+                    <p>Toda información ingresada sera validada por un equipo de Auditoria!</p>
+                    <p>Luego de ingresar la información basica debe ingresar al sistema para completar su información</p>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -276,8 +278,8 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <center>
-                                                <button type="button" id="btnGuardarSolicitud" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
-                                                <button type="button" id="btnCancelarSolicitud" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                                                <button type="button" id="btnGuardarSolicitud" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar Información</button>
+                                                <button type="button" id="btnCancelarSolicitud" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
                                             </center>
                                         </div>
                                     </div>
@@ -297,8 +299,17 @@
     @Scripts.Render("~/Scripts/Login")
     <script type="text/javascript" language="javascript">
 
-        $(document).ready(function () {
+        function setLimiteRUC(){
+            $("#soa_rucSoa").attr("maxlength", 11);
+        }
 
+        function setLimiteDNI() {
+            $("#auditor_dniAud").attr("maxlength", 8);
+        }
+
+
+        $(document).ready(function () {
+            setLimiteRUC();
             $('#auditor_fecNacAud').datepicker({
                 format: "dd/mm/yyyy"
             }).next().on(ace.click_event, function () {
@@ -314,6 +325,7 @@
 
 
                     if ($("#solicitud_codTipSol").val() == "1") { // si es una sociedad
+                        setLimiteRUC();
                         if ($("#soa_rucSoa").val().length != 11) {
                             mostrarNotificacionError("La longitud del RUC no es valido");
                             return;
@@ -335,7 +347,7 @@
                         }
 
                     } else {
-
+                        setLimiteDNI();
                         if ($("#auditor_dniAud").val().length != 8) {
                             mostrarNotificacionError("La longitud del DNI no es valido");
                             return;
@@ -432,7 +444,7 @@
         }
 
         function cancelarSolicitud() {
-            document.location = '@Url.Action("Login","Acceso")';
+            document.location = '@Config.RutaPantallaLogin';
         }
 
         function jsonObject() {

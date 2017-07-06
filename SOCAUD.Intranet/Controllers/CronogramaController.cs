@@ -18,7 +18,7 @@ namespace SOCAUD.Intranet.Controllers
 
     public class ReporteCronograma
     {
-
+        
         public TcSAFCRONOGRAMARPT cronograma { get; set; }
         public IEnumerable<TcSAFCRONOENTIDADCRONORPT> listaEntidades { get; set; }
         public string ImageUrl { get; set; }
@@ -63,6 +63,8 @@ namespace SOCAUD.Intranet.Controllers
                 anios.Add(new SelectListItem() { Value = item.ANIOCRO.Value.ToString(), Text = item.ANIOCRO.Value.ToString() });
             }
             ViewBag.Anios = anios;
+
+            
             return View();
         }
 
@@ -239,7 +241,8 @@ namespace SOCAUD.Intranet.Controllers
                 WebHelper.GetShortDateString(c.FECPUBCRO),
                 WebHelper.GetShortDateString(c.FECMAXCREBASCRO),
                 c.NOMPAR,
-                c.ESTCRO.GetValueOrDefault().Equals(Estado.Cronograma.Elaboracion.GetHashCode()) ? "1" : "0"
+                c.ESTCRO.GetValueOrDefault().Equals(Estado.Cronograma.Elaboracion.GetHashCode()) ? "1" : "0",
+                c.ESTCRO.GetValueOrDefault().ToString()
             }).ToArray();
 
             return Json(data);

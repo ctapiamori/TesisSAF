@@ -341,6 +341,9 @@
     <Compile Include="Model\TcAUDITORIAS.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\TcCORRELATIVO.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\TcCORTEPUBLICACION.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>

@@ -28,7 +28,7 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-primary" id="btnNuevaSolicitud"><i class="fa fa-file-o"></i>&nbsp;Generar Solicitud de Actualizacion</button>
+            <button type="button" class="btn btn-primary" id="btnNuevaSolicitud"><i class="fa fa-file"></i>&nbsp;Generar Solicitud de Actualizacion</button>
         </div>
     </div>
 </div>
@@ -67,10 +67,18 @@
                             "sClass": "center",
                             "sWidth": "5%",
                             "render": function (data, type, row) {
-                                if ('@Convert.ToInt32(Session["sessionTipoUsuario"])' == '@Convert.ToInt32(Tipo.TipoUsuarioExtranet.SociedadAuditoria)')
-                                    return '<center><button class="btn btn-primary" title="Abrir" type="button" onclick="editarSolicitudSOA(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
-                                else
-                                    return '<center><button class="btn btn-primary" title="Abrir" type="button" onclick="editarSolicitudAuditor(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+                                if ('@Convert.ToInt32(Session["sessionTipoUsuario"])' == '@Convert.ToInt32(Tipo.TipoUsuarioExtranet.SociedadAuditoria)') {
+                                    console.log(row[4]);
+                                    if (row[4] == '@Estado.Solicitud.Observada.GetHashCode()' || row[4] == '@Estado.Solicitud.Elaboracion.GetHashCode()')
+                                        return '<center><button class="btn btn-success" title="Abrir" type="button" onclick="editarSolicitudSOA(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                                    else
+                                        return '<center><button class="btn btn-primary" title="Abrir" type="button" onclick="editarSolicitudSOA(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+                                } else {
+                                    if (row[4] == '@Estado.Solicitud.Observada.GetHashCode()' || row[4] == '@Estado.Solicitud.Elaboracion.GetHashCode()')
+                                        return '<center><button class="btn btn-success" title="Abrir" type="button" onclick="editarSolicitudAuditor(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                                    else
+                                        return '<center><button class="btn btn-primary" title="Abrir" type="button" onclick="editarSolicitudAuditor(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+                                }
                             }
                         },
                         {
@@ -78,7 +86,7 @@
                             "sClass": "center"
                         },
                         { "sTitle": "Tipo Solicitud" },
-                        { "sTitle": "Estado Solicitud" }
+                        { "sTitle": "Estado Solicitud" } 
                     ]
 
                 });

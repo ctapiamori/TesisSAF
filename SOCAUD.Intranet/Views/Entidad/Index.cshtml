@@ -136,7 +136,9 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <button id="btnGrabar" class="btn btn-primary" type="button"><i class="fa fa-save"></i>&nbsp;Grabar</button>
+                    <center>
+                        <button id="btnGrabar" class="btn btn-primary" type="button"><i class="fa fa-save"></i>&nbsp;Grabar Información de la Entidad</button>
+                    </center>
                 </div>
             </div>
 
@@ -152,12 +154,17 @@
         $(document).ready(function () {
 
             $("#btnGrabar").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("GrabarInfoEntidad", "Entidad")',
-                    data: $("#frmGrabarEntidad").serialize(),
-                    success: function (result) {
-                        mostrarNotificacion(result);
+                if (!$("#frmGrabarEntidad").isValid()) { return; }
+                bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                    if (result) {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("GrabarInfoEntidad", "Entidad")',
+                            data: $("#frmGrabarEntidad").serialize(),
+                            success: function (result) {
+                                mostrarNotificacion(result);
+                            }
+                        });
                     }
                 });
             });

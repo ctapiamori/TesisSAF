@@ -475,5 +475,10 @@ namespace SOCAUD.Data.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcSUBMENUPORMENU>("SP_SAF_SUBMENUPORMENU", cODMENParameter);
         }
+    
+        public virtual ObjectResult<TcCORRELATIVO> SP_SAF_CORRELATIVOSOLICITUD1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcCORRELATIVO>("SP_SAF_CORRELATIVOSOLICITUD1");
+        }
     }
 }

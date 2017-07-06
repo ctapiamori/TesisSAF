@@ -1,4 +1,6 @@
-﻿<header class="main-header">
+﻿@using SOCAUD.Common.Constantes;
+
+<header class="main-header">
     <!-- Logo -->
     <a href="index2.html" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -242,7 +244,7 @@
                         </div>
                             *@
                             <div class="pull-right">
-                                <a href='@Url.Action("Login", "Acceso", new { Area = "" })' class="btn btn-default btn-flat">Cerrar Sesion</a>
+                                <a href='@Config.RutaPantallaLogin' class="btn btn-default btn-flat">Cerrar Sesion</a>
                             </div>
                         </li>
                     </ul>

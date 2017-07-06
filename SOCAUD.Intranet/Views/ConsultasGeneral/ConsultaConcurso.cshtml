@@ -39,6 +39,8 @@
         </div>
     </div>
 
+<div class="modal fade" id="modalResultadoCortePublicacion" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
 
 @section scripts {
 
@@ -84,6 +86,10 @@
         });
 
 
+        function descargarPublicacion(id) {
+            url = '@Url.Action("CreateReporteConcurso", "Evaluador", new { Area = "Publicacion", id = "_id_" })'.replace('_id_', id);
+            window.open(url);
+        }
 
         $(document).ready(function () {
             listarPublicaciones();
@@ -101,6 +107,19 @@
                 success: function (result) {
                     _dataPublicacion_ = result;
                     tabPublicacion.fnReloadData(_dataPublicacion_);
+                }
+            });
+        }
+
+
+        function verCortePublicacion(id) {
+            $.ajax({
+                url: '@Url.Action("VerResultadoCortePublicacion", "Evaluador", new { Area = "Publicacion" })',
+                type: 'POST',
+                async: false,
+                data: { id: id },
+                success: function (result) {
+                    $("#modalResultadoCortePublicacion").empty().html(result).modal();
                 }
             });
         }

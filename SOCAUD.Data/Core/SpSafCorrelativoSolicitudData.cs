@@ -26,7 +26,16 @@ namespace SOCAUD.Data.Core
 
         public string GenerarCorrelativo()
         {
-            return this._uow.DataContext().SP_SAF_CORRELATIVOSOLICITUD().ToString();
+            try
+            {
+                return this._uow.DataContext().SP_SAF_CORRELATIVOSOLICITUD1().ToList().FirstOrDefault().NUMSOL.ToString();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
         }
     }
 }

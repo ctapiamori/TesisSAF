@@ -77,6 +77,7 @@
             { "sTitle": "Total Viaticos" },
             { "sTitle": "Firma de PCAOB", "visible" : false },
             { "sTitle": "Firma Internacional", "visible": false },
+            { "sTitle": "Estado" },
             {
                 "bSortable": false,
                 "sClass": "center",
@@ -85,7 +86,19 @@
                         return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarBase(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
                     return "";
                 }
+            },
+
+            {
+                "bSortable": false,
+                "sClass": "center",
+                "render": function (data, type, row) {
+                    if (row[10] == "@Estado.Bases.Aprobado.GetHashCode()")
+                        return '<center><button class="btn btn-primary" title="Descargar" type="button" onclick="VerDocumentoBases(' + row[0] + ');"><i class="fa fa-download"></i></button></center>';
+                    return "";
+                }
             }
+
+
         ]
     });
 
@@ -132,6 +145,12 @@
                     listarBases();
                 }
             });
+        }
+
+        function VerDocumentoBases(id) {
+            var url = '@Url.Action("CreateReporteBase", "Base", new { Area = "", id = "_id_" })'.replace('_id_', id);
+            window.open(url);
+
         }
 
 

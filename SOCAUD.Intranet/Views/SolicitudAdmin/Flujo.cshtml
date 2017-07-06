@@ -96,7 +96,7 @@
         if (tipo == 'B')
             url = '@Url.Action("CreateReporteBase", "Base", new { Area = "", id = "_id_" })'.replace('_id_', id);
         if(tipo == 'P')
-            url = '@Url.Action("DescargarReporte", "Evaluador", new { Area = "Publicacion", id = "_id_" })'.replace('_id_', id);
+            url = '@Url.Action("CreateReporteConcurso", "Evaluador", new { Area = "Publicacion", id = "_id_" })'.replace('_id_', id);
 
         window.open(url);
     }

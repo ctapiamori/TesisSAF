@@ -4289,6 +4289,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <FunctionImport Name="SP_SAF_SUBMENUPORMENU" ReturnType="Collection(SI_SOCAUDModel.TcSUBMENUPORMENU)">
             <Parameter Name="CODMEN" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_SAF_CORRELATIVOSOLICITUD1" ReturnType="Collection(SI_SOCAUDModel.TcCORRELATIVO)" />
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
@@ -5194,6 +5195,9 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
           <Property Type="String" Name="DESSUBMEN" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="RUTASUBMEN" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="CODMEN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="TcCORRELATIVO">
+          <Property Type="String" Name="NUMSOL" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -6729,6 +6733,13 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW' no tiene defi
                 <ScalarProperty Name="DESSUBMEN" ColumnName="DESSUBMEN" />
                 <ScalarProperty Name="RUTASUBMEN" ColumnName="RUTASUBMEN" />
                 <ScalarProperty Name="CODMEN" ColumnName="CODMEN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SAF_CORRELATIVOSOLICITUD1" FunctionName="SI_SOCAUDModel.Store.SP_SAF_CORRELATIVOSOLICITUD">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SI_SOCAUDModel.TcCORRELATIVO">
+                <ScalarProperty Name="NUMSOL" ColumnName="NUMSOL" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

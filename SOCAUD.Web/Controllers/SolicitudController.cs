@@ -39,6 +39,7 @@ namespace SOCAUD.Web.Controllers
 
         public JsonResult listarSolicitud()
         {
+           
             var listado = this._solicitudLogic.ListarSolicitudes();
             if (Convert.ToInt32(Session["sessionTipoUsuario"]) == (int)Tipo.TipoUsuarioExtranet.Auditor)
                 listado = listado.Where(c => c.CODAUD == (int)Session["sessionCodigoResponsableLogin"]).ToList();
@@ -49,7 +50,8 @@ namespace SOCAUD.Web.Controllers
                 c.CODSOL.ToString(),
                 c.NUMSOL,
                 c.NOMTIPSOL,
-                c.NOMESTSOL
+                c.NOMESTSOL,
+                c.ESTSOL.GetValueOrDefault().ToString()
             }).ToArray();
 
             return Json(data);

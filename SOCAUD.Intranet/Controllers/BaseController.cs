@@ -401,6 +401,7 @@ namespace SOCAUD.Intranet.Controllers
 
         public JsonResult ListarBases(int? cronograma)
         {
+            
             var listado = this._baseLogic.BuscarPorCronograma(cronograma);
             var data = listado.Select(c => new string[]{ 
                 c.CODBAS.ToString(),
@@ -411,7 +412,9 @@ namespace SOCAUD.Intranet.Controllers
                 c.TOTVIABAS.GetValueOrDefault().ToString(),
                 WebHelper.GetBooleanString(c.FIRPCAOBBAS),
                 WebHelper.GetBooleanString(c.FIRINTBAS),
-                c.ESTBAS.GetValueOrDefault().Equals(Estado.Bases.Elaboracion.GetHashCode()) ? "1" : "0"
+                c.ESTBAS.GetValueOrDefault().Equals(Estado.Bases.Elaboracion.GetHashCode()) ? "En Elaboración" : (c.ESTBAS.GetValueOrDefault().Equals(Estado.Bases.PendienteAprobacion.GetHashCode())? "Pendiente de aprobación" : "Aprobado"),
+                c.ESTBAS.GetValueOrDefault().Equals(Estado.Bases.Elaboracion.GetHashCode()) ? "1" : "0",
+                c.ESTBAS.GetValueOrDefault().ToString()
 
             }).ToArray();
 

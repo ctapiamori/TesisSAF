@@ -79,7 +79,19 @@
                         else
                             return "";
                     }
+                },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "render": function (data, type, row) {
+                        if (row[6] == "@Estado.Cronograma.Aprobado.GetHashCode()")
+                            return '<center><button class="btn btn-primary" title="Ver documento" type="button" onclick="VerDocumentoCronograma(' + row[0] + ');"><i class="fa fa-download"></i></button></center>';
+                        else
+                            return "";
+                    }
                 }
+
+
             ]
         });
 
@@ -125,6 +137,13 @@
                 }
             });
         }
+
+        function VerDocumentoCronograma(id) {
+            var url = '@Url.Action("CreateReporteCronograma", "Cronograma", new { Area = "", id = "_id_" })'.replace('_id_', id);
+            window.open(url);
+
+        }
+
 
 
     </script>
