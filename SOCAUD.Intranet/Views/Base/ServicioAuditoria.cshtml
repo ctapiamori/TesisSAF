@@ -97,7 +97,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             @Html.LabelFor(c => c.IgvServicio)
-                            @Html.TextBoxFor(c => c.IgvServicio, new { @class = "form-control" })
+                            @Html.TextBoxFor(c => c.IgvServicio, new { @class = "form-control", @readonly="true" })
                             @Html.ValidationMessageFor(c => c.IgvServicio)
                         </div>
                     </div>
@@ -132,7 +132,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12">
-                    <button type="button" id="btnEquipo" class="btn btn-primary" onclick="agregarEquipo();"><i class="fa fa-fw fa-plus"></i>Agregar Equipo Auditor</button>
+                    <button type="button" id="btnEquipo"  class="btn btn-primary" onclick="agregarEquipo();"><i class="fa fa-fw fa-plus"></i>Agregar Equipo Auditor</button>
                     <button type="button" id="btnRegresar2" onclick="regresar();" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
                 </div>
             </div>
@@ -152,13 +152,13 @@
 
 
 
-            $("#ViaticosServicio").blur(function () {
-                var viaticos = parseFloat($("#ViaticosServicio").val());
-                var retribucion = parseFloat($("#RetribucionServicio").val());
-                
-                $("#IgvServicio").val(((retribucion + viaticos)*0.08).toFixed(2));
-
+            $("#RetribucionServicio").keyup(function () {
+                var totalRetribucion = $("#RetribucionServicio").val();
+                totalRetribucion = parseFloat(totalRetribucion);
+                var igvTotal = totalRetribucion * 0.18
+                $("#IgvServicio").val(igvTotal);
             });
+
             listarEquipoServicioAuditoria();
             $('#FechaInicio').datepicker({
                 format: "dd/mm/yyyy",

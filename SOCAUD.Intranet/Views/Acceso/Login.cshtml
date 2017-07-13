@@ -109,7 +109,7 @@
                 },
                 success: function (result) {
                     if (result.Correcto && result.TipoUsuario == "I")
-                        document.location = '@Url.Action("Index", "SolicitudAdmin")';
+                        document.location = '@Url.Action("Principal", "SolicitudAdmin")';
                     else if (result.Correcto && result.TipoUsuario == "E")
                         document.location = "@Config.RutaByPassLogin" + "?CodigoUsuario=" + result.CodigoUsuario + "&NombreUsuario=" + result.NombreUsuario + "&UsuarioSOAAuditor=" + result.UsuarioSOAAuditor + "&TipoExterno=" + result.TipoExterno + "&Usuario=" + result.Usuario;
                     else {

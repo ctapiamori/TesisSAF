@@ -175,6 +175,10 @@ namespace SOCAUD.Intranet.Controllers
             var infoCrono = this._cronogramaLogic.BuscarPorId(infoBase.CODCRO.Value);
             var listaServiciosAuditoria = this._safServicioAuditoriaLogic.ListarTodos().Where(c => c.CODBAS == model.IdCodigoBase);
 
+            if (Convert.ToDateTime(model.FechaInicio) > Convert.ToDateTime(model.FechaTermino)) {
+                return Json(new MensajeRespuesta("La fecha inicio debe ser menor a la fecha final.", false));
+            }
+
             var sumaRetribucion = listaServiciosAuditoria.Where(c=>c.CODSERAUD != model.IdServicioAuditoria).Sum(c => c.RETECOSERAUD);
 
             sumaRetribucion = sumaRetribucion + model.RetribucionServicio;
@@ -222,6 +226,14 @@ namespace SOCAUD.Intranet.Controllers
 
         public JsonResult GrabarCargoEquipo(CargoEquipoServicioAuditoriaModel model)
         {
+
+
+            var listaCargos = this._safServicioAuditoriaCargoLogic.ListarCargosPorServicioAuditoria(model.IdServicioAuditoria);
+
+            var verifyExisteCargo = listaCargos.Where(c => c.CODCAR == model.IdCargoSeleted).Any();
+            if (verifyExisteCargo)
+                return Json(new MensajeRespuesta("No puede registrar el mismo cargo mas de 1 vez.", false));
+
             var cargo = new SAF_SERAUDCARGO()
             {
                 CODSERAUD = model.IdServicioAuditoria,
@@ -457,7 +469,8 @@ namespace SOCAUD.Intranet.Controllers
                 {
                     entidad.CODBAS = model.Codigo;
                     var result = this._baseLogic.Actualizar(entidad);
-                    return Json(new MensajeRespuesta("Actualización satisfactoria", true, result));
+                    var numeroBase = result.NUMBAS;
+                    return Json(new MensajeRespuesta("Actualización satisfactoria", true, numeroBase));
                 }
             }
             catch (Exception ex)

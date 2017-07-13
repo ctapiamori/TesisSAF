@@ -95,7 +95,7 @@ namespace SOCAUD.Business.Core
             using (TransactionScope tran = new TransactionScope()) {
                 try
                 {
-                    entidad.ESTWORFLO = Estado.Workflow.PendienteAprobacion.GetHashCode();
+                    entidad.ESTWORFLO = Estado.Workflow.Aprobado.GetHashCode();
                     var flagFlujo = "0";
 
                     if (tipoUsuario.Equals(TipoUsuario.Gerente.GetHashCode()))
@@ -161,7 +161,7 @@ namespace SOCAUD.Business.Core
             {
                 try
                 {
-                    entidad.ESTWORFLO = Estado.Workflow.PendienteAprobacion.GetHashCode();
+                    entidad.ESTWORFLO = Estado.Workflow.Rechazado.GetHashCode();
                     var flagFlujo = "0";
 
                     if (entidad.TIPCARUSU.Equals(TipoUsuario.Operador.GetHashCode()))

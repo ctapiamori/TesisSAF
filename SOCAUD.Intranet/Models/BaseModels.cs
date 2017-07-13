@@ -12,7 +12,7 @@ namespace SOCAUD.Intranet.Models
     {
         public int Codigo { get; set; }
 
-        [Display(Name="Fecha máxima de Publicación")]
+        [Display(Name="Fecha máxima de aprobación de Base")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public string FechaMaxPublicacion { get; set; }
 
@@ -26,7 +26,7 @@ namespace SOCAUD.Intranet.Models
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        [Display(Name = "Número")]
+        [Display(Name = "N° de Base")]
         public string Numero { get; set; }
 
         [Display(Name="Total Retribución")]

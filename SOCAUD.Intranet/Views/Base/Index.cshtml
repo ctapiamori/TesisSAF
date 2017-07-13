@@ -22,7 +22,7 @@
                         <div class="col-md-3">
                             <br />
                             <button id="btnBuscar" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Buscar</button>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -52,97 +52,102 @@
     <script type="text/javascript" language="javascript">
 
 
-    var _dataBases_ = null;
-    var tabBases = $("#tabBases").dataTable({
-        "info": false,
-        "bServerSide": false,
-        "data": _dataBases_,
-        "order": [[1, "asc"]],
-        "columns": [
-            {
-                "bSortable": false,
-                "sClass": "center",
-                "sWidth": "5%",
-                "render": function (data, type, row) {
-                    if (row[8] == "1")
-                        return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarBase(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
-                    else
-                        return '<center><button class="btn btn-primary" title="Mostrar" type="button" onclick="ViewBase(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+        var _dataBases_ = null;
+        var tabBases = $("#tabBases").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataBases_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (row[9] == "1")
+                            return '<center><button class="btn btn-success" title="Editar" type="button" onclick="EditarBase(' + row[0] + ');"><i class="fa fa-pencil"></i></button></center>';
+                        else
+                            return '<center><button class="btn btn-primary" title="Mostrar" type="button" onclick="ViewBase(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Número" },
+                { "sTitle": "Fecha máxima de <br/> Publicación", "sClass": "center" },
+                { "sTitle": "Descripción" },
+                { "sTitle": "Total Retribución" },
+                { "sTitle": "Total Viaticos" },
+                { "sTitle": "Firma de PCAOB", "visible": false },
+                { "sTitle": "Firma Internacional", "visible": false },
+                { "sTitle": "Estado" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "render": function (data, type, row) {
+                        if (row[9] == "1")
+                            return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarBase(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
+                        return "";
+                    }
+                },
+
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "render": function (data, type, row) {
+                        if (row[10] == "@Estado.Bases.Aprobado.GetHashCode()")
+                            return '<center><button class="btn btn-primary" title="Descargar" type="button" onclick="VerDocumentoBases(' + row[0] + ');"><i class="fa fa-download"></i></button></center>';
+                        return "";
+                    }
                 }
-            },
-            { "sTitle": "Número" },
-            { "sTitle": "Fecha máxima de <br/> Publicación", "sClass": "center" },
-            { "sTitle": "Descripción" },
-            { "sTitle": "Total Retribución" },
-            { "sTitle": "Total Viaticos" },
-            { "sTitle": "Firma de PCAOB", "visible" : false },
-            { "sTitle": "Firma Internacional", "visible": false },
-            { "sTitle": "Estado" },
-            {
-                "bSortable": false,
-                "sClass": "center",
-                "render": function (data, type, row) {
-                    if (row[8] == "1")
-                        return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="EliminarBase(' + row[0] + ');"><i class="fa fa-trash-o"></i></button></center>';
-                    return "";
-                }
-            },
-
-            {
-                "bSortable": false,
-                "sClass": "center",
-                "render": function (data, type, row) {
-                    if (row[10] == "@Estado.Bases.Aprobado.GetHashCode()")
-                        return '<center><button class="btn btn-primary" title="Descargar" type="button" onclick="VerDocumentoBases(' + row[0] + ');"><i class="fa fa-download"></i></button></center>';
-                    return "";
-                }
-            }
 
 
-        ]
-    });
-
-
-    $(document).ready(function () {
-        listarBases();
-        $("#btnBuscar").click(listarBases);
-        $("#btnNuevo").click(nuevoBase);
-    });
-
-    function listarBases() {
-        $.ajax({
-            url: '@Url.Action("ListarBases", "Base")',
-            type: 'POST',
-            async: false,
-            data: { cronograma: $("#cronogramas").val() },
-            success: function (result) {
-                _dataBases_ = result;
-                tabBases.fnReloadData(_dataBases_);
-            }
+            ]
         });
-    }
 
-    function nuevoBase() {
-        document.location = '@Url.Action("Registrar", "Base")';
-    }
+
+        $(document).ready(function () {
+            listarBases();
+            $("#btnBuscar").click(listarBases);
+            $("#btnNuevo").click(nuevoBase);
+        });
+
+        function listarBases() {
+            $.ajax({
+                url: '@Url.Action("ListarBases", "Base")',
+                type: 'POST',
+                async: false,
+                data: { cronograma: $("#cronogramas").val() },
+                success: function (result) {
+                    _dataBases_ = result;
+                    tabBases.fnReloadData(_dataBases_);
+                }
+            });
+        }
+
+        function nuevoBase() {
+            document.location = '@Url.Action("Registrar", "Base")';
+        }
 
         function ViewBase(id) {
             document.location = '@Url.Action("View", "Base")/' + id;
         }
 
-    function EditarBase(id) {
-        document.location = '@Url.Action("Editar", "Base")/' + id;
+        function EditarBase(id) {
+            document.location = '@Url.Action("Editar", "Base")/' + id;
         }
 
-        function EliminarBase(id)
-        {
-            $.ajax({
-                url: '@Url.Action("EliminarBase", "Base")/' + id,
-                type: 'POST',
-                async: false,
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    listarBases();
+        function EliminarBase(id) {
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarBase", "Base")/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarBases();
+                        }
+                    });
                 }
             });
         }

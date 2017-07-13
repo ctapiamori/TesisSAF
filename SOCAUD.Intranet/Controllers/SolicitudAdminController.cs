@@ -35,6 +35,13 @@ namespace SOCAUD.Intranet.Controllers
             this._safWorkflowLogic = new SafWorkFlowLogic();
         }
 
+
+        public ActionResult Principal()
+        {
+            return View();
+        }
+
+
         // GET: SolicitudAdmin
         public ActionResult Index()
         {

@@ -33,7 +33,7 @@ namespace SOCAUD.Intranet.Models
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public string FechaInicio { get; set; }
 
-        [Display(Name = "Fin")]
+        [Display(Name = "Final")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public string FechaTermino { get; set; }
 

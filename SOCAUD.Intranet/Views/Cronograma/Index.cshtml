@@ -67,8 +67,8 @@
                     }
                 },
                 { "sTitle": "Periodo" },
-                { "sTitle": "Fecha Publicación" },
-                { "sTitle": "Max. Elaboración Bases" },
+                { "sTitle": "Fecha max. aprobar cronograma" },
+                { "sTitle": "Fecha max. Elaboración Bases" },
                 { "sTitle": "Estado" },
                 {
                     "bSortable": false,
@@ -127,13 +127,19 @@
         }
 
         function EliminarCronograma(id) {
-            $.ajax({
-                url: '@Url.Action("EliminarCronograma", "Cronograma")/' + id,
-                type: 'POST',
-                async: false,
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    listarCronogramas();
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarCronograma", "Cronograma")/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarCronogramas();
+                        }
+                    });
                 }
             });
         }

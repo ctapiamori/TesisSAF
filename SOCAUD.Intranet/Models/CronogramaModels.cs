@@ -15,7 +15,7 @@ namespace SOCAUD.Intranet.Models
         [Display(Name="Año")]
         public int Anio { get; set; }
 
-        [Display(Name = "Fecha máxima para aprobar")]
+        [Display(Name = "Fecha máxima para aprobar cronograma")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public string FechaPublicacion { get; set; }
 
@@ -60,7 +60,7 @@ namespace SOCAUD.Intranet.Models
         [Display(Name = "Fecha Inicio")]
         public string FechaInicio { get; set; }
         [Required]
-        [Display(Name = "Fecha Termino")]
+        [Display(Name = "Fecha Final")]
         public string FechaTermino { get; set; }
     }
 }

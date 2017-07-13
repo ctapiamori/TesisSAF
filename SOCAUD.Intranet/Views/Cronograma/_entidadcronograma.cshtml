@@ -154,13 +154,19 @@
     }
 
     function EliminarEntidad(id) {
-        $.ajax({
-            url: '@Url.Action("EliminarEntidad", "Cronograma")/' + id,
-            type: 'POST',
-            async: false,
-            success: function (result) {
-                mostrarNotificacion(result);
-                listarEntidades();
+
+        bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+            if (result) {
+                $.ajax({
+                    url: '@Url.Action("EliminarEntidad", "Cronograma")/' + id,
+                    type: 'POST',
+                    async: false,
+                    success: function (result) {
+                        mostrarNotificacion(result);
+                        listarEntidades();
+                    }
+                });
             }
         });
     }

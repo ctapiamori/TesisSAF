@@ -170,18 +170,23 @@
         }
 
         function eliminarPublicacion(id) {
-            $.ajax({
-                url: '@Url.Action("EliminarPublicacion", "Evaluador", new { Area = "Publicacion" })',
-                type: 'POST',
-                async: false,
-                data: { id: id },
-                success: function (result) {
-                    if (result.Exito) {
-                        listarPublicacion();
-                    }
-                    mostrarNotificacion(result);
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarPublicacion", "Evaluador", new { Area = "Publicacion" })',
+                        type: 'POST',
+                        async: false,
+                        data: { id: id },
+                        success: function (result) {
+                            if (result.Exito) 
+                                listarPublicacion();
+                            mostrarNotificacion(result);
+                        }
+                    });
                 }
-            });
+            })
         }
 
         function verCortePublicacion(id) {

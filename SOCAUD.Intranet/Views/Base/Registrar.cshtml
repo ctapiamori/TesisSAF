@@ -143,13 +143,13 @@
 
     <script type="text/javascript" language="javascript">
     $(document).ready(function () {
-        
+        /*
         $("#TotalViaticos").blur(function () {
             var totalRetribucion = $("#TotalRetribucion").val();
             var totalViaticos = $("#TotalViaticos").val();
             var totalIgv = (( parseFloat(totalRetribucion) + parseFloat(totalViaticos)) * 0.08).toFixed(2);
             $("#TotalIgv").val(totalIgv);
-        });
+        });*/
 
         $('#FechaMaxPublicacion').datepicker({
             format: "dd/mm/yyyy",
@@ -170,6 +170,13 @@
         
         $("#btnRegresar").click(function () {
             document.location.href = '@Url.Action("Index","Base")';
+        });
+
+        $("#TotalRetribucion").keyup(function () {
+            var totalRetribucion = $("#TotalRetribucion").val();
+            totalRetribucion = parseFloat(totalRetribucion);
+            var igvTotal = totalRetribucion * 0.18
+            $("#TotalIgv").val(igvTotal);
         });
 
     });
@@ -229,6 +236,7 @@
                             {
                                 $("#Numero").val(result.Data.NUMBAS)
                                 $("#btnGrabar").prop("disabled", true);
+                                document.location = '@Url.Action("Editar", "Base", new { id = "_id_" })'.replace("_id_", result.Data.CODBAS);
                             }
                         }
                     });

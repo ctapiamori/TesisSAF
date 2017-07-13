@@ -182,20 +182,27 @@
 
 
         function EliminarMenu(idItem) {
-            $.ajax({
-                url: '@Url.Action("EliminarPerfilMenu", "PerfilMenu")',
-                type: 'POST',
-                async: false,
-                data: { id: idItem },
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    var seleccionPerfil = $("#CODPER_SELECT").val()[0];
-                    
-                    listarOpcionesMenuAsignadad(seleccionPerfil);
-                    listarOpcionesLibres(seleccionPerfil);
-                    listarPerfilMenu();
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarPerfilMenu", "PerfilMenu")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: idItem },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            var seleccionPerfil = $("#CODPER_SELECT").val()[0];
+
+                            listarOpcionesMenuAsignadad(seleccionPerfil);
+                            listarOpcionesLibres(seleccionPerfil);
+                            listarPerfilMenu();
+                        }
+                    });
                 }
             });
+
         }
 
         function listarPerfilMenu() {

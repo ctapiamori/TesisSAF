@@ -51,11 +51,15 @@ namespace SOCAUD.Intranet.Controllers
 
         public JsonResult ListarWorkflowDocumento(int idDocumento, string tipoDocumento)
         {
-            var listado = this._workflowLogic.ListarPorDocumento(idDocumento, tipoDocumento);
+            var listado = this._workflowLogic.ListarPorDocumento(idDocumento, tipoDocumento).OrderByDescending(c => c.FECREG);
             var data = listado.Select(c => new string[]{
                 c.DESTIPDOC,
                 c.NOTWORFLO,
-                WebHelper.GetShortDateString(c.FECREG)
+                c.USUREG,
+                //(c.TIPCARUSU.GetValueOrDefault() == TipoUsuario.Operador.GetHashCode()) ? "Operador" : (c.TIPCARUSU.GetValueOrDefault() == TipoUsuario.Jefe.GetHashCode() ? "Jefe" : "Gerente"),
+                (c.ESTWORFLO.GetValueOrDefault() == Estado.Workflow.PendienteAprobacion.GetHashCode()) ? "Solicitando Aprobación" : ( (c.ESTWORFLO.GetValueOrDefault() == Estado.Workflow.Aprobado.GetHashCode())? "Aprobado" : "Rechazado"),
+                c.FECREG.HasValue? c.FECREG.Value.ToString("dd/MM/yyyy HH:mm:ss"): "",
+
             }).ToArray();
 
             return Json(data);
@@ -68,12 +72,14 @@ namespace SOCAUD.Intranet.Controllers
             var model = new SolicitarWorkflowViewModel();
             model.IdDocumento = idDocumento;
             model.IdTipoDocumento = tipoDocumento;
+            model.CodigoCargoIngresado = Convert.ToInt32(Session["tipoUsuario"]);
             model.IdFlujo = idFlujo;
+            
             if (tipoDocumento.Equals(Variables.CRONOGRAMA_ANUAL_ENTIDADES))
             {
                 var cronograma = this._cronogramaLogic.BuscarPorId(idDocumento);
                 model.Descripcion = string.Format("Cronograma Anual de Entidades : {0}", cronograma.ANIOCRO);
-                model.Comentario = string.Format("Solicitud de aprobación para del Cronograma Anual de Entidades {0}", cronograma.ANIOCRO);
+                //model.Comentario = string.Format("Solicitud de aprobación para del Cronograma Anual de Entidades {0}", cronograma.ANIOCRO);
             }
 
             if (tipoDocumento.Equals(Variables.BASES_CONCURSO))
@@ -81,7 +87,7 @@ namespace SOCAUD.Intranet.Controllers
                 var bases = this._baseLogic.BuscarPorId(idDocumento);
                 var cronograma = this._cronogramaLogic.BuscarPorId(bases.CODCRO.GetValueOrDefault());
                 model.Descripcion = string.Format("Bases de Concurso : {0}", bases.NUMBAS);
-                model.Comentario = string.Format("Solicitud de aprobación para la Base de Concurso {0} del Cronograma Anual de Entidades {1}.", bases.NUMBAS, cronograma.ANIOCRO);
+               // model.Comentario = string.Format("Solicitud de aprobación para la Base de Concurso {0} del Cronograma Anual de Entidades {1}.", bases.NUMBAS, cronograma.ANIOCRO);
             }
 
             if (tipoDocumento.Equals(Variables.PUBLICACION_CONCURSO))
@@ -89,7 +95,7 @@ namespace SOCAUD.Intranet.Controllers
                 var publicacion = this._publicacionLogic.BuscarPorId(idDocumento);
                 var cronograma = this._cronogramaLogic.BuscarPorId(publicacion.CODCRO.GetValueOrDefault());
                 model.Descripcion = string.Format("Publicación de Concurso : {0}", publicacion.NUMPUB);
-                model.Comentario = string.Format("Solicitud de aprobación para la Publicación de Concurso {0} del Cronograma Anual de Entidades {1}", publicacion.NUMPUB, cronograma.ANIOCRO);
+               // model.Comentario = string.Format("Solicitud de aprobación para la Publicación de Concurso {0} del Cronograma Anual de Entidades {1}", publicacion.NUMPUB, cronograma.ANIOCRO);
             }
 
             var tipoUsuarioLogIn = int.Parse(Session["tipoUsuario"].ToString());
@@ -109,7 +115,6 @@ namespace SOCAUD.Intranet.Controllers
             {
                 tiposUsuario.Add(new SelectListItem() { Value = TipoUsuario.Gerente.GetHashCode().ToString(), Text = "Gerente" });
                 tiposUsuario.Add(new SelectListItem() { Value = TipoUsuario.Jefe.GetHashCode().ToString(), Text = "Jefe" });
-                tiposUsuario.Add(new SelectListItem() { Value = TipoUsuario.Operador.GetHashCode().ToString(), Text = "Operador" });
 
             }
 

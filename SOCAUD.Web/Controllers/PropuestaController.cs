@@ -359,6 +359,18 @@ namespace SOCAUD.Web.Controllers
             }
         }
 
+        public JsonResult EliminarPropuesta(int idProp) {
+            try
+            {
+                this._propuestaLogic.Eliminar(idProp);
+                return Json(new MensajeRespuesta("Elimino la propuesta satisfactoriamente", true));
+            }
+            catch (Exception)
+            {
+                return Json(new MensajeRespuesta("No se pudo eliminar la propuesta", false));               
+            }
+        }
+
         #endregion
 
         #region Auditoria - Gantt

@@ -82,7 +82,18 @@
                 { "sTitle": "Retribucion" },
                 { "sTitle": "IGV" },
                 { "sTitle": "Viaticos" },
-                { "sTitle": "Estado" }
+                { "sTitle": "Estado" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        if (row[6] == '@Estado.Propuesta.Elaboracion.GetHashCode()')
+                            return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="eliminarPropuesta(' + row[0] + ');"><i class="fa fa-trash"></i></button></center>';
+                        else
+                            return '';
+                    }
+                },
             ]
 
         });
@@ -151,6 +162,24 @@
 
         function verPropuestaLectura(idPropuesta) {
             document.location = '@Url.Action("LecturaPropuesta", "Propuesta")' + "?idPropuesta=" + idPropuesta;
+        }
+
+        function eliminarPropuesta(id) {
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarPropuesta", "Propuesta")',
+                        type: 'POST',
+                        async: false,
+                        data: { idProp: id },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarPropuesta();
+                        }
+                    });
+                }
+            });
+
         }
 
     </script>

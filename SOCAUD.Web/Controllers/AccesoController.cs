@@ -95,7 +95,7 @@ namespace SOCAUD.Web.Controllers
                              });
 
             Session["sessionMenuSistema"] = MenuFinal.ToList();
-            return RedirectToAction("Index", "Solicitud");
+            return RedirectToAction("Bandeja", "Notificacion");
             
         }
     }

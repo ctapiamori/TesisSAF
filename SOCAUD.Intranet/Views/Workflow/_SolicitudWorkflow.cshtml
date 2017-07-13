@@ -1,4 +1,7 @@
-﻿@model SOCAUD.Intranet.Models.SolicitarWorkflowViewModel
+﻿@using SOCAUD.Common.Enum;
+@model SOCAUD.Intranet.Models.SolicitarWorkflowViewModel
+
+
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
@@ -11,15 +14,19 @@
                 @Html.HiddenFor(c => c.IdDocumento)
                 @Html.HiddenFor(c => c.IdTipoDocumento)
                 @Html.HiddenFor(c => c.Descripcion)
-                <div class="form-group">
-                    @Html.LabelFor(c => c.TipoUsuario)
-                    @Html.DropDownListFor(c => c.TipoUsuario, Model.TiposUsuario, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(c => c.TipoUsuario)
-                </div>
-                <div class="form-group">
+                @Html.HiddenFor(c => c.TipoUsuarioSelect)
+                @Html.HiddenFor(c => c.CodigoCargoIngresado)
+
+
+                <div id="sectionEstado" class="form-group">
                     @Html.LabelFor(c => c.EstadoFlujo)
                     @Html.DropDownListFor(c => c.EstadoFlujo, Model.EstadosFlujo, new { @class = "form-control" })
                     @Html.ValidationMessageFor(c => c.EstadoFlujo)
+                </div>
+                <div id="sectionTipoCargo" class="form-group">
+                    @Html.LabelFor(c => c.TipoUsuario)
+                    @Html.DropDownListFor(c => c.TipoUsuario, Model.TiposUsuario, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(c => c.TipoUsuario)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.Comentario)
@@ -36,8 +43,54 @@
 </div>
 
 <script>
+    
+    $(document).ready(function () {
+        $("#sectionEstado").hide();
+        $("#sectionTipoCargo").hide();
+        var codigoCargo = $("#CodigoCargoIngresado").val();
+        
+        if (codigoCargo == '@TipoUsuario.Operador.GetHashCode()') {
+            $("#sectionEstado").hide();
+            $("#sectionTipoCargo").hide();
+        } else if (codigoCargo == '@TipoUsuario.Jefe.GetHashCode()') {
+            $("#sectionEstado").show();
+            $("#sectionTipoCargo").hide();
+        } else if (codigoCargo == '@TipoUsuario.Gerente.GetHashCode()') {
+            $("#sectionEstado").show();
+            $("#sectionTipoCargo").hide();
+        }
+        
+    });
+
+
     function grabarFlujo()
     {
+        debugger;
+        var codigoCargo = $("#CodigoCargoIngresado").val();
+        if (codigoCargo == '@TipoUsuario.Jefe.GetHashCode()') {
+            if ($("#EstadoFlujo").val() == "43") //aprobado
+                $("#TipoUsuario").val('@TipoUsuario.Gerente.GetHashCode()')
+            else
+                $("#TipoUsuario").val('@TipoUsuario.Operador.GetHashCode()')
+        }
+
+        if (codigoCargo == '@TipoUsuario.Gerente.GetHashCode()') {
+            if ($("#EstadoFlujo").val() == "43") //aprobado
+                $("#TipoUsuario").val('@TipoUsuario.Gerente.GetHashCode()')
+            else
+                $("#TipoUsuario").val('@TipoUsuario.Jefe.GetHashCode()')
+        }
+
+
+        if ($("#Comentario").val() == "") {
+            new PNotify({
+                title: "Advertencia",
+                type: "error",
+                text: "Debe ingresar un comentario"
+            });
+            return;
+        }
+
         if (!$("#frmFlujo").isValid()) { return; }
 
         bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {

@@ -181,7 +181,7 @@ namespace SOCAUD.Intranet.Controllers
             var entidad = new SAF_CRONOGRAMA();
 
             if (Convert.ToDateTime(model.FechaPublicacion) >= Convert.ToDateTime(model.FechaMaximaCreacionBase))
-                return Json(new MensajeRespuesta("La fecha de publicacion debe ser mayor a la fecha de creacion de Bases.", false));
+                return Json(new MensajeRespuesta("La fecha máxima para aprobar cronograma debe ser menor a la fecha máxima para crear Bases.", false));
 
             if (model.Codigo == 0) { 
                 var cronogramaExiste = this._cronogramaLogic.ListarPorAnio(model.Anio);
@@ -268,6 +268,10 @@ namespace SOCAUD.Intranet.Controllers
             var entidad = new SAF_CRONOENTIDAD();
             try
             {
+                if (Convert.ToDateTime(model.FechaInicio) > Convert.ToDateTime(model.FechaTermino)) {
+                    return Json(new MensajeRespuesta("Fecha final debe ser mayor a la fecha de inicio", false));
+                }
+
                 entidad.CODCRO = model.Cronograma;
                 entidad.CODENT = model.Entidad;
                 entidad.DESCROENT = this._entidadLogic.BuscarPorId(model.Entidad).RAZSOCENT;

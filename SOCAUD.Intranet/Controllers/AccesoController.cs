@@ -34,6 +34,8 @@ namespace SOCAUD.Intranet.Controllers
         }
 
 
+
+
         public ActionResult RecuperaPassword()
         {
             return View();
