@@ -28,6 +28,8 @@ namespace SOCAUD.Business.Core
 
         IEnumerable<VW_SAF_WORKFLOW> ListarWorkFlowCompleto();
         Tuple<int, string> MostrarWorkFlow(int numeroDocumento, string tipoDocumento);
+
+        IEnumerable<SP_SAF_WORKFLOW_POR_USU_Result> ListarWorkFlowCabeceraPorUsuario(string usu, string tipo, string fecini, string fecfin);
     }
 
     public class SafWorkFlowLogic : ISafWorkFlowLogic
@@ -313,6 +315,17 @@ namespace SOCAUD.Business.Core
 
             return Tuple.Create<int, string>(codigoWorkFlow, FlgMostrarEnWorkFlow);
 
+        }
+
+
+
+
+
+        public IEnumerable<SP_SAF_WORKFLOW_POR_USU_Result> ListarWorkFlowCabeceraPorUsuario(string usu, string tipo, string fecini, string fecfin)
+        {
+           
+            var lista = this._safWorkFlowData.ListarWorkFlowCabeceraPorUsuario(usu, tipo, fecini, fecfin);
+            return lista;
         }
     }
 }

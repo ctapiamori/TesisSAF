@@ -16,20 +16,25 @@
         <div class="box-body">
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-12">
-                        <label>Descripcion</label>                      
-                        @Html.TextAreaFor(m => m.DESMEN, new { @class = "form-control", @rows = "5" })
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.DESMEN)
+                        @Html.TextBoxFor(m => m.DESMEN, new { @class = "form-control", @rows = "5" })
                         @Html.ValidationMessageFor(c => c.DESMEN)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.RUTAMEN)
+                        @Html.TextBoxFor(m => m.RUTAMEN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.RUTAMEN)
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label>Ruta</label>
-                        @Html.TextBoxFor(m => m.RUTAMEN, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(c => c.RUTAMEN)
+                        @Html.LabelFor(m => m.ORDEN)
+                        @Html.TextBoxFor(c=>c.ORDEN , new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.ORDEN)
                     </div>
                     <div class="col-md-6">
-                        <label>Icono</label>
+                        @Html.LabelFor(m => m.ICONCSS)
                         @Html.DropDownListFor(c=>c.ICONCSS, Model.ListaIconos, "Seleccione", new { @class = "form-control" })
                         @Html.ValidationMessageFor(c => c.ICONCSS)      
                     </div>
@@ -39,8 +44,8 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12" style="text-align:center;">
-                        <button id="btnEditar" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Guardar</button>
-                        <button id="btnRegresar" type="button" class="btn btn-info"> &nbsp;Regresar</button>
+                        <button id="btnEditar" type="button" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                        <button type="button" id="btnRegresar"  class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
                     </div>
 
                 </div>

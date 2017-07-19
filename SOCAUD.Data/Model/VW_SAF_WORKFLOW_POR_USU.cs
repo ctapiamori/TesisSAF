@@ -12,15 +12,13 @@ namespace SOCAUD.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class VW_SAF_PROPUESTAEJECUCION
+    public partial class VW_SAF_WORKFLOW_POR_USU
     {
-        public int CODPRO { get; set; }
-        public int CODAUD { get; set; }
-        public string PERAUD { get; set; }
-        public Nullable<int> CODSOA { get; set; }
-        public int CODPUB { get; set; }
-        public string DESBAS { get; set; }
-        public string RUCSOA { get; set; }
-        public string RAZSOCSOA { get; set; }
+        public string TIPDOC { get; set; }
+        public string DESTIPDOC { get; set; }
+        public Nullable<int> CODDOC { get; set; }
+        public string DESCRIPCION { get; set; }
+        public Nullable<System.DateTime> FECREG { get; set; }
+        public string USUREG { get; set; }
     }
 }

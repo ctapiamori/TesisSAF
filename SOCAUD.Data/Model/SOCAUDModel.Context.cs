@@ -73,13 +73,11 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_ASISTENCIA> SAF_ASISTENCIA { get; set; }
         public virtual DbSet<SAF_FALTAJUSTIFICA> SAF_FALTAJUSTIFICA { get; set; }
         public virtual DbSet<VW_SAF_AUDITORIAEQUIPO> VW_SAF_AUDITORIAEQUIPO { get; set; }
-        public virtual DbSet<VW_SAF_PROPUESTAEJECUCION> VW_SAF_PROPUESTAEJECUCION { get; set; }
         public virtual DbSet<SAF_PUBLICACIONBASE> SAF_PUBLICACIONBASE { get; set; }
         public virtual DbSet<SAF_WORKFLOW> SAF_WORKFLOW { get; set; }
         public virtual DbSet<SAF_ENTIDADES> SAF_ENTIDADES { get; set; }
         public virtual DbSet<SAF_CONSULTA> SAF_CONSULTA { get; set; }
         public virtual DbSet<VW_SAF_CARGOSENSERVICIO> VW_SAF_CARGOSENSERVICIO { get; set; }
-        public virtual DbSet<SAF_MENU> SAF_MENU { get; set; }
         public virtual DbSet<SAF_PERFIL> SAF_PERFIL { get; set; }
         public virtual DbSet<SAF_PERFIL_MENU> SAF_PERFIL_MENU { get; set; }
         public virtual DbSet<SAF_SUBMENU> SAF_SUBMENU { get; set; }
@@ -92,6 +90,9 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<VW_SAF_WORKFLOW> VW_SAF_WORKFLOW { get; set; }
         public virtual DbSet<SAF_USUARIO> SAF_USUARIO { get; set; }
         public virtual DbSet<VW_SAF_PUBLICACIONBASE> VW_SAF_PUBLICACIONBASE { get; set; }
+        public virtual DbSet<SAF_MENU> SAF_MENU { get; set; }
+        public virtual DbSet<VW_SAF_WORKFLOW_POR_USU> VW_SAF_WORKFLOW_POR_USU { get; set; }
+        public virtual DbSet<VW_SAF_PROPUESTAEJECUCION> VW_SAF_PROPUESTAEJECUCION { get; set; }
     
         public virtual ObjectResult<TcCORTEPUBLICACION> SP_SAF_CORTEPUBLICACION(Nullable<int> cODPUB)
         {
@@ -479,6 +480,66 @@ namespace SOCAUD.Data.Model
         public virtual ObjectResult<TcCORRELATIVO> SP_SAF_CORRELATIVOSOLICITUD1()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TcCORRELATIVO>("SP_SAF_CORRELATIVOSOLICITUD1");
+        }
+    
+        public virtual ObjectResult<SP_SAF_EQUIPO_PROPUESTA_Result> SP_SAF_EQUIPO_PROPUESTA(Nullable<int> cODPRO)
+        {
+            var cODPROParameter = cODPRO.HasValue ?
+                new ObjectParameter("CODPRO", cODPRO) :
+                new ObjectParameter("CODPRO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SAF_EQUIPO_PROPUESTA_Result>("SP_SAF_EQUIPO_PROPUESTA", cODPROParameter);
+        }
+    
+        public virtual ObjectResult<SP_SAF_EQUIPO_PROPUESTA_Result> SP_SAF_EQUIPO_PROPUESTA1(Nullable<int> cODPRO)
+        {
+            var cODPROParameter = cODPRO.HasValue ?
+                new ObjectParameter("CODPRO", cODPRO) :
+                new ObjectParameter("CODPRO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SAF_EQUIPO_PROPUESTA_Result>("SP_SAF_EQUIPO_PROPUESTA1", cODPROParameter);
+        }
+    
+        public virtual ObjectResult<SP_SAF_WORKFLOW_POR_USU_Result> SP_SAF_WORKFLOW_POR_USU(string uSU, string tIPO, string fECINI, string fECFIN)
+        {
+            var uSUParameter = uSU != null ?
+                new ObjectParameter("USU", uSU) :
+                new ObjectParameter("USU", typeof(string));
+    
+            var tIPOParameter = tIPO != null ?
+                new ObjectParameter("TIPO", tIPO) :
+                new ObjectParameter("TIPO", typeof(string));
+    
+            var fECINIParameter = fECINI != null ?
+                new ObjectParameter("FECINI", fECINI) :
+                new ObjectParameter("FECINI", typeof(string));
+    
+            var fECFINParameter = fECFIN != null ?
+                new ObjectParameter("FECFIN", fECFIN) :
+                new ObjectParameter("FECFIN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SAF_WORKFLOW_POR_USU_Result>("SP_SAF_WORKFLOW_POR_USU", uSUParameter, tIPOParameter, fECINIParameter, fECFINParameter);
+        }
+    
+        public virtual ObjectResult<SP_SAF_WORKFLOW_POR_USU_Result> SP_SAF_WORKFLOW_POR_USU1(string uSU, string tIPO, string fECINI, string fECFIN)
+        {
+            var uSUParameter = uSU != null ?
+                new ObjectParameter("USU", uSU) :
+                new ObjectParameter("USU", typeof(string));
+    
+            var tIPOParameter = tIPO != null ?
+                new ObjectParameter("TIPO", tIPO) :
+                new ObjectParameter("TIPO", typeof(string));
+    
+            var fECINIParameter = fECINI != null ?
+                new ObjectParameter("FECINI", fECINI) :
+                new ObjectParameter("FECINI", typeof(string));
+    
+            var fECFINParameter = fECFIN != null ?
+                new ObjectParameter("FECFIN", fECFIN) :
+                new ObjectParameter("FECFIN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SAF_WORKFLOW_POR_USU_Result>("SP_SAF_WORKFLOW_POR_USU1", uSUParameter, tIPOParameter, fECINIParameter, fECFINParameter);
         }
     }
 }

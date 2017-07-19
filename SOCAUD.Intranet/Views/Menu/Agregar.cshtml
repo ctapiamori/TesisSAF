@@ -15,22 +15,27 @@
         <div class="box-body">
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-12">
-                        <label>Descripcion</label>                      
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.DESMEN)
                         <!--<textarea id="DESMEN" name="DESMEN" rows="4" class="form-control"></textarea>-->
-                        @Html.TextAreaFor(m => m.DESMEN, new { @class = "form-control", @rows = "5" })
+                        @Html.TextBoxFor(m => m.DESMEN, new { @class = "form-control", @rows = "5" })
                         @Html.ValidationMessageFor(c => c.DESMEN)
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
-                        <label>Ruta</label>
+                        @Html.LabelFor(m => m.RUTAMEN)
                         <!--<input type="text" id="RUTAMEN" name="RUTAMEN" class="form-control" />-->
                         @Html.TextBoxFor(m => m.RUTAMEN, new { @class = "form-control" })
                         @Html.ValidationMessageFor(c => c.RUTAMEN)
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6">
-                        <label>Icono</label>
+                        @Html.LabelFor(m => m.ORDEN)
+                        @Html.TextBoxFor(c=>c.ORDEN , new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.ORDEN)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.ICONCSS)
                         @Html.DropDownListFor(c=>c.ICONCSS, Model.ListaIconos, "Seleccione", new { @class = "form-control" })
                         @Html.ValidationMessageFor(c => c.ICONCSS)                        
                     </div>
@@ -40,8 +45,8 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12" style="text-align:center;">
-                        <button id="btnAgregar" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Agregar</button>
-                        <button id="btnRegresar" type="button" class="btn">&nbsp;Regresar</button>
+                        <button id="btnAgregar" type="button" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Agregar</button>
+                        <button type="button" id="btnRegresar"  class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
                     </div>
 
                 </div>

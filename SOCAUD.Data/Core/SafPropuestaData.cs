@@ -17,6 +17,10 @@ namespace SOCAUD.Data.Core
         IEnumerable<TcPROPUESTAS> ListadoPropuestasCalificar(int? idPublicacion);
         TcASIGNARGANADORPROPUESTA AsignarGanadorPropuesta(int idPropuesta, int idPublicacion);
         IEnumerable<TcPROPUESTARPT> ListarPropuestasRpt(int idPropuesta);
+
+        IEnumerable<SP_SAF_EQUIPO_PROPUESTA_Result> ListarEquipoPropuesta(int idPropuesta);
+
+        IEnumerable<VW_SAF_PROPUESTAEJECUCION> ListarPropuestaEjecucion();
     }
 
     public class SafPropuestaData : BaseRepository<SAF_PROPUESTA>, ISafPropuestaData
@@ -70,6 +74,18 @@ namespace SOCAUD.Data.Core
         public IEnumerable<TcPROPUESTARPT> ListarPropuestasRpt(int idPropuesta)
         {
             return this._uow.DataContext().SP_SAF_PROPUESTA_RPT(idPropuesta).ToList();
+        }
+
+
+        public IEnumerable<SP_SAF_EQUIPO_PROPUESTA_Result> ListarEquipoPropuesta(int idPropuesta)
+        {
+            return this._uow.DataContext().SP_SAF_EQUIPO_PROPUESTA1(idPropuesta).ToList();
+        }
+
+
+        public IEnumerable<VW_SAF_PROPUESTAEJECUCION> ListarPropuestaEjecucion()
+        {
+            return this._uow.DataContext().VW_SAF_PROPUESTAEJECUCION.ToList();
         }
     }
 }

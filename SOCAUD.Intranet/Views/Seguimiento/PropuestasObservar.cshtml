@@ -1,0 +1,107 @@
+﻿@using SOCAUD.Intranet.Models;
+@model SeguimientoModel
+
+
+@{
+    ViewBag.PageTitle = "Seguimiento";
+    ViewBag.PageDescription = "Seguimiento";
+    ViewBag.PageDescription = "Observaciones a una Auditoria";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registrar Observación</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>SOA</label>
+                            @Html.DropDownListFor(c=>c.IdSoa, Model.cboSOA, "Seleccione", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            <label>Periodo</label>
+                            @Html.DropDownListFor(c=>c.IdPublicacion, Model.cboPublicacion, "Seleccione", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <br />
+                            <button id="btnBuscar" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Buscar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tabPropuestasEjecucion" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Observación</label>
+                            <textarea id="ObservacionPropuesta" name="ObservacionPropuesta" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12 center">
+                            <button id="btnObservacion" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Registrar Observación</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+            listarPropuestasEjecucion();
+        });
+
+
+        var _dataPropEjecucion_ = null;
+        var tabPropuestasEjecucion = $("#tabPropuestasEjecucion").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataPropEjecucion_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                         return '<center><button class="btn btn-primary" title="Mostrar" type="button" onclick="SeleccionarProp(' + row[0] + ');"><i class="fa fa-search-plus"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Periodo" },
+                { "sTitle": "Entidad" },
+                { "sTitle": "RUC" },
+                { "sTitle": "Razon Social" },
+            ]
+        });
+
+        function listarPropuestasEjecucion() {
+            $.ajax({
+                url: '@Url.Action("ListarPropEjecucion", "Seguimiento")',
+                type: 'POST',
+                async: false,
+                data: {},
+                success: function (result) {
+                    _dataPropEjecucion_ = result;
+                    tabPropuestasEjecucion.fnReloadData(_dataPropEjecucion_);
+                }
+            });
+        }
+   
+    </script>
+}
+

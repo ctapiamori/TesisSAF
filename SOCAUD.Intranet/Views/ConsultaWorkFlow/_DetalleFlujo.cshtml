@@ -1,0 +1,71 @@
+﻿@using SOCAUD.Common.Enum;
+@using SOCAUD.Intranet.Models;
+@model WorkFlowUsuarioModel 
+
+
+@Html.HiddenFor(c=>c.TIPDOC) 
+@Html.HiddenFor(c=>c.CODDOC) 
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Detalle de Flujo Trabajo</h4>
+        </div>
+        <div class="modal-body">
+            <table id="tabFlujo" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        </div>
+    </div>
+</div>
+ 
+
+
+<script type="text/javascript">
+
+
+    var _dataflujoaprob_ = null;
+
+
+    $(document).ready(function () {
+        listarFlujos();
+    });
+
+
+    var tabFlujo = $("#tabFlujo").dataTable({
+        "info": false,
+        "bServerSide": false,
+        "data": _dataFlujo_,
+        "order": [[0, "asc"]],
+        "columns": [
+            { "sTitle": "Flujo" },
+            { "sTitle": "Nota" },
+            { "sTitle": "Usuario" },
+            { "sTitle": "Estado" },
+            { "sTitle": "Fecha" }
+        ]
+
+    });
+
+    function listarFlujos() {
+
+     
+
+        $.ajax({
+            url: '@Url.Action("ListarWorkflowDocumento", "Workflow", new { Area = "" })',
+            type: 'POST',
+            async: false,
+            data: { idDocumento: $("#CODDOC").val(), tipoDocumento: $("#TIPDOC").val() },
+            success: function (result) {
+                _dataFlujo_ = result;
+                tabFlujo.fnReloadData(_dataFlujo_);
+            }
+        });
+    }
+
+
+ 
+
+</script>

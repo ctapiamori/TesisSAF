@@ -16,21 +16,17 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-4">
-                        @Html.LabelFor(m => m.Usuario, new { @class = "form-control"  })
-                        @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control"  })
+                        @Html.LabelFor(m => m.Usuario)
+                        @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control", @readonly="true"  })
                         @Html.ValidationMessageFor(c => c.Usuario)
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">}
-                        @Html.LabelFor(m => m.Contrasena, new { @class = "form-control"  })
+                    <div class="col-md-4"> 
+                        @Html.LabelFor(m => m.Contrasena)
                         @Html.PasswordFor(m => m.Contrasena, new { @class = "form-control"  })
                         @Html.ValidationMessageFor(c => c.Contrasena)
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-4">
-                        @Html.LabelFor(m => m.RepitaConstrasena, new { @class = "form-control"  })
+                        @Html.LabelFor(m => m.RepitaConstrasena)
                         @Html.PasswordFor(m => m.RepitaConstrasena, new { @class = "form-control"  })
                         @Html.ValidationMessageFor(c => c.RepitaConstrasena)
                     </div>
@@ -40,7 +36,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12" style="text-align:center;">
-                        <button id="btnCambiarPassword" type="button" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Grabar Cambios</button>
+                        <button id="btnCambiarPassword" type="button" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Grabar Cambios</button>
                     </div>
                 </div>
             </div>
@@ -59,9 +55,7 @@
             });
         });
 
-   
-
-
+ 
         function cambiarContrasenia() {
 
             bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {

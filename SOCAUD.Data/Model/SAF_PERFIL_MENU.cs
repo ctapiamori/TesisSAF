@@ -23,7 +23,7 @@ namespace SOCAUD.Data.Model
         public string USUMOD { get; set; }
         public string ESTREG { get; set; }
     
-        public virtual SAF_MENU SAF_MENU { get; set; }
         public virtual SAF_PERFIL SAF_PERFIL { get; set; }
+        public virtual SAF_MENU SAF_MENU { get; set; }
     }
 }

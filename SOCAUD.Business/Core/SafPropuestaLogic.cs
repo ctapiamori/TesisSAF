@@ -20,6 +20,10 @@ namespace SOCAUD.Business.Core
         TcPROPUESTAS PropuestaPorId(int idPropuesta);
         TcASIGNARGANADORPROPUESTA AsignarGanadorPropuesta(int idPropuesta, int idPublicacion);
         IEnumerable<TcPROPUESTARPT> ListarPropuestasRpt(int idPropuesta);
+
+        IEnumerable<SP_SAF_EQUIPO_PROPUESTA_Result> ListarEquipoPropuesta(int idPropuesta);
+
+        IEnumerable<VW_SAF_PROPUESTAEJECUCION> ListarPropuestaEjecucion();
     }
 
     public class SafPropuestaLogic : ISafPropuestaLogic
@@ -105,6 +109,18 @@ namespace SOCAUD.Business.Core
         public IEnumerable<TcPROPUESTARPT> ListarPropuestasRpt(int idPropuesta)
         {
             return this._safPropuestaData.ListarPropuestasRpt(idPropuesta);
+        }
+
+
+        public IEnumerable<SP_SAF_EQUIPO_PROPUESTA_Result> ListarEquipoPropuesta(int idPropuesta)
+        {
+            return this._safPropuestaData.ListarEquipoPropuesta(idPropuesta);
+        }
+
+
+        public IEnumerable<VW_SAF_PROPUESTAEJECUCION> ListarPropuestaEjecucion()
+        {
+            return this._safPropuestaData.ListarPropuestaEjecucion();
         }
     }
 }

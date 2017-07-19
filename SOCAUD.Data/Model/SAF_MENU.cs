@@ -30,6 +30,7 @@ namespace SOCAUD.Data.Model
         public string USUREG { get; set; }
         public string USUMOD { get; set; }
         public string ESTREG { get; set; }
+        public Nullable<int> ORDEN { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_PERFIL_MENU> SAF_PERFIL_MENU { get; set; }

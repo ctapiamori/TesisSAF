@@ -10,17 +10,14 @@
 namespace SOCAUD.Data.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class VW_SAF_PROPUESTAEJECUCION
+    public partial class SP_SAF_EQUIPO_PROPUESTA_Result
     {
-        public int CODPRO { get; set; }
-        public int CODAUD { get; set; }
-        public string PERAUD { get; set; }
-        public Nullable<int> CODSOA { get; set; }
-        public int CODPUB { get; set; }
-        public string DESBAS { get; set; }
-        public string RUCSOA { get; set; }
-        public string RAZSOCSOA { get; set; }
+        public int CODPROEQU { get; set; }
+        public string DNIAUD { get; set; }
+        public string NOMAUD { get; set; }
+        public string APEAUD { get; set; }
+        public string NOMCAR { get; set; }
+        public Nullable<int> HORAS { get; set; }
     }
 }

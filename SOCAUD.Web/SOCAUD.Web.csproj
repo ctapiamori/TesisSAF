@@ -51,6 +51,9 @@
       <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\SOCAUD.Common\Libraries\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
       <Private>True</Private>
@@ -74,6 +77,9 @@
     <Reference Include="Microsoft.SqlServer.Smo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Scripting.11.0.2100.61\lib\Microsoft.SqlServer.Smo.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfReportGenerator">
+      <HintPath>..\SOCAUD.Common\Libraries\PdfReportGenerator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -250,6 +256,9 @@
     <Content Include="Content\daterangepicker-bs3.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\img-logo-home_.png" />
+    <Content Include="Content\Images\LogoCGRFull.jpg" />
+    <Content Include="Content\Images\LogoCGRMini.jpg" />
+    <Content Include="Content\Images\sort_asc.png" />
     <Content Include="Content\Images\sort_asc_disabled.png" />
     <Content Include="Content\Images\sort_both.png" />
     <Content Include="Content\Images\sort_desc.png" />
@@ -286,6 +295,7 @@
     <Content Include="Content\jquery-jvectormap-1.2.2.css" />
     <Content Include="Content\jquery.pnotify.css" />
     <Content Include="Content\jquery.pnotify.icons.css" />
+    <Content Include="Content\logo_contraloria.png" />
     <Content Include="Content\materialize\css\materialize.css" />
     <Content Include="Content\materialize\css\materialize.min.css" />
     <Content Include="Content\materialize\font\material-design-icons\LICENSE.txt" />
@@ -862,6 +872,8 @@
     <Content Include="Views\Contrasena\CambiarContrasena.cshtml" />
     <Content Include="Views\Propuesta\_AsignarFechaEquipoLec.cshtml" />
     <Content Include="Views\Propuesta\LecturaPropuesta.cshtml" />
+    <Content Include="Views\Propuesta\CreateReportePropuesta.cshtml" />
+    <Content Include="Views\InvitacionAuditor\NuevaInvitacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,7 +11,7 @@ namespace SOCAUD.Intranet.Models
     public class MenuModel
     {
         public int CODMEN { get; set; }
-        [Display(Name="Descripcion")]
+        [Display(Name="Nombre")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         [MaxLength(199, ErrorMessage = Mensaje.MensajeCampoLongitudIncorrecta)]
         public string DESMEN { get; set; }
@@ -24,6 +24,10 @@ namespace SOCAUD.Intranet.Models
         [Display(Name = "Icono")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
         public string ICONCSS { get; set; }
+
+        [Display(Name = "Orden")]
+        [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
+        public int ORDEN { get; set; }
 
         public IList<SelectListItem> ListaIconos { get; set; }
 

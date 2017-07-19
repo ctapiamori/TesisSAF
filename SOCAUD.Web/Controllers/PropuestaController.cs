@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ReportManagement;
 using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Common.Enum;
@@ -12,8 +13,49 @@ using System.Web.Mvc;
 
 namespace SOCAUD.Web.Controllers
 {
-    public class PropuestaController : BaseController
+
+
+    public class ReportePropuesta
     {
+
+        public string ImageUrl { get; set; }
+        public string Publicacion { get; set; }
+        public string SOA { get; set; }
+        public string EntidadBase { get; set; }
+        public decimal Retribucion { get; set; }
+        public decimal IGVTotal { get; set; }
+        public decimal RetribucionTotal { get; set; }
+
+        public IList<AuditoriaPropuesta> ListaAuditoria { get; set; }
+        public IList<EquipoPropuesta> ListaEquipo { get; set; }
+
+        public ReportePropuesta() {
+            this.ListaEquipo = new List<EquipoPropuesta>();
+            this.ListaAuditoria = new List<AuditoriaPropuesta>();
+        }
+
+
+    }
+
+    public class EquipoPropuesta
+    {
+        public string DNI { get; set; }
+        public string NombreApellido { get; set; }
+        public int Horas { get; set; }
+    }
+
+    public class AuditoriaPropuesta
+    {
+        public string Periodo { get; set; }
+        public string FechaInicio { get; set; }
+        public string FechaFin { get; set; }
+    }
+
+    public class PropuestaController : PdfViewController
+    {
+
+        private readonly ISafSoaLogic _soaLogic;
+        private readonly ISafBaseLogic _baseLogic;
         private readonly ISafPublicacionLogic _publicacionLogic;
         private readonly ISafPropuestaLogic _propuestaLogic;
         private readonly ISafAuditoriaLogic _auditoriaLogic;
@@ -28,6 +70,7 @@ namespace SOCAUD.Web.Controllers
 
         public PropuestaController()
         {
+            _soaLogic = new SafSoaLogic();
             _publicacionLogic = new SafPublicacionLogic();
             _propuestaLogic = new SafPropuestaLogic();
             _auditoriaLogic = new SafAuditoriaLogic();
@@ -38,6 +81,7 @@ namespace SOCAUD.Web.Controllers
             _publicacionYBasesLogic = new SafPublicacionBaseLogic();
             _servicioAuditoriaLogic = new SafServicioAuditoriaLogic();
             _safServicioAuditoriaCargoLogic = new SafServicioAuditoriaCargoLogic();
+            _baseLogic = new SafBaseLogic();
         }
 
         #region Creacion de Propuesto
@@ -408,5 +452,53 @@ namespace SOCAUD.Web.Controllers
             return Json(gantt.ToArray());
         }
         #endregion
+
+
+        private void FillImageUrl(ReportePropuesta model, string imageName)
+        {
+            string url = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+            model.ImageUrl = url + "Content/" + imageName;
+        }
+
+
+        public ActionResult CreateReportePropuesta(int id) {
+
+            var propuestaReporte = new ReportePropuesta();
+            var propuesta = this._propuestaLogic.BuscarPorId(id);
+
+            var soainfo = this._soaLogic.BuscarPorId(propuesta.CODSOA.GetValueOrDefault());
+            var publicacion = this._publicacionLogic.BuscarPorId(propuesta.CODPUB.GetValueOrDefault());
+            var bases = this._baseLogic.BuscarPorId(propuesta.CODBAS.GetValueOrDefault());
+
+            propuestaReporte.EntidadBase = bases.DESBAS;
+            propuestaReporte.IGVTotal = propuesta.IGVTOTAL.GetValueOrDefault();
+            propuestaReporte.Retribucion = propuesta.RETRECO.GetValueOrDefault();
+            propuestaReporte.RetribucionTotal = propuesta.RETRECOTOTAL.GetValueOrDefault();
+            propuestaReporte.Publicacion = publicacion.NUMPUB;
+            propuestaReporte.SOA = soainfo.RAZSOCSOA;
+            var auditorias = this._auditoriaLogic.ListarAuditoriasPorPropuesta(id);
+            var equipo = this._propuestaLogic.ListarEquipoPropuesta(id);
+
+            foreach (var item in auditorias)
+            {
+                propuestaReporte.ListaAuditoria.Add(new AuditoriaPropuesta() {
+                    Periodo = item.PERAUD,
+                    FechaFin = item.FECFINAUDITORIA.GetValueOrDefault().ToString("dd/MM/yyyy"),
+                    FechaInicio = item.FECINIAUDITORIA.GetValueOrDefault().ToString("dd/MM/yyyy")
+                });
+            }
+
+            foreach (var item in equipo)
+            {
+                propuestaReporte.ListaEquipo.Add(new EquipoPropuesta() { 
+                    NombreApellido = item.NOMAUD + " " + item.APEAUD,
+                    DNI = item.DNIAUD,
+                    Horas = item.HORAS.GetValueOrDefault()
+                });
+            }
+            FillImageUrl(propuestaReporte, "logo_contraloria.png");
+            return this.ViewPdf("", "CreateReportePropuesta", propuestaReporte);
+            
+        }
     }
 }

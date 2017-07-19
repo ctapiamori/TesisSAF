@@ -54,6 +54,7 @@ namespace SOCAUD.Intranet.Controllers
                 MenuEntity.DESMEN = model.DESMEN;
                 MenuEntity.ICONCSS = model.ICONCSS;
                 MenuEntity.RUTAMEN = model.RUTAMEN;
+                MenuEntity.ORDEN = model.ORDEN;
                 var result = this._menuLogic.Registrar(MenuEntity);
                 return Json(new MensajeRespuesta("Se agrego un nuevo menu satisfactoriamente", true));
             }
@@ -72,6 +73,7 @@ namespace SOCAUD.Intranet.Controllers
             model.DESMEN = entity.DESMEN;
             model.ICONCSS = entity.ICONCSS;
             model.RUTAMEN = entity.RUTAMEN;
+            model.ORDEN = entity.ORDEN.GetValueOrDefault();
             return View(model);
         }
 
@@ -86,7 +88,7 @@ namespace SOCAUD.Intranet.Controllers
                 menu.RUTAMEN = model.RUTAMEN;
                 menu.ICONCSS = model.ICONCSS;
                 menu.DESMEN = model.DESMEN;
-
+                menu.ORDEN = model.ORDEN;
                 this._menuLogic.Actualizar(menu);
 
                 return Json(new MensajeRespuesta("Se modifico el menu satisfactoriamente", true));

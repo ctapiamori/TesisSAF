@@ -24,6 +24,7 @@ namespace SOCAUD.Business.Core
         IEnumerable<SAF_CARGO> ListarCargos();
         IEnumerable<SAF_TIPOSOLICITUD> ListarTipoSolicitud();
         IEnumerable<SAF_TIPOSOLICITUD> ListarRegistroTipoSolicitud();
+      
         SAF_CARGO GetCargo(int idCargo);
     }
 
@@ -127,5 +128,8 @@ namespace SOCAUD.Business.Core
         {
             return this._safTiposolicitudData.GetMany(c => c.CODTIPSOL >= 1 && c.CODTIPSOL <= 2).ToList();
         }
+
+
+   
     }
 }

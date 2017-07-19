@@ -12,6 +12,8 @@ namespace SOCAUD.Data.Core
     {
         IEnumerable<TcEQUIPOAUDITORIA> ListarEquipoAuditoria(int idAuditoria);
         IEnumerable<TcEQUIPOAUDITORIARPT> ListarEquipoAuditoriaRpt(int idPropuesta);
+
+      
     }
 
     public class SafPropuestaEquipoData : BaseRepository<SAF_PROPEQUIPO>, ISafPropuestaEquipoData
@@ -33,5 +35,8 @@ namespace SOCAUD.Data.Core
         {
             return this._uow.DataContext().SP_SAF_EQUIPOAUDITORIA_RPT(idPropuesta).ToList();
         }
+
+
+        
     }
 }

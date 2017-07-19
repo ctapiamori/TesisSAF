@@ -65,6 +65,25 @@ namespace SOCAUD.Intranet.Controllers
             return Json(data);
         }
 
+
+        public PartialViewResult DetalleWorkflowDocumento(int idDocumento, string tipoDocumento)
+        {
+            var listado = this._workflowLogic.ListarPorDocumento(idDocumento, tipoDocumento).OrderByDescending(c => c.FECREG).ToList();
+            /*
+            var data = listado.Select(c => new string[]{
+                c.DESTIPDOC,
+                c.NOTWORFLO,
+                c.USUREG,
+                //(c.TIPCARUSU.GetValueOrDefault() == TipoUsuario.Operador.GetHashCode()) ? "Operador" : (c.TIPCARUSU.GetValueOrDefault() == TipoUsuario.Jefe.GetHashCode() ? "Jefe" : "Gerente"),
+                (c.ESTWORFLO.GetValueOrDefault() == Estado.Workflow.PendienteAprobacion.GetHashCode()) ? "Solicitando Aprobación" : ( (c.ESTWORFLO.GetValueOrDefault() == Estado.Workflow.Aprobado.GetHashCode())? "Aprobado" : "Rechazado"),
+                c.FECREG.HasValue? c.FECREG.Value.ToString("dd/MM/yyyy HH:mm:ss"): "",
+
+            }).ToArray();
+            */
+            return PartialView("_DetalleFlujo", listado);
+        }
+
+
         public PartialViewResult Solicitud(int idDocumento, string tipoDocumento, int? idFlujo)
         {
             var tiposUsuario = new List<SelectListItem>();
