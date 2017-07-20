@@ -16,12 +16,15 @@ namespace SOCAUD.Intranet.Controllers
  
         private readonly ISafPublicacionLogic _publicacionLogic;
         private readonly ISafCronogramaLogic _cronogramaLogic;
-
         private readonly ISafBaseLogic _baseLogic;
+
+        private readonly ISafAbsolucionConsultaLogic _absolucionConsultaLogic;
+
         public ConsultasGeneralController()
         {
             _publicacionLogic = new SafPublicacionLogic();
             _cronogramaLogic = new SafCronogramaLogic();
+            _absolucionConsultaLogic = new SafAbsolucionConsultaLogic();
             _baseLogic = new SafBaseLogic();
         }
 
@@ -44,6 +47,24 @@ namespace SOCAUD.Intranet.Controllers
             var cronogramas = this._cronogramaLogic.ListarTodos().Where(c => c.ESTCRO == Estado.Cronograma.Aprobado.GetHashCode()); // Aprobada
             model.cboCronograma = (from c in cronogramas select new SelectListItem() { Text = c.ANIOCRO.GetValueOrDefault().ToString(), Value = c.CODCRO.ToString() });
             return View(model);
+        }
+
+        public ActionResult Absolucion()
+        {
+            return View();
+        }
+
+
+        public JsonResult ListarAbsolucionConsulta() {
+            var listado = _absolucionConsultaLogic.ListarAbsolucionConsultasCompleto();
+            var data = listado.Select(c => new string[]{ 
+                c.CODABSCON.ToString(),
+                c.NUMPUB,
+                c.DESBAS,
+                c.FECPUBABSOLUCION.HasValue? "": c.FECPUBABSOLUCION.Value.ToString("dd/MM/yyyy HH:mm:ss")
+            }).ToArray();
+
+            return Json(data);
         }
 
         public JsonResult ListarPublicaciones(int? idCronograma, string numeroPublicacion)

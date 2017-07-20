@@ -1,0 +1,78 @@
+﻿@model SOCAUD.Web.Controllers.ReporteConcursoPublico
+ 
+<br/>
+<img src="@Model.ImageUrl" width="200" height="64" /> 
+<br/> <br/> 
+ 
+<table>
+    <tr>
+        <td width="100%" align="center"><h2>Concurso Público de Merito</h2></td> 
+    </tr>
+    <tr>
+        <td width="100%" align="center">N° - @Model.NroConcurso</td> 
+    </tr>
+</table>
+<br />
+<br />
+
+
+
+<table cellpadding="3" cellspacing="3">
+
+    <tr>
+        <td width="50%" style="font-size:10px;font-weight:bold;">Fecha máxima para Crear Consultas:</td>
+        <td>@Model.FechaMaxConsultas</td>
+    </tr>
+
+    <tr>
+        <td width="50%" style="font-size:10px;font-weight:bold;">Fecha máxima para Responder Consultas:</td>
+        <td>@Model.FechaMaxResponderConsultas</td>
+    </tr>
+    <tr>
+        <td width="50%" style="font-size:10px;font-weight:bold;">Fecha máxima para Enviar Propuesta:</td>
+        <td>@Model.FechaMaxPropuestas</td>
+    </tr>
+ 
+</table>
+ 
+<br />
+<br />
+<table cellpadding="3" cellspacing="3">
+    <tr border="1" bgcolor="#777777" color="#ffffff">
+        <td width="80%" align="center">
+            Bases en la publicación
+        </td>
+    </tr>
+    @{
+        var OddColor = "#DDEEEE";
+        var evenColor = "#EEFFFF";
+        var Odd = OddColor;
+    }
+    @foreach (var item in Model.Entidades)
+    {
+        <tr border="1" bgcolor="@Odd" >
+            <td width="80%" style="font-size:10px;">@item</td>
+        </tr>
+        if (Odd == OddColor)
+        {
+            Odd = evenColor;
+        }
+        else
+        {
+            Odd = OddColor;
+        }
+
+    }
+</table>
+
+<br />
+<br />
+<p style="text-align:justify; font-size:10px;">
+    <span style="font-weight:bold;">Información Importante:</span><br />
+    La Ley regula el ingreso a la carrera administrativa, y los derechos, deberes y responsabilidades de
+    los servidores públicos. No están comprendidos en dicha carrera los funcionarios que desempeñan
+    cargos políticos o de confianza. Ningún funcionario o servidor público puede desempeñar más de un
+    empleo o cargo público remunerado, con excepción de uno o más por función docente. No están
+    comprendidos en la función pública los trabajadores de las empresas del Estado o de sociedades de
+    economía mixta. 
+</p>

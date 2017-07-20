@@ -1,0 +1,81 @@
+﻿@using SOCAUD.Common.Enum;
+@using SOCAUD.Web.Models;
+@model ConsultaBases
+ 
+
+ 
+@{
+    ViewBag.PageTitle = "Absolucion";
+    ViewBag.PageDescription = "Absolucion Consultas";
+}
+ 
+ 
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Busqueda de Absolucion</h3>
+        </div>
+        <div class="box-body">
+ 
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabAbsoluciones" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section scripts {
+
+    <script type="text/ecmascript">
+
+
+        var _dataAbsoluciones_ = null;
+        var tabAbsoluciones = $("#tabAbsoluciones").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataAbsoluciones_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-primary" title="Ver Documento" type="button" onclick="descargarAbsolucion(' + row[0] + ');"><i class="fa fa-download"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Publicación" },
+                { "sTitle": "Base" }
+            ]
+        });
+
+
+
+        $(document).ready(function () {
+            listarAbsolucionConsulta();
+          
+        });
+
+        function listarAbsolucionConsulta() {
+            $.ajax({
+                url: '@Url.Action("ListarAbsolucionConsulta", "ConsultasPublica")',
+                type: 'POST',
+                async: false,
+                data: {  },
+                success: function (result) {
+                    _dataAbsoluciones_ = result;
+                    tabAbsoluciones.fnReloadData(_dataAbsoluciones_);
+                }
+            });
+        }
+
+        function descargarAbsolucion(id) {
+            var url = '@Url.Action("CreateReporteAbsolucion", "ConsultasPublica", new { Area = "", id = "_id_" })'.replace('_id_', id);
+            window.open(url);
+        }
+
+    </script>
+}

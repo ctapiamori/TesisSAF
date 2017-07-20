@@ -31,7 +31,17 @@
             @foreach(var item in (List<MenuOpcionesModel>)Session["sessionMenuSistema"]){
 
             <li class="treeview">
-                <a href="@item.Ruta">
+                @{
+                    string controlador = ""; 
+                    string accion = ""; 
+                    if (item.Ruta != "#"){
+                        controlador = item.Ruta.Split('/')[1];
+                        accion = item.Ruta.Split('/')[2];
+                    }
+                }
+
+
+                <a href="@Url.Action(accion, controlador)">
                     <i class='@item.Css'></i> <span>@item.Nombre</span>
                     @if (item.Ruta == "#"){
                         <i class="fa fa-angle-left pull-right"></i>
@@ -39,8 +49,12 @@
                 </a>
                 @if (item.Ruta == "#") {
                     foreach(var item2 in item.SubMenu){
+
+                            string controlador2 = item2.Ruta.Split('/')[1];
+                            string accion2 = item2.Ruta.Split('/')[2];
+
                         <ul class="treeview-menu">
-                            <li><a href='@item2.Ruta'><i class="fa fa-circle-o"></i>@item2.Nombre</a></li>
+                            <li><a href='@Url.Action(accion2, controlador2)'><i class="fa fa-circle-o"></i>@item2.Nombre</a></li>
                         </ul>
                     }
                 }

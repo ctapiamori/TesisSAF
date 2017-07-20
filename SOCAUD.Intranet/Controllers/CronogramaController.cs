@@ -30,6 +30,8 @@ namespace SOCAUD.Intranet.Controllers
             this.listaEntidades = new List<TcSAFCRONOENTIDADCRONORPT>();
         }
     }
+
+
     public class CronogramaController : PdfViewController
     {
         private readonly ISafCronogramaLogic _cronogramaLogic;

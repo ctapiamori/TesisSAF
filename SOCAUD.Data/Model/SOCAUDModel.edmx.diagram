@@ -110,9 +110,6 @@
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_WORKFLOW" Width="1.5" PointX="19.375" PointY="4.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_ENTIDADES" Width="1.5" PointX="21.375" PointY="1.125" />
         <AssociationConnector Association="SI_SOCAUDModel.R_14" />
-        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CONSULTA" Width="1.5" PointX="22.75" PointY="24.625" />
-        <AssociationConnector Association="SI_SOCAUDModel.R_27" />
-        <AssociationConnector Association="SI_SOCAUDModel.R_28" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO" Width="1.5" PointX="13.375" PointY="9.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_PERFIL" Width="1.5" PointX="5.375" PointY="22" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_PERFIL_MENU" Width="1.5" PointX="7.625" PointY="22" />
@@ -132,6 +129,14 @@
         <AssociationConnector Association="SI_SOCAUDModel.FK__SAF_SUBME__CODME__41B8C09B" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_WORKFLOW_POR_USU" Width="1.5" PointX="14.375" PointY="24.75" />
         <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_PROPUESTAEJECUCION" Width="1.5" PointX="16.375" PointY="24.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_ABSOLUCION_CONSULTA" Width="1.5" PointX="25.375" PointY="10.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_OBSERVACION_PROPUESTA" Width="1.5" PointX="26.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_PENALIDAD_PROPUESTA" Width="1.5" PointX="26.375" PointY="5.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.SAF_CONSULTA" Width="1.5" PointX="28.75" PointY="18.5" />
+        <AssociationConnector Association="SI_SOCAUDModel.R_27" />
+        <AssociationConnector Association="SI_SOCAUDModel.R_28" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_CONSULTA" Width="1.5" PointX="27.375" PointY="10.75" />
+        <EntityTypeShape EntityType="SI_SOCAUDModel.VW_SAF_ABSOLUCION_CONSULTA" Width="1.5" PointX="28.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

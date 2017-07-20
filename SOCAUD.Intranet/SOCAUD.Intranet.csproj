@@ -214,6 +214,7 @@
     </Compile>
     <Compile Include="Helper\ArchivoWeb.cs" />
     <Compile Include="Helper\WebHelper.cs" />
+    <Compile Include="Models\AbsolucionConsultasModel.cs" />
     <Compile Include="Models\AccesoModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Archivo.cs" />
@@ -568,6 +569,9 @@
     <Content Include="Views\ConsultaWorkFlow\_DetalleFlujo.cshtml" />
     <Content Include="Views\Seguimiento\PropuestasObservar.cshtml" />
     <Content Include="Views\Seguimiento\PropuestasPenalidad.cshtml" />
+    <Content Include="Views\Consulta\_AbsolucionConsultas.cshtml" />
+    <Content Include="Views\ConsultasGeneral\Absolucion.cshtml" />
+    <Content Include="Views\Consulta\CreateReporteAbsolucion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

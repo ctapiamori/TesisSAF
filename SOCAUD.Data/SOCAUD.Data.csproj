@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\SafAbsolucionConsultaData.cs" />
     <Compile Include="Core\SafArchivoData.cs" />
     <Compile Include="Core\SafAsistenciaData.cs" />
     <Compile Include="Core\SafAuditorData.cs" />
@@ -74,7 +75,9 @@
     <Compile Include="Core\SafEntidadData.cs" />
     <Compile Include="Core\SafExperienciaData.cs" />
     <Compile Include="Core\SafMenuData.cs" />
+    <Compile Include="Core\SafObservacionPropuestaData.cs" />
     <Compile Include="Core\SafPefilMenuData.cs" />
+    <Compile Include="Core\SafPenalidadPropuestaData.cs" />
     <Compile Include="Core\SafPerfilData.cs" />
     <Compile Include="Core\SafPropuestaEquipoData.cs" />
     <Compile Include="Core\SafFaltaJustificadaData.cs" />
@@ -119,6 +122,9 @@
     <Compile Include="Core\VwSafSubMenuData.cs" />
     <Compile Include="Core\VwSafUsuarioData.cs" />
     <Compile Include="Core\VwSafWorkFlowData.cs" />
+    <Compile Include="Model\SAF_ABSOLUCION_CONSULTA.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\SAF_ARCHIVO.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
@@ -203,7 +209,13 @@
     <Compile Include="Model\SAF_NOTIFICACION.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\SAF_OBSERVACION_PROPUESTA.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\SAF_PARAMETRICA.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SAF_PENALIDAD_PROPUESTA.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SAF_PERFIL.cs">
@@ -425,10 +437,16 @@
     <Compile Include="Model\TcSUBMENUPORMENU.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\VW_SAF_ABSOLUCION_CONSULTA.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\VW_SAF_AUDITORIAEQUIPO.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VW_SAF_CARGOSENSERVICIO.cs">
+      <DependentUpon>SOCAUDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\VW_SAF_CONSULTA.cs">
       <DependentUpon>SOCAUDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VW_SAF_CRONOGRAMA.cs">

@@ -76,7 +76,6 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_PUBLICACIONBASE> SAF_PUBLICACIONBASE { get; set; }
         public virtual DbSet<SAF_WORKFLOW> SAF_WORKFLOW { get; set; }
         public virtual DbSet<SAF_ENTIDADES> SAF_ENTIDADES { get; set; }
-        public virtual DbSet<SAF_CONSULTA> SAF_CONSULTA { get; set; }
         public virtual DbSet<VW_SAF_CARGOSENSERVICIO> VW_SAF_CARGOSENSERVICIO { get; set; }
         public virtual DbSet<SAF_PERFIL> SAF_PERFIL { get; set; }
         public virtual DbSet<SAF_PERFIL_MENU> SAF_PERFIL_MENU { get; set; }
@@ -93,6 +92,12 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_MENU> SAF_MENU { get; set; }
         public virtual DbSet<VW_SAF_WORKFLOW_POR_USU> VW_SAF_WORKFLOW_POR_USU { get; set; }
         public virtual DbSet<VW_SAF_PROPUESTAEJECUCION> VW_SAF_PROPUESTAEJECUCION { get; set; }
+        public virtual DbSet<SAF_ABSOLUCION_CONSULTA> SAF_ABSOLUCION_CONSULTA { get; set; }
+        public virtual DbSet<SAF_OBSERVACION_PROPUESTA> SAF_OBSERVACION_PROPUESTA { get; set; }
+        public virtual DbSet<SAF_PENALIDAD_PROPUESTA> SAF_PENALIDAD_PROPUESTA { get; set; }
+        public virtual DbSet<SAF_CONSULTA> SAF_CONSULTA { get; set; }
+        public virtual DbSet<VW_SAF_CONSULTA> VW_SAF_CONSULTA { get; set; }
+        public virtual DbSet<VW_SAF_ABSOLUCION_CONSULTA> VW_SAF_ABSOLUCION_CONSULTA { get; set; }
     
         public virtual ObjectResult<TcCORTEPUBLICACION> SP_SAF_CORTEPUBLICACION(Nullable<int> cODPUB)
         {

@@ -1,0 +1,84 @@
+﻿@using SOCAUD.Common.Enum;
+@using SOCAUD.Web.Models;
+
+ 
+@{
+    ViewBag.PageTitle = "Consulta";
+    ViewBag.PageDescription = "Concurso Publico";
+}
+ 
+ 
+    <div class="box box-primary color-palette-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Listado de Cronogramas</h3>
+        </div>
+        <div class="box-body">
+ 
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabCronogramas" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section scripts {
+
+    <script type="text/ecmascript">
+
+
+        var _dataPublicacion_ = null;
+
+
+        var _dataCronogramas_ = null;
+        var tabCronogramas = $("#tabCronogramas").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataCronogramas_,
+            "order": [[1, "asc"]],
+            "columns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        return '<center><button class="btn btn-primary" title="Ver Documento" type="button" onclick="descargarCronograma(' + row[0] + ');"><i class="fa fa-download"></i></button></center>';
+                    }
+                },
+                { "sTitle": "Periodo" },
+                { "sTitle": "Fecha Publicación" },
+                { "sTitle": "Max. Elaboración Bases" },
+                { "sTitle": "Estado" } 
+            ]
+        });
+
+
+
+        $(document).ready(function () {
+            listarCronograma();
+        });
+
+        function listarCronograma() {
+            $.ajax({
+                url: '@Url.Action("ListarCronogramas", "ConsultasPublica")',
+                type: 'POST',
+                async: false,
+                data: { },
+                success: function (result) {
+                    _dataCronogramas_ = result;
+                    tabCronogramas.fnReloadData(_dataCronogramas_);
+                }
+            });
+        }
+
+
+        function descargarCronograma(id) {
+            var url = '@Url.Action("CreateReporteCronograma", "Cronograma", new { Area = "", id = "_id_" })'.replace('_id_', id);
+            window.open(url);
+        }
+
+    </script>
+}

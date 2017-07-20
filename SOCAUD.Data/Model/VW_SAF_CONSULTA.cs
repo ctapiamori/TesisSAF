@@ -12,7 +12,7 @@ namespace SOCAUD.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class SAF_CONSULTA
+    public partial class VW_SAF_CONSULTA
     {
         public int CODCON { get; set; }
         public string DESCON { get; set; }
@@ -26,8 +26,9 @@ namespace SOCAUD.Data.Model
         public Nullable<int> ESTCON { get; set; }
         public string RESCON { get; set; }
         public Nullable<int> CODBAS { get; set; }
-    
-        public virtual SAF_PUBLICACION SAF_PUBLICACION { get; set; }
-        public virtual SAF_SOA SAF_SOA { get; set; }
+        public string DESBAS { get; set; }
+        public string NUMPUB { get; set; }
+        public string ESTDES { get; set; }
+        public string RAZSOCSOA { get; set; }
     }
 }

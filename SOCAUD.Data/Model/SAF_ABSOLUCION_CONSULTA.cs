@@ -12,22 +12,16 @@ namespace SOCAUD.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class SAF_CONSULTA
+    public partial class SAF_ABSOLUCION_CONSULTA
     {
-        public int CODCON { get; set; }
-        public string DESCON { get; set; }
+        public int CODABSCON { get; set; }
+        public Nullable<int> CODPUB { get; set; }
+        public Nullable<int> CODBASE { get; set; }
+        public Nullable<System.DateTime> FECPUBABSOLUCION { get; set; }
         public Nullable<System.DateTime> FECREG { get; set; }
         public Nullable<System.DateTime> FECMOD { get; set; }
         public string USUREG { get; set; }
         public string USUMOD { get; set; }
         public string ESTREG { get; set; }
-        public Nullable<int> CODPUB { get; set; }
-        public Nullable<int> CODSOA { get; set; }
-        public Nullable<int> ESTCON { get; set; }
-        public string RESCON { get; set; }
-        public Nullable<int> CODBAS { get; set; }
-    
-        public virtual SAF_PUBLICACION SAF_PUBLICACION { get; set; }
-        public virtual SAF_SOA SAF_SOA { get; set; }
     }
 }

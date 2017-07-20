@@ -207,6 +207,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BandejaInvitacionesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ConsultaController.cs" />
+    <Compile Include="Controllers\ConsultasPublicaController.cs" />
     <Compile Include="Controllers\ContrasenaController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -222,11 +224,14 @@
     <Compile Include="Helper\Archivo.cs" />
     <Compile Include="Helper\Gantt.cs" />
     <Compile Include="Helper\SAF_ARCHIVOPartial.cs" />
+    <Compile Include="Helper\WebHelper.cs" />
     <Compile Include="Hubs\NotificacionHub.cs" />
     <Compile Include="Hubs\NotificacionProceso.cs" />
     <Compile Include="Models\AccesoModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuditorModel.cs" />
+    <Compile Include="Models\ConsultaBases.cs" />
+    <Compile Include="Models\ConsultaConcurso.cs" />
     <Compile Include="Models\ContrasenaModel.cs" />
     <Compile Include="Models\EquipoAuditoriaModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -234,6 +239,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuOpcionesModel.cs" />
     <Compile Include="Models\PropuestaModel.cs" />
+    <Compile Include="Models\RegistroConsultaModel.cs" />
     <Compile Include="Models\SoaModel.cs" />
     <Compile Include="Models\SolicitudModel.cs" />
     <Compile Include="Models\SolRegModel.cs" />
@@ -874,6 +880,15 @@
     <Content Include="Views\Propuesta\LecturaPropuesta.cshtml" />
     <Content Include="Views\Propuesta\CreateReportePropuesta.cshtml" />
     <Content Include="Views\InvitacionAuditor\NuevaInvitacion.cshtml" />
+    <Content Include="Views\Consulta\Listado.cshtml" />
+    <Content Include="Views\Consulta\_NuevaConsulta.cshtml" />
+    <Content Include="Views\ConsultasPublica\Absolucion.cshtml" />
+    <Content Include="Views\ConsultasPublica\Bases.cshtml" />
+    <Content Include="Views\ConsultasPublica\ConsultaConcurso.cshtml" />
+    <Content Include="Views\ConsultasPublica\Cronograma.cshtml" />
+    <Content Include="Views\ConsultasPublica\CreateReporteBase.cshtml" />
+    <Content Include="Views\ConsultasPublica\CreateReporteAbsolucion.cshtml" />
+    <Content Include="Views\ConsultasPublica\CreateReportPublicacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

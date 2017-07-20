@@ -178,7 +178,7 @@ namespace SOCAUDAPI.Servicios
         public IHttpActionResult InsertConsulta(int idSoa, int idPub, string desCon) { 
             try
             {
-                _consultaLogic.InsertConsulta(idSoa, idPub, desCon);
+                //_consultaLogic.InsertConsulta(idSoa, idPub, desCon);
                 return Ok("Agrego");
             }
             catch (Exception)

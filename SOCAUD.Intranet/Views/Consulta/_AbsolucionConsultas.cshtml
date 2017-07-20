@@ -1,0 +1,93 @@
+﻿@using SOCAUD.Intranet.Models;
+
+@model AbsolucionConsultasModel
+
+ 
+ 
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Absolución de Consultas</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(c=>c.Hora)
+                        @Html.TextBoxFor(c=>c.Hora, new { @class = "form-control", @readonly="true" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(c=>c.CodigoPubAbs)
+                        @Html.DropDownListFor(c=>c.CodigoPubAbs, Model.lista, "Seleccione", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.LabelFor(c=>c.CodigoBaseAbs)
+                        @Html.DropDownListFor(c=>c.CodigoBaseAbs, Model.listaBase, "Seleccione", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="btnCrearAbsolucionConsulta" class="btn btn-primary" >Grabar Absolución</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>&nbsp;
+        </div>
+    </div>
+</div>
+
+ 
+
+
+<script type="text/javascript">
+
+ 
+    $(document).ready(function () {
+        
+        $("#CodigoPubAbs").change(function () {
+            cargarComboBases();
+        });
+        
+        $("#btnCrearAbsolucionConsulta").click(grabarAbsolucionConsulta);
+    });
+
+    function grabarAbsolucionConsulta() {
+        bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GrabarAbsolucionConsulta", "Consulta")',
+                    data: { idPub: $("#CodigoPubAbs").val(), idBase: $("#CodigoBaseAbs").val() },
+                    dataType: "json",
+                    success: function (result) {
+                        mostrarNotificacion(result);
+                    }
+                });
+            }
+        });
+    }
+
+    function cargarComboBases() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("listarBases", "Consulta")',
+            data: { idPub: $("#CodigoPubAbs").val() },
+            dataType: "json",
+            success: function (result) {
+                $("#CodigoBaseAbs option").not(":first").remove();
+                $.each(result, function (i, v) {
+                    $("#CodigoBaseAbs").append("<option value='" + v.CODBAS + "'>" + v.DESBAS + "</option>");
+                });
+            }
+        });
+    }
+ 
+    
+
+</script>

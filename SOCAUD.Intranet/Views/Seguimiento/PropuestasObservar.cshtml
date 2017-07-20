@@ -8,6 +8,8 @@
     ViewBag.PageDescription = "Observaciones a una Auditoria";
 }
 
+
+<input type="hidden" id="CODPROP_Select" name="CODPROP_Select" />
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary color-palette-box">
@@ -18,12 +20,12 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-4">
-                            <label>SOA</label>
-                            @Html.DropDownListFor(c=>c.IdSoa, Model.cboSOA, "Seleccione", new { @class = "form-control" })
+                            <label>Publicación</label>
+                            @Html.DropDownListFor(c=>c.IdPublicacion, Model.cboPublicacion, "Seleccione", new { @class = "form-control" })
                         </div>
                         <div class="col-md-4">
-                            <label>Periodo</label>
-                            @Html.DropDownListFor(c=>c.IdPublicacion, Model.cboPublicacion, "Seleccione", new { @class = "form-control" })
+                            <label>SOA</label>
+                            @Html.DropDownListFor(c=>c.IdSoa, Model.cboSOA, "Seleccione", new { @class = "form-control" })
                         </div>
                         <div class="col-md-3">
                             <br />
@@ -64,6 +66,7 @@
 
         $(document).ready(function () {
             listarPropuestasEjecucion();
+            $("#btnObservacion").click(grabarPenalidad);
         });
 
 
@@ -89,6 +92,8 @@
             ]
         });
 
+        
+
         function listarPropuestasEjecucion() {
             $.ajax({
                 url: '@Url.Action("ListarPropEjecucion", "Seguimiento")',
@@ -101,7 +106,30 @@
                 }
             });
         }
-   
+        
+        function SeleccionarProp(id) {
+            $("#CODPROP_Select").val(id);
+        }
+        
+        function grabarPenalidad() {
+
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+
+                if (result) {
+
+                    $.ajax({
+                        url: '@Url.Action("GrabarObservaciones", "Seguimiento")',
+                        type: 'POST',
+                        async: false,
+                        data: { idProp: $("#CODPROP_Select").val(), observ: $("#ObservacionPropuesta").val() },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                        }
+                    });
+                }
+            });
+        }
+        
     </script>
 }
 

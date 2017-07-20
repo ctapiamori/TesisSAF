@@ -26,7 +26,7 @@ namespace SOCAUD.Intranet.Controllers
         public JsonResult ListarFlujoCabecera(string tipoDoc, string fecIni, string fecFin)
         {
             var usuario = Session["sessionUsuario"].ToString();
-            var listado = this._workFlowLogic.ListarWorkFlowCabeceraPorUsuario(usuario,"", "", "");
+            var listado = this._workFlowLogic.ListarWorkFlowCabeceraPorUsuario(usuario,tipoDoc, fecIni, fecFin).ToList();
 
             var result = listado.GroupBy(c => new
             {
@@ -45,7 +45,7 @@ namespace SOCAUD.Intranet.Controllers
                 CODDOC = g.Key.CODDOC,
                 FECREG = g.Key.FECREG,
                 USUREG = g.Key.USUREG
-            });
+            }).ToList();
  
             var data = result.Select(c => new string[]{ 
                 c.TIPDOC,

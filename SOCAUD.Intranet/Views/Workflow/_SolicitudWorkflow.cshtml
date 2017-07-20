@@ -18,6 +18,10 @@
                 @Html.HiddenFor(c => c.CodigoCargoIngresado)
 
 
+                <div  class="form-group">
+                    <label id="lblEnviara">Enviar a</label>
+                    <input type="text" id="DirigidoPara" name="DirigidoPara" class="form-control" readonly="true" />
+                </div>
                 <div id="sectionEstado" class="form-group">
                     @Html.LabelFor(c => c.EstadoFlujo)
                     @Html.DropDownListFor(c => c.EstadoFlujo, Model.EstadosFlujo, new { @class = "form-control" })
@@ -36,7 +40,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="grabarFlujo();"><i class="fa fa-fw fa-save"></i>Grabar y Continuar</button>
+            <button type="button" class="btn btn-primary" id="btnContinuarWorkFlow" onclick="grabarFlujo();"><i class="fa fa-fw fa-save"></i>Grabar y Enviar</button>
             <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
         </div>
     </div>
@@ -45,6 +49,7 @@
 <script>
     
     $(document).ready(function () {
+        debugger;
         $("#sectionEstado").hide();
         $("#sectionTipoCargo").hide();
         var codigoCargo = $("#CodigoCargoIngresado").val();
@@ -52,20 +57,51 @@
         if (codigoCargo == '@TipoUsuario.Operador.GetHashCode()') {
             $("#sectionEstado").hide();
             $("#sectionTipoCargo").hide();
+            $("#DirigidoPara").val("Jefe");
         } else if (codigoCargo == '@TipoUsuario.Jefe.GetHashCode()') {
             $("#sectionEstado").show();
             $("#sectionTipoCargo").hide();
+            $("#DirigidoPara").val("Gerente");
         } else if (codigoCargo == '@TipoUsuario.Gerente.GetHashCode()') {
             $("#sectionEstado").show();
             $("#sectionTipoCargo").hide();
+            $("#btnContinuarWorkFlow").text("Grabar y Finalizar");
+            $("#DirigidoPara").val("Aprobación Final");
+            $("#lblEnviara").text("Accion");
         }
         
+        $("#EstadoFlujo").change(function () {
+            var codigoCargo = $("#CodigoCargoIngresado").val();
+            if (codigoCargo == '@TipoUsuario.Gerente.GetHashCode()') {
+                if ($("#EstadoFlujo").val() == '@Estado.Workflow.Rechazado.GetHashCode()') {
+                    $("#btnContinuarWorkFlow").text("Grabar y Enviar");
+                    $("#DirigidoPara").val("Jefe");
+                    $("#lblEnviara").text("Enviar a");
+                } else {
+                    $("#btnContinuarWorkFlow").text("Grabar y Finalizar");
+                    $("#DirigidoPara").val("Aprobación Final");
+                    $("#lblEnviara").text("Accion");
+                    
+                }
+            }
+
+            if (codigoCargo == '@TipoUsuario.Jefe.GetHashCode()') {
+                if ($("#EstadoFlujo").val() == '@Estado.Workflow.Rechazado.GetHashCode()') {
+                    $("#DirigidoPara").val("Operador");
+                } else {
+                    $("#DirigidoPara").val("Gerente");
+                }
+            }
+
+
+        });
+
     });
 
 
     function grabarFlujo()
     {
-        debugger;
+         
         var codigoCargo = $("#CodigoCargoIngresado").val();
         if (codigoCargo == '@TipoUsuario.Jefe.GetHashCode()') {
             if ($("#EstadoFlujo").val() == "43") //aprobado

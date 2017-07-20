@@ -5,6 +5,20 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SI_SOCAUDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="SAF_ABSOLUCION_CONSULTA">
+          <Key>
+            <PropertyRef Name="CODABSCON" />
+          </Key>
+          <Property Name="CODABSCON" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CODPUB" Type="int" />
+          <Property Name="CODBASE" Type="int" />
+          <Property Name="FECPUBABSOLUCION" Type="datetime" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+        </EntityType>
         <EntityType Name="SAF_ARCHIVO">
           <Key>
             <PropertyRef Name="CODARC" />
@@ -182,6 +196,7 @@
           <Property Name="CODSOA" Type="int" />
           <Property Name="ESTCON" Type="int" />
           <Property Name="RESCON" Type="varchar" MaxLength="1000" />
+          <Property Name="CODBAS" Type="int" />
         </EntityType>
         <EntityType Name="SAF_CORTE_AUDITOR">
           <Key>
@@ -483,6 +498,23 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="SAF_OBSERVACION_PROPUESTA">
+          <Key>
+            <PropertyRef Name="CODOBSPRO" />
+          </Key>
+          <Property Name="CODOBSPRO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CODPROP" Type="int" />
+          <Property Name="OBSERVACION" Type="varchar" MaxLength="500" />
+          <Property Name="FECOBSER" Type="datetime" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="CODSOA" Type="int" />
+          <Property Name="CODPUB" Type="int" />
+          <Property Name="CODBAS" Type="int" />
+        </EntityType>
         <EntityType Name="SAF_PARAMETRICA">
           <Key>
             <PropertyRef Name="CODPAR" />
@@ -496,6 +528,25 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="USUREG" Type="varchar" MaxLength="50" />
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SAF_PENALIDAD_PROPUESTA">
+          <Key>
+            <PropertyRef Name="CODPENAPRO" />
+          </Key>
+          <Property Name="CODPENAPRO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CODPROP" Type="int" />
+          <Property Name="CODPENALIDAD" Type="int" />
+          <Property Name="PUNTOSCONTRA" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="OBSERVACION" Type="varchar" MaxLength="500" />
+          <Property Name="FECPENALIDAD" Type="datetime" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="CODSOA" Type="int" />
+          <Property Name="CODPUB" Type="int" />
+          <Property Name="CODBAS" Type="int" />
         </EntityType>
         <EntityType Name="SAF_PERFIL">
           <Key>
@@ -869,6 +920,24 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_ABSOLUCION_CONSULTA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VW_SAF_ABSOLUCION_CONSULTA">
+          <Key>
+            <PropertyRef Name="CODABSCON" />
+          </Key>
+          <Property Name="CODABSCON" Type="int" Nullable="false" />
+          <Property Name="CODPUB" Type="int" />
+          <Property Name="CODBASE" Type="int" />
+          <Property Name="FECPUBABSOLUCION" Type="datetime" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="DESBAS" Type="varchar" MaxLength="300" />
+          <Property Name="NUMPUB" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_AUDITORIAEQUIPO' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VW_SAF_AUDITORIAEQUIPO">
           <Key>
@@ -897,6 +966,29 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_CARGOSENSERVICIO' no ti
           <Property Name="NUMMININTSERAUDCAR" Type="int" />
           <Property Name="NUMMINHORSERAUDCAREXP" Type="int" />
           <Property Name="NUMMINHORSERAUDCAPCAP" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_CONSULTA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VW_SAF_CONSULTA">
+          <Key>
+            <PropertyRef Name="CODCON" />
+          </Key>
+          <Property Name="CODCON" Type="int" Nullable="false" />
+          <Property Name="DESCON" Type="varchar" MaxLength="300" />
+          <Property Name="FECREG" Type="datetime" />
+          <Property Name="FECMOD" Type="datetime" />
+          <Property Name="USUREG" Type="varchar" MaxLength="50" />
+          <Property Name="USUMOD" Type="varchar" MaxLength="50" />
+          <Property Name="ESTREG" Type="char" MaxLength="1" />
+          <Property Name="CODPUB" Type="int" />
+          <Property Name="CODSOA" Type="int" />
+          <Property Name="ESTCON" Type="int" />
+          <Property Name="RESCON" Type="varchar" MaxLength="1000" />
+          <Property Name="CODBAS" Type="int" />
+          <Property Name="DESBAS" Type="varchar" MaxLength="300" />
+          <Property Name="NUMPUB" Type="varchar" MaxLength="50" />
+          <Property Name="ESTDES" Type="varchar(max)" />
+          <Property Name="RAZSOCSOA" Type="varchar" MaxLength="150" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_CRONOGRAMA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1987,6 +2079,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
         </Function>
         <Function Name="USP_CORRELATIVO_SOLICITUD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SI_SOCAUDModelStoreContainer">
+          <EntitySet Name="SAF_ABSOLUCION_CONSULTA" EntityType="Self.SAF_ABSOLUCION_CONSULTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_ARCHIVO" EntityType="Self.SAF_ARCHIVO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_ASISTENCIA" EntityType="Self.SAF_ASISTENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_AUDITOR" EntityType="Self.SAF_AUDITOR" Schema="dbo" store:Type="Tables" />
@@ -2014,7 +2107,9 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <EntitySet Name="SAF_INVITACIONDETALLE" EntityType="Self.SAF_INVITACIONDETALLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_MENU" EntityType="Self.SAF_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_NOTIFICACION" EntityType="Self.SAF_NOTIFICACION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAF_OBSERVACION_PROPUESTA" EntityType="Self.SAF_OBSERVACION_PROPUESTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_PARAMETRICA" EntityType="Self.SAF_PARAMETRICA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAF_PENALIDAD_PROPUESTA" EntityType="Self.SAF_PENALIDAD_PROPUESTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_PERFIL" EntityType="Self.SAF_PERFIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_PERFIL_MENU" EntityType="Self.SAF_PERFIL_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SAF_PROPEQUIPO" EntityType="Self.SAF_PROPEQUIPO" Schema="dbo" store:Type="Tables" />
@@ -2051,6 +2146,21 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
     [SAF_DIALABORABLE].[ESTREG] AS [ESTREG]
     FROM [dbo].[SAF_DIALABORABLE] AS [SAF_DIALABORABLE]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VW_SAF_ABSOLUCION_CONSULTA" EntityType="Self.VW_SAF_ABSOLUCION_CONSULTA" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_SAF_ABSOLUCION_CONSULTA].[CODABSCON] AS [CODABSCON], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[CODPUB] AS [CODPUB], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[CODBASE] AS [CODBASE], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[FECPUBABSOLUCION] AS [FECPUBABSOLUCION], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[FECREG] AS [FECREG], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[FECMOD] AS [FECMOD], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[USUREG] AS [USUREG], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[USUMOD] AS [USUMOD], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[ESTREG] AS [ESTREG], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[DESBAS] AS [DESBAS], 
+    [VW_SAF_ABSOLUCION_CONSULTA].[NUMPUB] AS [NUMPUB]
+    FROM [dbo].[VW_SAF_ABSOLUCION_CONSULTA] AS [VW_SAF_ABSOLUCION_CONSULTA]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VW_SAF_AUDITORIAEQUIPO" EntityType="Self.VW_SAF_AUDITORIAEQUIPO" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VW_SAF_AUDITORIAEQUIPO].[CODPROEQU] AS [CODPROEQU], 
@@ -2073,6 +2183,26 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
     [VW_SAF_CARGOSENSERVICIO].[NUMMINHORSERAUDCAREXP] AS [NUMMINHORSERAUDCAREXP], 
     [VW_SAF_CARGOSENSERVICIO].[NUMMINHORSERAUDCAPCAP] AS [NUMMINHORSERAUDCAPCAP]
     FROM [dbo].[VW_SAF_CARGOSENSERVICIO] AS [VW_SAF_CARGOSENSERVICIO]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_SAF_CONSULTA" EntityType="Self.VW_SAF_CONSULTA" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_SAF_CONSULTA].[CODCON] AS [CODCON], 
+    [VW_SAF_CONSULTA].[DESCON] AS [DESCON], 
+    [VW_SAF_CONSULTA].[FECREG] AS [FECREG], 
+    [VW_SAF_CONSULTA].[FECMOD] AS [FECMOD], 
+    [VW_SAF_CONSULTA].[USUREG] AS [USUREG], 
+    [VW_SAF_CONSULTA].[USUMOD] AS [USUMOD], 
+    [VW_SAF_CONSULTA].[ESTREG] AS [ESTREG], 
+    [VW_SAF_CONSULTA].[CODPUB] AS [CODPUB], 
+    [VW_SAF_CONSULTA].[CODSOA] AS [CODSOA], 
+    [VW_SAF_CONSULTA].[ESTCON] AS [ESTCON], 
+    [VW_SAF_CONSULTA].[RESCON] AS [RESCON], 
+    [VW_SAF_CONSULTA].[CODBAS] AS [CODBAS], 
+    [VW_SAF_CONSULTA].[DESBAS] AS [DESBAS], 
+    [VW_SAF_CONSULTA].[NUMPUB] AS [NUMPUB], 
+    [VW_SAF_CONSULTA].[ESTDES] AS [ESTDES], 
+    [VW_SAF_CONSULTA].[RAZSOCSOA] AS [RAZSOCSOA]
+    FROM [dbo].[VW_SAF_CONSULTA] AS [VW_SAF_CONSULTA]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VW_SAF_CRONOGRAMA" EntityType="Self.VW_SAF_CRONOGRAMA" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -4265,15 +4395,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             <End Role="SAF_ENTIDADES" EntitySet="SAF_ENTIDADES" />
             <End Role="SAF_CRONOENTIDAD" EntitySet="SAF_CRONOENTIDAD" />
           </AssociationSet>
-          <EntitySet Name="SAF_CONSULTA" EntityType="SI_SOCAUDModel.SAF_CONSULTA" />
-          <AssociationSet Name="R_27" Association="SI_SOCAUDModel.R_27">
-            <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
-            <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
-          </AssociationSet>
-          <AssociationSet Name="R_28" Association="SI_SOCAUDModel.R_28">
-            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
-            <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
-          </AssociationSet>
           <EntitySet Name="VW_SAF_CARGOSENSERVICIO" EntityType="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO" />
           <EntitySet Name="SAF_PERFIL" EntityType="SI_SOCAUDModel.SAF_PERFIL" />
           <EntitySet Name="SAF_PERFIL_MENU" EntityType="SI_SOCAUDModel.SAF_PERFIL_MENU" />
@@ -4346,6 +4467,20 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             <Parameter Name="FECFIN" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="VW_SAF_PROPUESTAEJECUCION" EntityType="SI_SOCAUDModel.VW_SAF_PROPUESTAEJECUCION" />
+          <EntitySet Name="SAF_ABSOLUCION_CONSULTA" EntityType="SI_SOCAUDModel.SAF_ABSOLUCION_CONSULTA" />
+          <EntitySet Name="SAF_OBSERVACION_PROPUESTA" EntityType="SI_SOCAUDModel.SAF_OBSERVACION_PROPUESTA" />
+          <EntitySet Name="SAF_PENALIDAD_PROPUESTA" EntityType="SI_SOCAUDModel.SAF_PENALIDAD_PROPUESTA" />
+          <EntitySet Name="SAF_CONSULTA" EntityType="SI_SOCAUDModel.SAF_CONSULTA" />
+          <AssociationSet Name="R_27" Association="SI_SOCAUDModel.R_27">
+            <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
+            <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
+          </AssociationSet>
+          <AssociationSet Name="R_28" Association="SI_SOCAUDModel.R_28">
+            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
+            <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
+          </AssociationSet>
+          <EntitySet Name="VW_SAF_CONSULTA" EntityType="SI_SOCAUDModel.VW_SAF_CONSULTA" />
+          <EntitySet Name="VW_SAF_ABSOLUCION_CONSULTA" EntityType="SI_SOCAUDModel.VW_SAF_ABSOLUCION_CONSULTA" />
         </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
@@ -4872,48 +5007,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SAF_CONSULTA">
-          <Key>
-            <PropertyRef Name="CODCON" />
-          </Key>
-          <Property Name="CODCON" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DESCON" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="FECREG" Type="DateTime" Precision="3" />
-          <Property Name="FECMOD" Type="DateTime" Precision="3" />
-          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="CODPUB" Type="Int32" />
-          <Property Name="CODSOA" Type="Int32" />
-          <Property Name="ESTCON" Type="Int32" />
-          <Property Name="RESCON" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SAF_PUBLICACION" Relationship="SI_SOCAUDModel.R_27" FromRole="SAF_CONSULTA" ToRole="SAF_PUBLICACION" />
-          <NavigationProperty Name="SAF_SOA" Relationship="SI_SOCAUDModel.R_28" FromRole="SAF_CONSULTA" ToRole="SAF_SOA" />
-        </EntityType>
-        <Association Name="R_27">
-          <End Type="SI_SOCAUDModel.SAF_PUBLICACION" Role="SAF_PUBLICACION" Multiplicity="0..1" />
-          <End Type="SI_SOCAUDModel.SAF_CONSULTA" Role="SAF_CONSULTA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_PUBLICACION">
-              <PropertyRef Name="CODPUB" />
-            </Principal>
-            <Dependent Role="SAF_CONSULTA">
-              <PropertyRef Name="CODPUB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_28">
-          <End Type="SI_SOCAUDModel.SAF_SOA" Role="SAF_SOA" Multiplicity="0..1" />
-          <End Type="SI_SOCAUDModel.SAF_CONSULTA" Role="SAF_CONSULTA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_SOA">
-              <PropertyRef Name="CODSOA" />
-            </Principal>
-            <Dependent Role="SAF_CONSULTA">
-              <PropertyRef Name="CODSOA" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="VW_SAF_CARGOSENSERVICIO">
           <Key>
             <PropertyRef Name="CODSERAUDCAR" />
@@ -5284,6 +5377,136 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="RUCSOA" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
           <Property Name="RAZSOCSOA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SAF_ABSOLUCION_CONSULTA">
+          <Key>
+            <PropertyRef Name="CODABSCON" />
+          </Key>
+          <Property Name="CODABSCON" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CODPUB" Type="Int32" />
+          <Property Name="CODBASE" Type="Int32" />
+          <Property Name="FECPUBABSOLUCION" Type="DateTime" Precision="3" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SAF_OBSERVACION_PROPUESTA">
+          <Key>
+            <PropertyRef Name="CODOBSPRO" />
+          </Key>
+          <Property Name="CODOBSPRO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CODPROP" Type="Int32" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FECOBSER" Type="DateTime" Precision="3" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODSOA" Type="Int32" />
+          <Property Name="CODPUB" Type="Int32" />
+          <Property Name="CODBAS" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SAF_PENALIDAD_PROPUESTA">
+          <Key>
+            <PropertyRef Name="CODPENAPRO" />
+          </Key>
+          <Property Name="CODPENAPRO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CODPROP" Type="Int32" />
+          <Property Name="CODPENALIDAD" Type="Int32" />
+          <Property Name="PUNTOSCONTRA" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FECPENALIDAD" Type="DateTime" Precision="3" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODSOA" Type="Int32" />
+          <Property Name="CODPUB" Type="Int32" />
+          <Property Name="CODBAS" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SAF_CONSULTA">
+          <Key>
+            <PropertyRef Name="CODCON" />
+          </Key>
+          <Property Name="CODCON" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCON" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODPUB" Type="Int32" />
+          <Property Name="CODSOA" Type="Int32" />
+          <Property Name="ESTCON" Type="Int32" />
+          <Property Name="RESCON" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CODBAS" Type="Int32" />
+          <NavigationProperty Name="SAF_PUBLICACION" Relationship="SI_SOCAUDModel.R_27" FromRole="SAF_CONSULTA" ToRole="SAF_PUBLICACION" />
+          <NavigationProperty Name="SAF_SOA" Relationship="SI_SOCAUDModel.R_28" FromRole="SAF_CONSULTA" ToRole="SAF_SOA" />
+        </EntityType>
+        <Association Name="R_27">
+          <End Type="SI_SOCAUDModel.SAF_PUBLICACION" Role="SAF_PUBLICACION" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CONSULTA" Role="SAF_CONSULTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_PUBLICACION">
+              <PropertyRef Name="CODPUB" />
+            </Principal>
+            <Dependent Role="SAF_CONSULTA">
+              <PropertyRef Name="CODPUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_28">
+          <End Type="SI_SOCAUDModel.SAF_SOA" Role="SAF_SOA" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CONSULTA" Role="SAF_CONSULTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_SOA">
+              <PropertyRef Name="CODSOA" />
+            </Principal>
+            <Dependent Role="SAF_CONSULTA">
+              <PropertyRef Name="CODSOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VW_SAF_CONSULTA">
+          <Key>
+            <PropertyRef Name="CODCON" />
+          </Key>
+          <Property Name="CODCON" Type="Int32" Nullable="false" />
+          <Property Name="DESCON" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODPUB" Type="Int32" />
+          <Property Name="CODSOA" Type="Int32" />
+          <Property Name="ESTCON" Type="Int32" />
+          <Property Name="RESCON" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CODBAS" Type="Int32" />
+          <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="NUMPUB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTDES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RAZSOCSOA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VW_SAF_ABSOLUCION_CONSULTA">
+          <Key>
+            <PropertyRef Name="CODABSCON" />
+          </Key>
+          <Property Name="CODABSCON" Type="Int32" Nullable="false" />
+          <Property Name="CODPUB" Type="Int32" />
+          <Property Name="CODBASE" Type="Int32" />
+          <Property Name="FECPUBABSOLUCION" Type="DateTime" Precision="3" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="NUMPUB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -6474,23 +6697,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SAF_CONSULTA">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_CONSULTA">
-              <MappingFragment StoreEntitySet="SAF_CONSULTA">
-                <ScalarProperty Name="RESCON" ColumnName="RESCON" />
-                <ScalarProperty Name="ESTCON" ColumnName="ESTCON" />
-                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
-                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
-                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
-                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
-                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
-                <ScalarProperty Name="DESCON" ColumnName="DESCON" />
-                <ScalarProperty Name="CODCON" ColumnName="CODCON" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VW_SAF_CARGOSENSERVICIO">
             <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_CARGOSENSERVICIO">
               <MappingFragment StoreEntitySet="VW_SAF_CARGOSENSERVICIO">
@@ -6889,6 +7095,116 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
                 <ScalarProperty Name="PERAUD" ColumnName="PERAUD" />
                 <ScalarProperty Name="CODAUD" ColumnName="CODAUD" />
                 <ScalarProperty Name="CODPRO" ColumnName="CODPRO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_ABSOLUCION_CONSULTA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_ABSOLUCION_CONSULTA">
+              <MappingFragment StoreEntitySet="SAF_ABSOLUCION_CONSULTA">
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="FECPUBABSOLUCION" ColumnName="FECPUBABSOLUCION" />
+                <ScalarProperty Name="CODBASE" ColumnName="CODBASE" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="CODABSCON" ColumnName="CODABSCON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_OBSERVACION_PROPUESTA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_OBSERVACION_PROPUESTA">
+              <MappingFragment StoreEntitySet="SAF_OBSERVACION_PROPUESTA">
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="FECOBSER" ColumnName="FECOBSER" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="CODPROP" ColumnName="CODPROP" />
+                <ScalarProperty Name="CODOBSPRO" ColumnName="CODOBSPRO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_PENALIDAD_PROPUESTA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_PENALIDAD_PROPUESTA">
+              <MappingFragment StoreEntitySet="SAF_PENALIDAD_PROPUESTA">
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="FECPENALIDAD" ColumnName="FECPENALIDAD" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="PUNTOSCONTRA" ColumnName="PUNTOSCONTRA" />
+                <ScalarProperty Name="CODPENALIDAD" ColumnName="CODPENALIDAD" />
+                <ScalarProperty Name="CODPROP" ColumnName="CODPROP" />
+                <ScalarProperty Name="CODPENAPRO" ColumnName="CODPENAPRO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_CONSULTA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_CONSULTA">
+              <MappingFragment StoreEntitySet="SAF_CONSULTA">
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+                <ScalarProperty Name="RESCON" ColumnName="RESCON" />
+                <ScalarProperty Name="ESTCON" ColumnName="ESTCON" />
+                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="DESCON" ColumnName="DESCON" />
+                <ScalarProperty Name="CODCON" ColumnName="CODCON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_CONSULTA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_CONSULTA">
+              <MappingFragment StoreEntitySet="VW_SAF_CONSULTA">
+                <ScalarProperty Name="RAZSOCSOA" ColumnName="RAZSOCSOA" />
+                <ScalarProperty Name="ESTDES" ColumnName="ESTDES" />
+                <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
+                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
+                <ScalarProperty Name="CODBAS" ColumnName="CODBAS" />
+                <ScalarProperty Name="RESCON" ColumnName="RESCON" />
+                <ScalarProperty Name="ESTCON" ColumnName="ESTCON" />
+                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="DESCON" ColumnName="DESCON" />
+                <ScalarProperty Name="CODCON" ColumnName="CODCON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_ABSOLUCION_CONSULTA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_ABSOLUCION_CONSULTA">
+              <MappingFragment StoreEntitySet="VW_SAF_ABSOLUCION_CONSULTA">
+                <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
+                <ScalarProperty Name="DESBAS" ColumnName="DESBAS" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="FECPUBABSOLUCION" ColumnName="FECPUBABSOLUCION" />
+                <ScalarProperty Name="CODBASE" ColumnName="CODBASE" />
+                <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
+                <ScalarProperty Name="CODABSCON" ColumnName="CODABSCON" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

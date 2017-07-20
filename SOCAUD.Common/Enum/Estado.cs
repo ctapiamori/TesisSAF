@@ -67,7 +67,9 @@ namespace SOCAUD.Common.Enum
             [Description("Elaboracion")]
             Elaboracion = 9,
             [Description("Enviado")]
-            Enviado = 10
+            Enviado = 10,
+            [Description("Respondida")]
+            Respondida = 1048
         }
 
         public enum Solicitud

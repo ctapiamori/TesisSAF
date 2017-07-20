@@ -1,0 +1,205 @@
+﻿@using SOCAUD.Common.Enum;
+@using SOCAUD.Web.Models;
+
+@model ConsultaModel
+@{
+    ViewBag.PageTitle = "Consulta";
+    ViewBag.PageDescription = "Consulta";
+    ViewBag.PageDescription = "Consultas Registradas";
+}
+
+ 
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Bandeja de Consultas</h3>
+            </div>
+            <div class="box-body">
+
+                <div class="form-group">
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <label>Publicación</label>
+                            @Html.DropDownListFor(c => c.codPublicacion, Model.cboPublicaciones, "Seleccione", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.codPublicacion)
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(c => c.codBase)
+                                @Html.DropDownListFor(c => c.codBase, Model.cboBases, "Seleccione", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(c => c.codBase)
+                        </div>
+                        <div class="col-md-3">
+                            <br />
+                            <button class="btn btn-default" type="button" id="btnBuscarConsulta"><i class="fa fa-search"></i>&nbsp;Buscar</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tabConsultas" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12 center">
+                            <center>
+                             <button class="btn btn-primary" id="btnCrearConsulta" name="btnCrearConsulta"><i class="fa fa-save"></i>&nbsp;Crear nueva Consulta</button>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalNuevaConsulta" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+@section scripts {
+
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+            listarConsultas();
+            $("#btnCrearConsulta").click(abrirPopupNuevaConsulta);
+
+            $("#codPublicacion").change(function () {
+                cargarComboBases();
+            });
+
+            $("#btnBuscarConsulta").click(listarConsultas);
+
+        });
+
+        function cargarComboBases() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("listarBases", "Consulta")',
+                data: { idPub: $("#codPublicacion").val() },
+                dataType: "json",
+                success: function (result) {
+                    $("#codBase option").not(":first").remove();
+                    $.each(result, function (i, v) {
+                        $("#codBase").append("<option value='" + v.CODBAS + "'>" + v.DESBAS + "</option>");
+                    });
+                }
+            });
+        }
+
+
+        var _dataConsultas_ = null;
+
+        var tabConsultas = $("#tabConsultas").dataTable({
+            "info": false,
+            "bServerSide": false,
+            "data": _dataConsultas_,
+            "order": [[1, "asc"]],
+            "columns": [
+                { "sTitle": "Codigo", "visible": false },
+                { "sTitle": "Publicación" },
+                { "sTitle": "Entidad" },
+                { "sTitle": "Consulta" },
+                { "sTitle": "Estado" },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        debugger;
+                        if (row[5] == '@Convert.ToInt32(Estado.ConsultasPublicacion.Elaboracion)')
+                            return '<center><button class="btn btn-success" title="Enviar" type="button" onclick="enviarConsulta(' + row[0] + ');"><i class="fa fa-share"></i></button></center>';
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "sWidth": "5%",
+                    "render": function (data, type, row) {
+                        debugger;
+                        if (row[5] == '@Convert.ToInt32(Estado.ConsultasPublicacion.Elaboracion)')
+                            return '<center><button class="btn btn-danger" title="Eliminar" type="button" onclick="eliminarConsulta(' + row[0] + ');"><i class="fa fa-trash"></i></button></center>';
+                        else
+                            return "";
+                    }
+                }
+
+            ]
+
+        });
+
+
+        function listarConsultas() {
+            $.ajax({
+                url: '@Url.Action("ListarConsultas", "Consulta")',
+                type: 'POST',
+                async: false,
+                data: { idPub: $("#codPublicacion").val(), idBase: $("#codBase").val() },
+                success: function (result) {
+                    _dataConsultas_ = result;
+                    tabConsultas.fnReloadData(_dataConsultas_);
+                }
+            });
+        }
+
+        function abrirPopupNuevaConsulta() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ModalRegistrarConsulta", "Consulta")',
+                data: {},
+                success: function (result) {
+                    $("#modalNuevaConsulta").empty().html(result).modal();
+                }
+            });
+        }
+
+        $('#modalNuevaConsulta').on('hidden.bs.modal', function () { listarConsultas(); });
+
+
+
+        function enviarConsulta(id) {
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EnviarConsulta", "Consulta")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: id },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarConsultas();
+                        }
+                    });
+                }
+            });
+        }
+
+        function eliminarConsulta(id) {
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarConsulta", "Consulta")',
+                        type: 'POST',
+                        async: false,
+                        data: { id: id },
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            listarConsultas();
+                        }
+                    });
+                }
+            });
+        }
+
+
+    </script>
+}

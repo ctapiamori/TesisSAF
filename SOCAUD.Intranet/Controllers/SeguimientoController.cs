@@ -16,6 +16,8 @@ namespace SOCAUD.Intranet.Controllers
         ISafSoaLogic _soaLogic;
         ISafPublicacionBaseLogic _publicacionYBasesLogic;
         ISafPropuestaLogic _propuestaLogic;
+        ISafObservacionPropuestaLogic _observacionPropuesta;
+        ISafPenalidadPropuestaLogic _penalidadPropuesta;
         ISafGeneralLogic _generalLogic;
         public SeguimientoController()
         {
@@ -23,6 +25,8 @@ namespace SOCAUD.Intranet.Controllers
             _publicacionYBasesLogic = new SafPublicacionBaseLogic();
             _propuestaLogic = new SafPropuestaLogic();
             _generalLogic = new SafGeneralLogic();
+            _observacionPropuesta = new SafObservacionPropuestaLogic();
+            _penalidadPropuesta = new SafPenalidadPropuestaLogic();
         }
 
 
@@ -74,7 +78,8 @@ namespace SOCAUD.Intranet.Controllers
             return View(model);
         }
 
-        public JsonResult ListarPropEjecucion() {
+        public JsonResult ListarPropEjecucion()
+        {
 
             var lista = _propuestaLogic.ListarPropuestaEjecucion();
 
@@ -87,6 +92,56 @@ namespace SOCAUD.Intranet.Controllers
                 c.RAZSOCSOA
             }).ToArray();
             return Json(data);
+        }
+
+
+        public JsonResult GrabarObservaciones(int idProp, string observ)
+        {
+            try
+            {
+                
+                var propuesta = _propuestaLogic.BuscarPorId(idProp);
+                var result = this._observacionPropuesta.Registrar(new SAF_OBSERVACION_PROPUESTA()
+                {
+                    CODBAS = propuesta.CODBAS,
+                    CODPROP = propuesta.CODPRO,
+                    CODPUB = propuesta.CODPUB,
+                    CODSOA = propuesta.CODSOA,
+                    OBSERVACION = observ,
+                    FECOBSER = DateTime.Now
+                });
+                return Json(new MensajeRespuesta("Grabo la observación satisfactoriamente", true));
+            }
+            catch (Exception)
+            {
+                return Json(new MensajeRespuesta("No se pudo grabar la observacion", false));
+            }
+        }
+
+        public JsonResult GrabarPenalidad(int idProp, string tipoPenal, string observ)
+        {
+            try
+            {
+                var codigoTipoPenal = Convert.ToInt32(tipoPenal.Split('-')[0]);
+                var puntosContra = Convert.ToInt32(tipoPenal.Split('-')[1]);
+                var propuesta = _propuestaLogic.BuscarPorId(idProp);
+                var result = this._penalidadPropuesta.Registrar(new SAF_PENALIDAD_PROPUESTA()
+                {
+                    CODBAS = propuesta.CODBAS,
+                    CODPROP = propuesta.CODPRO,
+                    CODPUB = propuesta.CODPUB,
+                    CODSOA = propuesta.CODSOA,
+                    CODPENALIDAD = codigoTipoPenal,
+                    PUNTOSCONTRA = puntosContra,
+                    OBSERVACION = observ,
+                    FECPENALIDAD = DateTime.Now
+                });
+                return Json(new MensajeRespuesta("Grabo la penalidad satisfactoriamente", true));
+            }
+            catch (Exception)
+            {
+                return Json(new MensajeRespuesta("No se pudo grabar la penalidad", false));
+            }
         }
 
 
