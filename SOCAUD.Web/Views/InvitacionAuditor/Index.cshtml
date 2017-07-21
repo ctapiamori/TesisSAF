@@ -61,7 +61,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <center>
-                                <button class="btn btn-primary" type="button" id="btnBuscar"><i class="fa fa-search-plus"></i>&nbsp;Buscar Auditores para crear Equipo</button>
+                                <!--<button class="btn btn-primary" type="button" id="btnBuscar"><i class="fa fa-search-plus"></i>&nbsp;Buscar Auditores para crear Equipo</button>-->
                                 <button class="btn btn-primary" type="button" id="btnCrearInvitacion"><i class="fa fa-search-plus"></i>&nbsp;Crear Nueva Invitación</button>
                             </center>
                         </div>
@@ -76,11 +76,24 @@
 <div class="modal fade" id="modalBusquedaAuditor" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 <div class="modal fade" id="modalAgendaDisponibilidadAuditor" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div class="modal fade" id="modalDetalleInvitacion" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
 
 @section scripts {
 
     <script type="text/javascript" language="javascript">
 
+
+        function verAgendaInvitacion(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("VerDetalleInvitacion", "BandejaInvitaciones")',
+                data: { id: id },
+                success: function (result) {
+                    $("#modalDetalleInvitacion").empty().html(result).modal();
+                }
+            });
+        }
 
         var _dataInvitaciones_ = null;
 
@@ -95,8 +108,10 @@
                     "sClass": "center",
                     "sWidth": "5%",
                     "render": function (data, type, row) {
-
-                        return '<center><button class="btn btn-primary" title="Agregar agenda" type="button" onclick="popupAgendaAuditores(' + row[0] + ');"><i class="fa fa-calendar"></i></button></center>';
+                        if (row[8] == '@Convert.ToInt32(Estado.Invitacion.Elaboracion)')
+                            return '<center><button class="btn btn-primary" title="Agregar agenda" type="button" onclick="popupAgendaAuditores(' + row[0] + ');"><i class="fa fa-calendar"></i></button></center>';
+                        else
+                            return '<center><button class="btn btn-warning" title="Ver agenda" type="button" onclick="verAgendaInvitacion(' + row[0] + ');"><i class="fa fa-calendar"></i></button></center>';
                     }
                 },
                 { "sTitle": "Auditor" },
@@ -231,6 +246,13 @@
         }
 
 
+        function cancelarInvitacion() {
+            bootbox.confirm("¿Esta seguro que desea CANCELAR la invitación?. Esto ocaciona una PENALIDAD", function (result) {
+                if (result) {
+                    
+                }
+            });
+        }
 
 
         function enviarInvitacion(id) {

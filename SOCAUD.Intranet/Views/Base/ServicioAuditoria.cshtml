@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-6">
-                            @Html.LabelFor(c => c.FechaInicioSegunCronograma)
+                           <label>Inicio (Sugerido por Cronograma)</label>
                             <div class="input-group date">
                                 @Html.TextBoxFor(c => c.FechaInicioSegunCronograma, new { @class = "form-control", @readonly = "true" })
                                 <span class="input-group-addon">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            @Html.LabelFor(c => c.FechaFinSegunCronograma)
+                            <label>Fin (Sugerido por Cronograma)</label>
                             <div class="input-group date">
                                 @Html.TextBoxFor(c => c.FechaFinSegunCronograma, new { @class = "form-control", @readonly = "true" })
                                 <span class="input-group-addon">
@@ -258,6 +258,25 @@
         }
 
         function grabarServicio() {
+            
+
+            if (parseFloat($("#RetribucionServicio").val()) <= 0) {
+                new PNotify({
+                    title: 'Respuesta Sistema!',
+                    type: "error",
+                    text: "La retribución debe ser mayor a 0 (cero)"
+                });
+                return;
+            }
+
+            if (parseFloat($("#ViaticosServicio").val()) < 0) {
+                new PNotify({
+                    title: 'Respuesta Sistema!',
+                    type: "error",
+                    text: "El viatico debe ser mayor o igual a 0 (cero)"
+                });
+                return;
+            }
 
             if (!$("#frmGrabarServicioAuditoria").isValid()) { return; }
 
@@ -272,7 +291,7 @@
                             mostrarNotificacion(result);
                             if (result.Exito) {
                                 $("#IdServicioAuditoria").val(result.Data)
-                                $("#btnGrabar").prop("disabled", true);
+                                //$("#btnGrabar").prop("disabled", true);
                             }
                         }
                     });

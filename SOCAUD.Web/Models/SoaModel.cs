@@ -31,7 +31,7 @@ namespace SOCAUD.Web.Models
 
         [Display(Name = "R.U.C")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
-        [RegularExpression("[0-9]+", ErrorMessage = Mensaje.MensajeSoloNumeros)]
+        [RegularExpression("[0-9]{11}", ErrorMessage = Mensaje.MensajeIngreseRucValido)]
         public string rucSoa { get; set; }
 
         [Display(Name = "Nombre")]

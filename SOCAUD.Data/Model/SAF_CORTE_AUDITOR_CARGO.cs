@@ -25,8 +25,8 @@ namespace SOCAUD.Data.Model
         public Nullable<int> CODAUD { get; set; }
         public Nullable<int> CODCORAUD { get; set; }
     
-        public virtual SAF_AUDITOR SAF_AUDITOR { get; set; }
         public virtual SAF_CARGO SAF_CARGO { get; set; }
         public virtual SAF_PUBLICACION SAF_PUBLICACION { get; set; }
+        public virtual SAF_AUDITOR SAF_AUDITOR { get; set; }
     }
 }

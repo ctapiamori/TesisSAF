@@ -15,7 +15,7 @@
 
 
 
-<iframe id="iRegistroSolicitudAuditor" name="RegistroSolicitudAuditor" style="visibility:hidden; display: none;"></iframe>
+<iframe id="iRegistroSolicitudAuditor" name="RegistroSolicitudAuditor" style="visibility: hidden; display: none;"></iframe>
 @using (Html.BeginForm("grabarRegistroSolicitudAuditor", "Solicitud", FormMethod.Post, new { autocomplete = "off", id = "frmRegistroSolicitudAuditor", role = "form", enctype = "multipart/form-data", target = "RegistroSolicitudAuditor" }))
 {
     @Html.HiddenFor(c => c.codigoSolicitud)
@@ -35,14 +35,14 @@
                                                             <h3 class="box-title"><strong><i class="fa fa-info-circle"></i>&nbsp;Observaciones</strong></h3>
                                                         </div>
                                                         <div class="box-body">
-                                                            <div style="width:100%;">
+                                                            <div style="width: 100%;">
                                                                 @Html.Raw(HttpUtility.HtmlDecode(Model.observacionSolicitud));
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                           }
+}
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="box box-primary color-palette-box">
@@ -83,6 +83,13 @@
                                                                     @Html.ValidationMessageFor(c => c.apeComAud)
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <p>Lugar de Nacimiento:</p>
+                                                                    </div>
+                                                                </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="row">
@@ -128,98 +135,117 @@
                                         </div>
 
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="box box-primary color-palette-box">
-                                                    <div class="box-header with-border">
-                                                        <h3 class="box-title">Información Adicional</h3>
-                                                    </div>
-                                                    <div class="box-body">
-                                                        <div class="form-group">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Información Adicional</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
 
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    @Html.LabelFor(c => c.codCerAud)
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(c => c.codCerAud)
                                                                     @Html.TextBoxFor(c => c.codCerAud, new { @class = "form-control", @maxlength = "10" })
                                                                     @Html.ValidationMessageFor(c => c.codCerAud)
-                                                                </div>
+                        </div>
 
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        @Html.LabelFor(m => m.nombreArchivo)
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.nombreArchivo)
                                                                         <div class="input-group">
                                                                             @Html.TextBoxFor(m => m.nombreArchivo, new { @class = "form-control", @readonly = "" })
                                                                         </div>
-                                                                        @Html.HiddenFor(m => m.codArchivo)
+                                @Html.HiddenFor(m => m.codArchivo)
                                                                         @Html.ValidationMessageFor(m => m.nombreArchivo)
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="box box-primary color-palette-box">
-                                                    <div class="box-header with-border">
-                                                        <h3 class="box-title">Capacitaciones</h3>
-                                                    </div>
-                                                    <div class="box-body">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <button type="button" id="btnAgregarCapacitacion" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Agregar</button>
-                                                            </div>
-                                                        </div>
-                                                        <table id="tabCapacitaciones" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Capacitaciones</h3>
+            </div>
+            <div class="box-body">
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="box box-primary color-palette-box">
-                                                    <div class="box-header with-border">
-                                                        <h3 class="box-title">Experiencias</h3>
-                                                    </div>
-                                                    <div class="box-body">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <button type="button" id="btnAgregarExperiencia" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Agregar</button>
-                                                            </div>
-                                                        </div>
-                                                        <table id="tabExperiencias" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabCapacitaciones" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                    </div>
+                </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="box box-default color-palette-box">
-                                                    <div class="box-body">
-                                                        <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <center>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" id="btnAgregarCapacitacion" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Agregar Nueva Capacitacion</button>
+                    </div>
+                </div>              
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary color-palette-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Experiencias</h3>
+            </div>
+            <div class="box-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabExperiencias" class="table table-striped table-bordered" cellpadding="0" cellspacing="0" border="0"></table>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" id="btnAgregarExperiencia" class="btn btn-primary"><i class="fa fa-file"></i>&nbsp;Agregar Nueva Experiencia</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-default color-palette-box">
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <center>
                                                                         <button type="button" id="btnEnviarInfoAuditorSolicitud" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Enviar</button>
                                                                         <button type="button" id="btnGuardarSolicitudInscripcionAuditor" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
-                                                                        <button type="button" id="btnRegresar" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                                                                        <button type="button" id="btnRegresar" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
                                                                     </center>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal fade" id="dlgRegistroCapacitacion" tabindex="-1" role="dialog" aria-hidden="true"></div>
-                                        <div class="modal fade" id="dlgRegistroExperiencia" tabindex="-1" role="dialog" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dlgRegistroCapacitacion" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div class="modal fade" id="dlgRegistroExperiencia" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+
 }
 @section scripts {
 
@@ -250,7 +276,7 @@
 
 
 
-        var _capacitaciones_= null;
+        var _capacitaciones_ = null;
         var _experiencias_ = null;
 
         $(document).ready(function () {
@@ -284,7 +310,7 @@
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("CargarProvincia", "Solicitud")',
-                async:false,
+                async: false,
                 data: { id: cod },
                 success: function (result) {
                     $("#codProvAud option").not(":first").remove();
@@ -323,18 +349,18 @@
            '@Model.estadoSolicitud' == '@Convert.ToInt32(Estado.Solicitud.Elaboracion)' ||
                 '@Model.estadoSolicitud' == '@Convert.ToInt32(Estado.Solicitud.Observada)'
            ) {
-            $("#btnEnviarInfoAuditorSolicitud").prop("disabled", false);
-            $("#btnGuardarSolicitudInscripcionAuditor").prop("disabled", false);
+            $("#btnEnviarInfoAuditorSolicitud").show();
+            $("#btnGuardarSolicitudInscripcionAuditor").show();
 
         } else {
             $("input").prop("disabled", true);
             $("select").prop("disabled", true);
-            $("#btnEnviarInfoAuditorSolicitud").prop("disabled", true);
-            $("#btnGuardarSolicitudInscripcionAuditor").prop("disabled", true);
+            $("#btnEnviarInfoAuditorSolicitud").hide();
+            $("#btnGuardarSolicitudInscripcionAuditor").hide();
             $("#nombreArchivo").fileInput({ file: $("#codArchivo").val(), fileName: "archivoCertificadoAuditor", disabled: true });
-            $("#btnAgregarExperiencia").attr("disabled", true);
-            $("#btnAgregarCapacitacion").attr("disabled", true);
-            $("#btnRegresar").attr("disabled", false);
+            $("#btnAgregarExperiencia").hide();
+            $("#btnAgregarCapacitacion").hide();
+            $("#btnRegresar").show();
 
         }
 
@@ -368,35 +394,34 @@
         $("#btnRegresar").click(regresarListadoSolicitud);
         $("#btnEnviarInfoAuditorSolicitud").click(function () {
             bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
-                if(result)
+                if (result)
                     enviarSolicitudRegistroAuditor();
             });
         });
 
         function enviarSolicitudRegistroAuditor() {
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("enviarSolicitud", "Solicitud")',
-                data: { idSol: $("#codigoSolicitud").val() },
-                dataType: "json",
-                success: function (result) {
-                    mostrarNotificacion(result);
-                    if (result.Exito) {
-
-                        $("input").prop("disabled", true);
-                        $("select").prop("disabled", true);
-
-                        $("#btnGuardarSolicitudInscripcionAuditor").prop("disabled", true);
-                        $("#btnEnviarInfoAuditorSolicitud").prop("disabled", true);
-                        $("#btnAgregarExperiencia").attr("disabled", true);
-                        $("#btnAgregarCapacitacion").attr("disabled", true);
-
-                        $("#btnRegresar").attr("disabled", false);
 
 
-                    }
-                }
-            });
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("enviarSolicitud", "Solicitud")',
+                        data: { idSol: $("#codigoSolicitud").val() },
+                        dataType: "json",
+                        success: function (result) {
+                            mostrarNotificacion(result);
+                            if (result.Exito) {
+                                document.location = document.location.href;
+                                /*$("input").prop("disabled", true);
+                                $("select").prop("disabled", true);
+                                $("#btnGuardarSolicitudInscripcionAuditor").hide();
+                                $("#btnEnviarInfoAuditorSolicitud").hide();
+                                $("#btnAgregarExperiencia").hide();
+                                $("#btnAgregarCapacitacion").hide();
+                                $("#btnRegresar").show();*/
+                            }
+                        }
+                    });
+
         }
 
 
@@ -474,7 +499,7 @@
                 url: '@Url.Action("nuevaCapacitacion")',
                 data: { id: '@Model.codigoSolicitud' },
                 success: function (result) {
-                    $("#dlgRegistroCapacitacion").empty().html(result).modal().modal({ show: true, backdrop: 'static' });
+                    $("#dlgRegistroCapacitacion").empty().html(result).modal().modal();
                 }
             });
         };
@@ -484,7 +509,7 @@
                 url: '@Url.Action("editarCapacitacion")',
                 data: { id: id },
                 success: function (result) {
-                    $("#dlgRegistroCapacitacion").empty().html(result).modal({ show: true, backdrop: 'static' });
+                    $("#dlgRegistroCapacitacion").empty().html(result).modal();
                 }
             });
         };

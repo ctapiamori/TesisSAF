@@ -21,7 +21,9 @@ namespace SOCAUD.Business.Core
         SAF_NOTIFICACION GetNotificacion(int idNotificacion);
         SAF_NOTIFICACION GetNotificacion(int idNotificacion, string usuario);
         void GrabarNotificacionAuditor(int idAuditor, string asunto, string body);
+        void GrabarNotificacionAuditor(int idAuditor, string asunto, string body, string nombreCompletoUsuarioLogueado);
         void GrabarNotificacionSOA(int idSOA, string asunto, string body);
+        void GrabarNotificacionSOA(int idSOA, string asunto, string body, string nombreCompletoUsuarioLogueado);
         void GrabarNotificacionTodosUsuarios(string asunto, string body);
 
     }
@@ -118,7 +120,7 @@ namespace SOCAUD.Business.Core
                 DESNOT = body,
                 ASUNOT = asunto,
                 FECREG = DateTime.Now,
-                USUEMI = "SYSTEM",
+                USUEMI = "CGR",
                 INDNOT = "R",
                 ESTNOT = "R",
                 USUREC = infoAuditor.NOMUSU,
@@ -136,7 +138,7 @@ namespace SOCAUD.Business.Core
                 DESNOT = body,
                 ASUNOT = asunto,
                 FECREG = DateTime.Now,
-                USUEMI = "SYSTEM",
+                USUEMI = "CGR",
                 INDNOT = "R",
                 ESTNOT = "R",
                 USUREC = infoAuditor.NOMUSU,
@@ -158,7 +160,7 @@ namespace SOCAUD.Business.Core
                     FECREG = DateTime.Now,
                     INDNOT = "R",
                     ESTNOT = "R",
-                    USUEMI = "SYSTEM",
+                    USUEMI = "CGR",
                     USUREC = item.NOMUSU,
                     ESTREG = "1"
                 };
@@ -177,13 +179,50 @@ namespace SOCAUD.Business.Core
                     FECREG = DateTime.Now,
                     INDNOT = "R",
                     ESTNOT = "R",
-                    USUEMI = "SYSTEM",
+                    USUEMI = "CGR",
                     USUREC = item.NOMUSU,
                     ESTREG = "1"
                 };
 
                 this.Registrar(notificacion);
             }
+        }
+
+
+        public void GrabarNotificacionAuditor(int idAuditor, string asunto, string body, string nombreCompletoUsuarioLogueado)
+        {
+            var infoAuditor = this._safAuditorData.GetById(idAuditor);
+            var notificacion = new SAF_NOTIFICACION()
+            {
+                DESNOT = body,
+                ASUNOT = asunto,
+                FECREG = DateTime.Now,
+                USUEMI = nombreCompletoUsuarioLogueado,
+                INDNOT = "R",
+                ESTNOT = "R",
+                USUREC = infoAuditor.NOMUSU,
+                ESTREG = "1"
+            };
+
+            this.Registrar(notificacion);
+        }
+
+        public void GrabarNotificacionSOA(int idSOA, string asunto, string body, string nombreCompletoUsuarioLogueado)
+        {
+            var infoAuditor = this._safSoaData.GetById(idSOA);
+            var notificacion = new SAF_NOTIFICACION()
+            {
+                DESNOT = body,
+                ASUNOT = asunto,
+                FECREG = DateTime.Now,
+                USUEMI = nombreCompletoUsuarioLogueado,
+                INDNOT = "R",
+                ESTNOT = "R",
+                USUREC = infoAuditor.NOMUSU,
+                ESTREG = "1"
+            };
+
+            this.Registrar(notificacion);
         }
     }
 }

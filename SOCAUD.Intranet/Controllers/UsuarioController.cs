@@ -39,6 +39,7 @@ namespace SOCAUD.Intranet.Controllers
                c.APEPERUSU,
                c.NOMUSU,
                c.NOMCARGO
+               
             }).ToArray();
             return Json(data);
         }
@@ -98,6 +99,7 @@ namespace SOCAUD.Intranet.Controllers
             model.TIPCARUSU = entity.TIPCARUSU;
             model.CODENT = entity.CODENT;
             model.CODPER = entity.CODPER;
+            model.CORREOUSER = entity.CORREOUSER;
             return View(model);
         }
 

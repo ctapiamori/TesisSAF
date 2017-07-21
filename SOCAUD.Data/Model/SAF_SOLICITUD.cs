@@ -35,12 +35,12 @@ namespace SOCAUD.Data.Model
         public Nullable<int> CODAUD { get; set; }
         public string OBSSOL { get; set; }
     
-        public virtual SAF_AUDITOR SAF_AUDITOR { get; set; }
-        public virtual SAF_SOA SAF_SOA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_SOLCAPACITACION> SAF_SOLCAPACITACION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_SOLEXPERIENCIA> SAF_SOLEXPERIENCIA { get; set; }
         public virtual SAF_TIPOSOLICITUD SAF_TIPOSOLICITUD { get; set; }
+        public virtual SAF_AUDITOR SAF_AUDITOR { get; set; }
+        public virtual SAF_SOA SAF_SOA { get; set; }
     }
 }

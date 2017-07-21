@@ -5,7 +5,7 @@
 @{
     ViewBag.PageTitle = "Seguimiento";
     ViewBag.PageDescription = "Seguimiento";
-    ViewBag.PageDescription = "Observaciones a una Auditoria";
+    ViewBag.PageDescription = "Penalidades para una Auditoria";
 }
 
 
@@ -76,6 +76,7 @@
         $(document).ready(function () {
             listarPropuestasEjecucion();
             $("#btnPenalidad").click(grabarPenalidad);
+            $("#btnBuscar").click(listarPropuestasEjecucion);
         });
 
 
@@ -106,7 +107,7 @@
                 url: '@Url.Action("ListarPropEjecucion", "Seguimiento")',
                 type: 'POST',
                 async: false,
-                data: {},
+                data: { idPub: $("#IdPublicacion").val(), idSoa: $("#IdSoa").val() },
                 success: function (result) {
                     _dataPropEjecucion_ = result;
                     tabPropuestasEjecucion.fnReloadData(_dataPropEjecucion_);

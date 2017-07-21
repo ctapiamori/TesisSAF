@@ -23,7 +23,7 @@ namespace SOCAUD.Business.Core
 
         IEnumerable<SP_SAF_EQUIPO_PROPUESTA_Result> ListarEquipoPropuesta(int idPropuesta);
 
-        IEnumerable<VW_SAF_PROPUESTAEJECUCION> ListarPropuestaEjecucion();
+        IEnumerable<VW_SAF_PROPUESTAEJECUCION> ListarPropuestaEjecucion(int? idPub , int? idSoa);
     }
 
     public class SafPropuestaLogic : ISafPropuestaLogic
@@ -118,9 +118,16 @@ namespace SOCAUD.Business.Core
         }
 
 
-        public IEnumerable<VW_SAF_PROPUESTAEJECUCION> ListarPropuestaEjecucion()
+        public IEnumerable<VW_SAF_PROPUESTAEJECUCION> ListarPropuestaEjecucion(int? idPub, int? idSoa)
         {
-            return this._safPropuestaData.ListarPropuestaEjecucion();
+            var lista = this._safPropuestaData.ListarPropuestaEjecucion();
+            if (idPub.HasValue && !idSoa.HasValue)
+                lista = lista.Where(c => c.CODPUB == idPub.Value);
+            if (!idPub.HasValue && idSoa.HasValue)
+                lista = lista.Where(c => c.CODSOA == idSoa.Value);
+            if (idPub.HasValue && idSoa.HasValue)
+                lista = lista.Where(c => c.CODSOA == idSoa.Value && c.CODPUB == idPub.Value);
+            return lista;
         }
     }
 }

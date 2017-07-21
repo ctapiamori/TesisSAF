@@ -196,6 +196,13 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-4">
+                                                <p>Lugar de Nacimiento:</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
                                                 @Html.LabelFor(c => c.auditor.codDeparAud)
                                                 @Html.DropDownListFor(c => c.auditor.codDeparAud, Model.auditor.cboDepartamento, "Seleccione", new { @class = "form-control", @rows = "4" })
                                                 @Html.ValidationMessageFor(c => c.auditor.codDeparAud)
@@ -297,19 +304,13 @@
 
 
     @Scripts.Render("~/Scripts/Login")
+    
     <script type="text/javascript" language="javascript">
 
-        function setLimiteRUC(){
-            $("#soa_rucSoa").attr("maxlength", 11);
-        }
-
-        function setLimiteDNI() {
-            $("#auditor_dniAud").attr("maxlength", 8);
-        }
-
+    
 
         $(document).ready(function () {
-            setLimiteRUC();
+           
             $('#auditor_fecNacAud').datepicker({
                 format: "dd/mm/yyyy"
             }).next().on(ace.click_event, function () {
@@ -325,18 +326,18 @@
 
 
                     if ($("#solicitud_codTipSol").val() == "1") { // si es una sociedad
-                        setLimiteRUC();
+                         
                         if ($("#soa_rucSoa").val().length != 11) {
                             mostrarNotificacionError("La longitud del RUC no es valido");
                             return;
                         }
 
-                        if ($("#soa_visSoa").val().length > 299) {
+                        if ($("#soa_visSoa").val().length > 2000) {
                             mostrarNotificacionError("La longitud del VISION no es valido");
                             return;
                         }
 
-                        if ($("#soa_misSoa").val().length > 299) {
+                        if ($("#soa_misSoa").val().length > 2000) {
                             mostrarNotificacionError("La longitud del MISION no es valido");
                             return;
                         }
@@ -347,7 +348,7 @@
                         }
 
                     } else {
-                        setLimiteDNI();
+                       
                         if ($("#auditor_dniAud").val().length != 8) {
                             mostrarNotificacionError("La longitud del DNI no es valido");
                             return;
@@ -401,12 +402,20 @@
         });
 
         function seleccionTipoSolicitud() {
+
+            $("input:password").val("");
+            $("input:text").val("");
+            $("textarea").val("");
+            $("#auditor_codDeparAud").val(null);
+            $("#auditor_codProvAud").val(null);
+            $("#auditor_codDisAud").val(null);
+
             if ($("#solicitud_codTipSol").val() == '@Convert.ToInt32(Tipo.TipoSolicitud.InscripcionSoa)') {
-                $("#pnlSociedadAuditoria").show("slow");
+                $("#pnlSociedadAuditoria").show();
                 $("#pnlAuditor").hide();
             } else {
                 $("#pnlSociedadAuditoria").hide();
-                $("#pnlAuditor").show("slow");
+                $("#pnlAuditor").show();
             }
         }
 
@@ -435,6 +444,7 @@
                     if (result.Exito) {
                         $("#btnGuardarSolicitud").hide();
                         $("input").prop("disabled", true);
+                        $("textarea").prop("disabled", true);
                         $("select").prop("disabled", true);
                         $("#btnCancelarSolicitud").prop("disabled", false);
                     }

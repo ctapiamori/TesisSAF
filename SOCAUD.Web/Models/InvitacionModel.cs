@@ -19,6 +19,14 @@ namespace SOCAUD.Web.Models
 
         #region REGISTRO DE FECHAS LABORALES
 
+
+        public string InicioAuditoria { get; set; }
+        public string FinAuditoria { get; set; }
+        [Display(Name = "Entidad")]
+        public string EntidadBase { get; set; }
+        [Display(Name = "Periodo")]
+        public string FechaInicioFin { get; set; }
+
         public int codigoInvitacionAgenda { get; set; }
 
         [Display(Name = "N° Horas laborales")]
@@ -33,6 +41,8 @@ namespace SOCAUD.Web.Models
         public string fechaInicio { get; set; }
         [Display(Name = "Fecha Final")]
         public string fechaFinal { get; set; }
+
+ 
 
         #endregion
 

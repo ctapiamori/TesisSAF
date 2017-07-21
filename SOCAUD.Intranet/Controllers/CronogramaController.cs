@@ -274,6 +274,11 @@ namespace SOCAUD.Intranet.Controllers
                     return Json(new MensajeRespuesta("Fecha final debe ser mayor a la fecha de inicio", false));
                 }
 
+                var listaCroEntidad = this._cronoEntidadLogic.ListarTodos();
+                var existeReg = listaCroEntidad.Where(c => c.CODCRO == model.Cronograma && c.CODENT == model.Entidad).Any();
+                if (existeReg)
+                    return Json(new MensajeRespuesta("No puede agregar la misma entidad para el mismo cronograma", false));
+
                 entidad.CODCRO = model.Cronograma;
                 entidad.CODENT = model.Entidad;
                 entidad.DESCROENT = this._entidadLogic.BuscarPorId(model.Entidad).RAZSOCENT;

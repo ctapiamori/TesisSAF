@@ -284,7 +284,10 @@
                     if (result.Exito) {
                         $("input").prop("disabled", true);
                         $("select").prop("disabled", true);
-                        $("#btnCancelarInfoSoaSolicitud").attr("disabled", false);
+                        //$("#btnCancelarInfoSoaSolicitud").attr("disabled", false);
+                        $("#btnEnviarInfoSoaSolicitud").hide();
+                        $("#btnGuardarInfoSoaSolicitud").hide();
+                        $("#btnCancelarInfoSoaSolicitud").show();
                     }
                 }
             });

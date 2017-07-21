@@ -16,6 +16,9 @@ namespace SOCAUD.Common.Constantes
         public const string MensajeCampoLongitudIncorrecta = "Longitud excedida";
 
         public const string MensajeSoloIngreseDNI = "El DNI debe ser de 8 digitos";
+
+        public const string MensajeIngreseRucValido = "Ingrese un RUC valido";
+        public const string MensajeIngreseDNIValido = "Ingrese un DNI valido";
         #endregion
 
 

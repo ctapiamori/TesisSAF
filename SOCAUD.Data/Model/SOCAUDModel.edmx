@@ -55,8 +55,8 @@
           <Property Name="NOMAUD" Type="varchar" MaxLength="50" />
           <Property Name="APEAUD" Type="varchar" MaxLength="50" />
           <Property Name="DNIAUD" Type="char" MaxLength="8" />
-          <Property Name="CELAUD" Type="char" MaxLength="9" />
-          <Property Name="TELAUD" Type="char" MaxLength="8" />
+          <Property Name="CELAUD" Type="varchar" MaxLength="50" />
+          <Property Name="TELAUD" Type="varchar" MaxLength="50" />
           <Property Name="DIRAUD" Type="varchar" MaxLength="200" />
           <Property Name="CODDEPAUD" Type="int" />
           <Property Name="CODPROVAUD" Type="int" />
@@ -750,8 +750,8 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="NOMREPLEGSOA" Type="varchar" MaxLength="50" />
           <Property Name="APEREPLEGSOA" Type="varchar" MaxLength="50" />
           <Property Name="CORREPLEGSOA" Type="varchar" MaxLength="50" />
-          <Property Name="CELREPLEGSOA" Type="char" MaxLength="9" />
-          <Property Name="TELREPLEGSOA" Type="char" MaxLength="8" />
+          <Property Name="CELREPLEGSOA" Type="varchar" MaxLength="50" />
+          <Property Name="TELREPLEGSOA" Type="varchar" MaxLength="50" />
           <Property Name="CODCOLCONSOA" Type="varchar" MaxLength="50" />
           <Property Name="NUMPARSUNARPSOA" Type="varchar" MaxLength="50" />
           <Property Name="FIRPCAOBSOA" Type="char" MaxLength="1" />
@@ -761,8 +761,8 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.SAF_DIALABORABLE' no tiene def
           <Property Name="USUREG" Type="varchar" MaxLength="50" />
           <Property Name="USUMOD" Type="varchar" MaxLength="50" />
           <Property Name="ESTREG" Type="char" MaxLength="1" />
-          <Property Name="MISSOA" Type="varchar" MaxLength="300" />
-          <Property Name="VISSOA" Type="varchar" MaxLength="300" />
+          <Property Name="MISSOA" Type="varchar(max)" />
+          <Property Name="VISSOA" Type="varchar(max)" />
           <Property Name="ARCCOLCONSOA" Type="image" />
           <Property Name="NOMUSU" Type="varchar" MaxLength="50" />
           <Property Name="PASUSU" Type="varchar" MaxLength="50" />
@@ -1152,6 +1152,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_SOLICITUD' no tiene def
           <Property Name="ESTSOL" Type="int" />
           <Property Name="CODSOA" Type="int" />
           <Property Name="CODAUD" Type="int" />
+          <Property Name="RESPONSABLE" Type="varchar" MaxLength="150" />
           <Property Name="NOMESTSOL" Type="varchar(max)" />
         </EntityType>
         <!--Errores durante la generación:
@@ -2328,6 +2329,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
     [VW_SAF_SOLICITUD].[ESTSOL] AS [ESTSOL], 
     [VW_SAF_SOLICITUD].[CODSOA] AS [CODSOA], 
     [VW_SAF_SOLICITUD].[CODAUD] AS [CODAUD], 
+    [VW_SAF_SOLICITUD].[RESPONSABLE] AS [RESPONSABLE], 
     [VW_SAF_SOLICITUD].[NOMESTSOL] AS [NOMESTSOL]
     FROM [dbo].[VW_SAF_SOLICITUD] AS [VW_SAF_SOLICITUD]</DefiningQuery>
           </EntitySet>
@@ -2658,45 +2660,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <NavigationProperty Name="SAF_SOLCAPACITACION" Relationship="Self.FK_SAF_SOLCAPACITACION_SAF_ARCHIVO" FromRole="SAF_ARCHIVO" ToRole="SAF_SOLCAPACITACION" />
           <NavigationProperty Name="SAF_SOLEXPERIENCIA" Relationship="Self.FK_SAF_SOLEXPERIENCIA_SAF_ARCHIVO" FromRole="SAF_ARCHIVO" ToRole="SAF_SOLEXPERIENCIA" />
         </EntityType>
-        <EntityType Name="SAF_AUDITOR">
-          <Key>
-            <PropertyRef Name="CODAUD" />
-          </Key>
-          <Property Name="CODAUD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NOMAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="APEAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DNIAUD" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="CELAUD" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
-          <Property Name="TELAUD" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="DIRAUD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CODDEPAUD" Type="Int32" />
-          <Property Name="CODPROVAUD" Type="Int32" />
-          <Property Name="CODDISAUD" Type="Int32" />
-          <Property Name="CORAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SEXAUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="FECNACAUD" Type="DateTime" Precision="3" />
-          <Property Name="INDAUDAUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="INDESPAUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="INDSOCAUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="CODCERAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ARCCERAUD" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="FECREG" Type="DateTime" Precision="3" />
-          <Property Name="FECMOD" Type="DateTime" Precision="3" />
-          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PASUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CODARC" Type="Int64" />
-          <Property Name="NOMBLABEL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SAF_DIAOCUPADO" Relationship="Self.FK__SAF_DIAOC__CODAU__00200768" FromRole="SAF_AUDITOR" ToRole="SAF_DIAOCUPADO" />
-          <NavigationProperty Name="SAF_SOLICITUD" Relationship="Self.R_3" FromRole="SAF_AUDITOR" ToRole="SAF_SOLICITUD" />
-          <NavigationProperty Name="SAF_INVITACION" Relationship="Self.R_35" FromRole="SAF_AUDITOR" ToRole="SAF_INVITACION" />
-          <NavigationProperty Name="SAF_EXPERIENCIA" Relationship="Self.R_4" FromRole="SAF_AUDITOR" ToRole="SAF_EXPERIENCIA" />
-          <NavigationProperty Name="SAF_CORTE_AUDITOR" Relationship="Self.R_49" FromRole="SAF_AUDITOR" ToRole="SAF_CORTE_AUDITOR" />
-          <NavigationProperty Name="SAF_CAPACITACION" Relationship="Self.R_5" FromRole="SAF_AUDITOR" ToRole="SAF_CAPACITACION" />
-          <NavigationProperty Name="SAF_CORTE_AUDITOR_CARGO" Relationship="Self.R_53" FromRole="SAF_AUDITOR" ToRole="SAF_CORTE_AUDITOR_CARGO" />
-        </EntityType>
         <EntityType Name="SAF_AUDITORIA">
           <Key>
             <PropertyRef Name="CODAUD" />
@@ -2782,11 +2745,11 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="CODARC" Type="Int64" />
           <Property Name="NOMBLABEL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SAF_ARCHIVO" Relationship="Self.FK_SAF_CAPACITACION_SAF_ARCHIVO" FromRole="SAF_CAPACITACION" ToRole="SAF_ARCHIVO" />
-          <NavigationProperty Name="SAF_AUDITOR" Relationship="Self.R_5" FromRole="SAF_CAPACITACION" ToRole="SAF_AUDITOR" />
           <NavigationProperty Name="SAF_PARAMETRICA" Relationship="Self.FK_SAF_CAPACITACION_SAF_PARAMETRICA" FromRole="SAF_CAPACITACION" ToRole="SAF_PARAMETRICA" />
           <NavigationProperty Name="SAF_PARAMETRICA1" Relationship="Self.FK_SAF_CAPACITACION_SAF_PARAMETRICA1" FromRole="SAF_CAPACITACION" ToRole="SAF_PARAMETRICA" />
           <NavigationProperty Name="SAF_UNIVERSIDAD" Relationship="Self.R_7" FromRole="SAF_CAPACITACION" ToRole="SAF_UNIVERSIDAD" />
           <NavigationProperty Name="SAF_CARRERA" Relationship="Self.R_8" FromRole="SAF_CAPACITACION" ToRole="SAF_CARRERA" />
+          <NavigationProperty Name="SAF_AUDITOR" Relationship="SI_SOCAUDModel.R_5" FromRole="SAF_CAPACITACION" ToRole="SAF_AUDITOR" />
         </EntityType>
         <EntityType Name="SAF_CARGO">
           <Key>
@@ -2835,8 +2798,8 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="CODAUD" Type="Int32" />
           <Property Name="CODPUB" Type="Int32" />
           <Property Name="TOTALPUNT" Type="Int32" />
-          <NavigationProperty Name="SAF_AUDITOR" Relationship="Self.R_49" FromRole="SAF_CORTE_AUDITOR" ToRole="SAF_AUDITOR" />
           <NavigationProperty Name="SAF_PUBLICACION" Relationship="Self.R_50" FromRole="SAF_CORTE_AUDITOR" ToRole="SAF_PUBLICACION" />
+          <NavigationProperty Name="SAF_AUDITOR" Relationship="SI_SOCAUDModel.R_49" FromRole="SAF_CORTE_AUDITOR" ToRole="SAF_AUDITOR" />
         </EntityType>
         <EntityType Name="SAF_CORTE_AUDITOR_CARGO">
           <Key>
@@ -2852,9 +2815,9 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="CODPUB" Type="Int32" />
           <Property Name="CODAUD" Type="Int32" />
           <Property Name="CODCORAUD" Type="Int32" />
-          <NavigationProperty Name="SAF_AUDITOR" Relationship="Self.R_53" FromRole="SAF_CORTE_AUDITOR_CARGO" ToRole="SAF_AUDITOR" />
           <NavigationProperty Name="SAF_CARGO" Relationship="Self.R_51" FromRole="SAF_CORTE_AUDITOR_CARGO" ToRole="SAF_CARGO" />
           <NavigationProperty Name="SAF_PUBLICACION" Relationship="Self.R_52" FromRole="SAF_CORTE_AUDITOR_CARGO" ToRole="SAF_PUBLICACION" />
+          <NavigationProperty Name="SAF_AUDITOR" Relationship="SI_SOCAUDModel.R_53" FromRole="SAF_CORTE_AUDITOR_CARGO" ToRole="SAF_AUDITOR" />
         </EntityType>
         <EntityType Name="SAF_CRONOENTIDAD">
           <Key>
@@ -2922,7 +2885,7 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="SAF_AUDITOR" Relationship="Self.FK__SAF_DIAOC__CODAU__00200768" FromRole="SAF_DIAOCUPADO" ToRole="SAF_AUDITOR" />
+          <NavigationProperty Name="SAF_AUDITOR" Relationship="SI_SOCAUDModel.FK__SAF_DIAOC__CODAU__151B244E" FromRole="SAF_DIAOCUPADO" ToRole="SAF_AUDITOR" />
         </EntityType>
         <EntityType Name="SAF_DISTRITO">
           <Key>
@@ -2988,9 +2951,9 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="CODARC" Type="Int64" />
           <Property Name="NOMBLABEL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SAF_ARCHIVO" Relationship="Self.FK_SAF_EXPERIENCIA_SAF_ARCHIVO" FromRole="SAF_EXPERIENCIA" ToRole="SAF_ARCHIVO" />
-          <NavigationProperty Name="SAF_AUDITOR" Relationship="Self.R_4" FromRole="SAF_EXPERIENCIA" ToRole="SAF_AUDITOR" />
           <NavigationProperty Name="SAF_EMPRESA" Relationship="Self.R_6" FromRole="SAF_EXPERIENCIA" ToRole="SAF_EMPRESA" />
           <NavigationProperty Name="SAF_PARAMETRICA" Relationship="Self.FK_SAF_EXPERIENCIA_SAF_PARAMETRICA" FromRole="SAF_EXPERIENCIA" ToRole="SAF_PARAMETRICA" />
+          <NavigationProperty Name="SAF_AUDITOR" Relationship="SI_SOCAUDModel.R_4" FromRole="SAF_EXPERIENCIA" ToRole="SAF_AUDITOR" />
         </EntityType>
         <EntityType Name="SAF_FLUJO_DOCUMENTO">
           <Key>
@@ -3031,11 +2994,11 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="CODPUB" Type="Int32" />
           <Property Name="ESTINV" Type="Int32" />
           <Property Name="CODCAR" Type="Int32" />
-          <NavigationProperty Name="SAF_AUDITOR" Relationship="Self.R_35" FromRole="SAF_INVITACION" ToRole="SAF_AUDITOR" />
-          <NavigationProperty Name="SAF_SOA" Relationship="Self.R_33" FromRole="SAF_INVITACION" ToRole="SAF_SOA" />
           <NavigationProperty Name="SAF_INVITACIONDETALLE" Relationship="Self.R_34" FromRole="SAF_INVITACION" ToRole="SAF_INVITACIONDETALLE" />
           <NavigationProperty Name="SAF_SERVICIOAUDITORIA" Relationship="Self.R_36" FromRole="SAF_INVITACION" ToRole="SAF_SERVICIOAUDITORIA" />
           <NavigationProperty Name="SAF_PUBLICACION" Relationship="Self.R_37" FromRole="SAF_INVITACION" ToRole="SAF_PUBLICACION" />
+          <NavigationProperty Name="SAF_AUDITOR" Relationship="SI_SOCAUDModel.R_35" FromRole="SAF_INVITACION" ToRole="SAF_AUDITOR" />
+          <NavigationProperty Name="SAF_SOA" Relationship="SI_SOCAUDModel.R_33" FromRole="SAF_INVITACION" ToRole="SAF_SOA" />
         </EntityType>
         <EntityType Name="SAF_INVITACIONDETALLE">
           <Key>
@@ -3150,9 +3113,9 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="MONTVIATICOREQ" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="ESTPROP" Type="Int32" />
           <NavigationProperty Name="SAF_AUDITORIA" Relationship="Self.R_43" FromRole="SAF_PROPUESTA" ToRole="SAF_AUDITORIA" />
-          <NavigationProperty Name="SAF_SOA" Relationship="Self.R_31" FromRole="SAF_PROPUESTA" ToRole="SAF_SOA" />
           <NavigationProperty Name="SAF_PUBLICACION" Relationship="Self.R_32" FromRole="SAF_PROPUESTA" ToRole="SAF_PUBLICACION" />
           <Property Name="CODBAS" Type="Int32" />
+          <NavigationProperty Name="SAF_SOA" Relationship="SI_SOCAUDModel.R_31" FromRole="SAF_PROPUESTA" ToRole="SAF_SOA" />
         </EntityType>
         <EntityType Name="SAF_PROVINCIA">
           <Key>
@@ -3264,37 +3227,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <NavigationProperty Name="SAF_INVITACION" Relationship="Self.R_36" FromRole="SAF_SERVICIOAUDITORIA" ToRole="SAF_INVITACION" />
           <NavigationProperty Name="SAF_SERAUDCARGO" Relationship="Self.R_19" FromRole="SAF_SERVICIOAUDITORIA" ToRole="SAF_SERAUDCARGO" />
         </EntityType>
-        <EntityType Name="SAF_SOA">
-          <Key>
-            <PropertyRef Name="CODSOA" />
-          </Key>
-          <Property Name="CODSOA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RAZSOCSOA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="RUCSOA" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
-          <Property Name="NOMREPLEGSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="APEREPLEGSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CORREPLEGSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CELREPLEGSOA" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
-          <Property Name="TELREPLEGSOA" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="CODCOLCONSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NUMPARSUNARPSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FIRPCAOBSOA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="FIRINTSOA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="FECREG" Type="DateTime" Precision="3" />
-          <Property Name="FECMOD" Type="DateTime" Precision="3" />
-          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="MISSOA" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="VISSOA" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ARCCOLCONSOA" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PASUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SAF_INVITACION" Relationship="Self.R_33" FromRole="SAF_SOA" ToRole="SAF_INVITACION" />
-          <NavigationProperty Name="SAF_PROPUESTA" Relationship="Self.R_31" FromRole="SAF_SOA" ToRole="SAF_PROPUESTA" />
-          <NavigationProperty Name="SAF_SOLICITUD" Relationship="Self.R_2" FromRole="SAF_SOA" ToRole="SAF_SOLICITUD" />
-          <NavigationProperty Name="SAF_CONSULTA" Relationship="SI_SOCAUDModel.R_28" FromRole="SAF_SOA" ToRole="SAF_CONSULTA" />
-        </EntityType>
         <EntityType Name="SAF_SOLCAPACITACION">
           <Key>
             <PropertyRef Name="CODSOLCAP" />
@@ -3364,11 +3296,11 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="CODSOA" Type="Int32" />
           <Property Name="CODAUD" Type="Int32" />
           <Property Name="OBSSOL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SAF_AUDITOR" Relationship="Self.R_3" FromRole="SAF_SOLICITUD" ToRole="SAF_AUDITOR" />
-          <NavigationProperty Name="SAF_SOA" Relationship="Self.R_2" FromRole="SAF_SOLICITUD" ToRole="SAF_SOA" />
           <NavigationProperty Name="SAF_SOLCAPACITACION" Relationship="Self.R_11" FromRole="SAF_SOLICITUD" ToRole="SAF_SOLCAPACITACION" />
           <NavigationProperty Name="SAF_SOLEXPERIENCIA" Relationship="Self.R_9" FromRole="SAF_SOLICITUD" ToRole="SAF_SOLEXPERIENCIA" />
           <NavigationProperty Name="SAF_TIPOSOLICITUD" Relationship="Self.R_1" FromRole="SAF_SOLICITUD" ToRole="SAF_TIPOSOLICITUD" />
+          <NavigationProperty Name="SAF_AUDITOR" Relationship="SI_SOCAUDModel.R_3" FromRole="SAF_SOLICITUD" ToRole="SAF_AUDITOR" />
+          <NavigationProperty Name="SAF_SOA" Relationship="SI_SOCAUDModel.R_2" FromRole="SAF_SOLICITUD" ToRole="SAF_SOA" />
         </EntityType>
         <EntityType Name="SAF_TIPOPARAMETRICA">
           <Key>
@@ -3472,90 +3404,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             </Principal>
             <Dependent Role="SAF_SOLEXPERIENCIA">
               <PropertyRef Name="CODARC" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SAF_DIAOC__CODAU__00200768">
-          <End Role="SAF_AUDITOR" Type="Self.SAF_AUDITOR" Multiplicity="0..1" />
-          <End Role="SAF_DIAOCUPADO" Type="Self.SAF_DIAOCUPADO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_AUDITOR">
-              <PropertyRef Name="CODAUD" />
-            </Principal>
-            <Dependent Role="SAF_DIAOCUPADO">
-              <PropertyRef Name="CODAUD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_3">
-          <End Role="SAF_AUDITOR" Type="Self.SAF_AUDITOR" Multiplicity="0..1" />
-          <End Role="SAF_SOLICITUD" Type="Self.SAF_SOLICITUD" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_AUDITOR">
-              <PropertyRef Name="CODAUD" />
-            </Principal>
-            <Dependent Role="SAF_SOLICITUD">
-              <PropertyRef Name="CODAUD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_35">
-          <End Role="SAF_AUDITOR" Type="Self.SAF_AUDITOR" Multiplicity="0..1" />
-          <End Role="SAF_INVITACION" Type="Self.SAF_INVITACION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_AUDITOR">
-              <PropertyRef Name="CODAUD" />
-            </Principal>
-            <Dependent Role="SAF_INVITACION">
-              <PropertyRef Name="CODAUD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_4">
-          <End Role="SAF_AUDITOR" Type="Self.SAF_AUDITOR" Multiplicity="0..1" />
-          <End Role="SAF_EXPERIENCIA" Type="Self.SAF_EXPERIENCIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_AUDITOR">
-              <PropertyRef Name="CODAUD" />
-            </Principal>
-            <Dependent Role="SAF_EXPERIENCIA">
-              <PropertyRef Name="CODAUD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_49">
-          <End Role="SAF_AUDITOR" Type="Self.SAF_AUDITOR" Multiplicity="0..1" />
-          <End Role="SAF_CORTE_AUDITOR" Type="Self.SAF_CORTE_AUDITOR" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_AUDITOR">
-              <PropertyRef Name="CODAUD" />
-            </Principal>
-            <Dependent Role="SAF_CORTE_AUDITOR">
-              <PropertyRef Name="CODAUD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_5">
-          <End Role="SAF_AUDITOR" Type="Self.SAF_AUDITOR" Multiplicity="0..1" />
-          <End Role="SAF_CAPACITACION" Type="Self.SAF_CAPACITACION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_AUDITOR">
-              <PropertyRef Name="CODAUD" />
-            </Principal>
-            <Dependent Role="SAF_CAPACITACION">
-              <PropertyRef Name="CODAUD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_53">
-          <End Role="SAF_AUDITOR" Type="Self.SAF_AUDITOR" Multiplicity="0..1" />
-          <End Role="SAF_CORTE_AUDITOR_CARGO" Type="Self.SAF_CORTE_AUDITOR_CARGO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_AUDITOR">
-              <PropertyRef Name="CODAUD" />
-            </Principal>
-            <Dependent Role="SAF_CORTE_AUDITOR_CARGO">
-              <PropertyRef Name="CODAUD" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3811,18 +3659,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="R_33">
-          <End Role="SAF_SOA" Type="Self.SAF_SOA" Multiplicity="0..1" />
-          <End Role="SAF_INVITACION" Type="Self.SAF_INVITACION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_SOA">
-              <PropertyRef Name="CODSOA" />
-            </Principal>
-            <Dependent Role="SAF_INVITACION">
-              <PropertyRef Name="CODSOA" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="R_34">
           <End Role="SAF_INVITACION" Type="Self.SAF_INVITACION" Multiplicity="0..1" />
           <End Role="SAF_INVITACIONDETALLE" Type="Self.SAF_INVITACIONDETALLE" Multiplicity="*" />
@@ -3907,18 +3743,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="R_31">
-          <End Role="SAF_SOA" Type="Self.SAF_SOA" Multiplicity="0..1" />
-          <End Role="SAF_PROPUESTA" Type="Self.SAF_PROPUESTA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_SOA">
-              <PropertyRef Name="CODSOA" />
-            </Principal>
-            <Dependent Role="SAF_PROPUESTA">
-              <PropertyRef Name="CODSOA" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="R_32">
           <End Role="SAF_PUBLICACION" Type="Self.SAF_PUBLICACION" Multiplicity="0..1" />
           <End Role="SAF_PROPUESTA" Type="Self.SAF_PROPUESTA" Multiplicity="*" />
@@ -3964,18 +3788,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             </Principal>
             <Dependent Role="SAF_SERAUDCARGO">
               <PropertyRef Name="CODSERAUD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="R_2">
-          <End Role="SAF_SOA" Type="Self.SAF_SOA" Multiplicity="0..1" />
-          <End Role="SAF_SOLICITUD" Type="Self.SAF_SOLICITUD" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_SOA">
-              <PropertyRef Name="CODSOA" />
-            </Principal>
-            <Dependent Role="SAF_SOLICITUD">
-              <PropertyRef Name="CODSOA" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4029,7 +3841,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
         </Association>
         <EntityContainer Name="SOCAUDEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="SAF_ARCHIVO" EntityType="Self.SAF_ARCHIVO" />
-          <EntitySet Name="SAF_AUDITOR" EntityType="Self.SAF_AUDITOR" />
           <EntitySet Name="SAF_AUDITORIA" EntityType="Self.SAF_AUDITORIA" />
           <EntitySet Name="SAF_BASE" EntityType="Self.SAF_BASE" />
           <EntitySet Name="SAF_BASEENTREGABLE" EntityType="Self.SAF_BASEENTREGABLE" />
@@ -4060,7 +3871,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <EntitySet Name="SAF_SERAUDCAREXP" EntityType="Self.SAF_SERAUDCAREXP" />
           <EntitySet Name="SAF_SERAUDCARGO" EntityType="Self.SAF_SERAUDCARGO" />
           <EntitySet Name="SAF_SERVICIOAUDITORIA" EntityType="Self.SAF_SERVICIOAUDITORIA" />
-          <EntitySet Name="SAF_SOA" EntityType="Self.SAF_SOA" />
           <EntitySet Name="SAF_SOLCAPACITACION" EntityType="Self.SAF_SOLCAPACITACION" />
           <EntitySet Name="SAF_SOLEXPERIENCIA" EntityType="Self.SAF_SOLEXPERIENCIA" />
           <EntitySet Name="SAF_SOLICITUD" EntityType="Self.SAF_SOLICITUD" />
@@ -4083,34 +3893,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <AssociationSet Name="FK_SAF_SOLEXPERIENCIA_SAF_ARCHIVO" Association="Self.FK_SAF_SOLEXPERIENCIA_SAF_ARCHIVO">
             <End Role="SAF_ARCHIVO" EntitySet="SAF_ARCHIVO" />
             <End Role="SAF_SOLEXPERIENCIA" EntitySet="SAF_SOLEXPERIENCIA" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SAF_DIAOC__CODAU__00200768" Association="Self.FK__SAF_DIAOC__CODAU__00200768">
-            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
-            <End Role="SAF_DIAOCUPADO" EntitySet="SAF_DIAOCUPADO" />
-          </AssociationSet>
-          <AssociationSet Name="R_3" Association="Self.R_3">
-            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
-            <End Role="SAF_SOLICITUD" EntitySet="SAF_SOLICITUD" />
-          </AssociationSet>
-          <AssociationSet Name="R_35" Association="Self.R_35">
-            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
-            <End Role="SAF_INVITACION" EntitySet="SAF_INVITACION" />
-          </AssociationSet>
-          <AssociationSet Name="R_4" Association="Self.R_4">
-            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
-            <End Role="SAF_EXPERIENCIA" EntitySet="SAF_EXPERIENCIA" />
-          </AssociationSet>
-          <AssociationSet Name="R_49" Association="Self.R_49">
-            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
-            <End Role="SAF_CORTE_AUDITOR" EntitySet="SAF_CORTE_AUDITOR" />
-          </AssociationSet>
-          <AssociationSet Name="R_5" Association="Self.R_5">
-            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
-            <End Role="SAF_CAPACITACION" EntitySet="SAF_CAPACITACION" />
-          </AssociationSet>
-          <AssociationSet Name="R_53" Association="Self.R_53">
-            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
-            <End Role="SAF_CORTE_AUDITOR_CARGO" EntitySet="SAF_CORTE_AUDITOR_CARGO" />
           </AssociationSet>
           <AssociationSet Name="R_43" Association="Self.R_43">
             <End Role="SAF_PROPUESTA" EntitySet="SAF_PROPUESTA" />
@@ -4196,10 +3978,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             <End Role="SAF_PARAMETRICA" EntitySet="SAF_PARAMETRICA" />
             <End Role="SAF_EXPERIENCIA" EntitySet="SAF_EXPERIENCIA" />
           </AssociationSet>
-          <AssociationSet Name="R_33" Association="Self.R_33">
-            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
-            <End Role="SAF_INVITACION" EntitySet="SAF_INVITACION" />
-          </AssociationSet>
           <AssociationSet Name="R_34" Association="Self.R_34">
             <End Role="SAF_INVITACION" EntitySet="SAF_INVITACION" />
             <End Role="SAF_INVITACIONDETALLE" EntitySet="SAF_INVITACIONDETALLE" />
@@ -4228,10 +4006,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             <End Role="SAF_TIPOPARAMETRICA" EntitySet="SAF_TIPOPARAMETRICA" />
             <End Role="SAF_PARAMETRICA" EntitySet="SAF_PARAMETRICA" />
           </AssociationSet>
-          <AssociationSet Name="R_31" Association="Self.R_31">
-            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
-            <End Role="SAF_PROPUESTA" EntitySet="SAF_PROPUESTA" />
-          </AssociationSet>
           <AssociationSet Name="R_32" Association="Self.R_32">
             <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
             <End Role="SAF_PROPUESTA" EntitySet="SAF_PROPUESTA" />
@@ -4247,10 +4021,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <AssociationSet Name="R_19" Association="Self.R_19">
             <End Role="SAF_SERVICIOAUDITORIA" EntitySet="SAF_SERVICIOAUDITORIA" />
             <End Role="SAF_SERAUDCARGO" EntitySet="SAF_SERAUDCARGO" />
-          </AssociationSet>
-          <AssociationSet Name="R_2" Association="Self.R_2">
-            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
-            <End Role="SAF_SOLICITUD" EntitySet="SAF_SOLICITUD" />
           </AssociationSet>
           <AssociationSet Name="R_11" Association="Self.R_11">
             <End Role="SAF_SOLICITUD" EntitySet="SAF_SOLICITUD" />
@@ -4284,7 +4054,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           </FunctionImport>
           <EntitySet Name="VW_SAF_INVITACION" EntityType="SI_SOCAUDModel.VW_SAF_INVITACION" />
           <EntitySet Name="VW_SAF_PUBLICACION" EntityType="SI_SOCAUDModel.VW_SAF_PUBLICACION" />
-          <EntitySet Name="VW_SAF_SOLICITUD" EntityType="SI_SOCAUDModel.VW_SAF_SOLICITUD" />
           <EntitySet Name="SAF_ASISTENCIA" EntityType="SI_SOCAUDModel.SAF_ASISTENCIA" />
           <EntitySet Name="SAF_FALTAJUSTIFICA" EntityType="SI_SOCAUDModel.SAF_FALTAJUSTIFICA" />
           <EntitySet Name="VW_SAF_AUDITORIAEQUIPO" EntityType="SI_SOCAUDModel.VW_SAF_AUDITORIAEQUIPO" />
@@ -4475,13 +4244,56 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             <End Role="SAF_PUBLICACION" EntitySet="SAF_PUBLICACION" />
             <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
           </AssociationSet>
+          <EntitySet Name="VW_SAF_CONSULTA" EntityType="SI_SOCAUDModel.VW_SAF_CONSULTA" />
+          <EntitySet Name="VW_SAF_ABSOLUCION_CONSULTA" EntityType="SI_SOCAUDModel.VW_SAF_ABSOLUCION_CONSULTA" />
+          <EntitySet Name="VW_SAF_SOLICITUD" EntityType="SI_SOCAUDModel.VW_SAF_SOLICITUD" />
+          <EntitySet Name="SAF_AUDITOR" EntityType="SI_SOCAUDModel.SAF_AUDITOR" />
+          <EntitySet Name="SAF_SOA" EntityType="SI_SOCAUDModel.SAF_SOA" />
+          <AssociationSet Name="FK__SAF_DIAOC__CODAU__151B244E" Association="SI_SOCAUDModel.FK__SAF_DIAOC__CODAU__151B244E">
+            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
+            <End Role="SAF_DIAOCUPADO" EntitySet="SAF_DIAOCUPADO" />
+          </AssociationSet>
+          <AssociationSet Name="R_3" Association="SI_SOCAUDModel.R_3">
+            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
+            <End Role="SAF_SOLICITUD" EntitySet="SAF_SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="R_35" Association="SI_SOCAUDModel.R_35">
+            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
+            <End Role="SAF_INVITACION" EntitySet="SAF_INVITACION" />
+          </AssociationSet>
+          <AssociationSet Name="R_4" Association="SI_SOCAUDModel.R_4">
+            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
+            <End Role="SAF_EXPERIENCIA" EntitySet="SAF_EXPERIENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="R_49" Association="SI_SOCAUDModel.R_49">
+            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
+            <End Role="SAF_CORTE_AUDITOR" EntitySet="SAF_CORTE_AUDITOR" />
+          </AssociationSet>
+          <AssociationSet Name="R_5" Association="SI_SOCAUDModel.R_5">
+            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
+            <End Role="SAF_CAPACITACION" EntitySet="SAF_CAPACITACION" />
+          </AssociationSet>
+          <AssociationSet Name="R_53" Association="SI_SOCAUDModel.R_53">
+            <End Role="SAF_AUDITOR" EntitySet="SAF_AUDITOR" />
+            <End Role="SAF_CORTE_AUDITOR_CARGO" EntitySet="SAF_CORTE_AUDITOR_CARGO" />
+          </AssociationSet>
           <AssociationSet Name="R_28" Association="SI_SOCAUDModel.R_28">
             <End Role="SAF_SOA" EntitySet="SAF_SOA" />
             <End Role="SAF_CONSULTA" EntitySet="SAF_CONSULTA" />
           </AssociationSet>
-          <EntitySet Name="VW_SAF_CONSULTA" EntityType="SI_SOCAUDModel.VW_SAF_CONSULTA" />
-          <EntitySet Name="VW_SAF_ABSOLUCION_CONSULTA" EntityType="SI_SOCAUDModel.VW_SAF_ABSOLUCION_CONSULTA" />
-        </EntityContainer>
+          <AssociationSet Name="R_33" Association="SI_SOCAUDModel.R_33">
+            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
+            <End Role="SAF_INVITACION" EntitySet="SAF_INVITACION" />
+          </AssociationSet>
+          <AssociationSet Name="R_31" Association="SI_SOCAUDModel.R_31">
+            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
+            <End Role="SAF_PROPUESTA" EntitySet="SAF_PROPUESTA" />
+          </AssociationSet>
+          <AssociationSet Name="R_2" Association="SI_SOCAUDModel.R_2">
+            <End Role="SAF_SOA" EntitySet="SAF_SOA" />
+            <End Role="SAF_SOLICITUD" EntitySet="SAF_SOLICITUD" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="TcCORTEPUBLICACION">
           <Property Type="Int32" Name="EXITO" Nullable="false" />
           <Property Type="String" Name="MENSAJE" Nullable="false" MaxLength="38" />
@@ -4574,25 +4386,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="VW_SAF_SOLICITUD">
-          <Key>
-            <PropertyRef Name="CODSOL" />
-          </Key>
-          <Property Name="CODSOL" Type="Int32" Nullable="false" />
-          <Property Name="NUMSOL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DESSOL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FECREG" Type="DateTime" Precision="3" />
-          <Property Name="FECMOD" Type="DateTime" Precision="3" />
-          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="CODTIPSOL" Type="Int32" />
-          <Property Name="NOMTIPSOL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ESTSOL" Type="Int32" />
-          <Property Name="CODSOA" Type="Int32" />
-          <Property Name="CODAUD" Type="Int32" />
-          <Property Name="NOMESTSOL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SAF_ASISTENCIA">
           <Key>
@@ -5459,18 +5252,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="R_28">
-          <End Type="SI_SOCAUDModel.SAF_SOA" Role="SAF_SOA" Multiplicity="0..1" />
-          <End Type="SI_SOCAUDModel.SAF_CONSULTA" Role="SAF_CONSULTA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SAF_SOA">
-              <PropertyRef Name="CODSOA" />
-            </Principal>
-            <Dependent Role="SAF_CONSULTA">
-              <PropertyRef Name="CODSOA" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="VW_SAF_CONSULTA">
           <Key>
             <PropertyRef Name="CODCON" />
@@ -5508,7 +5289,229 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
           <Property Name="DESBAS" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="NUMPUB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-      </Schema>
+        <EntityType Name="VW_SAF_SOLICITUD">
+          <Key>
+            <PropertyRef Name="CODSOL" />
+          </Key>
+          <Property Name="CODSOL" Type="Int32" Nullable="false" />
+          <Property Name="NUMSOL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DESSOL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODTIPSOL" Type="Int32" />
+          <Property Name="NOMTIPSOL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTSOL" Type="Int32" />
+          <Property Name="CODSOA" Type="Int32" />
+          <Property Name="CODAUD" Type="Int32" />
+          <Property Name="RESPONSABLE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="NOMESTSOL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SAF_AUDITOR">
+          <Key>
+            <PropertyRef Name="CODAUD" />
+          </Key>
+          <Property Name="CODAUD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APEAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DNIAUD" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="CELAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TELAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DIRAUD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CODDEPAUD" Type="Int32" />
+          <Property Name="CODPROVAUD" Type="Int32" />
+          <Property Name="CODDISAUD" Type="Int32" />
+          <Property Name="CORAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SEXAUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FECNACAUD" Type="DateTime" Precision="3" />
+          <Property Name="INDAUDAUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="INDESPAUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="INDSOCAUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODCERAUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ARCCERAUD" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CODARC" Type="Int64" />
+          <Property Name="NOMBLABEL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SAF_DIAOCUPADO" Relationship="SI_SOCAUDModel.FK__SAF_DIAOC__CODAU__151B244E" FromRole="SAF_AUDITOR" ToRole="SAF_DIAOCUPADO" />
+          <NavigationProperty Name="SAF_SOLICITUD" Relationship="SI_SOCAUDModel.R_3" FromRole="SAF_AUDITOR" ToRole="SAF_SOLICITUD" />
+          <NavigationProperty Name="SAF_INVITACION" Relationship="SI_SOCAUDModel.R_35" FromRole="SAF_AUDITOR" ToRole="SAF_INVITACION" />
+          <NavigationProperty Name="SAF_EXPERIENCIA" Relationship="SI_SOCAUDModel.R_4" FromRole="SAF_AUDITOR" ToRole="SAF_EXPERIENCIA" />
+          <NavigationProperty Name="SAF_CORTE_AUDITOR" Relationship="SI_SOCAUDModel.R_49" FromRole="SAF_AUDITOR" ToRole="SAF_CORTE_AUDITOR" />
+          <NavigationProperty Name="SAF_CAPACITACION" Relationship="SI_SOCAUDModel.R_5" FromRole="SAF_AUDITOR" ToRole="SAF_CAPACITACION" />
+          <NavigationProperty Name="SAF_CORTE_AUDITOR_CARGO" Relationship="SI_SOCAUDModel.R_53" FromRole="SAF_AUDITOR" ToRole="SAF_CORTE_AUDITOR_CARGO" />
+        </EntityType>
+        <EntityType Name="SAF_SOA">
+          <Key>
+            <PropertyRef Name="CODSOA" />
+          </Key>
+          <Property Name="CODSOA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RAZSOCSOA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="RUCSOA" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
+          <Property Name="NOMREPLEGSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APEREPLEGSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CORREPLEGSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CELREPLEGSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TELREPLEGSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CODCOLCONSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NUMPARSUNARPSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FIRPCAOBSOA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FIRINTSOA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FECREG" Type="DateTime" Precision="3" />
+          <Property Name="FECMOD" Type="DateTime" Precision="3" />
+          <Property Name="USUREG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USUMOD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTREG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MISSOA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="VISSOA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ARCCOLCONSOA" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="NOMUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASUSU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SAF_CONSULTA" Relationship="SI_SOCAUDModel.R_28" FromRole="SAF_SOA" ToRole="SAF_CONSULTA" />
+          <NavigationProperty Name="SAF_INVITACION" Relationship="SI_SOCAUDModel.R_33" FromRole="SAF_SOA" ToRole="SAF_INVITACION" />
+          <NavigationProperty Name="SAF_PROPUESTA" Relationship="SI_SOCAUDModel.R_31" FromRole="SAF_SOA" ToRole="SAF_PROPUESTA" />
+          <NavigationProperty Name="SAF_SOLICITUD" Relationship="SI_SOCAUDModel.R_2" FromRole="SAF_SOA" ToRole="SAF_SOLICITUD" />
+        </EntityType>
+        <Association Name="FK__SAF_DIAOC__CODAU__151B244E">
+          <End Type="SI_SOCAUDModel.SAF_AUDITOR" Role="SAF_AUDITOR" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_DIAOCUPADO" Role="SAF_DIAOCUPADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_AUDITOR">
+              <PropertyRef Name="CODAUD" />
+            </Principal>
+            <Dependent Role="SAF_DIAOCUPADO">
+              <PropertyRef Name="CODAUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_3">
+          <End Type="SI_SOCAUDModel.SAF_AUDITOR" Role="SAF_AUDITOR" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_SOLICITUD" Role="SAF_SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_AUDITOR">
+              <PropertyRef Name="CODAUD" />
+            </Principal>
+            <Dependent Role="SAF_SOLICITUD">
+              <PropertyRef Name="CODAUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_35">
+          <End Type="SI_SOCAUDModel.SAF_AUDITOR" Role="SAF_AUDITOR" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_INVITACION" Role="SAF_INVITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_AUDITOR">
+              <PropertyRef Name="CODAUD" />
+            </Principal>
+            <Dependent Role="SAF_INVITACION">
+              <PropertyRef Name="CODAUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_4">
+          <End Type="SI_SOCAUDModel.SAF_AUDITOR" Role="SAF_AUDITOR" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_EXPERIENCIA" Role="SAF_EXPERIENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_AUDITOR">
+              <PropertyRef Name="CODAUD" />
+            </Principal>
+            <Dependent Role="SAF_EXPERIENCIA">
+              <PropertyRef Name="CODAUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_49">
+          <End Type="SI_SOCAUDModel.SAF_AUDITOR" Role="SAF_AUDITOR" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CORTE_AUDITOR" Role="SAF_CORTE_AUDITOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_AUDITOR">
+              <PropertyRef Name="CODAUD" />
+            </Principal>
+            <Dependent Role="SAF_CORTE_AUDITOR">
+              <PropertyRef Name="CODAUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_5">
+          <End Type="SI_SOCAUDModel.SAF_AUDITOR" Role="SAF_AUDITOR" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CAPACITACION" Role="SAF_CAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_AUDITOR">
+              <PropertyRef Name="CODAUD" />
+            </Principal>
+            <Dependent Role="SAF_CAPACITACION">
+              <PropertyRef Name="CODAUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_53">
+          <End Type="SI_SOCAUDModel.SAF_AUDITOR" Role="SAF_AUDITOR" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CORTE_AUDITOR_CARGO" Role="SAF_CORTE_AUDITOR_CARGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_AUDITOR">
+              <PropertyRef Name="CODAUD" />
+            </Principal>
+            <Dependent Role="SAF_CORTE_AUDITOR_CARGO">
+              <PropertyRef Name="CODAUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_28">
+          <End Type="SI_SOCAUDModel.SAF_SOA" Role="SAF_SOA" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_CONSULTA" Role="SAF_CONSULTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_SOA">
+              <PropertyRef Name="CODSOA" />
+            </Principal>
+            <Dependent Role="SAF_CONSULTA">
+              <PropertyRef Name="CODSOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_33">
+          <End Type="SI_SOCAUDModel.SAF_SOA" Role="SAF_SOA" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_INVITACION" Role="SAF_INVITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_SOA">
+              <PropertyRef Name="CODSOA" />
+            </Principal>
+            <Dependent Role="SAF_INVITACION">
+              <PropertyRef Name="CODSOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_31">
+          <End Type="SI_SOCAUDModel.SAF_SOA" Role="SAF_SOA" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_PROPUESTA" Role="SAF_PROPUESTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_SOA">
+              <PropertyRef Name="CODSOA" />
+            </Principal>
+            <Dependent Role="SAF_PROPUESTA">
+              <PropertyRef Name="CODSOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_2">
+          <End Type="SI_SOCAUDModel.SAF_SOA" Role="SAF_SOA" Multiplicity="0..1" />
+          <End Type="SI_SOCAUDModel.SAF_SOLICITUD" Role="SAF_SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAF_SOA">
+              <PropertyRef Name="CODSOA" />
+            </Principal>
+            <Dependent Role="SAF_SOLICITUD">
+              <PropertyRef Name="CODSOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -5526,39 +5529,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
                 <ScalarProperty Name="USUREG" ColumnName="USUREG" />
                 <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
                 <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SAF_AUDITOR">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_AUDITOR">
-              <MappingFragment StoreEntitySet="SAF_AUDITOR">
-                <ScalarProperty Name="CODAUD" ColumnName="CODAUD" />
-                <ScalarProperty Name="NOMAUD" ColumnName="NOMAUD" />
-                <ScalarProperty Name="APEAUD" ColumnName="APEAUD" />
-                <ScalarProperty Name="DNIAUD" ColumnName="DNIAUD" />
-                <ScalarProperty Name="CELAUD" ColumnName="CELAUD" />
-                <ScalarProperty Name="TELAUD" ColumnName="TELAUD" />
-                <ScalarProperty Name="DIRAUD" ColumnName="DIRAUD" />
-                <ScalarProperty Name="CODDEPAUD" ColumnName="CODDEPAUD" />
-                <ScalarProperty Name="CODPROVAUD" ColumnName="CODPROVAUD" />
-                <ScalarProperty Name="CODDISAUD" ColumnName="CODDISAUD" />
-                <ScalarProperty Name="CORAUD" ColumnName="CORAUD" />
-                <ScalarProperty Name="SEXAUD" ColumnName="SEXAUD" />
-                <ScalarProperty Name="FECNACAUD" ColumnName="FECNACAUD" />
-                <ScalarProperty Name="INDAUDAUD" ColumnName="INDAUDAUD" />
-                <ScalarProperty Name="INDESPAUD" ColumnName="INDESPAUD" />
-                <ScalarProperty Name="INDSOCAUD" ColumnName="INDSOCAUD" />
-                <ScalarProperty Name="CODCERAUD" ColumnName="CODCERAUD" />
-                <ScalarProperty Name="ARCCERAUD" ColumnName="ARCCERAUD" />
-                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
-                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
-                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
-                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-                <ScalarProperty Name="NOMUSU" ColumnName="NOMUSU" />
-                <ScalarProperty Name="PASUSU" ColumnName="PASUSU" />
-                <ScalarProperty Name="CODARC" ColumnName="CODARC" />
-                <ScalarProperty Name="NOMBLABEL" ColumnName="NOMBLABEL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6084,34 +6054,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SAF_SOA">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_SOA">
-              <MappingFragment StoreEntitySet="SAF_SOA">
-                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
-                <ScalarProperty Name="RAZSOCSOA" ColumnName="RAZSOCSOA" />
-                <ScalarProperty Name="RUCSOA" ColumnName="RUCSOA" />
-                <ScalarProperty Name="NOMREPLEGSOA" ColumnName="NOMREPLEGSOA" />
-                <ScalarProperty Name="APEREPLEGSOA" ColumnName="APEREPLEGSOA" />
-                <ScalarProperty Name="CORREPLEGSOA" ColumnName="CORREPLEGSOA" />
-                <ScalarProperty Name="CELREPLEGSOA" ColumnName="CELREPLEGSOA" />
-                <ScalarProperty Name="TELREPLEGSOA" ColumnName="TELREPLEGSOA" />
-                <ScalarProperty Name="CODCOLCONSOA" ColumnName="CODCOLCONSOA" />
-                <ScalarProperty Name="NUMPARSUNARPSOA" ColumnName="NUMPARSUNARPSOA" />
-                <ScalarProperty Name="FIRPCAOBSOA" ColumnName="FIRPCAOBSOA" />
-                <ScalarProperty Name="FIRINTSOA" ColumnName="FIRINTSOA" />
-                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
-                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
-                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
-                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-                <ScalarProperty Name="MISSOA" ColumnName="MISSOA" />
-                <ScalarProperty Name="VISSOA" ColumnName="VISSOA" />
-                <ScalarProperty Name="ARCCOLCONSOA" ColumnName="ARCCOLCONSOA" />
-                <ScalarProperty Name="NOMUSU" ColumnName="NOMUSU" />
-                <ScalarProperty Name="PASUSU" ColumnName="PASUSU" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SAF_SOLCAPACITACION">
             <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_SOLCAPACITACION">
               <MappingFragment StoreEntitySet="SAF_SOLCAPACITACION">
@@ -6337,26 +6279,6 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
                 <ScalarProperty Name="FECMAXCRECON" ColumnName="FECMAXCRECON" />
                 <ScalarProperty Name="NUMPUB" ColumnName="NUMPUB" />
                 <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VW_SAF_SOLICITUD">
-            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_SOLICITUD">
-              <MappingFragment StoreEntitySet="VW_SAF_SOLICITUD">
-                <ScalarProperty Name="NOMESTSOL" ColumnName="NOMESTSOL" />
-                <ScalarProperty Name="CODAUD" ColumnName="CODAUD" />
-                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
-                <ScalarProperty Name="ESTSOL" ColumnName="ESTSOL" />
-                <ScalarProperty Name="NOMTIPSOL" ColumnName="NOMTIPSOL" />
-                <ScalarProperty Name="CODTIPSOL" ColumnName="CODTIPSOL" />
-                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
-                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
-                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
-                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
-                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
-                <ScalarProperty Name="DESSOL" ColumnName="DESSOL" />
-                <ScalarProperty Name="NUMSOL" ColumnName="NUMSOL" />
-                <ScalarProperty Name="CODSOL" ColumnName="CODSOL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7205,6 +7127,88 @@ advertencia 6002: La tabla o vista 'SI_SOCAUD.dbo.VW_SAF_WORKFLOW_POR_USU' no ti
                 <ScalarProperty Name="CODBASE" ColumnName="CODBASE" />
                 <ScalarProperty Name="CODPUB" ColumnName="CODPUB" />
                 <ScalarProperty Name="CODABSCON" ColumnName="CODABSCON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_SAF_SOLICITUD">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.VW_SAF_SOLICITUD">
+              <MappingFragment StoreEntitySet="VW_SAF_SOLICITUD">
+                <ScalarProperty Name="NOMESTSOL" ColumnName="NOMESTSOL" />
+                <ScalarProperty Name="RESPONSABLE" ColumnName="RESPONSABLE" />
+                <ScalarProperty Name="CODAUD" ColumnName="CODAUD" />
+                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
+                <ScalarProperty Name="ESTSOL" ColumnName="ESTSOL" />
+                <ScalarProperty Name="NOMTIPSOL" ColumnName="NOMTIPSOL" />
+                <ScalarProperty Name="CODTIPSOL" ColumnName="CODTIPSOL" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="DESSOL" ColumnName="DESSOL" />
+                <ScalarProperty Name="NUMSOL" ColumnName="NUMSOL" />
+                <ScalarProperty Name="CODSOL" ColumnName="CODSOL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_AUDITOR">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_AUDITOR">
+              <MappingFragment StoreEntitySet="SAF_AUDITOR">
+                <ScalarProperty Name="NOMBLABEL" ColumnName="NOMBLABEL" />
+                <ScalarProperty Name="CODARC" ColumnName="CODARC" />
+                <ScalarProperty Name="PASUSU" ColumnName="PASUSU" />
+                <ScalarProperty Name="NOMUSU" ColumnName="NOMUSU" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="ARCCERAUD" ColumnName="ARCCERAUD" />
+                <ScalarProperty Name="CODCERAUD" ColumnName="CODCERAUD" />
+                <ScalarProperty Name="INDSOCAUD" ColumnName="INDSOCAUD" />
+                <ScalarProperty Name="INDESPAUD" ColumnName="INDESPAUD" />
+                <ScalarProperty Name="INDAUDAUD" ColumnName="INDAUDAUD" />
+                <ScalarProperty Name="FECNACAUD" ColumnName="FECNACAUD" />
+                <ScalarProperty Name="SEXAUD" ColumnName="SEXAUD" />
+                <ScalarProperty Name="CORAUD" ColumnName="CORAUD" />
+                <ScalarProperty Name="CODDISAUD" ColumnName="CODDISAUD" />
+                <ScalarProperty Name="CODPROVAUD" ColumnName="CODPROVAUD" />
+                <ScalarProperty Name="CODDEPAUD" ColumnName="CODDEPAUD" />
+                <ScalarProperty Name="DIRAUD" ColumnName="DIRAUD" />
+                <ScalarProperty Name="TELAUD" ColumnName="TELAUD" />
+                <ScalarProperty Name="CELAUD" ColumnName="CELAUD" />
+                <ScalarProperty Name="DNIAUD" ColumnName="DNIAUD" />
+                <ScalarProperty Name="APEAUD" ColumnName="APEAUD" />
+                <ScalarProperty Name="NOMAUD" ColumnName="NOMAUD" />
+                <ScalarProperty Name="CODAUD" ColumnName="CODAUD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAF_SOA">
+            <EntityTypeMapping TypeName="SI_SOCAUDModel.SAF_SOA">
+              <MappingFragment StoreEntitySet="SAF_SOA">
+                <ScalarProperty Name="PASUSU" ColumnName="PASUSU" />
+                <ScalarProperty Name="NOMUSU" ColumnName="NOMUSU" />
+                <ScalarProperty Name="ARCCOLCONSOA" ColumnName="ARCCOLCONSOA" />
+                <ScalarProperty Name="VISSOA" ColumnName="VISSOA" />
+                <ScalarProperty Name="MISSOA" ColumnName="MISSOA" />
+                <ScalarProperty Name="ESTREG" ColumnName="ESTREG" />
+                <ScalarProperty Name="USUMOD" ColumnName="USUMOD" />
+                <ScalarProperty Name="USUREG" ColumnName="USUREG" />
+                <ScalarProperty Name="FECMOD" ColumnName="FECMOD" />
+                <ScalarProperty Name="FECREG" ColumnName="FECREG" />
+                <ScalarProperty Name="FIRINTSOA" ColumnName="FIRINTSOA" />
+                <ScalarProperty Name="FIRPCAOBSOA" ColumnName="FIRPCAOBSOA" />
+                <ScalarProperty Name="NUMPARSUNARPSOA" ColumnName="NUMPARSUNARPSOA" />
+                <ScalarProperty Name="CODCOLCONSOA" ColumnName="CODCOLCONSOA" />
+                <ScalarProperty Name="TELREPLEGSOA" ColumnName="TELREPLEGSOA" />
+                <ScalarProperty Name="CELREPLEGSOA" ColumnName="CELREPLEGSOA" />
+                <ScalarProperty Name="CORREPLEGSOA" ColumnName="CORREPLEGSOA" />
+                <ScalarProperty Name="APEREPLEGSOA" ColumnName="APEREPLEGSOA" />
+                <ScalarProperty Name="NOMREPLEGSOA" ColumnName="NOMREPLEGSOA" />
+                <ScalarProperty Name="RUCSOA" ColumnName="RUCSOA" />
+                <ScalarProperty Name="RAZSOCSOA" ColumnName="RAZSOCSOA" />
+                <ScalarProperty Name="CODSOA" ColumnName="CODSOA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

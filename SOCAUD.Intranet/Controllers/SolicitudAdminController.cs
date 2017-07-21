@@ -56,6 +56,8 @@ namespace SOCAUD.Intranet.Controllers
                 c.CODSOL.ToString(),
                 c.NUMSOL,
                 c.NOMTIPSOL,
+                c.RESPONSABLE,
+                c.FECREG.HasValue? c.FECREG.Value.ToString("dd/MM/yyyy") : "",
                 c.NOMESTSOL,
                 c.CODSOA.HasValue ? "S":"A"
             }).ToArray();
@@ -153,6 +155,16 @@ namespace SOCAUD.Intranet.Controllers
             try
             {
                 var infoSolicitud = this._solicitudLogic.BuscarPorId(id);// modelEntity.SAF_SOLICITUD.Where(c => c.CODSOL == id).FirstOrDefault();
+
+
+                var mensaje = "La solicitud: " + "<strong>" + infoSolicitud.NUMSOL + "</strong>" + ", ha sido ACEPTADA, revise las observaciones y comentarios.";
+
+                if (infoSolicitud.CODSOA == null)
+                    this._notificacionLogic.GrabarNotificacionAuditor(infoSolicitud.CODAUD.Value, Notificacion.asuntoSolicitudAceptada, mensaje, "CGR");
+                else if (infoSolicitud.CODAUD == null)
+                    this._notificacionLogic.GrabarNotificacionSOA(infoSolicitud.CODSOA.Value, Notificacion.asuntoSolicitudAceptada, mensaje, "CGR");
+
+
                 if (infoSolicitud.CODSOA.HasValue)
                 {
                     infoSolicitud.ESTSOL = (int)Estado.Solicitud.Aprobado;
@@ -162,6 +174,8 @@ namespace SOCAUD.Intranet.Controllers
                 }
                 else
                     actualizarResafAuditor(infoSolicitud);
+
+
 
                 return Json(new MensajeRespuesta("Aprobo la solicitud satisfactoriamente", true));
             }
@@ -178,7 +192,8 @@ namespace SOCAUD.Intranet.Controllers
 
             //Helper.NotificacionAdmin noti = new Helper.NotificacionAdmin();
             //noti.grabarNotificacionSOA(infoSolicitud.CODSOA.Value, Notificacion.asuntoSolicitudObservada, Notificacion.bodySolicitudObservada);
-            this._notificacionLogic.GrabarNotificacionSOA(infoSolicitud.CODSOA.Value, Notificacion.asuntoSolicitudObservada, Notificacion.bodySolicitudObservada);
+            var mensaje = "La solicitud: " + "<strong>" + infoSolicitud.NUMSOL + "</strong>" + ", ha sido OBSERVADA, revise las observaciones y comentarios.";
+            this._notificacionLogic.GrabarNotificacionSOA(infoSolicitud.CODSOA.Value, Notificacion.asuntoSolicitudObservada, mensaje, "CGR");
 
             infoSolicitud.OBSSOL = model.observacionSolicitud;
             infoSolicitud.ESTSOL = (int)Estado.Solicitud.Observada;
@@ -193,7 +208,8 @@ namespace SOCAUD.Intranet.Controllers
 
             //Helper.NotificacionAdmin noti = new Helper.NotificacionAdmin();
             //noti.grabarNotificacionAuditor(infoSolicitud.CODAUD.Value, Notificacion.asuntoSolicitudObservada, Notificacion.bodySolicitudObservada);
-            this._notificacionLogic.GrabarNotificacionAuditor(infoSolicitud.CODAUD.Value, Notificacion.asuntoSolicitudObservada, Notificacion.bodySolicitudObservada);
+            var mensaje = "La solicitud: " + "<strong>" + infoSolicitud.NUMSOL + "</strong>" + ", ha sido OBSERVADA, revise las observaciones y comentarios.";
+            this._notificacionLogic.GrabarNotificacionAuditor(infoSolicitud.CODAUD.Value, Notificacion.asuntoSolicitudObservada, mensaje, "CGR");
 
             infoSolicitud.OBSSOL = model.observacionSolicitud;
             infoSolicitud.ESTSOL = (int)Estado.Solicitud.Observada;

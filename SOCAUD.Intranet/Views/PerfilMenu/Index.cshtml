@@ -130,13 +130,14 @@
                 async: false,
                 data: { idMenus: codigos },
                 success: function (result) {
-                    console.log(result);
-                    $("#CODMEN_DISPO option").remove();
+                    //console.log(result);
+                    mostrarNotificacion(result);
+                    //$("#CODMEN_DISPO option").remove();
 
-                    $.each(result, function (ind, val) {
-                        $("#CODMEN_DISPO").append("<option value='" + val.CODMEN + "'>" + val.DESMEN + "</option>");
-                    });
-
+                    //$.each(result, function (ind, val) {
+                    //    $("#CODMEN_DISPO").append("<option value='" + val.CODMEN + "'>" + val.DESMEN + "</option>");
+                    //});
+                    
                 }
             });
         }

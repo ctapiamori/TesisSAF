@@ -28,7 +28,6 @@ namespace SOCAUD.Data.Model
         }
     
         public virtual DbSet<SAF_ARCHIVO> SAF_ARCHIVO { get; set; }
-        public virtual DbSet<SAF_AUDITOR> SAF_AUDITOR { get; set; }
         public virtual DbSet<SAF_AUDITORIA> SAF_AUDITORIA { get; set; }
         public virtual DbSet<SAF_BASE> SAF_BASE { get; set; }
         public virtual DbSet<SAF_BASEENTREGABLE> SAF_BASEENTREGABLE { get; set; }
@@ -59,7 +58,6 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_SERAUDCAREXP> SAF_SERAUDCAREXP { get; set; }
         public virtual DbSet<SAF_SERAUDCARGO> SAF_SERAUDCARGO { get; set; }
         public virtual DbSet<SAF_SERVICIOAUDITORIA> SAF_SERVICIOAUDITORIA { get; set; }
-        public virtual DbSet<SAF_SOA> SAF_SOA { get; set; }
         public virtual DbSet<SAF_SOLCAPACITACION> SAF_SOLCAPACITACION { get; set; }
         public virtual DbSet<SAF_SOLEXPERIENCIA> SAF_SOLEXPERIENCIA { get; set; }
         public virtual DbSet<SAF_SOLICITUD> SAF_SOLICITUD { get; set; }
@@ -69,7 +67,6 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_DIALABORABLE> SAF_DIALABORABLE { get; set; }
         public virtual DbSet<VW_SAF_INVITACION> VW_SAF_INVITACION { get; set; }
         public virtual DbSet<VW_SAF_PUBLICACION> VW_SAF_PUBLICACION { get; set; }
-        public virtual DbSet<VW_SAF_SOLICITUD> VW_SAF_SOLICITUD { get; set; }
         public virtual DbSet<SAF_ASISTENCIA> SAF_ASISTENCIA { get; set; }
         public virtual DbSet<SAF_FALTAJUSTIFICA> SAF_FALTAJUSTIFICA { get; set; }
         public virtual DbSet<VW_SAF_AUDITORIAEQUIPO> VW_SAF_AUDITORIAEQUIPO { get; set; }
@@ -98,6 +95,9 @@ namespace SOCAUD.Data.Model
         public virtual DbSet<SAF_CONSULTA> SAF_CONSULTA { get; set; }
         public virtual DbSet<VW_SAF_CONSULTA> VW_SAF_CONSULTA { get; set; }
         public virtual DbSet<VW_SAF_ABSOLUCION_CONSULTA> VW_SAF_ABSOLUCION_CONSULTA { get; set; }
+        public virtual DbSet<VW_SAF_SOLICITUD> VW_SAF_SOLICITUD { get; set; }
+        public virtual DbSet<SAF_AUDITOR> SAF_AUDITOR { get; set; }
+        public virtual DbSet<SAF_SOA> SAF_SOA { get; set; }
     
         public virtual ObjectResult<TcCORTEPUBLICACION> SP_SAF_CORTEPUBLICACION(Nullable<int> cODPUB)
         {

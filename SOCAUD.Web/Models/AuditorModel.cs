@@ -35,7 +35,7 @@ namespace SOCAUD.Web.Models
 
         [Display(Name = "DNI")]
         [Required(ErrorMessage = Mensaje.MensajeCampoRequerido)]
-        [RegularExpression("[0-9]+", ErrorMessage = Mensaje.MensajeSoloNumeros)]
+        [RegularExpression("[0-9]{8}", ErrorMessage = Mensaje.MensajeIngreseDNIValido)]
         [MaxLength(8, ErrorMessage = "Ingrese un DNI valido")]
         public string dniAud { get; set; }
 

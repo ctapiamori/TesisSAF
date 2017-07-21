@@ -19,6 +19,8 @@ namespace SOCAUD.Web.Controllers
         private readonly ISafInvitacionDetalleLogic _invitacionDetalleLogic;
 
         private readonly ISafPublicacionBaseLogic _publicacionYBasesLogic;
+
+        private readonly ISafBaseLogic _baseLogic;
         public BandejaInvitacionesController()
         {
             this._publicacionLogic = new SafPublicacionLogic();
@@ -28,6 +30,8 @@ namespace SOCAUD.Web.Controllers
             this._invitacionDetalleLogic = new SafInvitacionDetalleLogic();
 
             _publicacionYBasesLogic = new SafPublicacionBaseLogic();
+
+            _baseLogic = new SafBaseLogic();
         }
 
         // GET: BandejaInvitaciones
@@ -104,8 +108,16 @@ namespace SOCAUD.Web.Controllers
             try
             {
                 var invitacion = this._invitacionLogic.BuscarPorId(id);// this.modelEntity.SAF_INVITACION.Where(c => c.CODINV == id).FirstOrDefault();
+
+                var publicacion = this._publicacionLogic.BuscarPorId(invitacion.CODPUB.GetValueOrDefault());
+                var ServAud = this._servicioAuditoriaLogic.BuscarPorId(invitacion.CODSERAUD.GetValueOrDefault());
+                var baseinfo = this._baseLogic.BuscarPorId(ServAud.CODBAS.GetValueOrDefault());
+
                 //var noti = new Helper.NotificacionAdmin();
-                var mensaje = "El auditor <strong>" + Session["sessionNombreCompletoUsuario"].ToString() + "</strong> identificado con el DNI " + Session["sessionUsuario"].ToString() + " ACEPTO su invitacion";
+                var mensaje = "El auditor <strong>" + Session["sessionNombreCompletoUsuario"].ToString() + "</strong> identificado con el DNI " + Session["sessionUsuario"].ToString() + " ACEPTO su invitación para la auditoria: <br/><br/>";
+                mensaje = mensaje + "<strong>Publicación:</strong>" + publicacion.NUMPUB + "<br/>";
+                mensaje = mensaje + "<strong>Entidad:</strong>" + baseinfo.DESBAS + "<br/>";
+                mensaje = mensaje + "<strong>Periodo:</strong>" + ServAud.FECINISERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + " - " + ServAud.FECFINSERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + "<br/>";
 
                 //this.modelEntity.SP_SAF_ACEPTARINVITACION(id);
                 //this.modelEntity.SP_SAF_ACEPTARINVITACION(id);
@@ -130,10 +142,21 @@ namespace SOCAUD.Web.Controllers
             {
                 var invitacion = this._invitacionLogic.BuscarPorId(id);// this.modelEntity.SAF_INVITACION.Where(c => c.CODINV == id).FirstOrDefault();
 
+                var publicacion = this._publicacionLogic.BuscarPorId(invitacion.CODPUB.GetValueOrDefault());
+                var ServAud = this._servicioAuditoriaLogic.BuscarPorId(invitacion.CODSERAUD.GetValueOrDefault());
+                var baseinfo = this._baseLogic.BuscarPorId(ServAud.CODBAS.GetValueOrDefault());
+
+
                 //var noti = new Helper.NotificacionAdmin();
-                var mensaje = "El auditor <strong>" + Session["sessionNombreCompletoUsuario"].ToString() + "</strong> identificado con el DNI " + Session["sessionUsuario"].ToString() + " CANCELO su invitacion";
+                var mensaje = "El auditor <strong>" + Session["sessionNombreCompletoUsuario"].ToString() + "</strong> identificado con el DNI " + Session["sessionUsuario"].ToString() + " CANCELO la invitacion para el concurso: <br/><br/>";
+                mensaje = mensaje + "<strong>Publicación:</strong>" + publicacion.NUMPUB + "<br/>";
+                mensaje = mensaje + "<strong>Entidad:</strong>" + baseinfo.DESBAS + "<br/>";
+                mensaje = mensaje + "<strong>Periodo:</strong>" + ServAud.FECINISERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + " - " + ServAud.FECFINSERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + "<br/>";
+
+
+
                 //noti.grabarNotificacionSOA((int)invitacion.CODSOA, Notificacion.asuntoInvitacionCancelado, mensaje);
-                this._notificacionLogic.GrabarNotificacionSOA((int)invitacion.CODSOA, Notificacion.asuntoInvitacionCancelado, mensaje);
+                this._notificacionLogic.GrabarNotificacionSOA((int)invitacion.CODSOA, Notificacion.asuntoInvitacionCancelado, mensaje, Session["sessionNombreCompletoUsuario"].ToString());
 
                 invitacion.ESTINV = (int)Estado.Invitacion.Cancelada;
                 invitacion.INDCANINV = "A";

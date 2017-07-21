@@ -48,7 +48,7 @@ namespace SOCAUD.Data.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_AUDITORIA> SAF_AUDITORIA { get; set; }
-        public virtual SAF_SOA SAF_SOA { get; set; }
         public virtual SAF_PUBLICACION SAF_PUBLICACION { get; set; }
+        public virtual SAF_SOA SAF_SOA { get; set; }
     }
 }

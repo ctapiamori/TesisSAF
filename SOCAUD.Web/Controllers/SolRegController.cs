@@ -74,6 +74,13 @@ namespace SOCAUD.Web.Controllers
             }
             else
             {
+                var anioNacimiento =  Convert.ToDateTime(model.auditor.fecNacAud).Year;
+                var AnioActual = DateTime.Now.Year;
+
+                if ((AnioActual - anioNacimiento) < 21) {
+                    return Json(new MensajeRespuesta("El auditor debe tener un promedio superior a 20 años", false));
+                }
+
                 var existeUsuario = this._auditorLogic.ExisteAuditor(model.auditor.nomUsu);// modelEntity.SAF_AUDITOR.Where(c => c.NOMUSU.Equals(model.auditor.nomUsu)).ToList().Any();
                 if (existeUsuario)
                 {

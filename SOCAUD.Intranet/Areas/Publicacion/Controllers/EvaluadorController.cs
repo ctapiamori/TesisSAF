@@ -190,17 +190,17 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
                     this._publicacionLogic.Registrar(publicacion);
 
                 //var noti = new Helper.NotificacionAdmin();
-                string mensaje = string.Empty;
-                if (model.CodigoPublicacion.HasValue)
-                    mensaje = "Se realizaron los siguientes cambios en la publicacion, debe tener en cuenta que las fechas mostradas son los limites para realizar cada accion: <br /><br />";
-                else
-                    mensaje = "Se registro una publicacion, debe tener en cuenta que las fechas mostradas son los limites para realizar cada accion: <br /><br />";
-                mensaje = mensaje + "*) Fecha publicacion concurso : <strong>" + model.FechaMaximaPublicacionConcurso + "</strong><br/>";
-                mensaje = mensaje + "*) Fecha elaboracion consultas : <strong>" + model.FechaMaximaCreacionConsulta + "</strong><br/>";
-                mensaje = mensaje + "*) Fecha elaboracion absolucion de consultas : <strong>" + model.FechaMaximaResponderConsultas + "</strong><br/>";
-                mensaje = mensaje + "*) Fecha elaboracion de propuestas : <strong>" + model.FechaMaximaPresentacionPropuestas + "</strong><br/>";
-                //noti.grabarNotificacionTodosUsuarios(Notificacion.asuntoCambiosConcurso, mensaje);
-                this._notificacionLogic.GrabarNotificacionTodosUsuarios(Notificacion.asuntoCambiosConcurso, mensaje);
+                //string mensaje = string.Empty;
+                //if (model.CodigoPublicacion.HasValue)
+                //    mensaje = "Se realizaron los siguientes cambios en la publicacion, debe tener en cuenta que las fechas mostradas son los limites para realizar cada accion: <br /><br />";
+                //else
+                //    mensaje = "Se registro una publicacion, debe tener en cuenta que las fechas mostradas son los limites para realizar cada accion: <br /><br />";
+                //mensaje = mensaje + "*) Fecha publicacion concurso : <strong>" + model.FechaMaximaPublicacionConcurso + "</strong><br/>";
+                //mensaje = mensaje + "*) Fecha elaboracion consultas : <strong>" + model.FechaMaximaCreacionConsulta + "</strong><br/>";
+                //mensaje = mensaje + "*) Fecha elaboracion absolucion de consultas : <strong>" + model.FechaMaximaResponderConsultas + "</strong><br/>";
+                //mensaje = mensaje + "*) Fecha elaboracion de propuestas : <strong>" + model.FechaMaximaPresentacionPropuestas + "</strong><br/>";
+                ////noti.grabarNotificacionTodosUsuarios(Notificacion.asuntoCambiosConcurso, mensaje);
+                //this._notificacionLogic.GrabarNotificacionTodosUsuarios(Notificacion.asuntoCambiosConcurso, mensaje);
 
                 //this.modeloEntity.SaveChanges();
                 return Json(new MensajeRespuesta("Se grabo la publicacion satisfactoriamente", true, publicacion.CODPUB));
@@ -270,7 +270,17 @@ namespace SOCAUD.Intranet.Areas.Publicacion.Controllers
             try
             {
                 var result = this._publicacionLogic.PublicarPublicacion(id); //this._agenteConcursoPublicoMerito.PublicarPublicacion(id);
-                return Json(new MensajeRespuesta("Se genero la publicacion Safistactoriamente", true));
+
+                string mensaje = string.Empty;
+
+                mensaje = "Se registro una publicacion, debe tener en cuenta que las fechas mostradas son los limites para realizar cada accion: <br /><br />";
+                mensaje = mensaje + "* Fecha máxima para ELABORAR CONSULTAS (Debe enviar las preguntas para que la CGR pueda responder) : <strong>" + result.FECMAXCRECON + "</strong><br/>";
+                mensaje = mensaje + "* Fecha máxima para publicar la ABSOLUCION de CONSULTAS : <strong>" + result.FECMAXRESCONS + "</strong><br/>";
+                mensaje = mensaje + "* Fecha máxima para PRESENTACION de PROPUESTAS (Debe enviar las propuestas para que la CGR pueda evaluarlas) : <strong>" + result.FECMAXPREPROP + "</strong><br/>";
+                this._notificacionLogic.GrabarNotificacionTodosUsuarios(Notificacion.asuntoPublicacionConcurso, mensaje);
+
+
+                return Json(new MensajeRespuesta("Se genero la publicacion Satisfactoriamente", true));
             }
             catch (Exception)
             {

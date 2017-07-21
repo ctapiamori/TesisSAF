@@ -92,6 +92,7 @@
                     data: $("#frmGrabarRespuesta").serialize(),
                     success: function (result) {
                         mostrarNotificacion(result);
+                        $("#modalResponder").modal('hide');
                     }
                 });
             }

@@ -33,10 +33,10 @@ namespace SOCAUD.Data.Model
         public string NOMBLABEL { get; set; }
     
         public virtual SAF_ARCHIVO SAF_ARCHIVO { get; set; }
-        public virtual SAF_AUDITOR SAF_AUDITOR { get; set; }
         public virtual SAF_PARAMETRICA SAF_PARAMETRICA { get; set; }
         public virtual SAF_PARAMETRICA SAF_PARAMETRICA1 { get; set; }
         public virtual SAF_UNIVERSIDAD SAF_UNIVERSIDAD { get; set; }
         public virtual SAF_CARRERA SAF_CARRERA { get; set; }
+        public virtual SAF_AUDITOR SAF_AUDITOR { get; set; }
     }
 }

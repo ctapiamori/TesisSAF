@@ -37,11 +37,11 @@ namespace SOCAUD.Data.Model
         public Nullable<int> ESTINV { get; set; }
         public Nullable<int> CODCAR { get; set; }
     
-        public virtual SAF_AUDITOR SAF_AUDITOR { get; set; }
-        public virtual SAF_SOA SAF_SOA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SAF_INVITACIONDETALLE> SAF_INVITACIONDETALLE { get; set; }
         public virtual SAF_SERVICIOAUDITORIA SAF_SERVICIOAUDITORIA { get; set; }
         public virtual SAF_PUBLICACION SAF_PUBLICACION { get; set; }
+        public virtual SAF_AUDITOR SAF_AUDITOR { get; set; }
+        public virtual SAF_SOA SAF_SOA { get; set; }
     }
 }

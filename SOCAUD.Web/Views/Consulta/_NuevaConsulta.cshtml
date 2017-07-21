@@ -94,6 +94,7 @@
                     dataType: "json",
                     success: function (result) {
                         mostrarNotificacion(result);
+                        $("#modalNuevaConsulta").modal('hide');
                     }
                 });
             }

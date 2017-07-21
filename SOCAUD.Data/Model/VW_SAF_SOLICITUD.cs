@@ -27,6 +27,7 @@ namespace SOCAUD.Data.Model
         public Nullable<int> ESTSOL { get; set; }
         public Nullable<int> CODSOA { get; set; }
         public Nullable<int> CODAUD { get; set; }
+        public string RESPONSABLE { get; set; }
         public string NOMESTSOL { get; set; }
     }
 }

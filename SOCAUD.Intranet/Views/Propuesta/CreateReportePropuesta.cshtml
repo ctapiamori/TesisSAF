@@ -1,0 +1,136 @@
+﻿@model SOCAUD.Intranet.Controllers.ReportePropuesta
+
+<br/>
+<img src="@Model.ImageUrl" width="200" height="64" /> 
+<br/> <br/> 
+ 
+<table>
+    <tr>
+        <td width="100%" align="center"><h2>Propuesta Publicación @Model.Publicacion</h2></td> 
+    </tr>
+    <tr>
+        <td width="100%" align="center">&nbsp;</td> 
+    </tr>
+</table>
+<br />
+<br />
+<br />
+
+
+<table cellpadding="3" cellspacing="3">
+    <tr>
+        <td width="100%" style="font-size:10px;font-weight:bold;">SOCIEDADES DE AUDITORIA:</td>
+    </tr>
+    <tr>
+        <td width="100%" style="font-size:10px;">@Model.SOA</td>
+    </tr>
+</table>
+<br />
+
+<table>
+    <tr>
+        <td width="30%" style="font-size:10px;font-weight:bold;" colspan="2">DATOS DE LA ENTIDAD:</td>
+    </tr>
+    <tr>
+        <td width="30%" style="font-size:10px;font-weight:bold;">Entidad</td><td>@Model.EntidadBase</td>
+    </tr>    
+    <tr>
+        <td width="30%" style="font-size:10px;font-weight:bold;">Retribución</td><td>@Model.Retribucion</td>
+    </tr>    
+    <tr>
+        <td width="30%" style="font-size:10px;font-weight:bold;">IGV</td><td>@Model.IGVTotal</td>
+    </tr>    
+    <tr>
+        <td width="30%" style="font-size:10px;font-weight:bold;">Retribución Total</td><td>@Model.RetribucionTotal</td>
+    </tr>
+</table>
+
+
+<br />
+<br />
+<br />
+<table cellpadding="3" cellspacing="3">
+    <tr>
+        <td width="30%" style="font-size:10px;font-weight:bold;" colspan="2">Auditorias de Ejecución</td>
+    </tr>
+</table>
+
+
+<table cellpadding="3" cellspacing="3">
+    <tr border="1" bgcolor="#777777" color="#ffffff">
+        <td width="34%" align="center">
+            Periodo
+        </td>
+        <td width="33%" align="center">
+            Inicio
+        </td>
+        <td width="33%" align="center">
+            Fin 
+        </td>
+    </tr>
+  
+    @foreach (var item in Model.ListaAuditoria)
+    {
+        <tr border="1"  >
+            <td style="font-size:10px;text-align:center;">@item.Periodo
+            </td>
+            <td style="font-size:10px;text-align:center;">@item.FechaInicio
+            </td>
+            <td style="font-size:10px;text-align:center;">@item.FechaFin
+            </td>
+        </tr>
+ 
+
+    }
+</table>
+
+<br />
+<br />
+<br />
+<table cellpadding="3" cellspacing="3">
+    <tr>
+        <td width="30%" style="font-size:10px;font-weight:bold;" colspan="2">Equipo Propuesto</td>
+    </tr>
+</table>
+
+<table cellpadding="3" cellspacing="3">
+    <tr border="1" bgcolor="#777777" color="#ffffff">
+        <td width="30%" align="center">
+            DNI
+        </td>
+        <td width="50%" align="center">
+            Nombre - Apellido
+        </td>
+        <td width="20%" align="center">
+            Horas
+        </td>
+    </tr>
+ 
+    @foreach (var item in Model.ListaEquipo)
+    {
+        <tr border="1"  >
+            <td style="font-size:10px;text-align:center;">@item.DNI
+            </td>
+            <td style="font-size:10px;">@item.NombreApellido
+            </td>
+            <td style="font-size:10px;text-align:center">@item.Horas
+            </td>
+        </tr>
+ 
+
+    }
+</table>
+
+
+<br />
+<br />
+<br />
+<p style="text-align:justify; font-size:10px;">
+    <span style="font-weight:bold;">Información Importante:</span><br />
+    La Ley regula el ingreso a la carrera administrativa, y los derechos, deberes y responsabilidades de
+    los servidores públicos. No están comprendidos en dicha carrera los funcionarios que desempeñan
+    cargos políticos o de confianza. Ningún funcionario o servidor público puede desempeñar más de un
+    empleo o cargo público remunerado, con excepción de uno o más por función docente. No están
+    comprendidos en la función pública los trabajadores de las empresas del Estado o de sociedades de
+    economía mixta. 
+</p>

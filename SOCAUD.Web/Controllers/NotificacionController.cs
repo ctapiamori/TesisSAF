@@ -47,12 +47,13 @@ namespace SOCAUD.Web.Controllers
             //IEnumerable<SAF_NOTIFICACION> mensajes = new List<SAF_NOTIFICACION>();
             var mensajes = this._notificacionLogic.ListarNotificaciones(bandeja, Session["sessionUsuario"].ToString());
             //mensajes = modelEntity.SAF_NOTIFICACION.ToList().Where(c => c.ESTNOT == bandeja && c.USUREC == Session["sessionUsuario"].ToString());
-
+            mensajes = mensajes.OrderByDescending(c => c.FECREG);
             var data = mensajes.Select(c => new string[] { 
                 c.CODNOT.ToString(),
                 c.USUEMI,
                 c.ASUNOT,
-                GetReciveNota(c.FECREG),
+                c.FECREG.HasValue? c.FECREG.Value.ToString("dd/MM/yyyy HH:mm:ss"): "",
+                //GetReciveNota(c.FECREG),
                 c.INDNOT.Equals("R") ? "1" : "0",
                 c.ESTNOT.Equals(TipoBandeja.BANDEJA_RECIBIDOS) ? "1" : "0"
             });

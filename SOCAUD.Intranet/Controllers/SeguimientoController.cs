@@ -78,10 +78,10 @@ namespace SOCAUD.Intranet.Controllers
             return View(model);
         }
 
-        public JsonResult ListarPropEjecucion()
+        public JsonResult ListarPropEjecucion(int? idPub, int? idSoa)
         {
 
-            var lista = _propuestaLogic.ListarPropuestaEjecucion();
+            var lista = _propuestaLogic.ListarPropuestaEjecucion(idPub, idSoa);
 
             var data = lista.Select(c => new string[]{ 
                 c.CODPRO.ToString(),

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reporting.WebForms;
+using ReportManagement;
 using SOCAUD.Business.Core;
 using SOCAUD.Common.Constantes;
 using SOCAUD.Data.Model;
@@ -11,19 +12,62 @@ using System.Web.Mvc;
 
 namespace SOCAUD.Intranet.Controllers
 {
-    public class PropuestaController : Controller
+
+    public class ReportePropuesta
+    {
+
+        public string ImageUrl { get; set; }
+        public string Publicacion { get; set; }
+        public string SOA { get; set; }
+        public string EntidadBase { get; set; }
+        public decimal Retribucion { get; set; }
+        public decimal IGVTotal { get; set; }
+        public decimal RetribucionTotal { get; set; }
+
+        public IList<AuditoriaPropuesta> ListaAuditoria { get; set; }
+        public IList<EquipoPropuesta> ListaEquipo { get; set; }
+
+        public ReportePropuesta()
+        {
+            this.ListaEquipo = new List<EquipoPropuesta>();
+            this.ListaAuditoria = new List<AuditoriaPropuesta>();
+        }
+
+
+    }
+
+    public class EquipoPropuesta
+    {
+        public string DNI { get; set; }
+        public string NombreApellido { get; set; }
+        public int Horas { get; set; }
+    }
+
+    public class AuditoriaPropuesta
+    {
+        public string Periodo { get; set; }
+        public string FechaInicio { get; set; }
+        public string FechaFin { get; set; }
+    }
+
+    public class PropuestaController : PdfViewController
     {
         private readonly ISafPublicacionLogic _publicacionLogic;
         private readonly ISafPropuestaLogic _propuestaLogic;
         private readonly ISafPropuestaEquipoLogic _propuestaEquipoLogic;
 
-        private IEnumerable<TcEQUIPOAUDITORIARPT> equipoAuditoriaRpt;   
-
+        private IEnumerable<TcEQUIPOAUDITORIARPT> equipoAuditoriaRpt;
+        private readonly ISafAuditoriaLogic _auditoriaLogic;
+        private readonly ISafSoaLogic _soaLogic;
+        private readonly ISafBaseLogic _baseLogic;
         public PropuestaController()
         {
+            _soaLogic = new SafSoaLogic();
             this._publicacionLogic = new SafPublicacionLogic();
             this._propuestaLogic = new SafPropuestaLogic();
             this._propuestaEquipoLogic = new SafPropuestaEquipoLogic();
+            _baseLogic = new SafBaseLogic();
+            _auditoriaLogic = new SafAuditoriaLogic();
         }
 
         // GET: Propuesta
@@ -117,6 +161,55 @@ namespace SOCAUD.Intranet.Controllers
             var file = localReport.Render("pdf", deviceInfoA4, out mimeType, out encoding, out fileNameExtension, out streams, out warnings);
 
             return file;
+        }
+
+        private void FillImageUrlPROPUESTA(ReportePropuesta model, string imageName)
+        {
+            string url = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+            model.ImageUrl = url + "Content/" + imageName;
+        }
+
+        public ActionResult CreateReportePropuesta(int id)
+        {
+
+            var propuestaReporte = new ReportePropuesta();
+            var propuesta = this._propuestaLogic.BuscarPorId(id);
+
+            var soainfo = this._soaLogic.BuscarPorId(propuesta.CODSOA.GetValueOrDefault());
+            var publicacion = this._publicacionLogic.BuscarPorId(propuesta.CODPUB.GetValueOrDefault());
+            var bases = this._baseLogic.BuscarPorId(propuesta.CODBAS.GetValueOrDefault());
+
+            propuestaReporte.EntidadBase = bases.DESBAS;
+            propuestaReporte.IGVTotal = propuesta.IGVTOTAL.GetValueOrDefault();
+            propuestaReporte.Retribucion = propuesta.RETRECO.GetValueOrDefault();
+            propuestaReporte.RetribucionTotal = propuesta.RETRECOTOTAL.GetValueOrDefault();
+            propuestaReporte.Publicacion = publicacion.NUMPUB;
+            propuestaReporte.SOA = soainfo.RAZSOCSOA;
+            var auditorias = this._auditoriaLogic.ListarAuditoriasPorPropuesta(id);
+            var equipo = this._propuestaLogic.ListarEquipoPropuesta(id);
+
+            foreach (var item in auditorias)
+            {
+                propuestaReporte.ListaAuditoria.Add(new AuditoriaPropuesta()
+                {
+                    Periodo = item.PERAUD,
+                    FechaFin = item.FECFINAUDITORIA.GetValueOrDefault().ToString("dd/MM/yyyy"),
+                    FechaInicio = item.FECINIAUDITORIA.GetValueOrDefault().ToString("dd/MM/yyyy")
+                });
+            }
+
+            foreach (var item in equipo)
+            {
+                propuestaReporte.ListaEquipo.Add(new EquipoPropuesta()
+                {
+                    NombreApellido = item.NOMAUD + " " + item.APEAUD,
+                    DNI = item.DNIAUD,
+                    Horas = item.HORAS.GetValueOrDefault()
+                });
+            }
+            FillImageUrlPROPUESTA(propuestaReporte, "logo_contraloria.png");
+            return this.ViewPdf("", "CreateReportePropuesta", propuestaReporte);
+
         }
     }
 }

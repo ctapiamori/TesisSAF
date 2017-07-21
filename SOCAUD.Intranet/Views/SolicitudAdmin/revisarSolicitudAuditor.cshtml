@@ -60,7 +60,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                @Html.LabelFor(c => c)
+                                <label>Departamento</label>
                                 @Html.DropDownListFor(c => c.codDeparAud, Model.cboDepartamento, "Seleccione", new { @class = "form-control", @rows = "4", @disabled = "disabled" })
                             </div>
                             <div class="col-md-4">
@@ -173,7 +173,7 @@
                                 <center>
                                     <button type="button" id="btnAceptarSolicitud" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
                                     <button type="button" id="btnObservarSolicitud" class="btn btn-primary"><i class="fa fa-close"></i>&nbsp;Observar</button>
-                                    <button type="button" id="btnRegresar" class="btn btn-info"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
+                                    <button type="button" id="btnRegresar" class="btn btn-default"><i class="fa fa-chevron-left"></i>&nbsp;Regresar</button>
                                 </center>
                             </div>
                         </div>
@@ -193,6 +193,22 @@
         $("#nombreArchivo").fileInput({ file: $("#codArchivo").val(), fileName: "archivoCertificadoAuditor", disabled: true });
 
         $(document).ready(function () {
+
+            if ($("#estadoSolicitud").val() == "29") { //LA SOA O AUDITOR LA ENVIO
+                $("#btnAceptarSolicitud").show();
+                $("#btnObservarSolicitud").show();
+                $("#btnRegresar").show();
+            } else if ($("#estadoSolicitud").val() == "28") {
+                $("#btnAceptarSolicitud").hide();
+                $("#btnObservarSolicitud").hide();
+                $("#btnRegresar").show();
+            } else if ($("#estadoSolicitud").val() == "12") {
+                $("#btnAceptarSolicitud").hide();
+                $("#btnObservarSolicitud").hide();
+                $("#btnRegresar").show();
+            }
+
+
             $("#observacionSolicitud").htmlarea();
             $("#btnObservarSolicitud").click(observarSolicitud);
             $("#btnAceptarSolicitud").click(function () {
@@ -215,15 +231,19 @@
                 success: function (result) {
                     mostrarNotificacion(result);
                     if (result.Exito) {
-                        $("#btnObservarSolicitud").attr("disabled", true);
-                        $("#btnAceptarSolicitud").attr("disabled", true);
+                        document.location = document.location.href;
+                        //$("#btnObservarSolicitud").attr("disabled", true);
+                        //$("#btnAceptarSolicitud").attr("disabled", true);
                     }
                 }
             });
         }
 
         function observarSolicitud() {
-            $("#frmRevisarSolicitudAuditor").submit();
+            bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
+                if (result)
+                    $("#frmRevisarSolicitudAuditor").submit();
+            });
         }
 
         function regresar() {

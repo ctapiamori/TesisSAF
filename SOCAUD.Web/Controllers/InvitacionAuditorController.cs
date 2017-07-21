@@ -13,6 +13,7 @@ namespace SOCAUD.Web.Controllers
     public class InvitacionAuditorController : BaseController
     {
         private readonly ISafPublicacionLogic _publicacionLogic;
+        private readonly ISafBaseLogic _baseLogic;
         private readonly ISafServicioAuditoriaLogic _servicioAuditoriaLogic;
         private readonly ISafInvitacionLogic _invitacionLogic;
         private readonly ISafInvitacionDetalleLogic _invitacionDetalleLogic;
@@ -24,6 +25,7 @@ namespace SOCAUD.Web.Controllers
 
         public InvitacionAuditorController()
         {
+            _baseLogic = new SafBaseLogic();
             _publicacionLogic = new SafPublicacionLogic();
             _servicioAuditoriaLogic = new SafServicioAuditoriaLogic();
             _invitacionLogic = new SafInvitacionLogic();
@@ -117,12 +119,19 @@ namespace SOCAUD.Web.Controllers
             var invitacion = this._invitacionLogic.BuscarPorId(idInvitacion);// this.modelEntity.SAF_INVITACION.ToList().Where(c => c.CODINV == idInvitacion).FirstOrDefault();
             var auditor = this._auditorLogic.BuscarPorId(invitacion.CODAUD.GetValueOrDefault());// this.modelEntity.SAF_AUDITOR.ToList().Where(c => c.CODAUD == invitacion.CODAUD).FirstOrDefault();
             var cargo = this._generalLogic.GetCargo(invitacion.CODCAR.GetValueOrDefault());// this.modelEntity.SAF_CARGO.ToList().Where(c => c.CODCAR == invitacion.CODCAR).FirstOrDefault();
+            var Servauditoria = this._servicioAuditoriaLogic.BuscarPorId(invitacion.CODSERAUD.GetValueOrDefault());
+            var infoBase = this._baseLogic.BuscarPorId(Servauditoria.CODBAS.GetValueOrDefault());
+
             var model = new InvitacionModel();
             model.codigoInvitacionAgenda = idInvitacion;
             model.codigoAuditorAgenda = auditor.CODAUD;
             model.nomCompletoAuditor = string.Format("{0} {1}", auditor.NOMAUD, auditor.APEAUD);
             model.cargoInvitacionAuditor = cargo.NOMCAR;
             model.numeroHorasLaboral = 8;
+            model.fechaFinal = Servauditoria.FECFINSERAUD.GetValueOrDefault().ToString("dd/MM/yyyy");
+            model.fechaInicio = Servauditoria.FECINISERAUD.GetValueOrDefault().ToString("dd/MM/yyyy");
+            model.FechaInicioFin = Servauditoria.FECFINSERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + " - " + Servauditoria.FECINISERAUD.GetValueOrDefault().ToString("dd/MM/yyyy");
+            model.EntidadBase = infoBase.DESBAS;
             return PartialView("_AgendaAuditor", model);
         }
 
@@ -203,7 +212,11 @@ namespace SOCAUD.Web.Controllers
             try
             {
                 var invitacion = this._invitacionLogic.BuscarPorId(id);// this.modelEntity.SAF_INVITACION.ToList().Where(c => c.CODINV == id).FirstOrDefault();
+                var publicacion = this._publicacionLogic.BuscarPorId(invitacion.CODPUB.GetValueOrDefault());
+                var ServAud = this._servicioAuditoriaLogic.BuscarPorId(invitacion.CODSERAUD.GetValueOrDefault());
+                var baseinfo = this._baseLogic.BuscarPorId(ServAud.CODBAS.GetValueOrDefault());
 
+                
                 var detalleInvitacion = this._invitacionDetalleLogic.ListarPorInvitacion(id);// this.modelEntity.SAF_INVITACIONDETALLE.ToList().Where(c => c.CODINV == id);
                 if (!detalleInvitacion.Any())
                 {
@@ -211,9 +224,12 @@ namespace SOCAUD.Web.Controllers
                 }
                 
                 //var noti = new Helper.NotificacionAdmin();
-                var mensaje = "La sociedad <strong>" + Session["sessionNombreCompletoUsuario"].ToString() + "</strong> identificado con el RUC " + Session["sessionUsuario"].ToString() + " le ha enviado una invitacion para pertenecer a su equipo de Auditoria";
+                var mensaje = "La sociedad <strong>" + Session["sessionNombreCompletoUsuario"].ToString() + "</strong> identificado con el RUC " + Session["sessionUsuario"].ToString() + " le ha enviado una INVITACIÓN para pertenecer a su equipo de Auditoria en el siguiente concurso: <br /><br />";
+                mensaje = mensaje  + "<strong>Publicación:</strong>" + publicacion.NUMPUB + "<br/>";
+                mensaje = mensaje + "<strong>Entidad:</strong>" + baseinfo.DESBAS + "<br/>";
+                mensaje = mensaje + "<strong>Periodo:</strong>" + ServAud.FECINISERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + " - " + ServAud.FECFINSERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + "<br/>";
                 //noti.grabarNotificacionAuditor((int)invitacion.CODAUD, Notificacion.asuntoInvitacion, mensaje);
-                this._notificacionLogic.GrabarNotificacionAuditor(invitacion.CODAUD.GetValueOrDefault(), Notificacion.asuntoInvitacion, mensaje);
+                this._notificacionLogic.GrabarNotificacionAuditor(invitacion.CODAUD.GetValueOrDefault(), Notificacion.asuntoInvitacion, mensaje, Session["sessionNombreCompletoUsuario"].ToString());
 
 
                 invitacion.ESTINV = (int)Estado.Invitacion.Enviada;
@@ -226,6 +242,39 @@ namespace SOCAUD.Web.Controllers
                 return Json(new MensajeRespuesta("No se pudo enviar la invitacion", false));
             }
         }
+
+
+        public JsonResult CancelarInvitacion(int id)
+        {
+            try
+            {
+                var invitacion = this._invitacionLogic.BuscarPorId(id);// this.modelEntity.SAF_INVITACION.Where(c => c.CODINV == id).FirstOrDefault();
+
+                var publicacion = this._publicacionLogic.BuscarPorId(invitacion.CODPUB.GetValueOrDefault());
+                var ServAud = this._servicioAuditoriaLogic.BuscarPorId(invitacion.CODSERAUD.GetValueOrDefault());
+                var baseinfo = this._baseLogic.BuscarPorId(ServAud.CODBAS.GetValueOrDefault());
+
+                //var noti = new Helper.NotificacionAdmin();
+                var mensaje = "La sociedad <strong>" + Session["sessionNombreCompletoUsuario"].ToString() + "</strong> identificado con el RUC " + Session["sessionUsuario"].ToString() + " ha enviado CANCELADO un acuerdo de participación en una auditoria con usted, detalle de la auditoria:  <br /><br />";
+                mensaje = mensaje + "<strong>Publicación:</strong>" + publicacion.NUMPUB + "<br/>";
+                mensaje = mensaje + "<strong>Entidad:</strong>" + baseinfo.DESBAS + "<br/>";
+                mensaje = mensaje + "<strong>Periodo:</strong>" + ServAud.FECINISERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + " - " + ServAud.FECFINSERAUD.GetValueOrDefault().ToString("dd/MM/yyyy") + "<br/>";
+                //noti.grabarNotificacionSOA((int)invitacion.CODSOA, Notificacion.asuntoInvitacionCancelado, mensaje);
+                this._notificacionLogic.GrabarNotificacionAuditor(invitacion.CODAUD.GetValueOrDefault(), Notificacion.asuntoInvitacionCancelado, mensaje, Session["sessionNombreCompletoUsuario"].ToString());
+
+                invitacion.ESTINV = (int)Estado.Invitacion.Cancelada;
+                invitacion.INDCANINV = "S";
+                //modelEntity.SaveChanges();
+                this._invitacionLogic.Actualizar(invitacion);
+
+                return Json(new MensajeRespuesta("Se cancelo la invitacion satisfactoriamente", true));
+            }
+            catch (Exception)
+            {
+                return Json(new MensajeRespuesta("No se pudo cancelar la invitacion", false));
+            }
+        }
+
 
         public JsonResult EliminarInvitacion(int id)
         {
@@ -240,6 +289,20 @@ namespace SOCAUD.Web.Controllers
             catch (Exception)
             {
                 return Json(new MensajeRespuesta("No se pudo eliminar la invitacion", false));
+            }
+        }
+
+        public JsonResult ValidarBusquedaDisponible(int idAuditor, string fechaInicio, string fechaFin)
+        {
+            var ini = Convert.ToDateTime(fechaInicio);
+            var fin = Convert.ToDateTime(fechaFin);
+
+            if (ini > fin )
+            {
+                return Json(false);
+            }
+            else {
+                return Json(true);
             }
         }
 

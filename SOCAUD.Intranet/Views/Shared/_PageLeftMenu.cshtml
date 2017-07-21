@@ -33,12 +33,25 @@
                 @{
                     string controlador = ""; 
                     string accion = ""; 
-                    if (item.Ruta != "#"){
-                        controlador = item.Ruta.Split('/')[1];
-                        accion = item.Ruta.Split('/')[2];
-                    }
-                }
-                <a href="@Url.Action(accion, controlador)">
+                    string areaR = ""; 
+                    if (item.Ruta != "#") {
+                        if (item.Ruta.Split('/').Length > 3) {
+                            areaR = item.Ruta.Split('/')[1];
+                            controlador = item.Ruta.Split('/')[2];
+                            accion = item.Ruta.Split('/')[3];
+                        } else {
+                            areaR = "";
+                            controlador = item.Ruta.Split('/')[1];
+                            accion = item.Ruta.Split('/')[2];                            
+                        }
+                   
+                     }
+                  }
+                
+                    
+                        <a href="@Url.Action(accion, controlador, new { area = areaR })">
+                    
+                
                     <i class='@item.Css'></i> <span>@item.Nombre</span>
                     @if (item.Ruta == "#"){
                         <i class="fa fa-angle-left pull-right"></i>

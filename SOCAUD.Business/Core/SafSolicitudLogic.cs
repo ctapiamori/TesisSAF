@@ -50,6 +50,7 @@ namespace SOCAUD.Business.Core
             this._solExperienciaLogic = new SafSolExperienciaLogic();
             this._solCapacitacionLogic = new SafSolCapacitacionLogic();
             this._experienciaLogic = new SafExperienciaLogic();
+            this._capacitacionLogic = new SafCapacitacionLogic();
             this._spSafSolicitudCorrelativo = new SpSafCorrelativoSolicitudData(_dataFactory, _uow);
         }
 

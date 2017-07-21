@@ -67,6 +67,7 @@
         $(document).ready(function () {
             listarPropuestasEjecucion();
             $("#btnObservacion").click(grabarPenalidad);
+            $("#btnBuscar").click(listarPropuestasEjecucion);
         });
 
 
@@ -99,7 +100,7 @@
                 url: '@Url.Action("ListarPropEjecucion", "Seguimiento")',
                 type: 'POST',
                 async: false,
-                data: {},
+                data: { idPub: $("#IdPublicacion").val(), idSoa: $("#IdSoa").val() },
                 success: function (result) {
                     _dataPropEjecucion_ = result;
                     tabPropuestasEjecucion.fnReloadData(_dataPropEjecucion_);

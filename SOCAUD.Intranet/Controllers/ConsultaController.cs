@@ -41,13 +41,14 @@ namespace SOCAUD.Intranet.Controllers
         private readonly ISafPublicacionLogic _publicacionLogic;
         private readonly ISafPublicacionBaseLogic _publicacionYBasesLogic;
         private readonly ISafAbsolucionConsultaLogic _absolucionConsultaLogic;
-
+        private readonly ISafNotificacionLogic _notificacionLogic;
         public ConsultaController()
         {
             _baseLogic = new SafBaseLogic();
             _publicacionLogic = new SafPublicacionLogic();
             _consultaLogic = new SafConsultaLogic();
             _publicacionYBasesLogic = new SafPublicacionBaseLogic();
+            this._notificacionLogic = new SafNotificacionLogic();
             _absolucionConsultaLogic = new SafAbsolucionConsultaLogic();
         }
 
@@ -181,6 +182,19 @@ namespace SOCAUD.Intranet.Controllers
                     CODPUB = idPub,
                     FECPUBABSOLUCION = DateTime.Now,
                 });
+
+                var infoPublicacion = this._publicacionLogic.BuscarPorId(idPub);
+                var infoBase = this._baseLogic.BuscarPorId(idBase);
+
+                string mensaje = string.Empty;
+
+                mensaje = "Se ha publicado el documento de ABSOLUCION de CONSULTAS, para el concurso: <br /><br />";
+                mensaje = mensaje + "Publicación: <strong>" + infoPublicacion.NUMPUB + "</strong><br/>";
+                mensaje = mensaje + "Entidad: <strong>" + infoBase.DESBAS + "</strong><br/>";
+
+                this._notificacionLogic.GrabarNotificacionTodosUsuarios(Notificacion.asuntoAbsolucionConsulta, mensaje);
+
+
 
                 return Json(new MensajeRespuesta("Se grabo la absolución de consultas satisfactoriamente", true));
             }

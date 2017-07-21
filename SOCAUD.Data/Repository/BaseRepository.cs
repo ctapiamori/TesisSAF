@@ -59,7 +59,10 @@ namespace SOCAUD.Data.Repository
         {
 
             SetValue(ref entity, "FECREG", DateTime.Now);
-            SetValue(ref entity, "USUREG", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
+            if (System.Web.HttpContext.Current.Session != null)
+                SetValue(ref entity, "USUREG", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
+            else
+                SetValue(ref entity, "USUREG", "");
             SetValue(ref entity, "ESTREG", ((int)Estado.Auditoria.Activo).ToString());
             dynamic obj = dbSet.Add(entity);
             this._unitOfWork.Db.SaveChanges();
@@ -69,7 +72,10 @@ namespace SOCAUD.Data.Repository
         public virtual T Update(T entity)
         {
             SetValue(ref entity, "FECMOD", DateTime.Now);
-            SetValue(ref entity, "USUMOD", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
+            if (System.Web.HttpContext.Current.Session != null)
+                SetValue(ref entity, "USUMOD", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
+            else
+                SetValue(ref entity, "USUMOD", ""); 
             SetValue(ref entity, "ESTREG", ((int)Estado.Auditoria.Activo).ToString());
             dbSet.Attach(entity);
             _unitOfWork.Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
@@ -80,7 +86,10 @@ namespace SOCAUD.Data.Repository
         {
             T entity = dbSet.Find(id);
             SetValue(ref entity, "FECMOD", DateTime.Now);
-            SetValue(ref entity, "USUMOD", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
+            if (System.Web.HttpContext.Current.Session != null)
+                SetValue(ref entity, "USUMOD", (System.Web.HttpContext.Current.Session["sessionUsuario"] == null) ? "" : System.Web.HttpContext.Current.Session["sessionUsuario"].ToString());
+            else
+                SetValue(ref entity, "USUMOD", "");
             SetValue(ref entity, "ESTREG", ((int)Estado.Auditoria.Inactivo).ToString());
             dbSet.Attach(entity);
             _unitOfWork.Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;

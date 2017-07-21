@@ -342,6 +342,25 @@
 
 
         function grabarCronograma() {
+
+            if (parseFloat($("#TotalRetribucion").val()) <= 0) {
+                new PNotify({
+                    title: 'Respuesta Sistema!',
+                    type: "error",
+                    text: "La retribución economica debe ser mayor a 0 (cero)"
+                });
+                return;
+            }
+
+            if (parseFloat($("#TotalViaticos").val()) < 0) {
+                new PNotify({
+                    title: 'Respuesta Sistema!',
+                    type: "error",
+                    text: "El viatico debe ser mayor o igual a 0 (cero)"
+                });
+                return;
+            }
+
             if (!$("#frmBases").isValid()) { return; }
 
             bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
@@ -357,7 +376,7 @@
                             mostrarNotificacion(result);
                             if (result.Exito) {
                                 //$("#Numero").val(result.Data.NUMBAS)
-                                $("#btnGrabar").prop("disabled", true);
+                                //$("#btnGrabar").prop("disabled", true);
                             }
                         }
                     });

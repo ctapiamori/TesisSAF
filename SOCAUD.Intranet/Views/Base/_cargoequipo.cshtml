@@ -93,6 +93,16 @@
 
     function grabarCargoEquipo() {
         
+        if (parseFloat($("#CantidadIntegrantes").val()) <= 0) {
+            new PNotify({
+                title: 'Respuesta Sistema!',
+                type: "error",
+                text: "Debe ingresar mínimo a un integrante"
+            });
+            return;
+        }
+        
+
         if (!$("#frmCargoEquipo").isValid()) { return; }
 
         bootbox.confirm(parametros.general.mensajeConfirmacion, function (result) {
